@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Tools – Ai-Auto</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Playfair+Display:wght@500;600;700;900&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      /* Neobrutalist Palette */
+      --bg-paper: #f2f0e9;
+      --bg-white: #ffffff;
+      --ink: #121212;
+      --blue: #2357ff;
+      --gold: #ffcc00;
+      --coral: #ff6b58;
+      --lavender: #dcd6f7;
+      --green: #00d084;
+      --pink: #ff4d9e;
+      --purple: #8b5cf6;
+
+      /* Structural Variables */
+      --border-thick: 3px solid var(--ink);
+      --border-thin: 2px solid var(--ink);
+      --shadow-hard: 6px 6px 0px 0px var(--ink);
+      --shadow-hover: 10px 10px 0px 0px var(--ink);
+      --shadow-brutal: 8px 8px 0px 0px var(--ink);
+      --radius-sm: 4px;
+      --max-width: 1200px;
+
+      /* Spacing */
+      --space-xs: 8px;
+      --space-sm: 16px;
+      --space-md: 32px;
+      --space-lg: 64px;
+      --space-xl: 128px;
+    }
+
+    [data-theme="dark"] {
+      --bg-paper: #0a0a0a;
+      --bg-white: #1a1a1a;
+      --ink: #f0f0f0;
+      --blue: #4d7aff;
+      --gold: #ffd633;
+      --coral: #ff8c7a;
+      --lavender: #2a2a40;
+      --green: #00ff9f;
+      --pink: #ff6bb5;
+      --purple: #a78bfa;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-paper);
+      color: var(--ink);
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-family: 'Playfair Display', serif;
+      margin: 0;
+      font-weight: 900;
+      line-height: 1.1;
+    }
+
+    p {
+      margin: 0 0 var(--space-sm);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+      border: var(--border-thin);
+    }
+
+    /* UTILITIES */
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 var(--space-md);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 28px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border: var(--border-thick);
+      background: var(--blue);
+      color: #fff;
+      box-shadow: var(--shadow-hard);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 14px;
+    }
+
+    .btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
+      filter: brightness(1.1);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--ink);
+    }
+
+    .btn-gold {
+      background: var(--gold);
+      color: #000;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 12px;
+      border: var(--border-thin);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    /* NAVIGATION */
+    .nav {
+      border-bottom: var(--border-thick);
+      background: var(--bg-white);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: var(--space-sm) 0;
+    }
+
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 900;
+      border: var(--border-thick);
+      padding: 4px 12px;
+      background: var(--ink);
+      color: var(--bg-paper);
+      box-shadow: 4px 4px 0 var(--blue);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: var(--space-md);
+    }
+
+    .nav-link {
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 14px;
+      position: relative;
+    }
+
+    .nav-link:hover::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--blue);
+    }
+
+    /* HERO */
+    .hero {
+      padding: var(--space-xl) 0;
+      border-bottom: var(--border-thick);
+      background: var(--bg-white);
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(56px, 10vw, 96px);
+      margin-bottom: var(--space-md);
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+    }
+
+    .hero h1 .highlight {
+      display: inline-block;
+      background: var(--gold);
+      color: #000;
+      padding: 0 16px;
+      transform: rotate(-1deg);
+      border: var(--border-thick);
+      box-shadow: var(--shadow-brutal);
+    }
+
+    .hero-subtitle {
+      font-size: 20px;
+      max-width: 700px;
+      margin: 0 auto var(--space-lg);
+      font-weight: 600;
+    }
+
+    /* CATEGORY SECTION */
+    .category-section {
+      padding: var(--space-xl) 0;
+      border-bottom: var(--border-thick);
+    }
+
+    .category-section:nth-child(even) {
+      background: var(--bg-white);
+    }
+
+    .category-header {
+      margin-bottom: var(--space-lg);
+    }
+
+    .category-header h2 {
+      font-size: 48px;
+      margin-bottom: var(--space-sm);
+      text-transform: uppercase;
+    }
+
+    .category-header p {
+      font-size: 18px;
+      opacity: 0.7;
+      max-width: 600px;
+    }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: var(--space-lg);
+    }
+
+    .tool-card {
+      border: var(--border-thick);
+      background: var(--bg-paper);
+      padding: var(--space-lg);
+      box-shadow: var(--shadow-brutal);
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tool-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 8px;
+    }
+
+    .tool-card.blue::before {
+      background: var(--blue);
+    }
+
+    .tool-card.coral::before {
+      background: var(--coral);
+    }
+
+    .tool-card.gold::before {
+      background: var(--gold);
+    }
+
+    .tool-card.green::before {
+      background: var(--green);
+    }
+
+    .tool-card.purple::before {
+      background: var(--purple);
+    }
+
+    .tool-card.pink::before {
+      background: var(--pink);
+    }
+
+    .tool-card:hover {
+      transform: translate(-4px, -4px);
+      box-shadow: 12px 12px 0 var(--ink);
+    }
+
+    .tool-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-bottom: var(--space-md);
+      padding-bottom: var(--space-sm);
+      border-bottom: var(--border-thick);
+    }
+
+    .tool-badge {
+      background: var(--blue);
+      color: #fff;
+      padding: 4px 12px;
+      border: var(--border-thin);
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .tool-card h3 {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .tool-price {
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--blue);
+      font-family: 'Playfair Display', serif;
+    }
+
+    .tool-description {
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: var(--space-md);
+    }
+
+    .tool-features {
+      list-style: none;
+      padding: 0;
+      margin: var(--space-md) 0;
+    }
+
+    .tool-features li {
+      padding: 8px 0;
+      border-bottom: 1px solid var(--ink);
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .tool-features li::before {
+      content: '→';
+      margin-right: 8px;
+      color: var(--blue);
+      font-weight: 900;
+    }
+
+    .tool-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 13px;
+      color: var(--blue);
+      border-bottom: 2px solid var(--blue);
+      padding-bottom: 2px;
+    }
+
+    .tool-cta:hover {
+      transform: translateX(4px);
+    }
+
+    /* PRICING TABLE */
+    .pricing-section {
+      padding: var(--space-xl) 0;
+      background: var(--bg-white);
+      border-bottom: var(--border-thick);
+    }
+
+    .pricing-header {
+      text-align: center;
+      margin-bottom: var(--space-lg);
+    }
+
+    .pricing-header h2 {
+      font-size: 64px;
+      margin-bottom: var(--space-sm);
+      text-transform: uppercase;
+    }
+
+    .pricing-table {
+      border: var(--border-thick);
+      background: var(--bg-paper);
+      overflow: hidden;
+    }
+
+    .pricing-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      border-bottom: var(--border-thin);
+      transition: background 0.2s;
+    }
+
+    .pricing-row:last-child {
+      border-bottom: none;
+    }
+
+    .pricing-row:hover {
+      background: var(--gold);
+    }
+
+    .pricing-cell {
+      padding: var(--space-md);
+      border-right: var(--border-thin);
+    }
+
+    .pricing-cell:last-child {
+      border-right: none;
+    }
+
+    .pricing-row.header {
+      background: var(--ink);
+      color: var(--bg-paper);
+    }
+
+    .pricing-row.header:hover {
+      background: var(--ink);
+    }
+
+    .pricing-tool-name {
+      font-weight: 900;
+      font-size: 18px;
+      margin-bottom: 4px;
+    }
+
+    .pricing-tool-type {
+      font-size: 12px;
+      opacity: 0.7;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .pricing-price {
+      font-size: 28px;
+      font-weight: 900;
+      font-family: 'Playfair Display', serif;
+      color: var(--blue);
+      text-align: center;
+    }
+
+    .pricing-row:hover .pricing-price {
+      color: var(--ink);
+    }
+
+    /* FEATURES GRID */
+    .features-section {
+      padding: var(--space-xl) 0;
+      background: var(--bg-paper);
+      border-bottom: var(--border-thick);
+    }
+
+    .features-header {
+      text-align: center;
+      margin-bottom: var(--space-lg);
+    }
+
+    .features-header h2 {
+      font-size: 64px;
+      margin-bottom: var(--space-sm);
+      text-transform: uppercase;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-lg);
+    }
+
+    .feature-card {
+      border: var(--border-thick);
+      background: var(--bg-white);
+      padding: var(--space-lg);
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .feature-card:hover {
+      transform: rotate(-2deg) scale(1.05);
+      z-index: 10;
+      box-shadow: var(--shadow-brutal);
+    }
+
+    .feature-icon {
+      width: 80px;
+      height: 80px;
+      border: var(--border-thick);
+      background: var(--ink);
+      color: var(--bg-paper);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      margin-bottom: var(--space-md);
+    }
+
+    .feature-card:nth-child(1) .feature-icon {
+      background: var(--blue);
+    }
+
+    .feature-card:nth-child(2) .feature-icon {
+      background: var(--coral);
+    }
+
+    .feature-card:nth-child(3) .feature-icon {
+      background: var(--gold);
+      color: #000;
+    }
+
+    .feature-card:nth-child(4) .feature-icon {
+      background: var(--green);
+      color: #000;
+    }
+
+    .feature-card:nth-child(5) .feature-icon {
+      background: var(--purple);
+    }
+
+    .feature-card:nth-child(6) .feature-icon {
+      background: var(--pink);
+    }
+
+    .feature-card h3 {
+      font-size: 24px;
+      margin-bottom: var(--space-sm);
+    }
+
+    .feature-card p {
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    /* COMPARISON TABLE */
+    .comparison-section {
+      padding: var(--space-xl) 0;
+      background: var(--bg-white);
+      border-bottom: var(--border-thick);
+    }
+
+    .comparison-header {
+      text-align: center;
+      margin-bottom: var(--space-lg);
+    }
+
+    .comparison-header h2 {
+      font-size: 64px;
+      margin-bottom: var(--space-sm);
+      text-transform: uppercase;
+    }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-md);
+    }
+
+    .plan-card {
+      border: var(--border-thick);
+      background: var(--bg-paper);
+      overflow: hidden;
+    }
+
+    .plan-card.featured {
+      transform: scale(1.05);
+      z-index: 2;
+    }
+
+    .plan-header {
+      background: var(--ink);
+      color: var(--bg-paper);
+      padding: var(--space-md);
+      text-align: center;
+      border-bottom: var(--border-thick);
+    }
+
+    .plan-card.featured .plan-header {
+      background: var(--blue);
+    }
+
+    .plan-header h3 {
+      font-size: 24px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .plan-price {
+      font-size: 48px;
+      font-weight: 900;
+      font-family: 'Playfair Display', serif;
+      margin-bottom: 4px;
+    }
+
+    .plan-period {
+      font-size: 14px;
+      opacity: 0.8;
+    }
+
+    .plan-body {
+      padding: var(--space-md);
+    }
+
+    .plan-features {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 var(--space-md);
+    }
+
+    .plan-features li {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--ink);
+      font-weight: 600;
+    }
+
+    .plan-features li::before {
+      content: '✓';
+      margin-right: 8px;
+      color: var(--green);
+      font-weight: 900;
+    }
+
+    /* FOOTER CTA */
+    .footer-cta {
+      background: var(--blue);
+      color: #fff;
+      padding: var(--space-xl) 0;
+      text-align: center;
+      border-bottom: var(--border-thick);
+    }
+
+    .footer-cta h2 {
+      font-size: 80px;
+      margin-bottom: var(--space-md);
+      text-shadow: 6px 6px 0 var(--ink);
+      text-transform: uppercase;
+    }
+
+    .footer-cta p {
+      font-size: 24px;
+      margin-bottom: var(--space-lg);
+      font-weight: 600;
+    }
+
+    /* SITE FOOTER */
+    .site-footer {
+      background: var(--ink);
+      color: var(--bg-paper);
+      padding: var(--space-lg) 0;
+    }
+
+    .footer-inner {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: var(--space-lg);
+    }
+
+    .footer-brand h3 {
+      font-size: 32px;
+      margin-bottom: var(--space-sm);
+    }
+
+    .footer-links h4 {
+      font-size: 16px;
+      margin-bottom: var(--space-sm);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .footer-links ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-links li {
+      margin-bottom: 8px;
+    }
+
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-bottom {
+      margin-top: var(--space-lg);
+      padding-top: var(--space-md);
+      border-top: 2px solid var(--bg-paper);
+      text-align: center;
+      font-weight: 700;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+
+      .tools-grid,
+      .features-grid,
+      .comparison-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .pricing-row {
+        grid-template-columns: 1fr;
+      }
+
+      .pricing-cell {
+        border-right: none;
+        border-bottom: var(--border-thin);
+      }
+
+      .hero h1 {
+        font-size: 48px;
+      }
+
+      .category-header h2,
+      .pricing-header h2,
+      .features-header h2,
+      .comparison-header h2 {
+        font-size: 40px;
+      }
+
+      .footer-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .plan-card.featured {
+        transform: scale(1);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="logo">Ai-Auto</a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="tools.html" class="nav-link"
+          style="text-decoration: underline; text-decoration-thickness: 3px; text-decoration-color: var(--gold);">Tools</a>
+      </div>
+      <button class="btn btn-gold">Get Started</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="tag" style="margin-bottom: 24px; background: var(--blue); color: #fff;">Full Catalog</div>
+      <h1>
+        Your <span class="highlight">Arsenal</span><br>
+        Of AI Tools
+      </h1>
+      <p class="hero-subtitle">
+        Everything you need to automate your work, scale your output, and set your own salary. Choose the tools that fit
+        your workflow.
+      </p>
+    </div>
+  </section>
+
+  <!-- CORE TOOLS -->
+  <section class="category-section">
+    <div class="container">
+      <div class="category-header">
+        <h2>Core Tools</h2>
+        <p>Premium automation for serious builders. These are the powerhouses that transform how you work.</p>
+      </div>
+      <div class="tools-grid">
+        <div class="tool-card blue">
+          <div class="tool-header">
+            <div>
+              <div class="tool-badge">Premium</div>
+              <h3>AI Content Engine</h3>
+            </div>
+            <div class="tool-price">$49/mo</div>
+          </div>
+          <p class="tool-description">
+            Generate unlimited blog posts, social media content, and marketing copy. Train it on your brand voice and
+            let it produce content that sounds exactly like you.
+          </p>
+          <ul class="tool-features">
+            <li>Unlimited content generation</li>
+            <li>Multi-platform optimization</li>
+            <li>SEO-ready output</li>
+            <li>Brand voice training</li>
+            <li>Batch processing</li>
+            <li>Content calendar integration</li>
+          </ul>
+          <a href="#" class="tool-cta">Start Free Trial →</a>
+        </div>
+
+        <div class="tool-card coral">
+          <div class="tool-header">
+            <div>
+              <div class="tool-badge" style="background: var(--coral);">Pro</div>
+              <h3>Smart Scheduler</h3>
+            </div>
+            <div class="tool-price">$39/mo</div>
+          </div>
+          <p class="tool-description">
+            AI-powered scheduling that learns your patterns and optimizes your calendar automatically. Never miss a
+            deadline or double-book again.
+          </p>
+          <ul class="tool-features">
+            <li>Intelligent time blocking</li>
+            <li>Priority management</li>
+            <li>Meeting optimization</li>
+            <li>Calendar sync across platforms</li>
+            <li>Focus time protection</li>
+            <li>Automated rescheduling</li>
+          </ul>
+          <a href="#" class="tool-cta">Learn More →</a>
+        </div>
+
+        <div class="tool-card gold">
+          <div class="tool-header">
+            <div>
+              <div class="tool-badge" style="background: var(--gold); color: #000;">Elite</div>
+              <h3>Analytics Dashboard</h3>
+            </div>
+            <div class="tool-price">$59/mo</div>
+          </div>
+          <p class="tool-description">
+            Turn raw data into actionable insights. Track everything that matters and make data-driven decisions with
+            confidence.
+          </p>
+          <ul class="tool-features">
+            <li>Real-time analytics</li>
+            <li>Custom dashboards</li>
+            <li>Predictive insights</li>
+            <li>Multi-source integration</li>
+            <li>Automated reporting</li>
+            <li>Export to any format</li>
+          </ul>
+          <a href="#" class="tool-cta">View Demo →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DAILY TOOLS -->
+  <section class="category-section">
+    <div class="container">
+      <div class="category-header">
+        <h2>Daily Tools</h2>
+        <p>Everyday automation for maximum efficiency. Small tools that make a big difference.</p>
+      </div>
+      <div class="tools-grid">
+        <div class="tool-card green">
+          <div class="tool-header">
+            <div>
+              <div class="tool-badge" style="background: var(--green); color: #000;">Daily</div>
+              <h3>Email Assistant</h3>
+            </div>
+            <div class="tool-price">$19/mo</div>
+          </div>
+          <p class="tool-description">
+            Auto-respond, categorize, and prioritize your inbox. Spend less time on email, more time on what matters.
+          </p>
+          <ul class="tool-features">
+            <li>Smart auto-responses</li>
+            <li>Priority inbox</li>
+            <li>Email categorization</li>
+            <li>Spam filtering</li>
+          </ul>
+          <a href="#" class="tool-cta">Get Started →</a>
+        </div>
+
+        <div class="tool-card purple">
+          <div class="tool-header">
+            <div>
+              <div class="tool-badge" style="background: var(--purple);">Daily</div>
+              <h3>Task Manager</h3>
+            </div>
+            <div class="tool-price">$15/mo</div>
+          </div>
+          <p class="tool-description">
+            Smart task organization with AI prioritization. Know exactly what to work on next.
+          </p>
+          <ul class="tool-features">
+            <li>AI task prioritization</li>
+            <li>Deadline tracking</li>
+            <li>Project templates</li>
+            <li>Team collaboration</li>
+          </ul>
+          <a href="#" class="tool-cta">Try Free →</a>
+        </div>
+
+        <div class="tool-card pink">
+          <div class="tool-header">
+            <div>
+              <div class="tool-badge" style="background: var(--pink);">Daily</div>
+              <h3>Social Poster</h3>
+            </div>
+            <div class="tool-price">$25/mo</div>
+          </div>
+          <p class="tool-description">
+            Schedule and optimize posts across all platforms. Maintain consistent presence without the daily grind.
+          </p>
+          <ul class="tool-features">
+            <li>Multi-platform posting</li>
+            <li>Optimal timing</li>
+            <li>Content calendar</li>
+            <li>Analytics tracking</li>
+          </ul>
+          <a href="#" class="tool-cta">Start Trial →</a>
+        </div>
+
+        <div class="tool-card blue">
+          <div class="tool-header">
+            <div>
+              <div class="tool-badge">Daily</div>
+              <h3>Code Helper</h3>
+            </div>
+            <div class="tool-price">$35/mo</div>
+          </div>
+          <p class="tool-description">
+            AI-powered code review and documentation. Ship faster with fewer bugs.
+          </p>
+          <ul class="tool-features">
+            <li>Code review automation</li>
+            <li>Auto-documentation</li>
+            <li>Bug detection</li>
+            <li>Refactoring suggestions</li>
+          </ul>
+          <a href="#" class="tool-cta">View Docs →</a>
+        </div>
+
+        <div class="tool-card coral">
+          <div class="tool-header">
+            <div>
+              <div class="tool-badge" style="background: var(--coral);">Daily</div>
+              <h3>Report Builder</h3>
+            </div>
+            <div class="tool-price">$22/mo</div>
+          </div>
+          <p class="tool-description">
+            Generate professional reports in seconds. Impress clients without the manual work.
+          </p>
+          <ul class="tool-features">
+            <li>Template library</li>
+            <li>Data visualization</li>
+            <li>Export options</li>
+            <li>Brand customization</li>
+          </ul>
+          <a href="#" class="tool-cta">Create Report →</a>
+        </div>
+
+        <div class="tool-card gold">
+          <div class="tool-header">
+            <div>
+              <div class="tool-badge" style="background: var(--gold); color: #000;">Daily</div>
+              <h3>Meeting Notes</h3>
+            </div>
+            <div class="tool-price">$18/mo</div>
+          </div>
+          <p class="tool-description">
+            Automatic meeting transcription and summarization. Never miss important details again.
+          </p>
+          <ul class="tool-features">
+            <li>Live transcription</li>
+            <li>Action item extraction</li>
+            <li>Summary generation</li>
+            <li>Integration with calendar</li>
+          </ul>
+          <a href="#" class="tool-cta">Record Meeting →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING TABLE -->
+  <section class="pricing-section">
+    <div class="container">
+      <div class="pricing-header">
+        <h2>Pricing Overview</h2>
+        <p style="font-size: 18px; opacity: 0.7;">Transparent pricing for every tool</p>
+      </div>
+      <div class="pricing-table">
+        <div class="pricing-row header">
+          <div class="pricing-cell">
+            <div style="font-weight: 900; font-size: 18px;">Tool Name</div>
+          </div>
+          <div class="pricing-cell">
+            <div style="font-weight: 900; font-size: 18px; text-align: center;">Monthly</div>
+          </div>
+          <div class="pricing-cell">
+            <div style="font-weight: 900; font-size: 18px; text-align: center;">Annual</div>
+          </div>
+        </div>
+        <div class="pricing-row">
+          <div class="pricing-cell">
+            <div class="pricing-tool-name">AI Content Engine</div>
+            <div class="pricing-tool-type">Core Tool</div>
+          </div>
+          <div class="pricing-cell">
+            <div class="pricing-price">$49</div>
+          </div>
+          <div class="pricing-cell">
+            <div class="pricing-price">$470</div>
+          </div>
+        </div>
+        <div class="pricing-row">
+          <div class="pricing-cell">
+            <div class="pricing-tool-name">Smart Scheduler</div>
+            <div class="pricing-tool-type">Core Tool</div>
+          </div>
+          <div class="pricing-cell">
+            <div class="pricing-price">$39</div>
+          </div>
+          <div class="pricing-cell">
+            <div class="pricing-price">$390</div>
+          </div>
+        </div>
+        <div class="pricing-row">
+          <div class="pricing-cell">
+            <div class="pricing-tool-name">Analytics Dashboard</div>
+            <div class="pricing-tool-type">Core Tool</div>
+          </div>
+          <div class="pricing-cell">
+            <div class="pricing-price">$59</div>
+          </div>
+          <div class="pricing-cell">
+            <div class="pricing-price">$590</div>
+          </div>
+        </div>
+        <div class="pricing-row">
+          <div class="pricing-cell">
+            <div class="pricing-tool-name">Email Assistant</div>
+            <div class="pricing-tool-type">Daily Tool</div>
+          </div>
+          <div class="pricing-cell">
+            <div class="pricing-price">$19</div>
+          </div>
+          <div class="pricing-cell">
+            <div class="pricing-price">$190</div>
+          </div>
+        </div>
+        <div class="pricing-row">
+          <div class="pricing-cell">
+            <div class="pricing-tool-name">Task Manager</div>
+            <div class="pricing-tool-type">Daily Tool</div>
+          </div>
+          <div class="pricing-cell">
+            <div class="pricing-price">$15</div>
+          </div>
+          <div class="pricing-cell">
+            <div class="pricing-price">$150</div>
+          </div>
+        </div>
+        <div class="pricing-row">
+          <div class="pricing-cell">
+            <div class="pricing-tool-name">Social Poster</div>
+            <div class="pricing-tool-type">Daily Tool</div>
+          </div>
+          <div class="pricing-cell">
+            <div class="pricing-price">$25</div>
+          </div>
+          <div class="pricing-cell">
+            <div class="pricing-price">$250</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features-section">
+    <div class="container">
+      <div class="features-header">
+        <h2>Key Features</h2>
+        <p style="font-size: 18px; opacity: 0.7;">What makes our tools different</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>Lightning Fast</h3>
+          <p>Built for speed. Every tool is optimized to save you time, not waste it.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔒</div>
+          <h3>Secure & Private</h3>
+          <p>Your data is encrypted and never shared. We take privacy seriously.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔄</div>
+          <h3>Seamless Integration</h3>
+          <p>Connect with the tools you already use. No workflow disruption.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <h3>Advanced Analytics</h3>
+          <p>Track everything. Understand your productivity and optimize continuously.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🎯</div>
+          <h3>AI-Powered</h3>
+          <p>Real AI, not just automation. Tools that learn and adapt to you.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">💪</div>
+          <h3>Built to Scale</h3>
+          <p>Start small, grow big. Our tools scale with your ambitions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARISON -->
+  <section class="comparison-section">
+    <div class="container">
+      <div class="comparison-header">
+        <h2>Choose Your Plan</h2>
+        <p style="font-size: 18px; opacity: 0.7;">Bundle tools together and save</p>
+      </div>
+      <div class="comparison-grid">
+        <div class="plan-card">
+          <div class="plan-header">
+            <h3>Starter</h3>
+            <div class="plan-price">$29</div>
+            <div class="plan-period">per month</div>
+          </div>
+          <div class="plan-body">
+            <ul class="plan-features">
+              <li>3 Core Tools</li>
+              <li>5 Daily Tools</li>
+              <li>Basic Support</li>
+              <li>Monthly Reports</li>
+            </ul>
+            <button class="btn btn-outline" style="width: 100%;">Get Started</button>
+          </div>
+        </div>
+
+        <div class="plan-card featured">
+          <div class="plan-header">
+            <h3>Pro</h3>
+            <div class="plan-price">$79</div>
+            <div class="plan-period">per month</div>
+          </div>
+          <div class="plan-body">
+            <ul class="plan-features">
+              <li>All Core Tools</li>
+              <li>All Daily Tools</li>
+              <li>Priority Support</li>
+              <li>Advanced Analytics</li>
+              <li>Custom Integrations</li>
+            </ul>
+            <button class="btn" style="width: 100%;">Start Free Trial</button>
+          </div>
+        </div>
+
+        <div class="plan-card">
+          <div class="plan-header">
+            <h3>Enterprise</h3>
+            <div class="plan-price">$199</div>
+            <div class="plan-period">per month</div>
+          </div>
+          <div class="plan-body">
+            <ul class="plan-features">
+              <li>Everything in Pro</li>
+              <li>Dedicated Support</li>
+              <li>Custom Development</li>
+              <li>White Label</li>
+              <li>API Access</li>
+            </ul>
+            <button class="btn btn-outline" style="width: 100%;">Contact Sales</button>
+          </div>
+        </div>
+
+        <div class="plan-card">
+          <div class="plan-header">
+            <h3>Custom</h3>
+            <div class="plan-price" style="font-size: 32px;">Let's Talk</div>
+            <div class="plan-period">tailored to you</div>
+          </div>
+          <div class="plan-body">
+            <ul class="plan-features">
+              <li>Custom Tool Selection</li>
+              <li>Volume Discounts</li>
+              <li>Dedicated Account Manager</li>
+              <li>Training & Onboarding</li>
+              <li>SLA Guarantees</li>
+            </ul>
+            <button class="btn btn-gold" style="width: 100%;">Schedule Call</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER CTA -->
+  <section class="footer-cta">
+    <div class="container">
+      <h2>Start Building</h2>
+      <p>Pick your tools and automate your future today</p>
+      <button class="btn"
+        style="background: var(--bg-white); color: var(--blue); font-size: 16px; padding: 18px 36px;">Get Started
+        Free</button>
+    </div>
+  </section>
+
+  <!-- SITE FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <h3>Ai-Auto</h3>
+          <p style="max-width: 300px;">
+            Building the future of work, one automation at a time. Set your own salary with AI-powered tools.
+          </p>
+        </div>
+        <div class="footer-links">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="tools.html">Tools</a></li>
+            <li><a href="#">Pricing</a></li>
+            <li><a href="#">Features</a></li>
+            <li><a href="#">Roadmap</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="about.html">About</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; 2024 Ai-Auto. All rights reserved. Built with AI.
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>

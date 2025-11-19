@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Ai-Auto – Set Your Own Salary with AI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Playfair+Display:wght@500;600;700;900&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      /* Neobrutalist Palette */
+      --bg-paper: #f2f0e9;
+      --bg-white: #ffffff;
+      --ink: #121212;
+      --blue: #2357ff;
+      --gold: #ffcc00;
+      --coral: #ff6b58;
+      --lavender: #dcd6f7;
+      --green: #00d084;
+      --pink: #ff4d9e;
+
+      /* Structural Variables */
+      --border-thick: 3px solid var(--ink);
+      --border-thin: 2px solid var(--ink);
+      --shadow-hard: 6px 6px 0px 0px var(--ink);
+      --shadow-hover: 10px 10px 0px 0px var(--ink);
+      --shadow-brutal: 8px 8px 0px 0px var(--ink);
+      --radius-sm: 4px;
+      --max-width: 1200px;
+
+      /* Spacing */
+      --space-xs: 8px;
+      --space-sm: 16px;
+      --space-md: 32px;
+      --space-lg: 64px;
+      --space-xl: 128px;
+    }
+
+    [data-theme="dark"] {
+      --bg-paper: #0a0a0a;
+      --bg-white: #1a1a1a;
+      --ink: #f0f0f0;
+      --blue: #4d7aff;
+      --gold: #ffd633;
+      --coral: #ff8c7a;
+      --lavender: #2a2a40;
+      --green: #00ff9f;
+      --pink: #ff6bb5;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-paper);
+      color: var(--ink);
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-family: 'Playfair Display', serif;
+      margin: 0;
+      font-weight: 900;
+      line-height: 1.1;
+    }
+
+    p {
+      margin: 0 0 var(--space-sm);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+      border: var(--border-thin);
+    }
+
+    /* UTILITIES */
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 var(--space-md);
+    }
+
+    .grid {
+      display: grid;
+      gap: var(--space-md);
+    }
+
+    .flex {
+      display: flex;
+      gap: var(--space-sm);
+    }
+
+    .border-box {
+      border: var(--border-thick);
+      background: var(--bg-white);
+      box-shadow: var(--shadow-hard);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .border-box:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 28px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border: var(--border-thick);
+      background: var(--blue);
+      color: #fff;
+      box-shadow: var(--shadow-hard);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 14px;
+    }
+
+    .btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
+      filter: brightness(1.1);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--ink);
+    }
+
+    .btn-gold {
+      background: var(--gold);
+      color: #000;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 12px;
+      border: var(--border-thin);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      background: var(--gold);
+      color: #000;
+    }
+
+    /* NAVIGATION */
+    .nav {
+      border-bottom: var(--border-thick);
+      background: var(--bg-white);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: var(--space-sm) 0;
+    }
+
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 900;
+      border: var(--border-thick);
+      padding: 4px 12px;
+      background: var(--ink);
+      color: var(--bg-paper);
+      box-shadow: 4px 4px 0 var(--blue);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: var(--space-md);
+    }
+
+    .nav-link {
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 14px;
+      position: relative;
+    }
+
+    .nav-link:hover::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--blue);
+    }
+
+    /* HERO SECTION */
+    .hero {
+      padding: var(--space-xl) 0;
+      border-bottom: var(--border-thick);
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 19px, var(--ink) 19px, var(--ink) 20px),
+        repeating-linear-gradient(90deg, transparent, transparent 19px, var(--ink) 19px, var(--ink) 20px);
+      background-size: 20px 20px;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--bg-paper);
+      opacity: 0.95;
+      z-index: 0;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: var(--space-lg);
+      align-items: center;
+    }
+
+    .hero-content h1 {
+      font-size: clamp(56px, 10vw, 120px);
+      margin-bottom: var(--space-md);
+      text-transform: uppercase;
+      letter-spacing: -0.03em;
+      line-height: 0.9;
+    }
+
+    .hero-content h1 .highlight {
+      display: inline-block;
+      background: var(--gold);
+      color: #000;
+      padding: 0 16px;
+      transform: rotate(-2deg);
+      border: var(--border-thick);
+      box-shadow: var(--shadow-brutal);
+    }
+
+    .hero-subtitle {
+      font-size: 22px;
+      max-width: 600px;
+      margin-bottom: var(--space-md);
+      font-weight: 600;
+      background: var(--bg-white);
+      border: var(--border-thin);
+      padding: var(--space-sm);
+      box-shadow: var(--shadow-hard);
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+      margin-bottom: var(--space-md);
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-sm);
+      margin-top: var(--space-lg);
+    }
+
+    .stat-box {
+      border: var(--border-thick);
+      background: var(--bg-white);
+      padding: var(--space-sm);
+      text-align: center;
+      box-shadow: var(--shadow-hard);
+    }
+
+    .stat-box:nth-child(1) {
+      background: var(--blue);
+      color: #fff;
+    }
+
+    .stat-box:nth-child(2) {
+      background: var(--coral);
+      color: #fff;
+    }
+
+    .stat-box:nth-child(3) {
+      background: var(--green);
+      color: #000;
+    }
+
+    .stat-val {
+      font-size: 36px;
+      font-weight: 900;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+
+    .hero-visual {
+      position: relative;
+    }
+
+    .hero-card-stack {
+      position: relative;
+      height: 500px;
+    }
+
+    .hero-floating-card {
+      position: absolute;
+      border: var(--border-thick);
+      background: var(--bg-white);
+      padding: var(--space-md);
+      box-shadow: var(--shadow-brutal);
+    }
+
+    .hero-floating-card:nth-child(1) {
+      top: 0;
+      left: 0;
+      width: 200px;
+      background: var(--pink);
+      color: #fff;
+      transform: rotate(-5deg);
+      z-index: 3;
+    }
+
+    .hero-floating-card:nth-child(2) {
+      top: 100px;
+      right: 0;
+      width: 220px;
+      background: var(--lavender);
+      transform: rotate(3deg);
+      z-index: 2;
+    }
+
+    .hero-floating-card:nth-child(3) {
+      bottom: 50px;
+      left: 40px;
+      width: 240px;
+      background: var(--gold);
+      transform: rotate(-3deg);
+      z-index: 1;
+    }
+
+    .hero-floating-card h4 {
+      font-size: 18px;
+      margin-bottom: 8px;
+      border-bottom: var(--border-thin);
+      padding-bottom: 8px;
+    }
+
+    /* WHO IT'S FOR */
+    .who-section {
+      padding: var(--space-xl) 0;
+      background: var(--bg-white);
+      border-bottom: var(--border-thick);
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: var(--space-lg);
+    }
+
+    .section-header h2 {
+      font-size: 64px;
+      margin-bottom: var(--space-sm);
+      text-transform: uppercase;
+    }
+
+    .section-header p {
+      font-size: 18px;
+      color: var(--ink);
+      opacity: 0.7;
+    }
+
+    .who-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-md);
+    }
+
+    .who-card {
+      border: var(--border-thick);
+      padding: var(--space-md);
+      background: var(--bg-paper);
+      transition: transform 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .who-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+    }
+
+    .who-card:nth-child(1)::before {
+      background: var(--blue);
+    }
+
+    .who-card:nth-child(2)::before {
+      background: var(--coral);
+    }
+
+    .who-card:nth-child(3)::before {
+      background: var(--gold);
+    }
+
+    .who-card:nth-child(4)::before {
+      background: var(--green);
+    }
+
+    .who-card:hover {
+      transform: translateY(-10px);
+    }
+
+    .who-icon {
+      width: 60px;
+      height: 60px;
+      border: var(--border-thin);
+      background: var(--ink);
+      color: var(--bg-paper);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      font-weight: 900;
+      margin-bottom: var(--space-sm);
+    }
+
+    .who-card h3 {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .who-card p {
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* CORE TOOLS */
+    .core-section {
+      padding: var(--space-xl) 0;
+      background: var(--bg-paper);
+      border-bottom: var(--border-thick);
+    }
+
+    .core-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-lg);
+    }
+
+    .core-card {
+      border: var(--border-thick);
+      background: var(--bg-white);
+      padding: var(--space-lg);
+      box-shadow: var(--shadow-brutal);
+      transition: all 0.2s;
+    }
+
+    .core-card:hover {
+      transform: translate(-4px, -4px);
+      box-shadow: 12px 12px 0 var(--ink);
+    }
+
+    .core-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-bottom: var(--space-md);
+      padding-bottom: var(--space-sm);
+      border-bottom: var(--border-thick);
+    }
+
+    .core-badge {
+      background: var(--blue);
+      color: #fff;
+      padding: 4px 12px;
+      border: var(--border-thin);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .core-card h3 {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+
+    .core-price {
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--blue);
+      font-family: 'Playfair Display', serif;
+    }
+
+    .core-card ul {
+      list-style: none;
+      padding: 0;
+      margin: var(--space-md) 0;
+    }
+
+    .core-card li {
+      padding: 8px 0;
+      border-bottom: 1px solid var(--ink);
+      font-weight: 600;
+    }
+
+    .core-card li::before {
+      content: '→';
+      margin-right: 8px;
+      color: var(--blue);
+      font-weight: 900;
+    }
+
+    /* DAILY TOOLS */
+    .daily-section {
+      padding: var(--space-xl) 0;
+      background: var(--bg-white);
+      border-bottom: var(--border-thick);
+    }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
+    }
+
+    .tool-card {
+      border: var(--border-thick);
+      padding: var(--space-md);
+      background: var(--bg-paper);
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .tool-card:hover {
+      transform: rotate(-2deg) scale(1.05);
+      z-index: 10;
+    }
+
+    .tool-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-sm);
+    }
+
+    .tool-card h4 {
+      font-size: 18px;
+    }
+
+    .tool-price {
+      font-weight: 900;
+      color: var(--blue);
+    }
+
+    .tool-tag {
+      display: inline-block;
+      background: var(--lavender);
+      border: var(--border-thin);
+      padding: 2px 8px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-top: 8px;
+    }
+
+    /* APP PREVIEW */
+    .app-section {
+      padding: var(--space-xl) 0;
+      background: var(--ink);
+      color: var(--bg-paper);
+      border-bottom: var(--border-thick);
+    }
+
+    .app-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-lg);
+      align-items: center;
+    }
+
+    .app-content h2 {
+      font-size: 72px;
+      margin-bottom: var(--space-md);
+      color: var(--gold);
+      text-shadow: 4px 4px 0 var(--bg-paper);
+    }
+
+    .app-content p {
+      font-size: 20px;
+      margin-bottom: var(--space-md);
+      line-height: 1.6;
+    }
+
+    .app-mockup {
+      border: var(--border-thick);
+      border-color: var(--bg-paper);
+      background: var(--bg-white);
+      padding: var(--space-lg);
+      box-shadow: 8px 8px 0 var(--gold);
+      min-height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      font-weight: 900;
+      color: var(--ink);
+    }
+
+    /* PRICING */
+    .pricing-section {
+      padding: var(--space-xl) 0;
+      background: var(--bg-paper);
+      border-bottom: var(--border-thick);
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-lg);
+    }
+
+    .pricing-card {
+      border: var(--border-thick);
+      background: var(--bg-white);
+      overflow: hidden;
+    }
+
+    .pricing-header {
+      background: var(--ink);
+      color: var(--bg-paper);
+      padding: var(--space-md);
+      text-align: center;
+      border-bottom: var(--border-thick);
+    }
+
+    .pricing-card.featured .pricing-header {
+      background: var(--blue);
+    }
+
+    .pricing-header h3 {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .pricing-amount {
+      font-size: 48px;
+      font-weight: 900;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .pricing-body {
+      padding: var(--space-md);
+    }
+
+    .pricing-features {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 var(--space-md);
+    }
+
+    .pricing-features li {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--ink);
+      font-weight: 600;
+    }
+
+    .pricing-features li::before {
+      content: '✓';
+      margin-right: 8px;
+      color: var(--green);
+      font-weight: 900;
+    }
+
+    /* FOOTER CTA */
+    .footer-cta {
+      background: var(--blue);
+      color: #fff;
+      padding: var(--space-xl) 0;
+      text-align: center;
+      border-bottom: var(--border-thick);
+    }
+
+    .footer-cta h2 {
+      font-size: 80px;
+      margin-bottom: var(--space-md);
+      text-shadow: 6px 6px 0 var(--ink);
+      text-transform: uppercase;
+    }
+
+    .footer-cta p {
+      font-size: 24px;
+      margin-bottom: var(--space-lg);
+      font-weight: 600;
+    }
+
+    /* SITE FOOTER */
+    .site-footer {
+      background: var(--ink);
+      color: var(--bg-paper);
+      padding: var(--space-lg) 0;
+    }
+
+    .footer-inner {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: var(--space-lg);
+    }
+
+    .footer-brand h3 {
+      font-size: 32px;
+      margin-bottom: var(--space-sm);
+    }
+
+    .footer-links h4 {
+      font-size: 16px;
+      margin-bottom: var(--space-sm);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .footer-links ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-links li {
+      margin-bottom: 8px;
+    }
+
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-bottom {
+      margin-top: var(--space-lg);
+      padding-top: var(--space-md);
+      border-top: 2px solid var(--bg-paper);
+      text-align: center;
+      font-weight: 700;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+
+      .hero-inner,
+      .app-inner,
+      .core-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .who-grid,
+      .tools-grid,
+      .pricing-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-content h1 {
+        font-size: 48px;
+      }
+
+      .section-header h2 {
+        font-size: 40px;
+      }
+
+      .hero-card-stack {
+        height: 300px;
+      }
+
+      .footer-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="logo">Ai-Auto</a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link"
+          style="text-decoration: underline; text-decoration-thickness: 3px; text-decoration-color: var(--gold);">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="tools.html" class="nav-link">Tools</a>
+      </div>
+      <button class="btn btn-gold">Get Started</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-content">
+        <div class="tag" style="margin-bottom: 24px;">AI-Powered Automation</div>
+        <h1>
+          Set Your<br>
+          <span class="highlight">Own Salary</span><br>
+          With AI
+        </h1>
+        <div class="hero-subtitle">
+          Stop trading time for money. Build automated systems that work 24/7 while you focus on what matters.
+        </div>
+        <div class="hero-cta">
+          <a href="tools.html" class="btn">Explore Tools</a>
+          <a href="about.html" class="btn btn-outline">Learn More</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-box">
+            <div class="stat-val">24/7</div>
+            <div class="stat-label">Automation</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-val">10x</div>
+            <div class="stat-label">Productivity</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-val">∞</div>
+            <div class="stat-label">Potential</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hero-card-stack">
+          <div class="hero-floating-card">
+            <h4>AI Writer</h4>
+            <p style="font-size: 13px; margin: 0;">Generate content at scale</p>
+          </div>
+          <div class="hero-floating-card">
+            <h4>Auto Scheduler</h4>
+            <p style="font-size: 13px; margin: 0;">Never miss a deadline</p>
+          </div>
+          <div class="hero-floating-card">
+            <h4>Smart Analytics</h4>
+            <p style="font-size: 13px; margin: 0;">Data-driven decisions</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHO IT'S FOR -->
+  <section class="who-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Who It's For</h2>
+        <p>Built for ambitious individuals ready to scale</p>
+      </div>
+      <div class="who-grid">
+        <div class="who-card">
+          <div class="who-icon">F</div>
+          <h3>Freelancers</h3>
+          <p>Multiply your output without multiplying your hours. Automate client work and scale your income.</p>
+        </div>
+        <div class="who-card">
+          <div class="who-icon">E</div>
+          <h3>Entrepreneurs</h3>
+          <p>Build businesses that run themselves. Focus on strategy while AI handles execution.</p>
+        </div>
+        <div class="who-card">
+          <div class="who-icon">C</div>
+          <h3>Creators</h3>
+          <p>Produce more content in less time. Let AI handle the repetitive work while you create.</p>
+        </div>
+        <div class="who-card">
+          <div class="who-icon">D</div>
+          <h3>Developers</h3>
+          <p>Ship faster with AI-powered tools. Automate testing, deployment, and documentation.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CORE TOOLS -->
+  <section class="core-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Core Tools</h2>
+        <p>Premium automation for serious builders</p>
+      </div>
+      <div class="core-grid">
+        <div class="core-card">
+          <div class="core-header">
+            <div>
+              <div class="core-badge">Premium</div>
+              <h3>AI Content Engine</h3>
+            </div>
+            <div class="core-price">$49/mo</div>
+          </div>
+          <p style="font-size: 16px; margin-bottom: 20px;">
+            Generate blog posts, social media content, and marketing copy at scale. Never run out of ideas.
+          </p>
+          <ul>
+            <li>Unlimited content generation</li>
+            <li>Multi-platform optimization</li>
+            <li>SEO-ready output</li>
+            <li>Brand voice training</li>
+            <li>Batch processing</li>
+          </ul>
+          <button class="btn" style="width: 100%;">Start Free Trial</button>
+        </div>
+
+        <div class="core-card">
+          <div class="core-header">
+            <div>
+              <div class="core-badge" style="background: var(--coral);">Pro</div>
+              <h3>Smart Scheduler</h3>
+            </div>
+            <div class="core-price">$39/mo</div>
+          </div>
+          <p style="font-size: 16px; margin-bottom: 20px;">
+            AI-powered scheduling that learns your patterns and optimizes your calendar automatically.
+          </p>
+          <ul>
+            <li>Intelligent time blocking</li>
+            <li>Priority management</li>
+            <li>Meeting optimization</li>
+            <li>Calendar sync</li>
+            <li>Focus time protection</li>
+          </ul>
+          <button class="btn btn-outline" style="width: 100%;">Learn More</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DAILY TOOLS -->
+  <section class="daily-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Daily Tools</h2>
+        <p>Everyday automation for maximum efficiency</p>
+      </div>
+      <div class="tools-grid">
+        <div class="tool-card">
+          <div class="tool-header">
+            <h4>Email Assistant</h4>
+            <span class="tool-price">$19/mo</span>
+          </div>
+          <p style="font-size: 14px;">Auto-respond, categorize, and prioritize your inbox.</p>
+          <div class="tool-tag">Email</div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-header">
+            <h4>Task Manager</h4>
+            <span class="tool-price">$15/mo</span>
+          </div>
+          <p style="font-size: 14px;">Smart task organization with AI prioritization.</p>
+          <div class="tool-tag">Productivity</div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-header">
+            <h4>Data Analyzer</h4>
+            <span class="tool-price">$29/mo</span>
+          </div>
+          <p style="font-size: 14px;">Turn raw data into actionable insights instantly.</p>
+          <div class="tool-tag">Analytics</div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-header">
+            <h4>Social Poster</h4>
+            <span class="tool-price">$25/mo</span>
+          </div>
+          <p style="font-size: 14px;">Schedule and optimize posts across all platforms.</p>
+          <div class="tool-tag">Social</div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-header">
+            <h4>Code Helper</h4>
+            <span class="tool-price">$35/mo</span>
+          </div>
+          <p style="font-size: 14px;">AI-powered code review and documentation.</p>
+          <div class="tool-tag">Development</div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-header">
+            <h4>Report Builder</h4>
+            <span class="tool-price">$22/mo</span>
+          </div>
+          <p style="font-size: 14px;">Generate professional reports in seconds.</p>
+          <div class="tool-tag">Business</div>
+        </div>
+      </div>
+      <div style="text-align: center; margin-top: 40px;">
+        <a href="tools.html" class="btn btn-gold">View All Tools →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- APP PREVIEW -->
+  <section class="app-section">
+    <div class="container app-inner">
+      <div class="app-content">
+        <h2>One Dashboard.<br>All Tools.</h2>
+        <p>
+          Access your entire automation suite from a single, powerful interface. Monitor performance, adjust settings,
+          and scale your operations effortlessly.
+        </p>
+        <button class="btn" style="background: var(--gold); color: #000;">See Demo</button>
+      </div>
+      <div class="app-mockup">
+        📊 Dashboard
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="pricing-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Simple Pricing</h2>
+        <p>Choose the plan that fits your ambition</p>
+      </div>
+      <div class="pricing-grid">
+        <div class="pricing-card">
+          <div class="pricing-header">
+            <h3>Starter</h3>
+            <div class="pricing-amount">$29</div>
+            <div style="font-size: 14px; opacity: 0.8;">per month</div>
+          </div>
+          <div class="pricing-body">
+            <ul class="pricing-features">
+              <li>3 Core Tools</li>
+              <li>5 Daily Tools</li>
+              <li>Basic Support</li>
+              <li>Monthly Reports</li>
+            </ul>
+            <button class="btn btn-outline" style="width: 100%;">Get Started</button>
+          </div>
+        </div>
+
+        <div class="pricing-card featured">
+          <div class="pricing-header">
+            <h3>Pro</h3>
+            <div class="pricing-amount">$79</div>
+            <div style="font-size: 14px; opacity: 0.8;">per month</div>
+          </div>
+          <div class="pricing-body">
+            <ul class="pricing-features">
+              <li>All Core Tools</li>
+              <li>All Daily Tools</li>
+              <li>Priority Support</li>
+              <li>Advanced Analytics</li>
+              <li>Custom Integrations</li>
+            </ul>
+            <button class="btn" style="width: 100%;">Start Free Trial</button>
+          </div>
+        </div>
+
+        <div class="pricing-card">
+          <div class="pricing-header">
+            <h3>Enterprise</h3>
+            <div class="pricing-amount">$199</div>
+            <div style="font-size: 14px; opacity: 0.8;">per month</div>
+          </div>
+          <div class="pricing-body">
+            <ul class="pricing-features">
+              <li>Everything in Pro</li>
+              <li>Dedicated Support</li>
+              <li>Custom Development</li>
+              <li>White Label Options</li>
+              <li>API Access</li>
+            </ul>
+            <button class="btn btn-outline" style="width: 100%;">Contact Sales</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER CTA -->
+  <section class="footer-cta">
+    <div class="container">
+      <h2>Ready to Automate?</h2>
+      <p>Join thousands building their automated future</p>
+      <button class="btn"
+        style="background: var(--bg-white); color: var(--blue); font-size: 16px; padding: 18px 36px;">Get Started
+        Free</button>
+    </div>
+  </section>
+
+  <!-- SITE FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <h3>Ai-Auto</h3>
+          <p style="max-width: 300px;">
+            Building the future of work, one automation at a time. Set your own salary with AI-powered tools.
+          </p>
+        </div>
+        <div class="footer-links">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="tools.html">Tools</a></li>
+            <li><a href="#">Pricing</a></li>
+            <li><a href="#">Features</a></li>
+            <li><a href="#">Roadmap</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="about.html">About</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; 2024 Ai-Auto. All rights reserved. Built with AI.
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>

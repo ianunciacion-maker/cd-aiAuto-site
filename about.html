@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>About – Ai-Auto</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Playfair Display for headings, Inter for body -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Playfair+Display:wght@500;600;700;900&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      /* Neobrutalist Palette */
+      --bg-paper: #f2f0e9;
+      --bg-white: #ffffff;
+      --ink: #121212;
+      --blue: #2357ff;
+      --gold: #ffcc00;
+      --coral: #ff6b58;
+      --lavender: #dcd6f7;
+
+      /* Structural Variables */
+      --border-thick: 3px solid var(--ink);
+      --border-thin: 2px solid var(--ink);
+      --shadow-hard: 6px 6px 0px 0px var(--ink);
+      --shadow-hover: 10px 10px 0px 0px var(--ink);
+      --radius-sm: 4px;
+      --max-width: 1200px;
+
+      /* Spacing */
+      --space-xs: 8px;
+      --space-sm: 16px;
+      --space-md: 32px;
+      --space-lg: 64px;
+      --space-xl: 128px;
+    }
+
+    [data-theme="dark"] {
+      --bg-paper: #0a0a0a;
+      --bg-white: #1a1a1a;
+      --ink: #f0f0f0;
+      --blue: #4d7aff;
+      --gold: #ffd633;
+      --coral: #ff8c7a;
+      --lavender: #2a2a40;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-paper);
+      color: var(--ink);
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-family: 'Playfair Display', serif;
+      margin: 0;
+      font-weight: 900;
+      line-height: 1.1;
+    }
+
+    p {
+      margin: 0 0 var(--space-sm);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+      border: var(--border-thin);
+    }
+
+    /* UTILITIES */
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 var(--space-md);
+    }
+
+    .grid {
+      display: grid;
+      gap: var(--space-md);
+    }
+
+    .flex {
+      display: flex;
+      gap: var(--space-sm);
+    }
+
+    .border-box {
+      border: var(--border-thick);
+      background: var(--bg-white);
+      box-shadow: var(--shadow-hard);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .border-box:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 24px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border: var(--border-thick);
+      background: var(--blue);
+      color: #fff;
+      box-shadow: var(--shadow-hard);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
+      filter: brightness(1.1);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--ink);
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 12px;
+      border: var(--border-thin);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      background: var(--gold);
+      color: #000;
+    }
+
+    /* NAVIGATION */
+    .nav {
+      border-bottom: var(--border-thick);
+      background: var(--bg-white);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: var(--space-sm) 0;
+    }
+
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 900;
+      border: var(--border-thick);
+      padding: 4px 12px;
+      background: var(--ink);
+      color: var(--bg-paper);
+      box-shadow: 4px 4px 0 var(--blue);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: var(--space-md);
+    }
+
+    .nav-link {
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 14px;
+      position: relative;
+    }
+
+    .nav-link:hover::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--blue);
+    }
+
+    /* HERO SECTION */
+    .hero {
+      padding: var(--space-lg) 0;
+      border-bottom: var(--border-thick);
+      background-image: radial-gradient(var(--ink) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    .hero-grid {
+      grid-template-columns: 2fr 1fr;
+      align-items: start;
+    }
+
+    .hero-content h1 {
+      font-size: clamp(48px, 8vw, 96px);
+      margin-bottom: var(--space-md);
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-content h1 span {
+      display: block;
+      background: var(--gold);
+      color: #000;
+      width: fit-content;
+      padding: 0 12px;
+      transform: rotate(-1deg);
+      border: var(--border-thin);
+    }
+
+    .hero-lead {
+      font-size: 20px;
+      max-width: 600px;
+      margin-bottom: var(--space-md);
+      font-weight: 500;
+      background: var(--bg-white);
+      border: var(--border-thin);
+      padding: var(--space-sm);
+      box-shadow: var(--shadow-hard);
+    }
+
+    .hero-card {
+      background: var(--bg-white);
+      padding: var(--space-md);
+      border: var(--border-thick);
+      box-shadow: var(--shadow-hard);
+      transform: rotate(2deg);
+    }
+
+    .hero-card h3 {
+      font-size: 24px;
+      margin-bottom: var(--space-sm);
+      border-bottom: var(--border-thin);
+      padding-bottom: var(--space-xs);
+    }
+
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      margin-top: var(--space-sm);
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-val {
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--blue);
+    }
+
+    .stat-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    /* MISSION SECTION (Rooted In) */
+    .mission {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .mission-left {
+      background: var(--ink);
+      color: var(--bg-paper);
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-bottom: var(--border-thick);
+    }
+
+    .mission-right {
+      background: var(--bg-white);
+      padding: var(--space-lg);
+      border-left: var(--border-thick);
+      border-bottom: var(--border-thick);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .mission-title {
+      font-size: 64px;
+      margin-bottom: var(--space-md);
+    }
+
+    .value-card {
+      border: var(--border-thin);
+      padding: var(--space-sm);
+      background: var(--lavender);
+      box-shadow: 4px 4px 0 var(--ink);
+    }
+
+    .value-card h4 {
+      font-size: 20px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    /* CLINT PROFILE */
+    .profile-section {
+      padding: var(--space-xl) 0;
+      background: var(--bg-paper);
+    }
+
+    .profile-container {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: var(--space-lg);
+      align-items: center;
+    }
+
+    .profile-img-box {
+      position: relative;
+    }
+
+    .profile-avatar {
+      width: 100%;
+      aspect-ratio: 1;
+      background: var(--blue);
+      border: var(--border-thick);
+      box-shadow: var(--shadow-hard);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 120px;
+      font-weight: 900;
+      color: #fff;
+    }
+
+    .profile-badge {
+      position: absolute;
+      bottom: -20px;
+      right: -20px;
+      background: var(--gold);
+      border: var(--border-thick);
+      padding: 12px 24px;
+      font-weight: 900;
+      text-transform: uppercase;
+      transform: rotate(-5deg);
+    }
+
+    .profile-content {
+      background: var(--bg-white);
+      border: var(--border-thick);
+      padding: var(--space-lg);
+      box-shadow: var(--shadow-hard);
+    }
+
+    .profile-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: var(--border-thick);
+      padding-bottom: var(--space-sm);
+      margin-bottom: var(--space-md);
+    }
+
+    .profile-name {
+      font-size: 48px;
+    }
+
+    .profile-role {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .skill-list {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+      margin-top: var(--space-md);
+    }
+
+    .skill-item {
+      border: var(--border-thin);
+      padding: 4px 12px;
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    /* JOURNEY (From Book to App) */
+    .journey {
+      padding: var(--space-lg) 0;
+      border-top: var(--border-thick);
+      border-bottom: var(--border-thick);
+      background: var(--bg-white);
+    }
+
+    .journey-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-md);
+      margin-top: var(--space-lg);
+    }
+
+    .step-card {
+      border: var(--border-thick);
+      padding: var(--space-md);
+      background: var(--bg-paper);
+      position: relative;
+      height: 100%;
+      transition: transform 0.2s;
+    }
+
+    .step-card:hover {
+      transform: translateY(-10px);
+      background: var(--gold);
+    }
+
+    .step-number {
+      font-size: 64px;
+      font-weight: 900;
+      opacity: 0.1;
+      position: absolute;
+      top: 0;
+      right: 10px;
+      line-height: 1;
+    }
+
+    .step-title {
+      font-size: 24px;
+      margin-bottom: var(--space-sm);
+      border-bottom: var(--border-thin);
+      padding-bottom: 8px;
+    }
+
+    /* TEAM SECTION */
+    .team {
+      padding: var(--space-lg) 0;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
+    }
+
+    .team-card {
+      border: var(--border-thick);
+      background: var(--bg-white);
+      padding: 0;
+      box-shadow: var(--shadow-hard);
+    }
+
+    .team-header {
+      background: var(--ink);
+      color: #fff;
+      padding: var(--space-sm);
+      text-align: center;
+      border-bottom: var(--border-thick);
+    }
+
+    .team-body {
+      padding: var(--space-md);
+    }
+
+    /* FOOTER */
+    .footer-cta {
+      background: var(--blue);
+      color: #fff;
+      padding: var(--space-xl) 0;
+      text-align: center;
+      border-top: var(--border-thick);
+    }
+
+    .footer-cta h2 {
+      font-size: 64px;
+      margin-bottom: var(--space-md);
+      text-shadow: 4px 4px 0 var(--ink);
+    }
+
+    .site-footer {
+      background: var(--ink);
+      color: var(--bg-paper);
+      padding: var(--space-md) 0;
+      border-top: var(--border-thick);
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+
+      .hero-grid,
+      .mission,
+      .profile-container,
+      .journey-grid,
+      .team-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .mission-right {
+        border-left: none;
+      }
+
+      .hero-content h1 {
+        font-size: 48px;
+      }
+
+      .profile-img-box {
+        width: 200px;
+        margin: 0 auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="logo">Ai-Auto</a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link"
+          style="text-decoration: underline; text-decoration-thickness: 3px; text-decoration-color: var(--gold);">About</a>
+        <a href="tools.html" class="nav-link">Tools</a>
+      </div>
+      <button class="btn">Login</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container grid hero-grid">
+      <div class="hero-content">
+        <div class="tag" style="margin-bottom: 16px;">Established 2024</div>
+        <h1>
+          Empowering<br>
+          <span>Your Work</span><br>
+          With AI
+        </h1>
+        <div class="hero-lead">
+          We believe in a future where you set your own salary, automate the mundane, and focus on what truly matters.
+        </div>
+        <div class="flex">
+          <a href="#mission" class="btn">Read Our Mission</a>
+          <a href="tools.html" class="btn btn-outline">View Tools</a>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <h3>Quick Facts</h3>
+        <div class="stat-row">
+          <div class="stat">
+            <div class="stat-val">HQ</div>
+            <div class="stat-label">Global</div>
+          </div>
+          <div class="stat">
+            <div class="stat-val">24/7</div>
+            <div class="stat-label">Automation</div>
+          </div>
+        </div>
+        <hr style="border: 0; border-top: var(--border-thin); margin: 20px 0;">
+        <p style="font-size: 14px; font-weight: 600;">
+          Ai-Auto is more than a platform; it's a movement towards autonomous productivity.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MISSION (Rooted In) -->
+  <section id="mission" class="mission">
+    <div class="mission-left">
+      <h2 class="mission-title">Rooted In<br><span style="color: var(--gold);">Efficiency</span></h2>
+      <p style="font-size: 20px; max-width: 400px;">
+        Our philosophy is simple: If it can be automated, it should be. We build tools that respect your time and
+        amplify your output.
+      </p>
+    </div>
+    <div class="mission-right">
+      <div class="value-card">
+        <h4>Transparency</h4>
+        <p>No hidden algorithms. We build in public and share our process.</p>
+      </div>
+      <div class="value-card" style="background: var(--coral);">
+        <h4>Speed</h4>
+        <p>Time is the only non-renewable resource. We help you save it.</p>
+      </div>
+      <div class="value-card" style="background: var(--blue); color: white;">
+        <h4>Empowerment</h4>
+        <p>Tools that don't just do the work, but teach you how to scale.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLINT PROFILE -->
+  <section class="profile-section">
+    <div class="container profile-container">
+      <div class="profile-img-box">
+        <div class="profile-avatar">C</div>
+        <div class="profile-badge">Founder</div>
+      </div>
+      <div class="profile-content">
+        <div class="profile-header">
+          <h2 class="profile-name">Clint</h2>
+          <span class="profile-role">Founder & Lead Dev</span>
+        </div>
+        <p style="font-size: 18px;">
+          "I started Ai-Auto to bridge the gap between manual grind and autonomous freedom. After years in traditional
+          development, I realized that the future belongs to those who can leverage AI to multiply their efforts."
+        </p>
+        <p>
+          From writing the initial concept in a notebook to deploying the full-stack application, my journey has been
+          about one thing: <strong>proving that one person can do the work of ten with the right tools.</strong>
+        </p>
+        <ul class="skill-list">
+          <li class="skill-item">Full Stack Dev</li>
+          <li class="skill-item">AI Enthusiast</li>
+          <li class="skill-item">Automation Expert</li>
+          <li class="skill-item">Builder</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- JOURNEY -->
+  <section class="journey">
+    <div class="container">
+      <h2 style="text-align: center; font-size: 48px;">From Book to App</h2>
+      <div class="journey-grid">
+        <div class="step-card">
+          <span class="step-number">01</span>
+          <h3 class="step-title">Concept</h3>
+          <p>The idea was born from a desire to escape the 9-5 loop. Sketches, notes, and a vision for autonomy.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-number">02</span>
+          <h3 class="step-title">Prototype</h3>
+          <p>Building the MVP. Rough edges, core functionality, and the first successful automation scripts.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-number">03</span>
+          <h3 class="step-title">Beta</h3>
+          <p>Testing with real users. Refining the UI, squashing bugs, and validating the "Set Your Own Salary" model.
+          </p>
+        </div>
+        <div class="step-card" style="background: var(--ink); color: var(--bg-paper);">
+          <span class="step-number" style="color: var(--bg-paper);">04</span>
+          <h3 class="step-title" style="border-color: var(--bg-paper);">Launch</h3>
+          <p>Going live. A full suite of tools available to the world. This is just the beginning.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section class="team">
+    <div class="container">
+      <h2 style="margin-bottom: var(--space-md);">Who's Building</h2>
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="team-header">
+            <h3>Engineering</h3>
+          </div>
+          <div class="team-body">
+            <p>The architects behind the code. Focused on stability, scalability, and speed.</p>
+            <div class="tag">Backend</div>
+            <div class="tag">AI Models</div>
+          </div>
+        </div>
+        <div class="team-card">
+          <div class="team-header" style="background: var(--blue);">
+            <h3>Design</h3>
+          </div>
+          <div class="team-body">
+            <p>Crafting the interface. Ensuring that power doesn't come at the cost of usability.</p>
+            <div class="tag">UI/UX</div>
+            <div class="tag">Visuals</div>
+          </div>
+        </div>
+        <div class="team-card">
+          <div class="team-header" style="background: var(--coral);">
+            <h3>Support</h3>
+          </div>
+          <div class="team-body">
+            <p>Here to help you succeed. Guides, tutorials, and direct assistance.</p>
+            <div class="tag">Docs</div>
+            <div class="tag">Community</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER CTA -->
+  <section class="footer-cta">
+    <div class="container">
+      <h2>Ready to Automate?</h2>
+      <p style="font-size: 20px; margin-bottom: 32px;">Join the revolution and start building your future today.</p>
+      <a href="tools.html" class="btn" style="background: var(--bg-white); color: var(--blue);">Get Started</a>
+    </div>
+  </section>
+
+  <!-- SITE FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div style="font-weight: 700;">&copy; 2024 Ai-Auto. All rights reserved.</div>
+      <div class="flex">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Twitter</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
