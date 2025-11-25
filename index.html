@@ -478,7 +478,8 @@
 
     .core-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: 1fr;
+      justify-items: center;
       gap: var(--space-lg);
     }
 
@@ -862,22 +863,42 @@
         </div>
       </div>
 
-      <div class="hero-visual">
-        <div class="hero-card-stack">
-          <div class="hero-floating-card">
-            <h4>AI Writer</h4>
-            <p style="font-size: 13px; margin: 0;">Generate content at scale</p>
-          </div>
-          <div class="hero-floating-card">
-            <h4>Auto Scheduler</h4>
-            <p style="font-size: 13px; margin: 0;">Never miss a deadline</p>
-          </div>
-          <div class="hero-floating-card">
-            <h4>Smart Analytics</h4>
-            <p style="font-size: 13px; margin: 0;">Data-driven decisions</p>
-          </div>
-        </div>
+    <style>
+    @keyframes float {
+      0% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+      100% {
+        transform: translateY(0px);
+      }
+    }
+    .hero-floating-card {
+      animation: float 6s ease-in-out infinite;
+    }
+    </style>
+  <div class="hero-visual">
+    <div class="hero-card-stack">
+      <div class="hero-floating-card" style="top: 0; left: 20px; animation-delay: 0s;">
+        <h4>Blog Post Generation</h4>
+        <p style="font-size: 13px; margin: 0;">AI-powered content for your blog.</p>
       </div>
+      <div class="hero-floating-card" style="top: 80px; right: 0; animation-delay: 1.5s;">
+        <h4>Social Media Captions</h4>
+        <p style="font-size: 13px; margin: 0;">Engaging captions for social media.</p>
+      </div>
+      <div class="hero-floating-card" style="bottom: 120px; left: 0; animation-delay: 3s;">
+        <h4>Email Campaigns</h4>
+        <p style="font-size: 13px; margin: 0;">Draft effective marketing emails.</p>
+      </div>
+      <div class="hero-floating-card" style="bottom: 40px; right: 20px; animation-delay: 4.5s;">
+        <h4>Product Descriptions</h4>
+        <p style="font-size: 13px; margin: 0;">Compelling copy for your products.</p>
+      </div>
+    </div>
+  </div>
     </div>
   </section>
 
@@ -925,111 +946,48 @@
           <div class="core-header">
             <div>
               <div class="core-badge">Premium</div>
-              <h3>AI Content Engine</h3>
+              <h3>AI Content Creation Suite</h3>
             </div>
-            <div class="core-price">$49/mo</div>
+            <div class="core-price">$49.99</div>
           </div>
           <p style="font-size: 16px; margin-bottom: 20px;">
-            Generate blog posts, social media content, and marketing copy at scale. Never run out of ideas.
+            Get all of our powerful AI content generation tools for a single price.
           </p>
           <ul>
-            <li>Unlimited content generation</li>
-            <li>Multi-platform optimization</li>
-            <li>SEO-ready output</li>
-            <li>Brand voice training</li>
-            <li>Batch processing</li>
+            <li>Blog post generation - AI creates written content for company blogs</li>
+            <li>Social media caption writing - Automated creation of posts for social platforms</li>
+            <li>Email campaign creation - AI drafts marketing emails and newsletters</li>
+            <li>Product description writing - Generates copy for product listings and catalogs</li>
           </ul>
-          <button class="btn" style="width: 100%;">Start Free Trial</button>
-        </div>
-
-        <div class="core-card">
-          <div class="core-header">
-            <div>
-              <div class="core-badge" style="background: var(--coral);">Pro</div>
-              <h3>Smart Scheduler</h3>
-            </div>
-            <div class="core-price">$39/mo</div>
-          </div>
-          <p style="font-size: 16px; margin-bottom: 20px;">
-            AI-powered scheduling that learns your patterns and optimizes your calendar automatically.
-          </p>
-          <ul>
-            <li>Intelligent time blocking</li>
-            <li>Priority management</li>
-            <li>Meeting optimization</li>
-            <li>Calendar sync</li>
-            <li>Focus time protection</li>
-          </ul>
-          <button class="btn btn-outline" style="width: 100%;">Learn More</button>
+          <button class="btn" style="width: 100%;">Get Started Now</button>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- DAILY TOOLS -->
+  <!-- HOW IT WORKS -->
   <section class="daily-section">
     <div class="container">
       <div class="section-header">
-        <h2>Daily Tools</h2>
-        <p>Everyday automation for maximum efficiency</p>
+        <h2>How It Works</h2>
+        <p>A streamlined process to get you creating in minutes.</p>
       </div>
-      <div class="tools-grid">
-        <div class="tool-card">
-          <div class="tool-header">
-            <h4>Email Assistant</h4>
-            <span class="tool-price">$19/mo</span>
-          </div>
-          <p style="font-size: 14px;">Auto-respond, categorize, and prioritize your inbox.</p>
-          <div class="tool-tag">Email</div>
+      <div class="who-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="who-card">
+          <div class="who-icon">1</div>
+          <h3>Sign Up</h3>
+          <p>Create your account and get instant access to the entire suite.</p>
         </div>
-
-        <div class="tool-card">
-          <div class="tool-header">
-            <h4>Task Manager</h4>
-            <span class="tool-price">$15/mo</span>
-          </div>
-          <p style="font-size: 14px;">Smart task organization with AI prioritization.</p>
-          <div class="tool-tag">Productivity</div>
+        <div class="who-card">
+          <div class="who-icon">2</div>
+          <h3>Set Your Voice</h3>
+          <p>Provide a few samples, and our AI learns your unique brand voice and style.</p>
         </div>
-
-        <div class="tool-card">
-          <div class="tool-header">
-            <h4>Data Analyzer</h4>
-            <span class="tool-price">$29/mo</span>
-          </div>
-          <p style="font-size: 14px;">Turn raw data into actionable insights instantly.</p>
-          <div class="tool-tag">Analytics</div>
+        <div class="who-card">
+          <div class="who-icon">3</div>
+          <h3>Generate</h3>
+          <p>Choose a tool, enter a prompt, and generate high-quality content in seconds.</p>
         </div>
-
-        <div class="tool-card">
-          <div class="tool-header">
-            <h4>Social Poster</h4>
-            <span class="tool-price">$25/mo</span>
-          </div>
-          <p style="font-size: 14px;">Schedule and optimize posts across all platforms.</p>
-          <div class="tool-tag">Social</div>
-        </div>
-
-        <div class="tool-card">
-          <div class="tool-header">
-            <h4>Code Helper</h4>
-            <span class="tool-price">$35/mo</span>
-          </div>
-          <p style="font-size: 14px;">AI-powered code review and documentation.</p>
-          <div class="tool-tag">Development</div>
-        </div>
-
-        <div class="tool-card">
-          <div class="tool-header">
-            <h4>Report Builder</h4>
-            <span class="tool-price">$22/mo</span>
-          </div>
-          <p style="font-size: 14px;">Generate professional reports in seconds.</p>
-          <div class="tool-tag">Business</div>
-        </div>
-      </div>
-      <div style="text-align: center; margin-top: 40px;">
-        <a href="tools.html" class="btn btn-gold">View All Tools →</a>
       </div>
     </div>
   </section>
@@ -1046,7 +1004,7 @@
         <button class="btn" style="background: var(--gold); color: #000;">See Demo</button>
       </div>
       <div class="app-mockup">
-        📊 Dashboard
+        📝 Content Suite
       </div>
     </div>
   </section>
@@ -1055,60 +1013,26 @@
   <section class="pricing-section">
     <div class="container">
       <div class="section-header">
-        <h2>Simple Pricing</h2>
-        <p>Choose the plan that fits your ambition</p>
+        <h2>Simple, All-Inclusive Pricing</h2>
+        <p>One plan. All features. No hidden fees.</p>
       </div>
-      <div class="pricing-grid">
-        <div class="pricing-card">
-          <div class="pricing-header">
-            <h3>Starter</h3>
-            <div class="pricing-amount">$29</div>
-            <div style="font-size: 14px; opacity: 0.8;">per month</div>
-          </div>
-          <div class="pricing-body">
-            <ul class="pricing-features">
-              <li>3 Core Tools</li>
-              <li>5 Daily Tools</li>
-              <li>Basic Support</li>
-              <li>Monthly Reports</li>
-            </ul>
-            <button class="btn btn-outline" style="width: 100%;">Get Started</button>
-          </div>
-        </div>
-
+      <div class="pricing-grid" style="grid-template-columns: 1fr; max-width: 600px; margin: 0 auto;">
         <div class="pricing-card featured">
           <div class="pricing-header">
-            <h3>Pro</h3>
-            <div class="pricing-amount">$79</div>
-            <div style="font-size: 14px; opacity: 0.8;">per month</div>
+            <h3>AI Content Suite</h3>
+            <div class="pricing-amount">$49.99</div>
+            <div style="font-size: 14px; opacity: 0.8;">one-time payment</div>
           </div>
           <div class="pricing-body">
+            <p style="text-align: center; font-weight: 600; margin-bottom: 24px;">Everything you need to automate your content creation.</p>
             <ul class="pricing-features">
-              <li>All Core Tools</li>
-              <li>All Daily Tools</li>
-              <li>Priority Support</li>
-              <li>Advanced Analytics</li>
-              <li>Custom Integrations</li>
+              <li>Blog Post Generation</li>
+              <li>Social Media Captions</li>
+              <li>Email Campaign Creation</li>
+              <li>Product Descriptions</li>
+              <li>Full Access to All Tools</li>
             </ul>
-            <button class="btn" style="width: 100%;">Start Free Trial</button>
-          </div>
-        </div>
-
-        <div class="pricing-card">
-          <div class="pricing-header">
-            <h3>Enterprise</h3>
-            <div class="pricing-amount">$199</div>
-            <div style="font-size: 14px; opacity: 0.8;">per month</div>
-          </div>
-          <div class="pricing-body">
-            <ul class="pricing-features">
-              <li>Everything in Pro</li>
-              <li>Dedicated Support</li>
-              <li>Custom Development</li>
-              <li>White Label Options</li>
-              <li>API Access</li>
-            </ul>
-            <button class="btn btn-outline" style="width: 100%;">Contact Sales</button>
+            <button class="btn" style="width: 100%;">Get Instant Access</button>
           </div>
         </div>
       </div>
