@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Login – Ai-Auto</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Playfair+Display:wght@500;600;700;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/components/blog.css">
+  <style>
+    .admin-login-container {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-paper);
+      padding: var(--space-md);
+    }
+
+    .admin-login-card {
+      background: var(--bg-white);
+      border: var(--border-thick);
+      padding: var(--space-xl);
+      box-shadow: var(--shadow-brutal);
+      width: 100%;
+      max-width: 400px;
+      transform: rotate(-1deg);
+    }
+
+    .admin-login-header {
+      text-align: center;
+      margin-bottom: var(--space-lg);
+    }
+
+    .admin-login-header h1 {
+      font-size: 32px;
+      margin-bottom: var(--space-sm);
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+    }
+
+    .admin-login-header p {
+      opacity: 0.7;
+      font-size: 14px;
+    }
+
+    .form-group {
+      margin-bottom: var(--space-md);
+    }
+
+    .form-label {
+      display: block;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-xs);
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: var(--border-thick);
+      background: var(--bg-paper);
+      font-size: 16px;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.2s;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--blue);
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hard);
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 16px;
+      font-size: 16px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border: var(--border-thick);
+      background: var(--blue);
+      color: #fff;
+      box-shadow: var(--shadow-hard);
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: var(--space-md);
+    }
+
+    .login-btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
+      filter: brightness(1.1);
+    }
+
+    .login-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .back-link {
+      display: inline-block;
+      text-align: center;
+      width: 100%;
+      color: var(--ink);
+      opacity: 0.7;
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover {
+      color: var(--blue);
+    }
+
+    .error-message {
+      background: var(--coral);
+      color: #fff;
+      padding: var(--space-sm);
+      border: var(--border-thick);
+      margin-bottom: var(--space-md);
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .success-message {
+      background: var(--green);
+      color: #fff;
+      padding: var(--space-sm);
+      border: var(--border-thick);
+      margin-bottom: var(--space-md);
+      font-weight: 600;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="admin-login-container">
+    <div class="admin-login-card">
+      <div class="admin-login-header">
+        <h1>Admin Login</h1>
+        <p>Access the blog management dashboard</p>
+      </div>
+
+      <form id="loginForm">
+        <div id="messageContainer"></div>
+
+        <div class="form-group">
+          <label for="email" class="form-label">Email Address</label>
+          <input 
+            type="email" 
+            id="email" 
+            name="email" 
+            class="form-input" 
+            placeholder="admin@example.com"
+            required
+            autocomplete="email"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="password" class="form-label">Password</label>
+          <input 
+            type="password" 
+            id="password" 
+            name="password" 
+            class="form-input" 
+            placeholder="Enter your password"
+            required
+            autocomplete="current-password"
+          >
+        </div>
+
+        <button type="submit" class="login-btn" id="loginBtn">
+          Sign In
+        </button>
+
+        <a href="../blog.html" class="back-link">← Back to Blog</a>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../supabase.js"></script>
+  <script>
+    // Admin login functionality
+    class AdminLogin {
+      constructor() {
+        this.form = document.getElementById('loginForm');
+        this.emailInput = document.getElementById('email');
+        this.passwordInput = document.getElementById('password');
+        this.loginBtn = document.getElementById('loginBtn');
+        this.messageContainer = document.getElementById('messageContainer');
+        this.init();
+      }
+
+      init() {
+        // Check if already logged in
+        if (authManager.isAuthenticated()) {
+          window.location.href = 'dashboard.html';
+          return;
+        }
+
+        this.form.addEventListener('submit', (e) => this.handleLogin(e));
+        
+        // Add input validation
+        this.emailInput.addEventListener('input', () => this.clearMessages());
+        this.passwordInput.addEventListener('input', () => this.clearMessages());
+      }
+
+      async handleLogin(e) {
+        e.preventDefault();
+        
+        const email = this.emailInput.value.trim();
+        const password = this.passwordInput.value;
+
+        if (!email || !password) {
+          this.showError('Please fill in all fields');
+          return;
+        }
+
+        this.setLoading(true);
+        
+        try {
+          const { data, error } = await authManager.login(email, password);
+          
+          if (error) {
+            this.showError('Invalid email or password');
+            return;
+          }
+
+          if (data?.user) {
+            this.showSuccess('Login successful! Redirecting...');
+            setTimeout(() => {
+              window.location.href = 'dashboard.html';
+            }, 1500);
+          }
+        } catch (error) {
+          this.showError('Login failed. Please try again.');
+        } finally {
+          this.setLoading(false);
+        }
+      }
+
+      setLoading(isLoading) {
+        this.loginBtn.disabled = isLoading;
+        this.loginBtn.textContent = isLoading ? 'Signing In...' : 'Sign In';
+      }
+
+      showError(message) {
+        this.messageContainer.innerHTML = `<div class="error-message">${message}</div>`;
+      }
+
+      showSuccess(message) {
+        this.messageContainer.innerHTML = `<div class="success-message">${message}</div>`;
+      }
+
+      clearMessages() {
+        this.messageContainer.innerHTML = '';
+      }
+    }
+
+    // Initialize admin login when DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+      new AdminLogin();
+    });
+  </script>
+
+</body>
+
+</html>

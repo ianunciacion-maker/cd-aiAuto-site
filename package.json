@@ -1,0 +1,69 @@
+{
+  "name": "ai-auto",
+  "version": "1.0.0",
+  "description": "Ai-Auto – Set Your Own Salary with AI. A modern web platform for automating work and scaling productivity.",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve . -p 8000",
+    "dev": "npx live-server --port=8000 --open=/index.html",
+    "build": "npm run build-css && npm run build-js",
+    "build-css": "npm run css-minify",
+    "build-js": "npm run js-minify",
+    "css-minify": "npx clean-css-cli -o dist/css/main.min.css css/*.css",
+    "js-minify": "npx terser js/*.js -o dist/js/main.min.js",
+    "watch": "npm run watch-css & npm run watch-js",
+    "watch-css": "npx onchange 'css/**/*.css' -- npm run build-css",
+    "watch-js": "npx onchange 'js/**/*.js' -- npm run build-js",
+    "lint-css": "npx stylelint 'css/**/*.css'",
+    "lint-js": "npx eslint 'js/**/*.js'",
+    "validate-html": "npx html-validate *.html",
+    "test": "npm run lint-css && npm run lint-js && npm run validate-html",
+    "deploy": "npm run build && npm run deploy-to-staging",
+    "deploy-to-staging": "echo 'Deploy to staging server'",
+    "deploy-to-production": "echo 'Deploy to production server'"
+  },
+  "keywords": [
+    "ai",
+    "automation",
+    "productivity",
+    "content-creation",
+    "freelance",
+    "entrepreneur",
+    "tools",
+    "saas"
+  ],
+  "author": {
+    "name": "Clint Day",
+    "email": "clint@ai-auto.com",
+    "url": "https://ai-auto.com"
+  },
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ai-auto/ai-auto.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ai-auto/ai-auto/issues"
+  },
+  "homepage": "https://ai-auto.com",
+  "devDependencies": {
+    "clean-css-cli": "^5.6.2",
+    "eslint": "^8.52.0",
+    "html-validate": "^8.15.0",
+    "live-server": "^1.2.2",
+    "onchange": "^7.1.0",
+    "serve": "^14.2.1",
+    "stylelint": "^15.11.0",
+    "terser": "^5.24.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie <= 11"
+  ],
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  }
+}

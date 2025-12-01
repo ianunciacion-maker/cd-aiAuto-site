@@ -1,0 +1,57 @@
+/* CSS Custom Properties (Variables) */
+:root {
+  /* Neobrutalist Palette */
+  --bg-paper: #f2f0e9;
+  --bg-white: #ffffff;
+  --ink: #121212;
+  --blue: #2357ff;
+  --gold: #ffcc00;
+  --coral: #ff6b58;
+  --lavender: #dcd6f7;
+  --green: #00d084;
+  --pink: #ff4d9e;
+  --purple: #8b5cf6;
+
+  /* Structural Variables */
+  --border-thick: 3px solid var(--ink);
+  --border-thin: 2px solid var(--ink);
+  --shadow-hard: 6px 6px 0px 0px var(--ink);
+  --shadow-hover: 10px 10px 0px 0px var(--ink);
+  --shadow-brutal: 8px 8px 0px 0px var(--ink);
+  --radius-sm: 4px;
+  --max-width: 1200px;
+
+  /* Spacing */
+  --space-xs: 8px;
+  --space-sm: 16px;
+  --space-md: 32px;
+  --space-lg: 64px;
+  --space-xl: 128px;
+
+  /* Typography */
+  --font-primary: 'Inter', sans-serif;
+  --font-heading: 'Playfair Display', serif;
+  
+  /* Z-index */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+  --bg-paper: #0a0a0a;
+  --bg-white: #1a1a1a;
+  --ink: #f0f0f0;
+  --blue: #4d7aff;
+  --gold: #ffd633;
+  --coral: #ff8c7a;
+  --lavender: #2a2a40;
+  --green: #00ff9f;
+  --pink: #ff6bb5;
+  --purple: #a78bfa;
+}

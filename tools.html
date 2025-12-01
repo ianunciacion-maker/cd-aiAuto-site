@@ -192,6 +192,94 @@
       background: var(--blue);
     }
 
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      background: none;
+      border: var(--border-thick);
+      padding: 10px;
+      cursor: pointer;
+      background: var(--bg-white);
+      box-shadow: var(--shadow-hard);
+      transition: all 0.2s;
+    }
+
+    .hamburger:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .hamburger span {
+      width: 24px;
+      height: 3px;
+      background: var(--ink);
+      transition: all 0.3s;
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(8px, 8px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -7px);
+    }
+
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: var(--bg-white);
+      border-bottom: var(--border-thick);
+      z-index: 99;
+      display: none;
+      flex-direction: column;
+      padding: var(--space-lg) var(--space-md);
+      gap: var(--space-md);
+    }
+
+    .mobile-menu.active {
+      display: flex;
+    }
+
+    .mobile-menu-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: var(--space-md);
+      border-bottom: var(--border-thick);
+    }
+
+    .mobile-menu-links {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    .mobile-menu-link {
+      padding: var(--space-sm);
+      border: var(--border-thick);
+      background: var(--bg-paper);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 18px;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .mobile-menu-link:hover {
+      background: var(--blue);
+      color: #fff;
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hard);
+    }
+
     /* HERO */
     .hero {
       padding: var(--space-xl) 0;
@@ -740,6 +828,14 @@
         display: none;
       }
 
+      .hamburger {
+        display: flex;
+      }
+
+      .nav-inner > .btn {
+        display: none;
+      }
+
       .plan-card.featured {
         transform: scale(1);
       }
@@ -758,22 +854,45 @@
         <a href="about.html" class="nav-link">About</a>
         <a href="tools.html" class="nav-link"
           style="text-decoration: underline; text-decoration-thickness: 3px; text-decoration-color: var(--gold);">Tools</a>
+        <a href="blog.html" class="nav-link">Blog</a>
       </div>
       <button class="btn btn-gold">Get Started</button>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
   </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-header">
+      <button class="hamburger active" id="closeMenu" aria-label="Close menu" style="margin-left: auto;">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div class="mobile-menu-links">
+      <a href="index.html" class="mobile-menu-link">Home</a>
+      <a href="about.html" class="mobile-menu-link">About</a>
+      <a href="tools.html" class="mobile-menu-link">Tools</a>
+      <a href="blog.html" class="mobile-menu-link">Blog</a>
+      <button class="btn btn-gold" style="width: 100%; margin-top: 16px;">Get Started</button>
+    </div>
+  </div>
 
   <!-- HERO -->
   <section class="hero">
     <div class="container">
-      <div class="tag" style="margin-bottom: 24px; background: var(--blue); color: #fff;">Full Catalog</div>
+      <div class="tag" style="margin-bottom: 24px; background: var(--blue); color: #fff;">Tools</div>
       <h1>
-        Your <span class="highlight">Arsenal</span><br>
-        Of AI Tools
+        Your <span class="highlight">Automation</span><br>
+        Toolkit
       </h1>
       <p class="hero-subtitle">
-        Everything you need to automate your work, scale your output, and set your own salary. Choose the tools that fit
-        your workflow.
+        Discover powerful AI tools to streamline your workflow, boost productivity, and scale your operations with intelligent automation.
       </p>
     </div>
   </section>
@@ -877,6 +996,7 @@
           <h4>Product</h4>
           <ul>
             <li><a href="tools.html">Tools</a></li>
+            <li><a href="blog.html">Blog</a></li>
             <li><a href="#">Pricing</a></li>
             <li><a href="#">Features</a></li>
             <li><a href="#">Roadmap</a></li>
@@ -897,6 +1017,32 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    // Mobile menu toggle
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const closeMenu = document.getElementById('closeMenu');
+
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+
+    closeMenu.addEventListener('click', () => {
+      mobileMenu.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+
+    // Close menu when clicking on a link
+    const mobileLinks = document.querySelectorAll('.mobile-menu-link');
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+    });
+  </script>
 
 </body>
 

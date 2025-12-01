@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Dashboard – Ai-Auto</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Playfair+Display:wght@500;600;700;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/components/blog.css">
+  <style>
+    .admin-dashboard {
+      padding: var(--space-lg) 0;
+      background: var(--bg-paper);
+      min-height: 100vh;
+    }
+
+    .admin-header {
+      background: var(--bg-white);
+      border-bottom: var(--border-thick);
+      padding: var(--space-md) 0;
+      margin-bottom: var(--space-lg);
+    }
+
+    .admin-header-content {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 var(--space-md);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .admin-title {
+      font-size: 32px;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+    }
+
+    .admin-actions {
+      display: flex;
+      gap: var(--space-sm);
+    }
+
+    .dashboard-container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 var(--space-md);
+    }
+
+    .dashboard-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-md);
+      margin-bottom: var(--space-lg);
+    }
+
+    .stat-card {
+      background: var(--bg-white);
+      border: var(--border-thick);
+      padding: var(--space-md);
+      box-shadow: var(--shadow-hard);
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .stat-card:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .stat-number {
+      font-size: 48px;
+      font-weight: 900;
+      font-family: 'Playfair Display', serif;
+      margin-bottom: var(--space-xs);
+    }
+
+    .stat-label {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      opacity: 0.7;
+    }
+
+    .posts-section {
+      background: var(--bg-white);
+      border: var(--border-thick);
+      box-shadow: var(--shadow-hard);
+    }
+
+    .posts-header {
+      padding: var(--space-md);
+      border-bottom: var(--border-thick);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .posts-title {
+      font-size: 24px;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    .create-btn {
+      padding: 8px 16px;
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border: var(--border-thick);
+      background: var(--gold);
+      color: #000;
+      box-shadow: var(--shadow-hard);
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+
+    .create-btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
+      filter: brightness(1.1);
+    }
+
+    .posts-list {
+      max-height: 600px;
+      overflow-y: auto;
+    }
+
+    .post-item {
+      padding: var(--space-md);
+      border-bottom: var(--border-thin);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.2s;
+    }
+
+    .post-item:hover {
+      background: var(--bg-paper);
+    }
+
+    .post-item:last-child {
+      border-bottom: none;
+    }
+
+    .post-info {
+      flex: 1;
+    }
+
+    .post-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: var(--space-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .post-meta {
+      font-size: 12px;
+      opacity: 0.7;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .post-status {
+      padding: 4px 8px;
+      border: var(--border-thin);
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .post-status.published {
+      background: var(--green);
+      color: #000;
+    }
+
+    .post-status.draft {
+      background: var(--gold);
+      color: #000;
+    }
+
+    .post-actions {
+      display: flex;
+      gap: var(--space-xs);
+    }
+
+    .action-btn {
+      padding: 6px 12px;
+      border: var(--border-thin);
+      background: var(--bg-paper);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+
+    .action-btn:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 2px 2px 0 var(--ink);
+    }
+
+    .action-btn.edit {
+      color: var(--blue);
+    }
+
+    .action-btn.delete {
+      color: var(--coral);
+    }
+
+    .loading {
+      text-align: center;
+      padding: var(--space-xl) 0;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .error {
+      text-align: center;
+      padding: var(--space-xl) 0;
+      color: var(--coral);
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .empty {
+      text-align: center;
+      padding: var(--space-xl) 0;
+      opacity: 0.7;
+      font-size: 18px;
+    }
+
+    @media (max-width: 768px) {
+      .admin-header-content {
+        flex-direction: column;
+        gap: var(--space-md);
+        text-align: center;
+      }
+
+      .dashboard-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .posts-header {
+        flex-direction: column;
+        gap: var(--space-md);
+        text-align: center;
+      }
+
+      .post-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-sm);
+      }
+
+      .post-actions {
+        width: 100%;
+        justify-content: flex-end;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ADMIN HEADER -->
+  <header class="admin-header">
+    <div class="admin-header-content">
+      <h1 class="admin-title">Admin Dashboard</h1>
+      <div class="admin-actions">
+        <a href="create-post.html" class="create-btn">+ New Post</a>
+        <button class="btn btn-outline" id="logoutBtn">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- DASHBOARD CONTENT -->
+  <main class="admin-dashboard">
+    <div class="dashboard-container">
+      <!-- Dashboard Stats -->
+      <div class="dashboard-stats" id="dashboardStats">
+        <div class="loading">Loading dashboard...</div>
+      </div>
+
+      <!-- Blog Posts Section -->
+      <section class="posts-section">
+        <div class="posts-header">
+          <h2 class="posts-title">Blog Posts</h2>
+          <a href="create-post.html" class="create-btn">+ New Post</a>
+        </div>
+        <div class="posts-list" id="postsList">
+          <div class="loading">Loading posts...</div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="../supabase.js"></script>
+  <script>
+    // Admin dashboard functionality
+    class AdminDashboard {
+      constructor() {
+        this.statsContainer = document.getElementById('dashboardStats');
+        this.postsList = document.getElementById('postsList');
+        this.logoutBtn = document.getElementById('logoutBtn');
+        this.init();
+      }
+
+      async init() {
+        // Protect admin route
+        if (!authManager.protectAdminRoute()) {
+          return;
+        }
+
+        this.logoutBtn.addEventListener('click', () => authManager.logout());
+        
+        try {
+          await this.loadDashboard();
+        } catch (error) {
+          this.showError('Failed to load dashboard. Please refresh the page.');
+        }
+      }
+
+      async loadDashboard() {
+        // Load posts for admin
+        const { data: posts, error } = await blogManager.getAllPostsAdmin();
+        
+        if (error) {
+          throw error;
+        }
+
+        this.renderStats(posts);
+        this.renderPosts(posts);
+      }
+
+      renderStats(posts) {
+        const publishedCount = posts.filter(post => post.status === 'published').length;
+        const draftCount = posts.filter(post => post.status === 'draft').length;
+        const totalCount = posts.length;
+
+        const statsHTML = `
+          <div class="stat-card">
+            <div class="stat-number">${totalCount}</div>
+            <div class="stat-label">Total Posts</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">${publishedCount}</div>
+            <div class="stat-label">Published</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">${draftCount}</div>
+            <div class="stat-label">Drafts</div>
+          </div>
+        `;
+
+        this.statsContainer.innerHTML = statsHTML;
+      }
+
+      renderPosts(posts) {
+        if (!posts || posts.length === 0) {
+          this.postsList.innerHTML = `
+            <div class="empty">
+              <p>No blog posts yet. Create your first post!</p>
+            </div>
+          `;
+          return;
+        }
+
+        const postsHTML = posts.map(post => this.createPostItem(post)).join('');
+        this.postsList.innerHTML = postsHTML;
+      }
+
+      createPostItem(post) {
+        const date = new Date(post.created_at).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric'
+        });
+
+        const statusClass = post.status === 'published' ? 'published' : 'draft';
+        const statusText = post.status === 'published' ? 'Published' : 'Draft';
+
+        return `
+          <div class="post-item">
+            <div class="post-info">
+              <h3 class="post-title">${this.escapeHtml(post.title)}</h3>
+              <div class="post-meta">
+                <span>${date}</span>
+                <span>•</span>
+                <span class="post-status ${statusClass}">${statusText}</span>
+              </div>
+            </div>
+            <div class="post-actions">
+              <a href="edit-post.html?id=${post.id}" class="action-btn edit">Edit</a>
+              <button class="action-btn delete" onclick="dashboard.deletePost('${post.id}')">Delete</button>
+            </div>
+          </div>
+        `;
+      }
+
+      async deletePost(postId) {
+        if (!confirm('Are you sure you want to delete this post? This action cannot be undone.')) {
+          return;
+        }
+
+        try {
+          const { error } = await blogManager.deletePost(postId);
+          
+          if (error) {
+            alert('Failed to delete post. Please try again.');
+            return;
+          }
+
+          // Reload the dashboard
+          await this.loadDashboard();
+        } catch (error) {
+          alert('Error deleting post. Please try again.');
+        }
+      }
+
+      escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+      }
+
+      showError(message) {
+        this.statsContainer.innerHTML = `<div class="error">${message}</div>`;
+        this.postsList.innerHTML = '';
+      }
+    }
+
+    // Initialize dashboard when DOM is ready
+    let dashboard;
+    document.addEventListener('DOMContentLoaded', () => {
+      dashboard = new AdminDashboard();
+    });
+  </script>
+
+</body>
+
+</html>

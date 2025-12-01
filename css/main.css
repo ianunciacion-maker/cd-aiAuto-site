@@ -1,0 +1,35 @@
+/* Ai-Auto Main Stylesheet */
+/* Import CSS files in order of specificity */
+
+/* Base Styles */
+@import url('./base/variables.css');
+@import url('./base/reset.css');
+@import url('./base/typography.css');
+
+/* Layout Utilities */
+@import url('./utilities/layout.css');
+
+/* Components */
+@import url('./components/buttons.css');
+@import url('./components/navigation.css');
+@import url('./components/cards.css');
+
+/* Layout */
+@import url('./layout/header.css');
+@import url('./layout/sections.css');
+@import url('./layout/footer.css');
+
+/* Pages */
+@import url('./pages/home.css');
+@import url('./pages/about.css');
+@import url('./pages/tools.css');
+
+/* Themes */
+@import url('./themes/dark.css');
+
+/* Additional utilities and overrides */
+@import url('./utilities/animations.css');
+@import url('./utilities/accessibility.css');
+
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Playfair+Display:wght@500;600;700;900&display=swap');

@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Blog – Ai-Auto</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Read the latest articles about AI automation, productivity tips, and how to set your own salary with AI-powered tools.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Playfair+Display:wght@500;600;700;900&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      /* Neobrutalist Palette */
+      --bg-paper: #f2f0e9;
+      --bg-white: #ffffff;
+      --ink: #121212;
+      --blue: #2357ff;
+      --gold: #ffcc00;
+      --coral: #ff6b58;
+      --lavender: #dcd6f7;
+      --green: #00d084;
+      --pink: #ff4d9e;
+
+      /* Structural Variables */
+      --border-thick: 3px solid var(--ink);
+      --border-thin: 2px solid var(--ink);
+      --shadow-hard: 6px 6px 0px 0px var(--ink);
+      --shadow-hover: 10px 10px 0px 0px var(--ink);
+      --shadow-brutal: 8px 8px 0px 0px var(--ink);
+      --radius-sm: 4px;
+      --max-width: 1200px;
+
+      /* Spacing */
+      --space-xs: 8px;
+      --space-sm: 16px;
+      --space-md: 32px;
+      --space-lg: 64px;
+      --space-xl: 128px;
+    }
+
+    [data-theme="dark"] {
+      --bg-paper: #0a0a0a;
+      --bg-white: #1a1a1a;
+      --ink: #f0f0f0;
+      --blue: #4d7aff;
+      --gold: #ffd633;
+      --coral: #ff8c7a;
+      --lavender: #2a2a40;
+      --green: #00ff9f;
+      --pink: #ff6bb5;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-paper);
+      color: var(--ink);
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-family: 'Playfair Display', serif;
+      margin: 0;
+      font-weight: 900;
+      line-height: 1.1;
+    }
+
+    p {
+      margin: 0 0 var(--space-sm);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+      border: var(--border-thin);
+    }
+
+    /* UTILITIES */
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 var(--space-md);
+    }
+
+    .grid {
+      display: grid;
+      gap: var(--space-md);
+    }
+
+    .flex {
+      display: flex;
+      gap: var(--space-sm);
+    }
+
+    .border-box {
+      border: var(--border-thick);
+      background: var(--bg-white);
+      box-shadow: var(--shadow-hard);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .border-box:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 28px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border: var(--border-thick);
+      background: var(--blue);
+      color: #fff;
+      box-shadow: var(--shadow-hard);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 14px;
+    }
+
+    .btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
+      filter: brightness(1.1);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--ink);
+    }
+
+    .btn-gold {
+      background: var(--gold);
+      color: #000;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 12px;
+      border: var(--border-thin);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      background: var(--gold);
+      color: #000;
+    }
+
+    /* NAVIGATION */
+    .nav {
+      border-bottom: var(--border-thick);
+      background: var(--bg-white);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: var(--space-sm) 0;
+    }
+
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 900;
+      border: var(--border-thick);
+      padding: 4px 12px;
+      background: var(--ink);
+      color: var(--bg-paper);
+      box-shadow: 4px 4px 0 var(--blue);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: var(--space-md);
+    }
+
+    .nav-link {
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 14px;
+      position: relative;
+    }
+
+    .nav-link:hover::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--blue);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      background: none;
+      border: var(--border-thick);
+      padding: 10px;
+      cursor: pointer;
+      background: var(--bg-white);
+      box-shadow: var(--shadow-hard);
+      transition: all 0.2s;
+    }
+
+    .hamburger:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .hamburger span {
+      width: 24px;
+      height: 3px;
+      background: var(--ink);
+      transition: all 0.3s;
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(8px, 8px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -7px);
+    }
+
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: var(--bg-white);
+      border-bottom: var(--border-thick);
+      z-index: 99;
+      display: none;
+      flex-direction: column;
+      padding: var(--space-lg) var(--space-md);
+      gap: var(--space-md);
+    }
+
+    .mobile-menu.active {
+      display: flex;
+    }
+
+    .mobile-menu-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: var(--space-md);
+      border-bottom: var(--border-thick);
+    }
+
+    .mobile-menu-links {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    .mobile-menu-link {
+      padding: var(--space-sm);
+      border: var(--border-thick);
+      background: var(--bg-paper);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 18px;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .mobile-menu-link:hover {
+      background: var(--blue);
+      color: #fff;
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hard);
+    }
+
+    /* HERO SECTION */
+    .hero {
+      padding: var(--space-xl) 0;
+      border-bottom: var(--border-thick);
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 19px, var(--ink) 19px, var(--ink) 20px),
+        repeating-linear-gradient(90deg, transparent, transparent 19px, var(--ink) 19px, var(--ink) 20px);
+      background-size: 20px 20px;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--bg-paper);
+      opacity: 0.92;
+      z-index: 0;
+    }
+
+    .hero .container {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero h1 {
+      font-size: clamp(48px, 8vw, 80px);
+      margin-bottom: var(--space-md);
+      text-transform: uppercase;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: var(--ink);
+    }
+
+    .hero h1 .highlight {
+      display: inline-block;
+      background: var(--gold);
+      color: #000;
+      padding: 0 16px;
+      transform: rotate(-2deg);
+      border: var(--border-thick);
+      box-shadow: var(--shadow-brutal);
+    }
+
+    .hero-subtitle {
+      font-size: 20px;
+      max-width: 600px;
+      margin-bottom: var(--space-md);
+      font-weight: 600;
+      color: var(--ink);
+      background: var(--bg-white);
+      border: var(--border-thick);
+      padding: var(--space-md);
+      box-shadow: var(--shadow-hard);
+    }
+
+    .hero .tag {
+      margin-bottom: 24px;
+    }
+
+    /* FOOTER CTA */
+    .footer-cta {
+      background: var(--blue);
+      color: #fff;
+      padding: var(--space-xl) 0;
+      text-align: center;
+      border-bottom: var(--border-thick);
+    }
+
+    .footer-cta h2 {
+      font-size: 80px;
+      margin-bottom: var(--space-md);
+      text-shadow: 6px 6px 0 var(--ink);
+      text-transform: uppercase;
+    }
+
+    .footer-cta p {
+      font-size: 24px;
+      margin-bottom: var(--space-lg);
+      font-weight: 600;
+    }
+
+    /* SITE FOOTER */
+    .site-footer {
+      background: var(--ink);
+      color: var(--bg-paper);
+      padding: var(--space-lg) 0;
+    }
+
+    .footer-inner {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: var(--space-lg);
+    }
+
+    .footer-brand h3 {
+      font-size: 32px;
+      margin-bottom: var(--space-sm);
+    }
+
+    .footer-links h4 {
+      font-size: 16px;
+      margin-bottom: var(--space-sm);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .footer-links ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-links li {
+      margin-bottom: 8px;
+    }
+
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-bottom {
+      margin-top: var(--space-lg);
+      padding-top: var(--space-md);
+      border-top: 2px solid var(--bg-paper);
+      text-align: center;
+      font-weight: 700;
+    }
+
+    /* BLOG SPECIFIC STYLES */
+    .blog-posts-container {
+      padding: var(--space-xl) 0;
+      background: var(--bg-paper);
+    }
+
+    .blog-posts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: var(--space-lg);
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 var(--space-md);
+    }
+
+    .blog-post-card {
+      border: var(--border-thick);
+      background: var(--bg-white);
+      padding: var(--space-lg);
+      box-shadow: var(--shadow-hard);
+      transition: all 0.2s;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .blog-post-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: var(--blue);
+    }
+
+    .blog-post-card:hover {
+      transform: translate(-4px, -4px);
+      box-shadow: 12px 12px 0 var(--ink);
+    }
+
+    .blog-post-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-sm);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      opacity: 0.7;
+    }
+
+    .blog-post-date {
+      font-weight: 600;
+    }
+
+    .blog-post-author {
+      font-weight: 700;
+      color: var(--blue);
+    }
+
+    .blog-post-title {
+      font-size: 24px;
+      margin-bottom: var(--space-sm);
+      line-height: 1.2;
+    }
+
+    .blog-post-excerpt {
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: var(--space-md);
+      opacity: 0.8;
+    }
+
+    .blog-post-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 14px;
+      color: var(--blue);
+      border-bottom: 2px solid var(--blue);
+      padding-bottom: 2px;
+      transition: all 0.2s;
+    }
+
+    .blog-post-link:hover {
+      transform: translateX(4px);
+      color: var(--gold);
+      border-color: var(--gold);
+    }
+
+    /* Loading, Error, Empty States */
+    .blog-loading,
+    .blog-error,
+    .blog-empty {
+      text-align: center;
+      padding: var(--space-xl) 0;
+    }
+
+    .blog-loading {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .blog-loading-spinner {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      border: var(--border-thick);
+      border-color: var(--blue);
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: var(--space-md);
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .blog-error-box {
+      border: var(--border-thick);
+      background: var(--coral);
+      color: #fff;
+      padding: var(--space-lg);
+      max-width: 600px;
+      margin: 0 auto;
+      box-shadow: var(--shadow-hard);
+    }
+
+    .blog-empty-box {
+      border: var(--border-thick);
+      background: var(--bg-white);
+      padding: var(--space-xl);
+      max-width: 600px;
+      margin: 0 auto;
+      box-shadow: var(--shadow-hard);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-content h1 {
+        font-size: 48px;
+      }
+
+      .footer-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .nav-inner > .btn {
+        display: none;
+      }
+
+      .blog-posts-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+      }
+
+      .footer-cta h2 {
+        font-size: 48px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="logo">Ai-Auto</a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="tools.html" class="nav-link">Tools</a>
+        <a href="blog.html" class="nav-link" style="text-decoration: underline; text-decoration-thickness: 3px; text-decoration-color: var(--gold);">Blog</a>
+      </div>
+      <button class="btn btn-gold">Get Started</button>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-header">
+      <button class="hamburger active" id="closeMenu" aria-label="Close menu" style="margin-left: auto;">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div class="mobile-menu-links">
+      <a href="index.html" class="mobile-menu-link">Home</a>
+      <a href="about.html" class="mobile-menu-link">About</a>
+      <a href="tools.html" class="mobile-menu-link">Tools</a>
+      <a href="blog.html" class="mobile-menu-link">Blog</a>
+      <button class="btn btn-gold" style="width: 100%; margin-top: 16px;">Get Started</button>
+    </div>
+  </div>
+
+  <!-- BLOG HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="tag" style="margin-bottom: 24px; background: var(--blue); color: #fff;">AI Automation Blog</div>
+      <h1>
+        Your <span class="highlight">Content Hub</span><br>
+        For AI Automation
+      </h1>
+      <p class="hero-subtitle">
+        Learn how to automate your work, scale your productivity, and set your own salary with AI-powered tools and strategies.
+      </p>
+    </div>
+  </section>
+
+  <!-- BLOG POSTS -->
+  <section class="blog-posts-container">
+    <div class="blog-posts-grid" id="blogPostsGrid">
+      <!-- Loading state -->
+      <div class="blog-loading" id="blogLoading">
+        <div class="blog-loading-spinner"></div>
+        <p>Loading blog posts...</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER CTA -->
+  <section class="footer-cta">
+    <div class="container">
+      <h2>Ready to Automate?</h2>
+      <p>Start your journey to autonomous productivity today</p>
+      <a href="tools.html" class="btn" style="background: var(--bg-white); color: var(--blue);">Get Started</a>
+    </div>
+  </section>
+
+  <!-- SITE FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <h3>Ai-Auto</h3>
+          <p style="max-width: 300px;">
+            Building the future of work, one automation at a time. Set your own salary with AI-powered tools.
+          </p>
+        </div>
+        <div class="footer-links">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="tools.html">Tools</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="#">Pricing</a></li>
+            <li><a href="#">Features</a></li>
+            <li><a href="#">Roadmap</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="about.html">About</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; 2024 Ai-Auto. All rights reserved. Built with AI.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="supabase.js"></script>
+  <script>
+    // Blog listing functionality
+    class BlogListing {
+      constructor() {
+        this.postsGrid = document.getElementById('blogPostsGrid');
+        this.loading = document.getElementById('blogLoading');
+        this.init();
+      }
+
+      async init() {
+        try {
+          // Load blog posts
+          await this.loadBlogPosts();
+        } catch (error) {
+          this.showError('Failed to load blog posts. Please try again later.');
+        }
+      }
+
+      async loadBlogPosts() {
+        const { data, error } = await blogManager.getAllPosts();
+
+        if (error) {
+          throw error;
+        }
+
+        if (!data || data.length === 0) {
+          this.showEmptyState();
+          return;
+        }
+
+        this.renderBlogPosts(data);
+      }
+
+      renderBlogPosts(posts) {
+        const postsHTML = posts.map(post => this.createPostCard(post)).join('');
+        this.postsGrid.innerHTML = postsHTML;
+      }
+
+      createPostCard(post) {
+        const date = new Date(post.published_at || post.created_at).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric'
+        });
+
+        const excerpt = post.excerpt || this.createExcerpt(post.content);
+
+        return `
+          <article class="blog-post-card" onclick="window.location.href='blog/post.html?slug=${post.slug}'">
+            <div class="blog-post-meta">
+              <span class="blog-post-date">${date}</span>
+              <span class="blog-post-author">By Admin</span>
+            </div>
+            <h2 class="blog-post-title">${this.escapeHtml(post.title)}</h2>
+            <p class="blog-post-excerpt">${this.escapeHtml(excerpt)}</p>
+            <a href="blog/post.html?slug=${post.slug}" class="blog-post-link" onclick="event.stopPropagation()">
+              Read More →
+            </a>
+          </article>
+        `;
+      }
+
+      createExcerpt(content, maxLength = 150) {
+        const stripped = content.replace(/<[^>]*>/g, '');
+        return stripped.length > maxLength
+          ? stripped.substring(0, maxLength) + '...'
+          : stripped;
+      }
+
+      escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+      }
+
+      showLoading() {
+        this.loading.style.display = 'block';
+      }
+
+      hideLoading() {
+        this.loading.style.display = 'none';
+      }
+
+      showError(message) {
+        this.hideLoading();
+        this.postsGrid.innerHTML = `
+          <div class="blog-error">
+            <div class="blog-error-box">
+              <h3>Oops! Something went wrong</h3>
+              <p>${message}</p>
+            </div>
+          </div>
+        `;
+      }
+
+      showEmptyState() {
+        this.hideLoading();
+        this.postsGrid.innerHTML = `
+          <div class="blog-empty">
+            <div class="blog-empty-box">
+              <h3>No blog posts yet</h3>
+              <p>We're working on some great content. Check back soon!</p>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    // Initialize blog listing when DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+      new BlogListing();
+    });
+
+    // Mobile menu functionality
+    document.addEventListener('DOMContentLoaded', () => {
+      const hamburger = document.getElementById('hamburger');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const closeMenu = document.getElementById('closeMenu');
+
+      hamburger.addEventListener('click', () => {
+        mobileMenu.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+
+      closeMenu.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+
+      // Close menu when clicking on a link
+      const mobileLinks = document.querySelectorAll('.mobile-menu-link');
+      mobileLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.remove('active');
+          document.body.style.overflow = '';
+        });
+      });
+    });
+  </script>
+
+</body>
+
+</html>

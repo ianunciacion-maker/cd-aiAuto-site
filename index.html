@@ -214,6 +214,94 @@
       background: var(--blue);
     }
 
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      background: none;
+      border: var(--border-thick);
+      padding: 10px;
+      cursor: pointer;
+      background: var(--bg-white);
+      box-shadow: var(--shadow-hard);
+      transition: all 0.2s;
+    }
+
+    .hamburger:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .hamburger span {
+      width: 24px;
+      height: 3px;
+      background: var(--ink);
+      transition: all 0.3s;
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(8px, 8px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -7px);
+    }
+
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: var(--bg-white);
+      border-bottom: var(--border-thick);
+      z-index: 99;
+      display: none;
+      flex-direction: column;
+      padding: var(--space-lg) var(--space-md);
+      gap: var(--space-md);
+    }
+
+    .mobile-menu.active {
+      display: flex;
+    }
+
+    .mobile-menu-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: var(--space-md);
+      border-bottom: var(--border-thick);
+    }
+
+    .mobile-menu-links {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    .mobile-menu-link {
+      padding: var(--space-sm);
+      border: var(--border-thick);
+      background: var(--bg-paper);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 18px;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .mobile-menu-link:hover {
+      background: var(--blue);
+      color: #fff;
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hard);
+    }
+
     /* HERO SECTION */
     .hero {
       padding: var(--space-xl) 0;
@@ -800,7 +888,22 @@
       }
 
       .hero-card-stack {
-        height: 300px;
+        height: auto;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: var(--space-sm);
+        margin-top: var(--space-md);
+      }
+
+      .hero-floating-card {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+        width: 100% !important;
+        transform: none !important;
+        animation: none !important;
       }
 
       .footer-inner {
@@ -808,6 +911,14 @@
       }
 
       .nav-links {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .nav-inner > .btn {
         display: none;
       }
     }
@@ -825,10 +936,34 @@
           style="text-decoration: underline; text-decoration-thickness: 3px; text-decoration-color: var(--gold);">Home</a>
         <a href="about.html" class="nav-link">About</a>
         <a href="tools.html" class="nav-link">Tools</a>
+        <a href="blog.html" class="nav-link">Blog</a>
       </div>
       <button class="btn btn-gold">Get Started</button>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
   </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-header">
+      <button class="hamburger active" id="closeMenu" aria-label="Close menu" style="margin-left: auto;">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div class="mobile-menu-links">
+      <a href="index.html" class="mobile-menu-link">Home</a>
+      <a href="about.html" class="mobile-menu-link">About</a>
+      <a href="tools.html" class="mobile-menu-link">Tools</a>
+      <a href="blog.html" class="mobile-menu-link">Blog</a>
+      <button class="btn btn-gold" style="width: 100%; margin-top: 16px;">Get Started</button>
+    </div>
+  </div>
 
   <!-- HERO -->
   <section class="hero">
@@ -879,27 +1014,26 @@
       animation: float 6s ease-in-out infinite;
     }
     </style>
-  <div class="hero-visual">
-    <div class="hero-card-stack">
-      <div class="hero-floating-card" style="top: 0; left: 20px; animation-delay: 0s;">
-        <h4>Blog Post Generation</h4>
-        <p style="font-size: 13px; margin: 0;">AI-powered content for your blog.</p>
-      </div>
-      <div class="hero-floating-card" style="top: 80px; right: 0; animation-delay: 1.5s;">
-        <h4>Social Media Captions</h4>
-        <p style="font-size: 13px; margin: 0;">Engaging captions for social media.</p>
-      </div>
-      <div class="hero-floating-card" style="bottom: 120px; left: 0; animation-delay: 3s;">
-        <h4>Email Campaigns</h4>
-        <p style="font-size: 13px; margin: 0;">Draft effective marketing emails.</p>
-      </div>
-      <div class="hero-floating-card" style="bottom: 40px; right: 20px; animation-delay: 4.5s;">
-        <h4>Product Descriptions</h4>
-        <p style="font-size: 13px; margin: 0;">Compelling copy for your products.</p>
-      </div>
-    </div>
-  </div>
-    </div>
+        <div class="hero-visual">
+          <div class="hero-card-stack">
+            <div class="hero-floating-card" style="top: 0; left: 20px; animation-delay: 0s;">
+              <h4>Blog Post Generation</h4>
+              <p style="font-size: 13px; margin: 0;">AI-powered content for your blog.</p>
+            </div>
+            <div class="hero-floating-card" style="top: 80px; right: 0; animation-delay: 1.5s;">
+              <h4>Social Media Captions</h4>
+              <p style="font-size: 13px; margin: 0;">Engaging captions for social media.</p>
+            </div>
+            <div class="hero-floating-card" style="bottom: 140px; left: 0; animation-delay: 3s;">
+              <h4>Email Campaigns</h4>
+              <p style="font-size: 13px; margin: 0;">Draft effective marketing emails.</p>
+            </div>
+            <div class="hero-floating-card" style="bottom: 20px; right: 0; animation-delay: 4.5s;">
+              <h4>Product Descriptions</h4>
+              <p style="font-size: 13px; margin: 0;">Compelling copy for your products.</p>
+            </div>
+          </div>
+        </div>    </div>
   </section>
 
   <!-- WHO IT'S FOR -->
@@ -1064,6 +1198,7 @@
           <h4>Product</h4>
           <ul>
             <li><a href="tools.html">Tools</a></li>
+            <li><a href="blog.html">Blog</a></li>
             <li><a href="#">Pricing</a></li>
             <li><a href="#">Features</a></li>
             <li><a href="#">Roadmap</a></li>
@@ -1084,6 +1219,32 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    // Mobile menu toggle
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const closeMenu = document.getElementById('closeMenu');
+
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+
+    closeMenu.addEventListener('click', () => {
+      mobileMenu.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+
+    // Close menu when clicking on a link
+    const mobileLinks = document.querySelectorAll('.mobile-menu-link');
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+    });
+  </script>
 
 </body>
 

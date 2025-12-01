@@ -1,0 +1,269 @@
+/* Card Components */
+.card {
+  border: var(--border-thick);
+  background: var(--bg-white);
+  padding: var(--space-md);
+  box-shadow: var(--shadow-hard);
+  transition: all 0.2s ease;
+  border-radius: var(--radius-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-hover);
+}
+
+.card:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 2px;
+}
+
+/* Card variants */
+.card-blue {
+  background: var(--blue);
+  color: #fff;
+}
+
+.card-gold {
+  background: var(--gold);
+  color: #000;
+}
+
+.card-coral {
+  background: var(--coral);
+  color: #fff;
+}
+
+.card-green {
+  background: var(--green);
+  color: #000;
+}
+
+.card-lavender {
+  background: var(--lavender);
+  color: var(--ink);
+}
+
+.card-pink {
+  background: var(--pink);
+  color: #fff;
+}
+
+.card-purple {
+  background: var(--purple);
+  color: #fff;
+}
+
+/* Card with accent border */
+.card-accent-top::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+}
+
+.card-accent-top.blue::before {
+  background: var(--blue);
+}
+
+.card-accent-top.coral::before {
+  background: var(--coral);
+}
+
+.card-accent-top.gold::before {
+  background: var(--gold);
+}
+
+.card-accent-top.green::before {
+  background: var(--green);
+}
+
+.card-accent-top.purple::before {
+  background: var(--purple);
+}
+
+.card-accent-top.pink::before {
+  background: var(--pink);
+}
+
+/* Tool card specific styles */
+.tool-card {
+  border: var(--border-thick);
+  background: var(--bg-paper);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-brutal);
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.tool-card:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: 12px 12px 0 var(--ink);
+}
+
+.tool-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-sm);
+  border-bottom: var(--border-thick);
+}
+
+.tool-badge {
+  background: var(--blue);
+  color: #fff;
+  padding: 4px 12px;
+  border: var(--border-thin);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: var(--radius-sm);
+}
+
+.tool-price {
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--blue);
+  font-family: var(--font-heading);
+}
+
+/* Feature card */
+.feature-card {
+  border: var(--border-thick);
+  background: var(--bg-white);
+  padding: var(--space-lg);
+  transition: all 0.2s ease;
+  position: relative;
+  text-align: center;
+}
+
+.feature-card:hover {
+  transform: rotate(-2deg) scale(1.05);
+  z-index: 10;
+  box-shadow: var(--shadow-brutal);
+}
+
+.feature-icon {
+  width: 80px;
+  height: 80px;
+  border: var(--border-thick);
+  background: var(--ink);
+  color: var(--bg-paper);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  margin: 0 auto var(--space-md);
+  border-radius: var(--radius-sm);
+}
+
+/* Pricing card */
+.pricing-card {
+  border: var(--border-thick);
+  background: var(--bg-white);
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+
+.pricing-card:hover {
+  transform: translateY(-8px);
+}
+
+.pricing-card.featured {
+  transform: scale(1.05);
+  z-index: 2;
+  border-color: var(--blue);
+}
+
+.pricing-header {
+  background: var(--ink);
+  color: var(--bg-paper);
+  padding: var(--space-md);
+  text-align: center;
+  border-bottom: var(--border-thick);
+}
+
+.pricing-card.featured .pricing-header {
+  background: var(--blue);
+}
+
+.pricing-amount {
+  font-size: 48px;
+  font-weight: 900;
+  font-family: var(--font-heading);
+}
+
+/* Team card */
+.team-card {
+  border: var(--border-thick);
+  background: var(--bg-white);
+  padding: 0;
+  box-shadow: var(--shadow-hard);
+  overflow: hidden;
+}
+
+.team-header {
+  background: var(--ink);
+  color: #fff;
+  padding: var(--space-sm);
+  text-align: center;
+  border-bottom: var(--border-thick);
+}
+
+.team-body {
+  padding: var(--space-md);
+}
+
+/* Stats card */
+.stat-box {
+  border: var(--border-thick);
+  background: var(--bg-white);
+  padding: var(--space-sm);
+  text-align: center;
+  box-shadow: var(--shadow-hard);
+  transition: transform 0.2s ease;
+}
+
+.stat-box:hover {
+  transform: translateY(-4px);
+}
+
+.stat-val {
+  font-size: 36px;
+  font-weight: 900;
+  font-family: var(--font-heading);
+}
+
+.stat-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+/* Responsive cards */
+@media (max-width: 768px) {
+  .card {
+    margin-bottom: var(--space-md);
+  }
+  
+  .tool-card {
+    padding: var(--space-md);
+  }
+  
+  .feature-icon {
+    width: 60px;
+    height: 60px;
+    font-size: 30px;
+  }
+  
+  .pricing-card.featured {
+    transform: scale(1);
+  }
+}

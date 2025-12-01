@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Blog Post – Ai-Auto</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Read about AI automation and productivity tips from Ai-Auto.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Playfair+Display:wght@500;600;700;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/components/blog.css">
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="../index.html" class="logo">Ai-Auto</a>
+      <div class="nav-links">
+        <a href="../index.html" class="nav-link">Home</a>
+        <a href="../about.html" class="nav-link">About</a>
+        <a href="../tools.html" class="nav-link">Tools</a>
+        <a href="../blog.html" class="nav-link">Blog</a>
+      </div>
+      <button class="btn btn-gold">Get Started</button>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-header">
+      <button class="hamburger active" id="closeMenu" aria-label="Close menu" style="margin-left: auto;">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div class="mobile-menu-links">
+      <a href="../index.html" class="mobile-menu-link">Home</a>
+      <a href="../about.html" class="mobile-menu-link">About</a>
+      <a href="../tools.html" class="mobile-menu-link">Tools</a>
+      <a href="../blog.html" class="mobile-menu-link">Blog</a>
+      <button class="btn btn-gold" style="width: 100%; margin-top: 16px;">Get Started</button>
+    </div>
+  </div>
+
+  <!-- BLOG POST -->
+  <section class="blog-post-container">
+    <div class="blog-post-wrapper">
+      <!-- Loading state -->
+      <div class="blog-loading" id="postLoading">
+        <div class="blog-loading-spinner"></div>
+        <p>Loading blog post...</p>
+      </div>
+
+      <!-- Blog post content will be loaded here -->
+      <div id="blogPostContent"></div>
+    </div>
+  </section>
+
+  <!-- BLOG NAVIGATION -->
+  <nav class="blog-nav" id="blogNavigation" style="display: none;">
+    <a href="../blog.html" class="blog-nav-link">← Back to Blog</a>
+    <a href="#" class="blog-nav-link" id="editPostLink" style="display: none;">Edit Post</a>
+  </nav>
+
+  <!-- FOOTER CTA -->
+  <section class="footer-cta">
+    <div class="container">
+      <h2>Ready to Automate?</h2>
+      <p>Start your journey to autonomous productivity today</p>
+      <a href="../tools.html" class="btn" style="background: var(--bg-white); color: var(--blue);">Get Started</a>
+    </div>
+  </section>
+
+  <!-- SITE FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <h3>Ai-Auto</h3>
+          <p style="max-width: 300px;">
+            Building the future of work, one automation at a time. Set your own salary with AI-powered tools.
+          </p>
+        </div>
+        <div class="footer-links">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="../tools.html">Tools</a></li>
+            <li><a href="#">Pricing</a></li>
+            <li><a href="../blog.html">Blog</a></li>
+            <li><a href="#">Features</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="../about.html">About</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; 2024 Ai-Auto. All rights reserved. Built with AI.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../supabase.js"></script>
+  <script>
+    // Blog post functionality
+    class BlogPost {
+      constructor() {
+        this.postContent = document.getElementById('blogPostContent');
+        this.loading = document.getElementById('postLoading');
+        this.navigation = document.getElementById('blogNavigation');
+        this.editLink = document.getElementById('editPostLink');
+        this.slug = this.getSlugFromUrl();
+        this.init();
+      }
+
+      getSlugFromUrl() {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get('slug');
+      }
+
+      async init() {
+        if (!this.slug) {
+          this.showError('No blog post specified.');
+          return;
+        }
+
+        try {
+          await this.loadBlogPost();
+          await this.checkAdminAccess();
+        } catch (error) {
+          this.showError('Failed to load blog post. Please try again later.');
+        }
+      }
+
+      async loadBlogPost() {
+        const { data, error } = await blogManager.getPostBySlug(this.slug);
+        
+        if (error) {
+          throw error;
+        }
+
+        if (!data) {
+          this.showNotFound();
+          return;
+        }
+
+        this.renderBlogPost(data);
+        this.updateSEO(data);
+      }
+
+      renderBlogPost(post) {
+        const date = new Date(post.published_at || post.created_at).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        });
+
+        const postHTML = `
+          <article class="blog-post-header">
+            <h1 class="blog-post-title-main">${this.escapeHtml(post.title)}</h1>
+            <div class="blog-post-meta-main">
+              <span class="blog-post-date">${date}</span>
+              <span class="blog-post-author">By Admin</span>
+            </div>
+          </article>
+
+          <article class="blog-post-content">
+            ${post.content}
+          </article>
+        `;
+
+        this.hideLoading();
+        this.postContent.innerHTML = postHTML;
+        this.navigation.style.display = 'flex';
+      }
+
+      updateSEO(post) {
+        // Update page title
+        document.title = `${post.title} – Ai-Auto Blog`;
+        
+        // Update meta description
+        const metaDescription = document.querySelector('meta[name="description"]');
+        if (metaDescription) {
+          const excerpt = post.excerpt || this.createExcerpt(post.content);
+          metaDescription.content = excerpt;
+        }
+
+        // Update Open Graph tags
+        this.updateMetaTag('og:title', post.title);
+        this.updateMetaTag('og:description', post.excerpt || this.createExcerpt(post.content));
+        this.updateMetaTag('og:type', 'article');
+        this.updateMetaTag('og:url', window.location.href);
+      }
+
+      updateMetaTag(property, content) {
+        let tag = document.querySelector(`meta[property="${property}"]`) || 
+                   document.querySelector(`meta[name="${property}"]`);
+        
+        if (!tag) {
+          tag = document.createElement('meta');
+          tag.setAttribute(property.includes('og:') ? 'property' : 'name', property);
+          document.head.appendChild(tag);
+        }
+        
+        tag.content = content;
+      }
+
+      async checkAdminAccess() {
+        const isAdmin = await authManager.isAdmin();
+        if (isAdmin) {
+          this.editLink.style.display = 'inline-flex';
+          this.editLink.href = `../admin/edit-post.html?id=${this.slug}`;
+        }
+      }
+
+      createExcerpt(content, maxLength = 160) {
+        const stripped = content.replace(/<[^>]*>/g, '');
+        return stripped.length > maxLength 
+          ? stripped.substring(0, maxLength) + '...'
+          : stripped;
+      }
+
+      escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+      }
+
+      hideLoading() {
+        this.loading.style.display = 'none';
+      }
+
+      showError(message) {
+        this.hideLoading();
+        this.postContent.innerHTML = `
+          <div class="blog-error">
+            <div class="blog-error-box">
+              <h3>Oops! Something went wrong</h3>
+              <p>${message}</p>
+            </div>
+          </div>
+        `;
+      }
+
+      showNotFound() {
+        this.hideLoading();
+        this.postContent.innerHTML = `
+          <div class="blog-error">
+            <div class="blog-error-box">
+              <h3>Blog Post Not Found</h3>
+              <p>The blog post you're looking for doesn't exist or has been removed.</p>
+              <a href="../blog.html" class="btn" style="margin-top: var(--space-md);">Back to Blog</a>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    // Initialize blog post when DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+      new BlogPost();
+    });
+
+    // Mobile menu functionality (reusing existing navigation)
+    document.addEventListener('DOMContentLoaded', () => {
+      const hamburger = document.getElementById('hamburger');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const closeMenu = document.getElementById('closeMenu');
+
+      hamburger.addEventListener('click', () => {
+        mobileMenu.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+
+      closeMenu.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+
+      // Close menu when clicking on a link
+      const mobileLinks = document.querySelectorAll('.mobile-menu-link');
+      mobileLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.remove('active');
+          document.body.style.overflow = '';
+        });
+      });
+    });
+  </script>
+
+</body>
+
+</html>
