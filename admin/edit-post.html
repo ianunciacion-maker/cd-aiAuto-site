@@ -248,14 +248,8 @@
           </div>
 
           <div class="form-group">
-            <label for="content" class="form-label">Content</label>
-            <textarea
-              id="content"
-              name="content"
-              class="form-textarea" 
-              placeholder="Write your blog post content here..."
-              required
-            ></textarea>
+            <label for="editor-container" class="form-label">Content</label>
+            <div id="editor-container"></div>
             <div class="char-count">
               <span id="charCount">0</span> characters
             </div>
@@ -302,11 +296,9 @@
   <!-- Scripts -->
   <!-- Supabase client -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <!-- Markdown editor -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
-  <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
-  <!-- Marked.js for markdown parsing -->
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <!-- Quill Rich Text Editor -->
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+  <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
   <script src="../supabase.js"></script>
   <script>
     // Edit post functionality
@@ -315,7 +307,6 @@
         this.form = document.getElementById('postForm');
         this.titleInput = document.getElementById('title');
         this.excerptInput = document.getElementById('excerpt');
-        this.contentInput = document.getElementById('content');
         this.slugInput = document.getElementById('slug');
         this.statusSelect = document.getElementById('status');
         this.saveDraftBtn = document.getElementById('saveDraftBtn');
@@ -325,6 +316,7 @@
         this.charCount = document.getElementById('charCount');
         this.wordCount = document.getElementById('wordCount');
         this.postId = null;
+        this.quill = null;
         this.init();
       }
 
@@ -357,52 +349,64 @@
       }
 
       initializeEditor() {
-        // Initialize SimpleMDE with custom configuration
-        this.editor = new SimpleMDE({
-          element: document.getElementById('content'),
-          toolbar: [
-            'bold', 'italic', 'heading', '|',
-            'quote', 'unordered-list', 'ordered-list', '|',
-            'link', {
-              name: 'image-upload',
-              action: async (editor) => {
-                const input = document.createElement('input');
-                input.type = 'file';
-                input.accept = 'image/*';
-                input.onchange = async (e) => {
-                  const file = e.target.files[0];
-                  if (!file) return;
+        // Initialize Quill with custom toolbar
+        const toolbarOptions = [
+          [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+          [{ 'size': ['small', false, 'large', 'huge'] }],
+          [{ 'font': [] }],
+          ['bold', 'italic', 'underline', 'strike'],
+          [{ 'color': [] }, { 'background': [] }],
+          [{ 'align': [] }],
+          [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+          ['blockquote', 'code-block'],
+          ['link', 'image'],
+          ['clean']
+        ];
 
-                  try {
-                    const { url, error } = await blogManager.uploadImage(file);
-                    if (error) {
-                      alert('Image upload failed: ' + error.message);
-                      return;
-                    }
-
-                    const cm = editor.codemirror;
-                    const output = `![${file.name}](${url})`;
-                    cm.replaceSelection(output);
-                  } catch (error) {
-                    alert('Image upload failed');
-                  }
-                };
-                input.click();
-              },
-              className: 'fa fa-image',
-              title: 'Upload Image'
-            },
-            '|', 'preview', 'guide'
-          ],
-          spellChecker: true,
-          autosave: {
-            enabled: true,
-            uniqueId: 'blog-post-editor',
-            delay: 1000
+        this.quill = new Quill('#editor-container', {
+          theme: 'snow',
+          modules: {
+            toolbar: toolbarOptions
           },
-          lineNumbers: false,
-          lineWrapping: true
+          placeholder: 'Write your blog post content here...'
         });
+
+        // Update character and word count on text change
+        this.quill.on('text-change', () => {
+          this.updateCounts();
+        });
+
+        // Handle image uploads
+        const toolbar = this.quill.getModule('toolbar');
+        toolbar.addHandler('image', () => {
+          this.handleImageUpload();
+        });
+      }
+
+      handleImageUpload() {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        input.onchange = async () => {
+          const file = input.files[0];
+          if (!file) return;
+
+          try {
+            const { url, error } = await blogManager.uploadImage(file);
+            if (error) {
+              alert('Image upload failed: ' + error.message);
+              return;
+            }
+
+            // Insert image into editor
+            const range = this.quill.getSelection(true);
+            this.quill.insertEmbed(range.index, 'image', url);
+            this.quill.setSelection(range.index + 1);
+          } catch (error) {
+            alert('Image upload failed');
+          }
+        };
+        input.click();
       }
 
       getPostId() {
@@ -433,7 +437,8 @@
 
           this.titleInput.value = data.title;
           this.excerptInput.value = data.excerpt || '';
-          this.editor.value(data.content);
+          // Set Quill content (data.content is HTML from Quill)
+          this.quill.root.innerHTML = data.content;
           this.slugInput.value = data.slug;
           this.statusSelect.value = data.status;
 
@@ -454,10 +459,10 @@
       }
 
       updateCounts() {
-        const content = this.editor.value();
-        this.charCount.textContent = content.length;
+        const text = this.quill.getText();
+        this.charCount.textContent = text.length;
 
-        const words = content.trim().split(/\s+/).filter(word => word.length > 0);
+        const words = text.trim().split(/\s+/).filter(word => word.length > 0);
         this.wordCount.textContent = words.length;
       }
 
@@ -560,7 +565,7 @@
         return {
           title: this.titleInput.value.trim(),
           excerpt: this.excerptInput.value.trim(),
-          content: this.editor.value().trim(),
+          content: this.quill.root.innerHTML.trim(),
           slug: this.slugInput.value.trim(),
           status: this.statusSelect.value,
           published_at: this.statusSelect.value === 'published' ? new Date().toISOString() : null
@@ -569,7 +574,7 @@
 
       validateForm() {
         const title = this.titleInput.value.trim();
-        const content = this.editor.value().trim();
+        const content = this.quill.getText().trim();
         const slug = this.slugInput.value.trim();
 
         if (!title) {
