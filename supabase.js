@@ -251,7 +251,7 @@ class BlogManager {
         slug: postData.slug,
         excerpt: postData.excerpt || null,
         content: postData.content,
-        content_type: 'markdown',
+        content_type: 'html',
         author_id: user.id,
         status: postData.status || 'draft',
         published_at: postData.status === 'published' ? new Date().toISOString() : null,
