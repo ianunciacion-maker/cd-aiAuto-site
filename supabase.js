@@ -50,6 +50,29 @@ class AuthManager {
     }
   }
 
+  async signup(email, password, metadata = {}) {
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email: email.trim(),
+        password: password,
+        options: {
+          data: metadata
+        }
+      });
+
+      if (error) {
+        console.error('Signup error:', error.message);
+        return { data: null, error };
+      }
+
+      console.log('Signup successful:', data.user.email);
+      return { data, error: null };
+    } catch (error) {
+      console.error('Signup exception:', error);
+      return { data: null, error };
+    }
+  }
+
   async login(email, password) {
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
@@ -467,18 +490,452 @@ class BlogManager {
 }
 
 // ============================================
+// USER MANAGER
+// ============================================
+
+class UserManager {
+  constructor() {
+    this.tableName = 'user_profiles';
+  }
+
+  // Get current user profile
+  async getCurrentProfile() {
+    try {
+      const user = await authManager.getCurrentUser();
+      if (!user) {
+        return { data: null, error: { message: 'Not authenticated' } };
+      }
+
+      const { data, error } = await supabase
+        .from(this.tableName)
+        .select('*')
+        .eq('id', user.id)
+        .single();
+
+      if (error) {
+        console.error('Get profile error:', error.message);
+        return { data: null, error };
+      }
+
+      return { data, error: null };
+    } catch (error) {
+      console.error('Get profile exception:', error);
+      return { data: null, error };
+    }
+  }
+
+  // Update user profile
+  async updateProfile(updates) {
+    try {
+      const user = await authManager.getCurrentUser();
+      if (!user) {
+        return { data: null, error: { message: 'Not authenticated' } };
+      }
+
+      const { data, error } = await supabase
+        .from(this.tableName)
+        .update(updates)
+        .eq('id', user.id)
+        .select()
+        .single();
+
+      if (error) {
+        console.error('Update profile error:', error.message);
+        return { data: null, error };
+      }
+
+      console.log('Profile updated successfully');
+      return { data, error: null };
+    } catch (error) {
+      console.error('Update profile exception:', error);
+      return { data: null, error };
+    }
+  }
+
+  // Get user subscription status
+  async getSubscriptionStatus() {
+    try {
+      const user = await authManager.getCurrentUser();
+      if (!user) {
+        return { data: null, error: { message: 'Not authenticated' } };
+      }
+
+      const { data, error } = await supabase
+        .from('subscriptions')
+        .select('*')
+        .eq('user_id', user.id)
+        .single();
+
+      if (error && error.code === 'PGRST116') {
+        // No subscription found - return inactive status
+        return {
+          data: {
+            user_id: user.id,
+            status: 'inactive',
+            current_period_end: null
+          },
+          error: null
+        };
+      }
+
+      if (error) {
+        console.error('Get subscription error:', error.message);
+        return { data: null, error };
+      }
+
+      return { data, error: null };
+    } catch (error) {
+      console.error('Get subscription exception:', error);
+      return { data: null, error };
+    }
+  }
+
+  // Check if user can access tools
+  async canAccessTools() {
+    try {
+      const { data: subscription, error } = await this.getSubscriptionStatus();
+
+      if (error) {
+        return false;
+      }
+
+      return subscription?.status === 'active' || subscription?.status === 'trialing';
+    } catch (error) {
+      console.error('Can access tools error:', error);
+      return false;
+    }
+  }
+
+  // Get tool usage stats
+  async getToolUsage(toolType) {
+    try {
+      const user = await authManager.getCurrentUser();
+      if (!user) {
+        return { data: null, error: { message: 'Not authenticated' } };
+      }
+
+      const { data, error } = await supabase
+        .from('tool_usage')
+        .select('*')
+        .eq('user_id', user.id)
+        .eq('tool_type', toolType)
+        .single();
+
+      if (error) {
+        console.error('Get tool usage error:', error.message);
+        return { data: null, error };
+      }
+
+      return { data, error: null };
+    } catch (error) {
+      console.error('Get tool usage exception:', error);
+      return { data: null, error };
+    }
+  }
+
+  // Get all tool usage stats
+  async getAllToolUsage() {
+    try {
+      const user = await authManager.getCurrentUser();
+      if (!user) {
+        return { data: null, error: { message: 'Not authenticated' } };
+      }
+
+      const { data, error } = await supabase
+        .from('tool_usage')
+        .select('*')
+        .eq('user_id', user.id);
+
+      if (error) {
+        console.error('Get all tool usage error:', error.message);
+        return { data: null, error };
+      }
+
+      return { data, error: null };
+    } catch (error) {
+      console.error('Get all tool usage exception:', error);
+      return { data: null, error };
+    }
+  }
+}
+
+// ============================================
+// STRIPE MANAGER
+// ============================================
+
+class StripeManager {
+  constructor() {
+    this.apiBase = window.location.origin;
+  }
+
+  // Create checkout session and redirect to Stripe
+  async checkout(priceId) {
+    try {
+      const user = await authManager.getCurrentUser();
+      if (!user) {
+        return { error: { message: 'User not authenticated' } };
+      }
+
+      const response = await fetch(`${this.apiBase}/api/checkout`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_id: user.id,
+          email: user.email,
+          priceId: priceId
+        })
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        console.error('Checkout error:', error);
+        return { error };
+      }
+
+      const { sessionId, url } = await response.json();
+
+      // Redirect to Stripe Checkout
+      window.location.href = url;
+
+      return { data: { sessionId, url }, error: null };
+    } catch (error) {
+      console.error('Checkout exception:', error);
+      return { error };
+    }
+  }
+
+  // Open billing portal to manage subscription
+  async openBillingPortal() {
+    try {
+      const user = await authManager.getCurrentUser();
+      if (!user) {
+        return { error: { message: 'User not authenticated' } };
+      }
+
+      const response = await fetch(`${this.apiBase}/api/billing-portal`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_id: user.id
+        })
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        console.error('Billing portal error:', error);
+        return { error };
+      }
+
+      const { url } = await response.json();
+
+      // Redirect to Stripe Billing Portal
+      window.location.href = url;
+
+      return { data: { url }, error: null };
+    } catch (error) {
+      console.error('Billing portal exception:', error);
+      return { error };
+    }
+  }
+
+  // Use a tool and increment usage counter
+  async useTool(toolType) {
+    try {
+      const user = await authManager.getCurrentUser();
+      if (!user) {
+        return { error: { message: 'User not authenticated' } };
+      }
+
+      const response = await fetch(`${this.apiBase}/api/tools/use-tool`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_id: user.id,
+          tool_type: toolType
+        })
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        console.error('Tool usage error:', result);
+        return { error: result };
+      }
+
+      return { data: result, error: null };
+    } catch (error) {
+      console.error('Tool usage exception:', error);
+      return { error };
+    }
+  }
+}
+
+// ============================================
+// ADMIN USER MANAGER
+// ============================================
+
+class AdminUserManager {
+  constructor() {
+    this.userProfileTable = 'user_profiles';
+    this.subscriptionTable = 'subscriptions';
+    this.toolUsageTable = 'tool_usage';
+  }
+
+  // Get all users (admin only)
+  async getAllUsers() {
+    try {
+      const { data, error } = await supabase
+        .from(this.userProfileTable)
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Get all users error:', error.message);
+        return { data: null, error };
+      }
+
+      return { data, error: null };
+    } catch (error) {
+      console.error('Get all users exception:', error);
+      return { data: null, error };
+    }
+  }
+
+  // Get user subscription with details
+  async getUserSubscription(userId) {
+    try {
+      const { data, error } = await supabase
+        .from(this.subscriptionTable)
+        .select('*')
+        .eq('user_id', userId)
+        .single();
+
+      if (error && error.code === 'PGRST116') {
+        // No subscription found
+        return { data: null, error: null };
+      }
+
+      if (error) {
+        console.error('Get user subscription error:', error.message);
+        return { data: null, error };
+      }
+
+      return { data, error: null };
+    } catch (error) {
+      console.error('Get user subscription exception:', error);
+      return { data: null, error };
+    }
+  }
+
+  // Get user tool usage
+  async getUserToolUsage(userId) {
+    try {
+      const { data, error } = await supabase
+        .from(this.toolUsageTable)
+        .select('*')
+        .eq('user_id', userId);
+
+      if (error) {
+        console.error('Get user tool usage error:', error.message);
+        return { data: null, error };
+      }
+
+      return { data, error: null };
+    } catch (error) {
+      console.error('Get user tool usage exception:', error);
+      return { data: null, error };
+    }
+  }
+
+  // Get dashboard stats
+  async getDashboardStats() {
+    try {
+      // Total users
+      const { data: users, error: usersError } = await supabase
+        .from(this.userProfileTable)
+        .select('id', { count: 'exact' });
+
+      // Active subscriptions
+      const { data: activeSubscriptions, error: subsError } = await supabase
+        .from(this.subscriptionTable)
+        .select('id', { count: 'exact' })
+        .in('status', ['active', 'trialing']);
+
+      // Revenue calculation (optional - if you track subscription amounts)
+      const { data: subscriptions, error: allSubsError } = await supabase
+        .from(this.subscriptionTable)
+        .select('status, current_period_end');
+
+      if (usersError || subsError) {
+        console.error('Dashboard stats error:', usersError || subsError);
+        return { data: null, error: usersError || subsError };
+      }
+
+      const stats = {
+        totalUsers: users?.length || 0,
+        activeSubscriptions: activeSubscriptions?.length || 0,
+        monthlyRecurringRevenue: subscriptions?.length ? (subscriptions.length * 49) : 0, // $49 per subscription
+        churnRate: 0 // Calculate if needed
+      };
+
+      return { data: stats, error: null };
+    } catch (error) {
+      console.error('Dashboard stats exception:', error);
+      return { data: null, error };
+    }
+  }
+
+  // Cancel user subscription (admin action)
+  async cancelUserSubscription(userId) {
+    try {
+      const { error } = await supabase
+        .from(this.subscriptionTable)
+        .update({
+          status: 'canceled',
+          canceled_at: new Date().toISOString()
+        })
+        .eq('user_id', userId);
+
+      if (error) {
+        console.error('Cancel subscription error:', error.message);
+        return { error };
+      }
+
+      console.log('Subscription canceled for user:', userId);
+      return { error: null };
+    } catch (error) {
+      console.error('Cancel subscription exception:', error);
+      return { error };
+    }
+  }
+}
+
+// ============================================
 // INITIALIZE MANAGERS
 // ============================================
 
 const authManager = new AuthManager();
 const blogManager = new BlogManager();
+const userManager = new UserManager();
+const stripeManager = new StripeManager();
+const adminUserManager = new AdminUserManager();
 
 // Expose to global scope for access in HTML files
 if (typeof window !== 'undefined') {
   window.authManager = authManager;
   window.blogManager = blogManager;
+  window.userManager = userManager;
+  window.stripeManager = stripeManager;
+  window.adminUserManager = adminUserManager;
   window.supabase = supabase;
 }
 
 console.log('✅ Supabase client initialized');
 console.log('✅ Auth and Blog managers ready');
+console.log('✅ User, Stripe, and Admin managers ready');

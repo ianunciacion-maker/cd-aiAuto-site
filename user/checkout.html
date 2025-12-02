@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Subscribe to Ai-Auto – Complete Payment</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Complete your subscription to Ai-Auto and access all AI content tools.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Playfair+Display:wght@500;600;700;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css">
+  <style>
+    .checkout-container {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%);
+      padding: var(--space-lg);
+    }
+
+    .checkout-card {
+      background: white;
+      border-radius: 16px;
+      padding: var(--space-xxl);
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    }
+
+    .checkout-header {
+      text-align: center;
+      margin-bottom: var(--space-xl);
+    }
+
+    .checkout-header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: var(--space-sm);
+      color: var(--text-dark);
+    }
+
+    .checkout-header p {
+      color: var(--text-light);
+      font-size: 14px;
+    }
+
+    .plan-details {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: var(--space-lg);
+      margin-bottom: var(--space-lg);
+    }
+
+    .plan-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-sm) 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .plan-row:last-child {
+      border-bottom: none;
+    }
+
+    .plan-row.total {
+      border-top: 1px solid #e5e7eb;
+      margin-top: var(--space-sm);
+      padding-top: var(--space-sm);
+      font-weight: 600;
+      font-size: 16px;
+      color: var(--text-dark);
+    }
+
+    .plan-row label {
+      color: var(--text-light);
+      font-size: 14px;
+    }
+
+    .plan-row span {
+      color: var(--text-dark);
+      font-weight: 500;
+    }
+
+    .features-list {
+      margin-bottom: var(--space-lg);
+      padding: var(--space-lg);
+      background: #f0f9ff;
+      border-left: 4px solid var(--blue);
+      border-radius: 4px;
+    }
+
+    .features-list h3 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: var(--space-sm);
+    }
+
+    .features-list ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .features-list li {
+      font-size: 13px;
+      color: var(--text-light);
+      padding: 4px 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .features-list li::before {
+      content: '✓';
+      display: inline-block;
+      width: 16px;
+      color: var(--blue);
+      font-weight: bold;
+      margin-right: 8px;
+    }
+
+    .loading-state {
+      display: none;
+      text-align: center;
+      padding: var(--space-lg);
+    }
+
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid #f0f0f0;
+      border-top-color: var(--blue);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto var(--space-md);
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .checkout-btn {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-bottom: var(--space-md);
+    }
+
+    .checkout-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+    }
+
+    .checkout-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .security-note {
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-light);
+      padding-top: var(--space-md);
+      border-top: 1px solid #f0f0f0;
+    }
+
+    .security-note svg {
+      width: 16px;
+      height: 16px;
+      display: inline-block;
+      margin-right: 4px;
+      vertical-align: middle;
+    }
+
+    .error-message {
+      background: #fee;
+      color: #c33;
+      padding: var(--space-md);
+      border-radius: 8px;
+      margin-bottom: var(--space-md);
+      display: none;
+    }
+
+    .error-message.show {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="checkout-container">
+    <div class="checkout-card">
+      <div class="checkout-header">
+        <h1>Complete Your Subscription</h1>
+        <p>Start creating with AI-powered tools</p>
+      </div>
+
+      <div class="error-message" id="errorMessage"></div>
+
+      <div id="checkoutContent">
+        <div class="plan-details">
+          <h3 style="margin-top: 0; margin-bottom: var(--space-md); color: var(--text-dark);">AI Content Creation Suite</h3>
+
+          <div class="plan-row">
+            <label>Monthly subscription</label>
+            <span>$49.00</span>
+          </div>
+
+          <div class="plan-row">
+            <label>Renewal date</label>
+            <span id="renewalDate">-</span>
+          </div>
+
+          <div class="plan-row">
+            <label>Tax</label>
+            <span>Calculated at checkout</span>
+          </div>
+
+          <div class="plan-row total">
+            <label>Total (due today)</label>
+            <span>$49.00</span>
+          </div>
+        </div>
+
+        <div class="features-list">
+          <h3>What you'll get:</h3>
+          <ul>
+            <li>4 AI-powered content tools</li>
+            <li>100 generations per tool per month</li>
+            <li>Access to blog generator</li>
+            <li>Access to social captions generator</li>
+            <li>Access to email campaigns tool</li>
+            <li>Access to product descriptions tool</li>
+            <li>Monthly usage reset</li>
+            <li>Cancel anytime</li>
+          </ul>
+        </div>
+
+        <button class="checkout-btn" id="checkoutBtn">
+          Proceed to Payment
+        </button>
+
+        <div class="security-note">
+          <svg fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+          </svg>
+          Secure payment powered by Stripe
+        </div>
+      </div>
+
+      <div class="loading-state" id="loadingState">
+        <div class="loading-spinner"></div>
+        <p style="color: var(--text-light); margin: 0;">Redirecting to Stripe Checkout...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../supabase.js"></script>
+  <script>
+    class CheckoutPage {
+      constructor() {
+        this.checkoutBtn = document.getElementById('checkoutBtn');
+        this.errorMessage = document.getElementById('errorMessage');
+        this.checkoutContent = document.getElementById('checkoutContent');
+        this.loadingState = document.getElementById('loadingState');
+        this.priceId = process.env.STRIPE_PRICE_ID || 'price_YOUR_PRICE_ID';
+        this.init();
+      }
+
+      init() {
+        this.setRenewalDate();
+        this.checkoutBtn.addEventListener('click', () => this.handleCheckout());
+      }
+
+      setRenewalDate() {
+        const renewalDate = new Date();
+        renewalDate.setMonth(renewalDate.getMonth() + 1);
+        const formatted = renewalDate.toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        });
+        document.getElementById('renewalDate').textContent = formatted;
+      }
+
+      async handleCheckout() {
+        try {
+          this.checkoutBtn.disabled = true;
+          this.showLoading(true);
+
+          // Check if user is authenticated
+          const isAuth = await authManager.isAuthenticated();
+          if (!isAuth) {
+            this.showError('Please sign in to complete checkout');
+            this.checkoutBtn.disabled = false;
+            this.showLoading(false);
+            return;
+          }
+
+          // Redirect to Stripe Checkout
+          await stripeManager.checkout(this.priceId);
+
+        } catch (error) {
+          console.error('Checkout error:', error);
+          this.showError('Failed to start checkout. Please try again.');
+          this.checkoutBtn.disabled = false;
+          this.showLoading(false);
+        }
+      }
+
+      showError(message) {
+        this.errorMessage.textContent = message;
+        this.errorMessage.classList.add('show');
+      }
+
+      showLoading(isLoading) {
+        if (isLoading) {
+          this.checkoutContent.style.display = 'none';
+          this.loadingState.style.display = 'block';
+        } else {
+          this.checkoutContent.style.display = 'block';
+          this.loadingState.style.display = 'none';
+        }
+      }
+    }
+
+    // Initialize page when DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+      new CheckoutPage();
+    });
+  </script>
+</body>
+
+</html>

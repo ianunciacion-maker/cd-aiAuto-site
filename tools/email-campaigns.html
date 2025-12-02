@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Email Campaigns Generator – Ai-Auto</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Playfair+Display:wght@500;600;700;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css">
+  <style>
+    body { background: #f8f9fa; }
+    .tool-container { max-width: 1400px; margin: 0 auto; padding: var(--space-lg); }
+    .tool-header { background: white; padding: var(--space-lg); border-radius: 12px; margin-bottom: var(--space-lg); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); display: flex; justify-content: space-between; align-items: center; }
+    .tool-header h1 { font-size: 28px; font-weight: 700; color: var(--text-dark); margin: 0; }
+    .tool-header a { padding: 10px 20px; background: white; color: var(--blue); border: 1px solid var(--blue); border-radius: 8px; text-decoration: none; font-weight: 600; }
+    .tool-header a:hover { background: #f0f9ff; }
+    .tool-content { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg); }
+    @media (max-width: 768px) { .tool-content { grid-template-columns: 1fr; } }
+    .form-section, .output-section { background: white; padding: var(--space-lg); border-radius: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); }
+    .form-section h2, .output-section h2 { font-size: 18px; font-weight: 700; color: var(--text-dark); margin-top: 0; margin-bottom: var(--space-md); padding-bottom: var(--space-md); border-bottom: 1px solid #f0f0f0; }
+    .form-group { margin-bottom: var(--space-md); }
+    .form-group label { display: block; font-size: 14px; font-weight: 600; color: var(--text-dark); margin-bottom: 8px; }
+    .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 14px; font-family: inherit; }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+    .usage-info { background: #f0f9ff; border-left: 4px solid var(--blue); padding: var(--space-md); border-radius: 4px; margin-bottom: var(--space-md); }
+    .usage-info p { margin: 0; font-size: 14px; color: var(--text-dark); }
+    .usage-bar { width: 100%; height: 8px; background: #e0e7ff; border-radius: 4px; overflow: hidden; margin-top: 8px; }
+    .usage-bar-fill { height: 100%; background: linear-gradient(90deg, var(--blue), var(--purple)); }
+    .submit-btn { width: 100%; padding: 12px; background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%); color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; }
+    .submit-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3); }
+    .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    .output-content { min-height: 300px; padding: var(--space-md); background: #f9fafb; border-radius: 8px; line-height: 1.6; color: var(--text-dark); }
+    .output-content.empty { display: flex; align-items: center; justify-content: center; color: var(--text-light); font-style: italic; }
+    .copy-btn { padding: 8px 16px; background: var(--blue); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: var(--space-md); }
+    .copy-btn:hover { background: var(--purple); }
+    .error-message { background: #fee; border-left: 4px solid #c33; padding: var(--space-md); border-radius: 4px; margin-bottom: var(--space-md); color: #c33; display: none; }
+    .error-message.show { display: block; }
+  </style>
+</head>
+
+<body>
+  <div class="tool-container">
+    <div class="tool-header">
+      <h1>✉️ Email Campaigns</h1>
+      <a href="../user/dashboard.html">← Back to Dashboard</a>
+    </div>
+
+    <div class="tool-content">
+      <div class="form-section">
+        <h2>Generate Email Campaign</h2>
+
+        <div class="error-message" id="errorMessage"></div>
+
+        <div class="usage-info">
+          <p><strong id="usageText">0/100</strong> generations used this month</p>
+          <div class="usage-bar">
+            <div class="usage-bar-fill" id="usageBar" style="width: 0%"></div>
+          </div>
+        </div>
+
+        <form id="generatorForm">
+          <div class="form-group">
+            <label for="product">Product/Service</label>
+            <input type="text" id="product" name="product" placeholder="What are you promoting?" required>
+          </div>
+
+          <div class="form-group">
+            <label for="audience">Target Audience</label>
+            <input type="text" id="audience" name="audience" placeholder="e.g., Small business owners" required>
+          </div>
+
+          <div class="form-group">
+            <label for="cta">Call to Action</label>
+            <select id="cta" name="cta">
+              <option value="buy">Buy Now</option>
+              <option value="learn">Learn More</option>
+              <option value="trial">Start Free Trial</option>
+              <option value="contact">Contact Us</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="style">Email Style</label>
+            <select id="style" name="style">
+              <option value="promotional">Promotional</option>
+              <option value="educational">Educational</option>
+              <option value="newsletter">Newsletter</option>
+              <option value="personal">Personal</option>
+            </select>
+          </div>
+
+          <button type="submit" class="submit-btn" id="submitBtn">Generate Email</button>
+        </form>
+      </div>
+
+      <div class="output-section">
+        <h2>Output</h2>
+        <div class="output-content empty" id="outputContent">
+          Fill in the form and click "Generate" to create email campaigns
+        </div>
+        <button class="copy-btn" id="copyBtn" style="display: none;">📋 Copy to Clipboard</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../supabase.js"></script>
+  <script>
+    class EmailGenerator {
+      constructor() {
+        this.form = document.getElementById('generatorForm');
+        this.submitBtn = document.getElementById('submitBtn');
+        this.outputContent = document.getElementById('outputContent');
+        this.copyBtn = document.getElementById('copyBtn');
+        this.errorMessage = document.getElementById('errorMessage');
+        this.usageBar = document.getElementById('usageBar');
+        this.usageText = document.getElementById('usageText');
+        this.toolType = 'email_campaigns';
+        this.init();
+      }
+
+      async init() {
+        const isAuth = await authManager.isAuthenticated();
+        if (!isAuth) {
+          window.location.href = '../user/login.html';
+          return;
+        }
+        await this.loadUsage();
+        this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+        this.copyBtn.addEventListener('click', () => this.copyOutput());
+      }
+
+      async loadUsage() {
+        const { data: usage } = await userManager.getToolUsage(this.toolType);
+        if (usage) {
+          const percentage = (usage.generation_count / usage.monthly_limit) * 100;
+          this.usageBar.style.width = percentage + '%';
+          this.usageText.textContent = `${usage.generation_count}/${usage.monthly_limit}`;
+        }
+      }
+
+      async handleSubmit(e) {
+        e.preventDefault();
+        this.clearError();
+
+        const product = document.getElementById('product').value.trim();
+        if (!product) {
+          this.showError('Please enter a product or service');
+          return;
+        }
+
+        this.setSubmitting(true);
+
+        try {
+          const { error, code } = await stripeManager.useTool(this.toolType);
+
+          if (error) {
+            if (code === 'USAGE_LIMIT_EXCEEDED') {
+              this.showError('Monthly limit reached.');
+            } else {
+              this.showError(error.message || 'Unable to generate content.');
+            }
+            this.setSubmitting(false);
+            return;
+          }
+
+          const output = `Subject: Discover ${product}\n\nHi there,\n\nWe're excited to share ${product} with you!\n\nBest regards,\nThe Team`;
+          this.displayOutput(output);
+          await this.loadUsage();
+
+        } catch (error) {
+          this.showError('Failed. Try again.');
+        } finally {
+          this.setSubmitting(false);
+        }
+      }
+
+      displayOutput(content) {
+        this.outputContent.innerHTML = `<pre style="white-space: pre-wrap;">${this.escapeHtml(content)}</pre>`;
+        this.outputContent.classList.remove('empty');
+        this.copyBtn.style.display = 'block';
+        this.currentOutput = content;
+      }
+
+      copyOutput() {
+        if (this.currentOutput) {
+          navigator.clipboard.writeText(this.currentOutput);
+          this.copyBtn.textContent = '✓ Copied!';
+          setTimeout(() => { this.copyBtn.textContent = '📋 Copy to Clipboard'; }, 2000);
+        }
+      }
+
+      escapeHtml(text) {
+        const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+        return text.replace(/[&<>"']/g, m => map[m]);
+      }
+
+      showError(msg) { this.errorMessage.textContent = msg; this.errorMessage.classList.add('show'); }
+      clearError() { this.errorMessage.classList.remove('show'); }
+      setSubmitting(is) { this.submitBtn.disabled = is; this.submitBtn.textContent = is ? '⏳ Generating...' : 'Generate Email'; }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => { new EmailGenerator(); });
+  </script>
+</body>
+
+</html>

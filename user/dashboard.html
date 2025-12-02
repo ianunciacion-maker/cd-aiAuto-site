@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard – Ai-Auto</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Access your Ai-Auto tools and manage your subscription.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Playfair+Display:wght@500;600;700;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css">
+  <style>
+    body {
+      background: #f8f9fa;
+    }
+
+    .dashboard-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: var(--space-lg);
+    }
+
+    .dashboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-xl);
+      background: white;
+      padding: var(--space-lg);
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .dashboard-header h1 {
+      font-size: 28px;
+      color: var(--text-dark);
+      margin: 0;
+    }
+
+    .dashboard-actions {
+      display: flex;
+      gap: var(--space-md);
+    }
+
+    .dashboard-actions button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 14px;
+    }
+
+    .btn-secondary {
+      background: white;
+      color: var(--blue);
+      border: 1px solid var(--blue);
+    }
+
+    .btn-secondary:hover {
+      background: #f0f9ff;
+    }
+
+    .btn-danger {
+      background: #fee;
+      color: #c33;
+    }
+
+    .btn-danger:hover {
+      background: #fdd;
+    }
+
+    .loading-state {
+      text-align: center;
+      padding: var(--space-xl);
+      color: var(--text-light);
+    }
+
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid #f0f0f0;
+      border-top-color: var(--blue);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto var(--space-md);
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .error-banner {
+      background: #fee;
+      border-left: 4px solid #c33;
+      padding: var(--space-lg);
+      border-radius: 8px;
+      margin-bottom: var(--space-lg);
+      color: #c33;
+      display: none;
+    }
+
+    .error-banner.show {
+      display: block;
+    }
+
+    .section {
+      background: white;
+      border-radius: 12px;
+      padding: var(--space-lg);
+      margin-bottom: var(--space-lg);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: var(--space-md);
+      padding-bottom: var(--space-md);
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .subscription-status {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--space-lg);
+      margin-bottom: var(--space-lg);
+    }
+
+    .status-card {
+      padding: var(--space-lg);
+      background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%);
+      border-radius: 12px;
+      color: white;
+    }
+
+    .status-card h3 {
+      font-size: 14px;
+      font-weight: 500;
+      opacity: 0.9;
+      margin: 0 0 8px 0;
+    }
+
+    .status-card .value {
+      font-size: 24px;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .status-card.inactive {
+      background: linear-gradient(135deg, #ccc 0%, #aaa 100%);
+    }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--space-lg);
+      margin-bottom: var(--space-lg);
+    }
+
+    .tool-card {
+      padding: var(--space-lg);
+      border: 1px solid #e0e0e0;
+      border-radius: 12px;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .tool-card:hover {
+      border-color: var(--blue);
+      box-shadow: 0 8px 24px rgba(59, 130, 246, 0.15);
+      transform: translateY(-4px);
+    }
+
+    .tool-card.locked {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .tool-card.locked:hover {
+      border-color: #e0e0e0;
+      box-shadow: none;
+      transform: none;
+    }
+
+    .tool-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin: 0 0 var(--space-sm) 0;
+    }
+
+    .tool-card p {
+      color: var(--text-light);
+      font-size: 13px;
+      margin: 0 0 var(--space-md) 0;
+    }
+
+    .tool-card .usage {
+      font-size: 13px;
+      color: var(--text-light);
+      margin-bottom: var(--space-sm);
+    }
+
+    .usage-bar {
+      width: 100%;
+      height: 8px;
+      background: #f0f0f0;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: var(--space-md);
+    }
+
+    .usage-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--blue), var(--purple));
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .tool-card button {
+      width: 100%;
+      padding: 10px;
+      background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .tool-card button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(59, 130, 246, 0.3);
+    }
+
+    .tool-card.locked button {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    .profile-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--space-lg);
+    }
+
+    .info-card {
+      padding: var(--space-lg);
+      background: #f9fafb;
+      border-radius: 8px;
+    }
+
+    .info-card label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-light);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .info-card .value {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="dashboard-container">
+    <!-- Header -->
+    <div class="dashboard-header">
+      <div>
+        <h1>Welcome, <span id="userName">User</span>!</h1>
+      </div>
+      <div class="dashboard-actions">
+        <button class="btn-secondary" id="billingBtn">Manage Subscription</button>
+        <button class="btn-secondary" id="logoutBtn">Sign Out</button>
+      </div>
+    </div>
+
+    <!-- Error Banner -->
+    <div class="error-banner" id="errorBanner"></div>
+
+    <!-- Loading State -->
+    <div class="loading-state" id="loadingState">
+      <div class="loading-spinner"></div>
+      <p>Loading your dashboard...</p>
+    </div>
+
+    <!-- Main Content -->
+    <div id="mainContent" style="display: none;">
+      <!-- Subscription Status -->
+      <div class="section">
+        <h2 class="section-title">Subscription Status</h2>
+        <div class="subscription-status" id="subscriptionStatus"></div>
+      </div>
+
+      <!-- Tools -->
+      <div class="section">
+        <h2 class="section-title">Your Tools</h2>
+        <div class="tools-grid" id="toolsGrid"></div>
+      </div>
+
+      <!-- Profile -->
+      <div class="section">
+        <h2 class="section-title">Profile</h2>
+        <div class="profile-section" id="profileSection"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../supabase.js"></script>
+  <script>
+    class UserDashboard {
+      constructor() {
+        this.currentUser = null;
+        this.subscription = null;
+        this.toolUsage = null;
+        this.toolTypes = [
+          { id: 'blog_generator', name: 'Blog Generator', desc: 'Create engaging blog posts with AI' },
+          { id: 'social_captions', name: 'Social Captions', desc: 'Generate perfect social media captions' },
+          { id: 'email_campaigns', name: 'Email Campaigns', desc: 'Write compelling email campaigns' },
+          { id: 'product_descriptions', name: 'Product Descriptions', desc: 'Create product descriptions' }
+        ];
+        this.init();
+      }
+
+      async init() {
+        try {
+          // Check authentication
+          const isAuth = await authManager.isAuthenticated();
+          if (!isAuth) {
+            window.location.href = './login.html';
+            return;
+          }
+
+          // Load user data
+          await this.loadUserData();
+          this.render();
+          this.setupEventListeners();
+
+          // Hide loading, show content
+          document.getElementById('loadingState').style.display = 'none';
+          document.getElementById('mainContent').style.display = 'block';
+
+        } catch (error) {
+          console.error('Dashboard init error:', error);
+          this.showError('Failed to load dashboard. Please refresh the page.');
+        }
+      }
+
+      async loadUserData() {
+        // Get current user
+        this.currentUser = await authManager.getCurrentUser();
+
+        // Get user profile
+        const { data: profile } = await userManager.getCurrentProfile();
+        this.userProfile = profile;
+
+        // Get subscription status
+        const { data: subscription } = await userManager.getSubscriptionStatus();
+        this.subscription = subscription;
+
+        // Get tool usage
+        const { data: toolUsage } = await userManager.getAllToolUsage();
+        this.toolUsage = toolUsage || [];
+      }
+
+      render() {
+        this.renderHeader();
+        this.renderSubscriptionStatus();
+        this.renderTools();
+        this.renderProfile();
+      }
+
+      renderHeader() {
+        const userName = this.userProfile?.full_name || this.currentUser?.email || 'User';
+        document.getElementById('userName').textContent = userName.split(' ')[0];
+      }
+
+      renderSubscriptionStatus() {
+        const status = this.subscription?.status || 'inactive';
+        const isActive = status === 'active' || status === 'trialing';
+        const endDate = this.subscription?.current_period_end
+          ? new Date(this.subscription.current_period_end).toLocaleDateString('en-US')
+          : 'N/A';
+
+        const statusHtml = `
+          <div class="status-card ${!isActive ? 'inactive' : ''}">
+            <h3>Status</h3>
+            <p class="value" style="text-transform: capitalize;">${status}</p>
+          </div>
+          <div class="status-card ${!isActive ? 'inactive' : ''}">
+            <h3>Plan</h3>
+            <p class="value">$49/mo</p>
+          </div>
+          <div class="status-card ${!isActive ? 'inactive' : ''}">
+            <h3>Renewal Date</h3>
+            <p class="value" style="font-size: 16px;">${endDate}</p>
+          </div>
+        `;
+
+        document.getElementById('subscriptionStatus').innerHTML = statusHtml;
+      }
+
+      renderTools() {
+        const canAccess = this.subscription?.status === 'active' || this.subscription?.status === 'trialing';
+
+        const toolsHtml = this.toolTypes.map(tool => {
+          const usage = this.toolUsage.find(u => u.tool_type === tool.id);
+          const used = usage?.generation_count || 0;
+          const limit = usage?.monthly_limit || 100;
+          const percentage = Math.min((used / limit) * 100, 100);
+
+          const locked = !canAccess;
+
+          // Map tool IDs to file names
+          const toolFileMap = {
+            'blog_generator': 'blog-generator',
+            'social_captions': 'social-captions',
+            'email_campaigns': 'email-campaigns',
+            'product_descriptions': 'product-descriptions'
+          };
+
+          return `
+            <div class="tool-card ${locked ? 'locked' : ''}">
+              <h3>${tool.name}</h3>
+              <p>${tool.desc}</p>
+              ${canAccess ? `
+                <div class="usage">
+                  ${used} / ${limit} used this month
+                </div>
+                <div class="usage-bar">
+                  <div class="usage-bar-fill" style="width: ${percentage}%"></div>
+                </div>
+                <button onclick="window.location.href = '../tools/${toolFileMap[tool.id] || tool.id}.html'">
+                  Use Tool
+                </button>
+              ` : `
+                <div class="usage" style="margin-bottom: var(--space-md); color: #c33;">
+                  Upgrade to access
+                </div>
+                <button disabled>Locked</button>
+              `}
+            </div>
+          `;
+        }).join('');
+
+        document.getElementById('toolsGrid').innerHTML = toolsHtml;
+      }
+
+      renderProfile() {
+        const profileHtml = `
+          <div class="info-card">
+            <label>Full Name</label>
+            <div class="value">${this.userProfile?.full_name || 'Not set'}</div>
+          </div>
+          <div class="info-card">
+            <label>Email</label>
+            <div class="value">${this.currentUser?.email || 'N/A'}</div>
+          </div>
+          <div class="info-card">
+            <label>Member Since</label>
+            <div class="value">${new Date(this.userProfile?.created_at).toLocaleDateString('en-US')}</div>
+          </div>
+        `;
+
+        document.getElementById('profileSection').innerHTML = profileHtml;
+      }
+
+      setupEventListeners() {
+        document.getElementById('billingBtn').addEventListener('click', async () => {
+          try {
+            await stripeManager.openBillingPortal();
+          } catch (error) {
+            this.showError('Failed to open billing portal');
+          }
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+          await authManager.logout();
+        });
+      }
+
+      showError(message) {
+        const banner = document.getElementById('errorBanner');
+        banner.textContent = message;
+        banner.classList.add('show');
+      }
+    }
+
+    // Initialize dashboard when DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+      new UserDashboard();
+    });
+  </script>
+</body>
+
+</html>
