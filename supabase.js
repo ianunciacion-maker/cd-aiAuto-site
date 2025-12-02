@@ -24,11 +24,8 @@ class AuthManager {
     this.adminEmails = [
       'setyourownsalary@gmail.com',
     ];
-    this.init();
-  }
-
-  async init() {
-    // Listen for auth state changes
+    this.isInitialized = false;
+    // Setup auth state listener immediately (non-async)
     supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'SIGNED_IN') {
         console.log('User signed in:', session.user.email);
@@ -37,11 +34,19 @@ class AuthManager {
         this.clearSession();
       }
     });
+    // Mark as initialized
+    this.isInitialized = true;
+  }
 
-    // Check for existing session on init
-    const { data: { session } } = await supabase.auth.getSession();
-    if (session) {
-      console.log('Existing session found:', session.user.email);
+  async init() {
+    // Check for existing session
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        console.log('Existing session found:', session.user.email);
+      }
+    } catch (error) {
+      console.error('Error checking session:', error);
     }
   }
 

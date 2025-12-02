@@ -323,6 +323,9 @@
       }
 
       async init() {
+        // Initialize auth manager and check session
+        await authManager.init();
+
         // Protect admin route
         if (!await authManager.protectAdminRoute()) {
           return;

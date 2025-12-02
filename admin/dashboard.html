@@ -320,13 +320,16 @@
       }
 
       async init() {
+        // Initialize auth manager and check session
+        await authManager.init();
+
         // Protect admin route
         if (!await authManager.protectAdminRoute()) {
           return;
         }
 
         this.logoutBtn.addEventListener('click', () => authManager.logout());
-        
+
         try {
           await this.loadDashboard();
         } catch (error) {
