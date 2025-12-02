@@ -810,11 +810,8 @@
       }
 
       createExcerpt(content, maxLength = 150) {
-        // Strip markdown syntax
+        // Strip HTML tags and formatting to create plain text excerpt
         let stripped = content
-          .replace(/[#*`_[\]()]/g, '') // Remove markdown formatting chars
-          .replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1') // Convert [text](url) to text
-          .replace(/!\[([^\]]*)\]\([^\)]+\)/g, '') // Remove images
           .replace(/<[^>]*>/g, '') // Remove HTML tags
           .trim();
         return stripped.length > maxLength
@@ -893,9 +890,8 @@
     });
   </script>
 
-  <!-- Supabase and markdown support -->
+  <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script src="./supabase.js"></script>
 
 </body>

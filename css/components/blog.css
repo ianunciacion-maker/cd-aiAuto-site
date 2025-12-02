@@ -261,6 +261,52 @@
   margin: var(--space-md) 0;
 }
 
+/* Quill Editor Content Styling */
+.blog-post-content.ql-editor {
+  border: none;
+  padding: var(--space-lg);
+}
+
+.blog-post-content .ql-size-small {
+  font-size: 0.75em;
+}
+
+.blog-post-content .ql-size-large {
+  font-size: 1.5em;
+}
+
+.blog-post-content .ql-size-huge {
+  font-size: 2em;
+}
+
+.blog-post-content .ql-align-center {
+  text-align: center;
+}
+
+.blog-post-content .ql-align-right {
+  text-align: right;
+}
+
+.blog-post-content .ql-align-justify {
+  text-align: justify;
+}
+
+.blog-post-content strong {
+  font-weight: 700;
+}
+
+.blog-post-content em {
+  font-style: italic;
+}
+
+.blog-post-content u {
+  text-decoration: underline;
+}
+
+.blog-post-content s {
+  text-decoration: line-through;
+}
+
 /* Blog Navigation */
 .blog-nav {
   display: flex;

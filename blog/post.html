@@ -118,9 +118,10 @@
   </footer>
 
   <!-- Scripts -->
-  <!-- Supabase and markdown support -->
+  <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <!-- Quill styles for content display -->
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
   <script src="../supabase.js"></script>
   <script>
     // Blog post functionality
@@ -178,8 +179,8 @@
           day: 'numeric'
         });
 
-        // Render markdown content to HTML
-        const renderedContent = marked.parse(post.content);
+        // Content is already HTML from Quill editor
+        const renderedContent = post.content;
 
         // Include featured image if available
         const featuredImageHtml = post.featured_image
@@ -197,7 +198,7 @@
 
           ${featuredImageHtml}
 
-          <article class="blog-post-content">
+          <article class="blog-post-content ql-editor">
             ${renderedContent}
           </article>
         `;
@@ -272,11 +273,8 @@
       }
 
       createExcerpt(content, maxLength = 160) {
-        // Strip markdown syntax
+        // Strip HTML tags and formatting to create plain text excerpt
         let stripped = content
-          .replace(/[#*`_[\]()]/g, '') // Remove markdown formatting chars
-          .replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1') // Convert [text](url) to text
-          .replace(/!\[([^\]]*)\]\([^\)]+\)/g, '') // Remove images
           .replace(/<[^>]*>/g, '') // Remove HTML tags
           .trim();
         return stripped.length > maxLength
