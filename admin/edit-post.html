@@ -328,9 +328,9 @@
         this.init();
       }
 
-      init() {
+      async init() {
         // Protect admin route
-        if (!authManager.protectAdminRoute()) {
+        if (!await authManager.protectAdminRoute()) {
           return;
         }
 
