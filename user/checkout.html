@@ -429,12 +429,16 @@
           this.checkoutBtn.disabled = true;
           this.showLoading(true);
 
-          // Check if user is authenticated
-          const isAuth = await authManager.isAuthenticated();
-          if (!isAuth) {
+          // Get current user directly instead of just checking authentication
+          const user = await authManager.getCurrentUser();
+          if (!user) {
             this.showError('Please sign in to complete checkout');
             this.checkoutBtn.disabled = false;
             this.showLoading(false);
+            // Redirect to login after a short delay
+            setTimeout(() => {
+              window.location.href = './login.html';
+            }, 2000);
             return;
           }
 
@@ -467,7 +471,10 @@
 
     // Initialize page when DOM is ready
     document.addEventListener('DOMContentLoaded', () => {
-      new CheckoutPage();
+      // Give Supabase Auth time to load the session from storage
+      setTimeout(() => {
+        new CheckoutPage();
+      }, 500);
     });
   </script>
 </body>
