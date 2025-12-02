@@ -274,6 +274,17 @@
           </div>
 
           <div class="form-group">
+            <label for="featuredImage" class="form-label">Featured Image URL (Optional)</label>
+            <input
+              type="url"
+              id="featuredImage"
+              name="featuredImage"
+              class="form-input"
+              placeholder="https://example.com/image.jpg"
+            >
+          </div>
+
+          <div class="form-group">
             <label for="content" class="form-label">Content</label>
             <div id="editor-container"></div>
             <div class="char-count">
@@ -332,6 +343,7 @@
         this.form = document.getElementById('postForm');
         this.titleInput = document.getElementById('title');
         this.excerptInput = document.getElementById('excerpt');
+        this.featuredImageInput = document.getElementById('featuredImage');
         this.slugInput = document.getElementById('slug');
         this.statusSelect = document.getElementById('status');
         this.saveDraftBtn = document.getElementById('saveDraftBtn');
@@ -455,6 +467,7 @@
 
           this.titleInput.value = data.title;
           this.excerptInput.value = data.excerpt || '';
+          this.featuredImageInput.value = data.featured_image || '';
           // Set Quill content (data.content is HTML from Quill)
           this.quill.root.innerHTML = data.content;
           this.slugInput.value = data.slug;
@@ -572,6 +585,7 @@
         return {
           title: this.titleInput.value.trim(),
           excerpt: this.excerptInput.value.trim(),
+          featured_image: this.featuredImageInput.value.trim(),
           content: this.quill.root.innerHTML.trim(),
           slug: this.slugInput.value.trim(),
           status: this.statusSelect.value,
