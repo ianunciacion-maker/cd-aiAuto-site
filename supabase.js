@@ -250,6 +250,7 @@ class BlogManager {
         title: postData.title,
         slug: postData.slug,
         excerpt: postData.excerpt || null,
+        featured_image: postData.featured_image || null,
         content: postData.content,
         content_type: 'html',
         author_id: user.id,
