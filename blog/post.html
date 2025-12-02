@@ -118,6 +118,9 @@
   </footer>
 
   <!-- Scripts -->
+  <!-- Supabase and markdown support -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script src="../supabase.js"></script>
   <script>
     // Blog post functionality
@@ -173,6 +176,9 @@
           day: 'numeric'
         });
 
+        // Render markdown content to HTML
+        const renderedContent = marked.parse(post.content);
+
         const postHTML = `
           <article class="blog-post-header">
             <h1 class="blog-post-title-main">${this.escapeHtml(post.title)}</h1>
@@ -183,7 +189,7 @@
           </article>
 
           <article class="blog-post-content">
-            ${post.content}
+            ${renderedContent}
           </article>
         `;
 
@@ -226,14 +232,24 @@
       async checkAdminAccess() {
         const isAdmin = await authManager.isAdmin();
         if (isAdmin) {
-          this.editLink.style.display = 'inline-flex';
-          this.editLink.href = `../admin/edit-post.html?id=${this.slug}`;
+          // Need to get post ID from post data
+          const { data } = await blogManager.getPostBySlug(this.slug);
+          if (data && data.id) {
+            this.editLink.style.display = 'inline-flex';
+            this.editLink.href = `../admin/edit-post.html?id=${data.id}`;
+          }
         }
       }
 
       createExcerpt(content, maxLength = 160) {
-        const stripped = content.replace(/<[^>]*>/g, '');
-        return stripped.length > maxLength 
+        // Strip markdown syntax
+        let stripped = content
+          .replace(/[#*`_[\]()]/g, '') // Remove markdown formatting chars
+          .replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1') // Convert [text](url) to text
+          .replace(/!\[([^\]]*)\]\([^\)]+\)/g, '') // Remove images
+          .replace(/<[^>]*>/g, '') // Remove HTML tags
+          .trim();
+        return stripped.length > maxLength
           ? stripped.substring(0, maxLength) + '...'
           : stripped;
       }

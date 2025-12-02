@@ -294,6 +294,13 @@
   </main>
 
   <!-- Scripts -->
+  <!-- Supabase client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Markdown editor -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+  <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+  <!-- Marked.js for markdown parsing -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script src="../supabase.js"></script>
   <script>
     // Blog post editor functionality
@@ -321,18 +328,69 @@
           return;
         }
 
+        // Initialize SimpleMDE editor
+        this.initializeEditor();
+
         // Check if we're editing an existing post
         this.checkEditMode();
 
         // Add event listeners
         this.titleInput.addEventListener('input', () => this.updateSlug());
-        this.contentInput.addEventListener('input', () => this.updateCounts());
         this.form.addEventListener('submit', (e) => this.handleSubmit(e));
         this.saveDraftBtn.addEventListener('click', () => this.saveDraft());
-        
+
         // Clear messages on input
-        [this.titleInput, this.contentInput, this.slugInput].forEach(input => {
+        [this.titleInput, this.slugInput].forEach(input => {
           input.addEventListener('input', () => this.clearMessages());
+        });
+      }
+
+      initializeEditor() {
+        // Initialize SimpleMDE with custom configuration
+        this.editor = new SimpleMDE({
+          element: document.getElementById('content'),
+          toolbar: [
+            'bold', 'italic', 'heading', '|',
+            'quote', 'unordered-list', 'ordered-list', '|',
+            'link', {
+              name: 'image-upload',
+              action: async (editor) => {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = 'image/*';
+                input.onchange = async (e) => {
+                  const file = e.target.files[0];
+                  if (!file) return;
+
+                  try {
+                    const { url, error } = await blogManager.uploadImage(file);
+                    if (error) {
+                      alert('Image upload failed: ' + error.message);
+                      return;
+                    }
+
+                    const cm = editor.codemirror;
+                    const output = `![${file.name}](${url})`;
+                    cm.replaceSelection(output);
+                  } catch (error) {
+                    alert('Image upload failed');
+                  }
+                };
+                input.click();
+              },
+              className: 'fa fa-image',
+              title: 'Upload Image'
+            },
+            '|', 'preview', 'guide'
+          ],
+          spellChecker: true,
+          autosave: {
+            enabled: true,
+            uniqueId: 'blog-post-editor',
+            delay: 1000
+          },
+          lineNumbers: false,
+          lineWrapping: true
         });
       }
 
@@ -350,7 +408,7 @@
       async loadPost(postId) {
         try {
           const { data, error } = await blogManager.getPostBySlug(postId);
-          
+
           if (error || !data) {
             this.showError('Failed to load post for editing');
             return;
@@ -358,12 +416,14 @@
 
           this.titleInput.value = data.title;
           this.excerptInput.value = data.excerpt || '';
-          this.contentInput.value = data.content;
+          this.editor.value(data.content);
           this.slugInput.value = data.slug;
           this.statusSelect.value = data.status;
-          
+          this.postId = data.id;
+          this.isEditMode = true;
+
           this.updateCounts();
-          
+
           // Update page title
           document.title = `Edit Post – Admin – Ai-Auto`;
           document.querySelector('.admin-title').textContent = 'Edit Post';
@@ -383,9 +443,9 @@
       }
 
       updateCounts() {
-        const content = this.contentInput.value;
+        const content = this.editor.value();
         this.charCount.textContent = content.length;
-        
+
         const words = content.trim().split(/\s+/).filter(word => word.length > 0);
         this.wordCount.textContent = words.length;
       }
@@ -458,7 +518,7 @@
         return {
           title: this.titleInput.value.trim(),
           excerpt: this.excerptInput.value.trim(),
-          content: this.contentInput.value.trim(),
+          content: this.editor.value().trim(),
           slug: this.slugInput.value.trim(),
           status: this.statusSelect.value,
           published_at: this.statusSelect.value === 'published' ? new Date().toISOString() : null
@@ -467,7 +527,7 @@
 
       validateForm() {
         const title = this.titleInput.value.trim();
-        const content = this.contentInput.value.trim();
+        const content = this.editor.value().trim();
         const slug = this.slugInput.value.trim();
 
         if (!title) {

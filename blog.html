@@ -787,7 +787,13 @@
       }
 
       createExcerpt(content, maxLength = 150) {
-        const stripped = content.replace(/<[^>]*>/g, '');
+        // Strip markdown syntax
+        let stripped = content
+          .replace(/[#*`_[\]()]/g, '') // Remove markdown formatting chars
+          .replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1') // Convert [text](url) to text
+          .replace(/!\[([^\]]*)\]\([^\)]+\)/g, '') // Remove images
+          .replace(/<[^>]*>/g, '') // Remove HTML tags
+          .trim();
         return stripped.length > maxLength
           ? stripped.substring(0, maxLength) + '...'
           : stripped;
@@ -863,6 +869,11 @@
       });
     });
   </script>
+
+  <!-- Supabase and markdown support -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="./supabase.js"></script>
 
 </body>
 
