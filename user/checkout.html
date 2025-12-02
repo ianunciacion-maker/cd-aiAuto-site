@@ -403,8 +403,13 @@
         this.errorMessage = document.getElementById('errorMessage');
         this.checkoutContent = document.getElementById('checkoutContent');
         this.loadingState = document.getElementById('loadingState');
-        // Price ID for the AI Content Creation Suite monthly subscription
+
+        // ⚠️ IMPORTANT: Update this with your actual Stripe Price ID
+        // Get it from: Stripe Dashboard → Products → Your Product → Click on the price
+        // It should match the STRIPE_PRICE_ID environment variable in Vercel
+        // Format: price_XXXXXXXXXXXXX
         this.priceId = 'price_1SZvk1Dz3xUi80YhG1GcElpd';
+
         this.init();
       }
 
@@ -443,11 +448,41 @@
           }
 
           // Redirect to Stripe Checkout
-          await stripeManager.checkout(this.priceId);
+          const result = await stripeManager.checkout(this.priceId);
+
+          // Check if there was an error
+          if (result && result.error) {
+            console.error('Stripe checkout error:', result.error);
+
+            // Show specific error messages
+            let errorMsg = 'Failed to start checkout. ';
+            if (result.error.message) {
+              errorMsg += result.error.message;
+            } else if (result.error.includes('FUNCTION_INVOCATION_FAILED')) {
+              errorMsg += 'Server configuration error. Please contact support.';
+            } else {
+              errorMsg += 'Please try again or contact support.';
+            }
+
+            this.showError(errorMsg);
+            this.checkoutBtn.disabled = false;
+            this.showLoading(false);
+          }
 
         } catch (error) {
           console.error('Checkout error:', error);
-          this.showError('Failed to start checkout. Please try again.');
+
+          // Show more specific error message
+          let errorMsg = 'Failed to start checkout. ';
+          if (error.message && error.message.includes('fetch')) {
+            errorMsg += 'Unable to connect to payment server. Please check your connection.';
+          } else if (error.message) {
+            errorMsg += error.message;
+          } else {
+            errorMsg += 'Please try again or contact support.';
+          }
+
+          this.showError(errorMsg);
           this.checkoutBtn.disabled = false;
           this.showLoading(false);
         }
