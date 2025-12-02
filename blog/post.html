@@ -71,7 +71,7 @@
   <!-- BLOG NAVIGATION -->
   <nav class="blog-nav" id="blogNavigation" style="display: none;">
     <a href="../blog.html" class="blog-nav-link">← Back to Blog</a>
-    <a href="#" class="blog-nav-link" id="editPostLink" style="display: none;">Edit Post</a>
+    <a href="#" class="blog-nav-link" id="nextPostLink" style="display: none;">Next Post →</a>
   </nav>
 
   <!-- FOOTER CTA -->
@@ -129,8 +129,10 @@
         this.postContent = document.getElementById('blogPostContent');
         this.loading = document.getElementById('postLoading');
         this.navigation = document.getElementById('blogNavigation');
-        this.editLink = document.getElementById('editPostLink');
+        this.nextPostLink = document.getElementById('nextPostLink');
         this.slug = this.getSlugFromUrl();
+        this.allPosts = [];
+        this.currentPostIndex = 0;
         this.init();
       }
 
@@ -147,7 +149,7 @@
 
         try {
           await this.loadBlogPost();
-          await this.checkAdminAccess();
+          await this.loadNextPostLink();
         } catch (error) {
           this.showError('Failed to load blog post. Please try again later.');
         }
@@ -243,15 +245,29 @@
         tag.content = content;
       }
 
-      async checkAdminAccess() {
-        const isAdmin = await authManager.isAdmin();
-        if (isAdmin) {
-          // Need to get post ID from post data
-          const { data } = await blogManager.getPostBySlug(this.slug);
-          if (data && data.id) {
-            this.editLink.style.display = 'inline-flex';
-            this.editLink.href = `../admin/edit-post.html?id=${data.id}`;
+      async loadNextPostLink() {
+        try {
+          // Get all published posts
+          const { data: allPosts } = await blogManager.getAllPosts();
+
+          if (!allPosts || allPosts.length === 0) {
+            return;
           }
+
+          this.allPosts = allPosts;
+
+          // Find the current post index
+          this.currentPostIndex = allPosts.findIndex(post => post.slug === this.slug);
+
+          // If there's a next post, show the link
+          if (this.currentPostIndex !== -1 && this.currentPostIndex < allPosts.length - 1) {
+            const nextPost = allPosts[this.currentPostIndex + 1];
+            this.nextPostLink.style.display = 'inline-flex';
+            this.nextPostLink.href = `post.html?slug=${nextPost.slug}`;
+            this.nextPostLink.textContent = `Next Post: ${nextPost.title} →`;
+          }
+        } catch (error) {
+          console.error('Error loading next post link:', error);
         }
       }
 
