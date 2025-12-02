@@ -87,6 +87,85 @@
       opacity: 0.7;
     }
 
+    .section {
+      background: var(--bg-white);
+      border: var(--border-thick);
+      box-shadow: var(--shadow-hard);
+      margin-bottom: var(--space-lg);
+    }
+
+    .section-header {
+      padding: var(--space-md);
+      border-bottom: var(--border-thick);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .section-title {
+      font-size: 24px;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    .section-content {
+      max-height: 600px;
+      overflow-y: auto;
+    }
+
+    .user-row {
+      padding: var(--space-md);
+      border-bottom: var(--border-thin);
+      display: grid;
+      grid-template-columns: 2fr 1.5fr 1.5fr 1fr auto;
+      gap: var(--space-md);
+      align-items: center;
+    }
+
+    .user-row:hover {
+      background: var(--bg-paper);
+    }
+
+    .user-row:last-child {
+      border-bottom: none;
+    }
+
+    .user-email {
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .user-status {
+      padding: 4px 8px;
+      border: var(--border-thin);
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      text-align: center;
+    }
+
+    .user-status.active {
+      background: var(--green);
+      color: #000;
+    }
+
+    .user-status.inactive {
+      background: var(--gold);
+      color: #000;
+    }
+
+    .user-status.past_due {
+      background: var(--coral);
+      color: white;
+    }
+
+    .user-actions {
+      display: flex;
+      gap: var(--space-xs);
+    }
+
     .posts-section {
       background: var(--bg-white);
       border: var(--border-thick);
@@ -292,6 +371,16 @@
         <div class="loading">Loading dashboard...</div>
       </div>
 
+      <!-- Users Management Section -->
+      <section class="section">
+        <div class="section-header">
+          <h2 class="section-title">Users & Subscriptions</h2>
+        </div>
+        <div class="section-content" id="usersContainer">
+          <div class="loading">Loading users...</div>
+        </div>
+      </section>
+
       <!-- Blog Posts Section -->
       <section class="posts-section">
         <div class="posts-header">
@@ -314,6 +403,7 @@
     class AdminDashboard {
       constructor() {
         this.statsContainer = document.getElementById('dashboardStats');
+        this.usersContainer = document.getElementById('usersContainer');
         this.postsList = document.getElementById('postsList');
         this.logoutBtn = document.getElementById('logoutBtn');
         this.init();
@@ -340,21 +430,37 @@
       async loadDashboard() {
         // Load posts for admin
         const { data: posts, error } = await blogManager.getAllPostsAdmin();
-        
+
         if (error) {
           throw error;
         }
 
-        this.renderStats(posts);
+        // Load users and subscriptions
+        const { data: users } = await adminUserManager.getAllUsers();
+        const subscriptions = {};
+        if (users) {
+          for (const user of users) {
+            const { data: sub } = await adminUserManager.getUserSubscription(user.id);
+            subscriptions[user.id] = sub;
+          }
+        }
+
+        this.renderStats(posts, users);
+        this.renderUsers(users, subscriptions);
         this.renderPosts(posts);
       }
 
-      renderStats(posts) {
+      renderStats(posts, users) {
         const publishedCount = posts.filter(post => post.status === 'published').length;
         const draftCount = posts.filter(post => post.status === 'draft').length;
         const totalCount = posts.length;
+        const usersCount = users ? users.length : 0;
 
         const statsHTML = `
+          <div class="stat-card">
+            <div class="stat-number">${usersCount}</div>
+            <div class="stat-label">Total Users</div>
+          </div>
           <div class="stat-card">
             <div class="stat-number">${totalCount}</div>
             <div class="stat-label">Total Posts</div>
@@ -370,6 +476,54 @@
         `;
 
         this.statsContainer.innerHTML = statsHTML;
+      }
+
+      renderUsers(users, subscriptions) {
+        if (!users || users.length === 0) {
+          this.usersContainer.innerHTML = `
+            <div class="empty">
+              <p>No users yet.</p>
+            </div>
+          `;
+          return;
+        }
+
+        const usersHTML = users.map(user => {
+          const sub = subscriptions[user.id];
+          const status = sub?.status || 'inactive';
+          const joinDate = new Date(user.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: '2-digit' });
+
+          return `
+            <div class="user-row">
+              <div class="user-email">${this.escapeHtml(user.email)}</div>
+              <div>${this.escapeHtml(user.full_name || 'N/A')}</div>
+              <div>${joinDate}</div>
+              <div class="user-status ${status}">${status}</div>
+              <div class="user-actions">
+                <button class="action-btn delete" onclick="dashboard.cancelUserSub('${user.id}')">Cancel</button>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        this.usersContainer.innerHTML = usersHTML;
+      }
+
+      async cancelUserSub(userId) {
+        if (!confirm('Cancel this user\'s subscription?')) {
+          return;
+        }
+
+        try {
+          const { error } = await adminUserManager.cancelUserSubscription(userId);
+          if (error) {
+            alert('Failed to cancel subscription');
+            return;
+          }
+          await this.loadDashboard();
+        } catch (error) {
+          alert('Error canceling subscription');
+        }
       }
 
       renderPosts(posts) {
