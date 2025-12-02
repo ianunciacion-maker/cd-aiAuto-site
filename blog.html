@@ -453,12 +453,21 @@
     .blog-post-card {
       border: var(--border-thick);
       background: var(--bg-white);
-      padding: var(--space-lg);
       box-shadow: var(--shadow-hard);
       transition: all 0.2s;
       cursor: pointer;
       position: relative;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .blog-post-image {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      border-bottom: var(--border-thick);
+      margin: 0;
     }
 
     .blog-post-card::before {
@@ -469,6 +478,14 @@
       width: 100%;
       height: 6px;
       background: var(--blue);
+      z-index: 10;
+    }
+
+    .blog-post-card-content {
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
     }
 
     .blog-post-card:hover {
@@ -770,18 +787,24 @@
         });
 
         const excerpt = post.excerpt || this.createExcerpt(post.content);
+        const imageHtml = post.featured_image
+          ? `<img src="${post.featured_image}" alt="${this.escapeHtml(post.title)}" class="blog-post-image" />`
+          : '';
 
         return `
           <article class="blog-post-card" onclick="window.location.href='blog/post.html?slug=${post.slug}'">
-            <div class="blog-post-meta">
-              <span class="blog-post-date">${date}</span>
-              <span class="blog-post-author">By Admin</span>
+            ${imageHtml}
+            <div class="blog-post-card-content">
+              <div class="blog-post-meta">
+                <span class="blog-post-date">${date}</span>
+                <span class="blog-post-author">By Admin</span>
+              </div>
+              <h2 class="blog-post-title">${this.escapeHtml(post.title)}</h2>
+              <p class="blog-post-excerpt">${this.escapeHtml(excerpt)}</p>
+              <a href="blog/post.html?slug=${post.slug}" class="blog-post-link" onclick="event.stopPropagation()">
+                Read More →
+              </a>
             </div>
-            <h2 class="blog-post-title">${this.escapeHtml(post.title)}</h2>
-            <p class="blog-post-excerpt">${this.escapeHtml(excerpt)}</p>
-            <a href="blog/post.html?slug=${post.slug}" class="blog-post-link" onclick="event.stopPropagation()">
-              Read More →
-            </a>
           </article>
         `;
       }

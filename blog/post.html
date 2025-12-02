@@ -179,6 +179,11 @@
         // Render markdown content to HTML
         const renderedContent = marked.parse(post.content);
 
+        // Include featured image if available
+        const featuredImageHtml = post.featured_image
+          ? `<img src="${post.featured_image}" alt="${this.escapeHtml(post.title)}" class="blog-featured-image" />`
+          : '';
+
         const postHTML = `
           <article class="blog-post-header">
             <h1 class="blog-post-title-main">${this.escapeHtml(post.title)}</h1>
@@ -187,6 +192,8 @@
               <span class="blog-post-author">By Admin</span>
             </div>
           </article>
+
+          ${featuredImageHtml}
 
           <article class="blog-post-content">
             ${renderedContent}
@@ -201,7 +208,7 @@
       updateSEO(post) {
         // Update page title
         document.title = `${post.title} – Ai-Auto Blog`;
-        
+
         // Update meta description
         const metaDescription = document.querySelector('meta[name="description"]');
         if (metaDescription) {
@@ -214,6 +221,13 @@
         this.updateMetaTag('og:description', post.excerpt || this.createExcerpt(post.content));
         this.updateMetaTag('og:type', 'article');
         this.updateMetaTag('og:url', window.location.href);
+
+        // Add featured image to Open Graph if available
+        if (post.featured_image) {
+          this.updateMetaTag('og:image', post.featured_image);
+          this.updateMetaTag('og:image:width', '1200');
+          this.updateMetaTag('og:image:height', '630');
+        }
       }
 
       updateMetaTag(property, content) {
