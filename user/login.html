@@ -372,17 +372,40 @@
             localStorage.removeItem('ai-auto-remember-email');
           }
 
-          // Check subscription status from Stripe (more reliable than database)
-          const { data: subscription } = await userManager.getSubscriptionStatusFromStripe();
+          // Check subscription status from API
+          try {
+            const response = await fetch(`${window.location.origin}/api/check-subscription`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                user_id: data.user.id
+              })
+            });
 
-          // Only redirect to dashboard if user has an ACTIVE subscription
-          if (subscription && subscription.status === 'active') {
-            // User has active subscription - redirect to dashboard
-            console.log('User has active subscription, redirecting to dashboard');
-            window.location.href = './dashboard.html';
-          } else {
-            // No active subscription - redirect to checkout
-            console.log('User has no active subscription, redirecting to checkout');
+            const result = await response.json();
+
+            if (result.error) {
+              console.error('Error checking subscription:', result.error);
+              // Default to checkout on error
+              window.location.href = './checkout.html';
+              return;
+            }
+
+            // Only redirect to dashboard if user has an ACTIVE or TRIALING subscription
+            if (result.data && (result.data.status === 'active' || result.data.status === 'trialing')) {
+              // User has active subscription - redirect to dashboard
+              console.log('User has active subscription, redirecting to dashboard');
+              window.location.href = './dashboard.html';
+            } else {
+              // No active subscription - redirect to checkout
+              console.log('User has no active subscription, redirecting to checkout');
+              window.location.href = './checkout.html';
+            }
+          } catch (error) {
+            console.error('Failed to check subscription:', error);
+            // Default to checkout on error
             window.location.href = './checkout.html';
           }
 

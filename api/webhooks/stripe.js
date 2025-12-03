@@ -77,6 +77,8 @@ module.exports = async (req, res) => {
       console.error('Error logging webhook event:', logError);
     }
 
+    console.log(`Webhook event ${event.id} for subscription ${subscription?.id || 'unknown'}`);
+
     // Handle only supported events
     if (!SUPPORTED_EVENTS.includes(event.type)) {
       console.log(`Ignoring unsupported event type: ${event.type}`);
@@ -176,7 +178,13 @@ async function handleSubscriptionChange(event) {
 
     // Initialize tool usage if subscription is now active
     if (subscriptionStatus === 'active' || subscriptionStatus === 'trialing') {
-      await supabase.rpc('initialize_tool_usage', { p_user_id: userId });
+      console.log(`Initializing tool usage for user: ${userId}`);
+      const { error: initError } = await supabase.rpc('initialize_tool_usage', { p_user_id: userId });
+      if (initError) {
+        console.error('Error initializing tool usage:', initError);
+      } else {
+        console.log(`Tool usage initialized successfully for user: ${userId}`);
+      }
     }
 
     return true;
