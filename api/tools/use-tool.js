@@ -29,6 +29,12 @@ module.exports = async (req, res) => {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
+  // Validate environment variables
+  if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_KEY) {
+    console.error('Missing Supabase environment variables');
+    return res.status(500).json({ error: 'Server configuration error: Missing Supabase configuration' });
+  }
+
   try {
     const { user_id, tool_type } = req.body;
 
