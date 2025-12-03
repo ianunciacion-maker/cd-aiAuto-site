@@ -1,6 +1,12 @@
 {
   "version": 2,
   "name": "ai-auto",
+  "functions": {
+    "api/webhooks/stripe.js": {
+      "memory": 1024,
+      "maxDuration": 10
+    }
+  },
   "headers": [
     {
       "source": "/(.*)",

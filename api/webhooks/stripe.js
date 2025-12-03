@@ -45,9 +45,18 @@ module.exports = async (req, res) => {
   const signature = req.headers['stripe-signature'];
 
   try {
+    // Get the raw body for webhook verification
+    // Vercel may provide body as string or buffer, stripe.webhooks.constructEvent expects raw bytes
+    let rawBody = req.body;
+
+    // If body is an object (already parsed), convert back to string
+    if (typeof rawBody === 'object' && !Buffer.isBuffer(rawBody)) {
+      rawBody = JSON.stringify(rawBody);
+    }
+
     // Verify webhook signature
     const event = stripeInstance.webhooks.constructEvent(
-      req.body,
+      rawBody,
       signature,
       process.env.STRIPE_WEBHOOK_SECRET
     );
