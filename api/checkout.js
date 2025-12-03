@@ -6,14 +6,8 @@
  * Body: { user_id: string, email: string, priceId: string }
  */
 
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const stripe = require('stripe');
 const { createClient } = require('@supabase/supabase-js');
-
-// Initialize Supabase admin client (server-side with elevated permissions)
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_KEY
-);
 
 module.exports = async (req, res) => {
   // Only allow POST requests
@@ -21,7 +15,7 @@ module.exports = async (req, res) => {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  // Validate environment variables
+  // Validate environment variables FIRST
   if (!process.env.STRIPE_SECRET_KEY) {
     console.error('Missing STRIPE_SECRET_KEY environment variable');
     return res.status(500).json({ error: 'Server configuration error: Missing Stripe configuration' });
@@ -31,6 +25,13 @@ module.exports = async (req, res) => {
     console.error('Missing Supabase environment variables');
     return res.status(500).json({ error: 'Server configuration error: Missing Supabase configuration' });
   }
+
+  // Initialize Stripe and Supabase AFTER validating environment variables
+  const stripeInstance = stripe(process.env.STRIPE_SECRET_KEY);
+  const supabase = createClient(
+    process.env.SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_KEY
+  );
 
   try {
     const { user_id, email, priceId } = req.body;
@@ -75,7 +76,7 @@ module.exports = async (req, res) => {
       customerId = existingSubscription.stripe_customer_id;
     } else {
       // Create new Stripe customer
-      const customer = await stripe.customers.create({
+      const customer = await stripeInstance.customers.create({
         email: email,
         metadata: {
           supabase_user_id: user_id
@@ -103,7 +104,7 @@ module.exports = async (req, res) => {
     }
 
     // Create checkout session
-    const session = await stripe.checkout.sessions.create({
+    const session = await stripeInstance.checkout.sessions.create({
       payment_method_types: ['card'],
       customer: customerId,
       client_reference_id: user_id,
