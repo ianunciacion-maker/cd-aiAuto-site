@@ -434,15 +434,10 @@
     .profile-avatar {
       width: 100%;
       aspect-ratio: 1;
-      background: var(--blue);
+      object-fit: cover;
+      object-position: center 20%;
       border: var(--border-thick);
       box-shadow: var(--shadow-hard);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 120px;
-      font-weight: 900;
-      color: #fff;
     }
 
     .profile-badge {
@@ -752,7 +747,7 @@
   <section class="profile-section">
     <div class="container profile-container">
       <div class="profile-img-box">
-        <div class="profile-avatar">C</div>
+        <img src="images/founder.jpeg" alt="Clint Day - Founder" class="profile-avatar">
         <div class="profile-badge">Founder</div>
       </div>
       <div class="profile-content">

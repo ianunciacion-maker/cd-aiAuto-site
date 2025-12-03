@@ -50,6 +50,12 @@ The site auto-deploys to Vercel on push to main branch. Manual deployment:
 vercel --prod
 ```
 
+**Important Vercel Configuration Notes:**
+- `vercel.json` is intentionally minimal - Vercel auto-detects API functions in `/api/`
+- Complex `functions` configuration can break static file serving
+- Only include `functions` config for specific needs (memory, maxDuration)
+- Current config only specifies settings for the Stripe webhook endpoint
+
 ## Architecture
 
 ### Directory Structure
@@ -116,7 +122,7 @@ aiAuto/
 This file is the heart of the application and exports 5 manager classes:
 
 - **AuthManager**: Handles user authentication (signup, login, logout, admin checks)
-- **BlogManager**: CRUD operations for blog posts, image uploads, markdown rendering
+- **BlogManager**: CRUD operations for blog posts, image uploads, HTML content handling
 - **UserManager**: User profile management, subscription status, tool usage tracking
 - **StripeManager**: Client-side Stripe integration (checkout, billing portal, tool usage)
 - **AdminUserManager**: Admin-only operations (user management, dashboard stats)
@@ -127,7 +133,9 @@ All managers are instantiated and exposed globally via `window` object for use i
 - Blog posts use **HTML content** (content_type: 'html'), not markdown
 - Blog editor uses **Quill.js** rich text editor (not SimpleMDE/markdown)
 - Featured Image URL field was removed from create/edit post pages
-- Admin email is hardcoded in AuthManager.adminEmails array
+- Admin email is hardcoded in AuthManager.adminEmails array (supabase.js:25-27)
+- Supabase client is initialized with hardcoded URL and anon key (safe for client-side)
+- Auth state listener is set up automatically on AuthManager construction
 
 #### 2. Authentication Flow
 
@@ -228,9 +236,14 @@ The design uses a bold, accessible neobrutalist aesthetic with:
 ### Stripe Integration
 
 1. **Test mode keys** are in `.env.local` (not committed)
-2. **Webhooks** must be configured in Stripe dashboard
+2. **Webhooks** must be configured in Stripe dashboard with endpoint URL and signing secret
 3. **Success URL** includes session_id for verification
 4. **Customer ID** stored in Supabase subscriptions table
+5. **Webhook body parsing**: Vercel environment requires special handling - webhook handler converts parsed objects back to strings for signature verification (see api/webhooks/stripe.js:50-55)
+6. **Subscription verification**: UserManager has two methods:
+   - `getSubscriptionStatus()`: Checks database (faster, may be stale)
+   - `getSubscriptionStatusFromStripe()`: Queries Stripe API directly (more reliable, client-side only in supabase.js:606-681)
+7. **Environment validation**: All API endpoints validate environment variables before initialization to provide clear error messages
 
 ## Styling Guidelines
 
@@ -330,13 +343,17 @@ const { error } = await stripeManager.checkout(priceId);
 
 5. **Vercel environment variables**: Must be set in Vercel dashboard for production. Local development uses `/api/.env.local`.
 
+6. **Stripe webhook events table**: Webhook handler logs all events to `webhook_events` table for debugging and audit trail (see api/webhooks/stripe.js:68-78).
+
+7. **Tool usage initialization**: When subscription becomes active, `initialize_tool_usage` RPC function is called to set up user's tool usage tracking (api/webhooks/stripe.js:179).
+
 ## Resources
 
-- **Supabase Dashboard**: https://qhmjyeohczpjgfzgxdjx.supabase.co
+- **Supabase Dashboard**: https://evzitnywfgbxzymddvyl.supabase.co
 - **Stripe Dashboard**: Configure webhooks, view subscriptions
 - **Vercel Dashboard**: View deployments, set environment variables
 - **Quill.js Docs**: https://quilljs.com/docs/
-- **Design System**: See `design_system.md` for comprehensive design tokens
+- **Setup Guides**: See VERCEL_SETUP.md, STRIPE_WEBHOOK_SETUP.md, SUPABASE_SETUP_GUIDE.md for detailed configuration
 
 ## Performance Considerations
 
