@@ -63,21 +63,22 @@ module.exports = async (req, res) => {
     Object.keys(formData).forEach(key => {
       if (allowedFields.includes(key)) {
         const value = formData[key];
-        if (value !== undefined && value !== null && value.trim() !== '') {
+        // Allow empty strings for optional fields, but still trim if not empty
+        if (value !== undefined && value !== null) {
           updates[key] = value.trim();
         }
       }
     });
 
     // Handle avatar URL separately if provided
-    if (formData.avatar_url) {
+    if (formData.avatar_url !== undefined && formData.avatar_url !== null) {
       updates.avatar_url = formData.avatar_url.trim();
     }
 
     console.log('Updates to apply:', updates);
 
-    // Validate required fields
-    if (!updates.full_name || updates.full_name === '') {
+    // Only validate full_name if it's being updated
+    if (formData.hasOwnProperty('full_name') && (!updates.full_name || updates.full_name === '')) {
       return res.status(400).json({ error: 'Full name is required' });
     }
 
