@@ -1223,12 +1223,17 @@
 
       async updateProfileField(fieldName, value) {
         try {
-          const token = localStorage.getItem('authToken');
+          // Get the current session token from Supabase
+          const { data: { session } } = await supabase.auth.getSession();
+          if (!session?.access_token) {
+            throw new Error('No authentication token found');
+          }
+
           const response = await fetch('/api/update-profile', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-              'Authorization': `Bearer ${token}`
+              'Authorization': `Bearer ${session.access_token}`
             },
             body: JSON.stringify({ [fieldName]: value })
           });
@@ -1238,14 +1243,16 @@
             if (result.data) {
               this.userProfile = { ...this.userProfile, ...result.data };
               this.renderProfile();
+              console.log('Profile updated successfully:', result.data);
             }
           } else {
             const error = await response.json();
+            console.error('Profile update error:', error);
             alert(error.error || 'Failed to update profile');
           }
         } catch (error) {
           console.error('Profile update error:', error);
-          alert('Failed to update profile');
+          alert('Failed to update profile: ' + error.message);
         }
       }
 

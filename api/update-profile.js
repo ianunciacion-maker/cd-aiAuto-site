@@ -31,20 +31,33 @@ module.exports = async (req, res) => {
     // Get user from JWT token
     const authHeader = req.headers.authorization;
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      console.error('No auth header or invalid format:', authHeader);
       return res.status(401).json({ error: 'Unauthorized: No token provided' });
     }
 
     const token = authHeader.replace('Bearer ', '');
+    console.log('Token received:', token.substring(0, 20) + '...');
+    
     const { data: { user }, error: userError } = await supabase.auth.getUser(token);
     
-    if (userError || !user) {
-      return res.status(401).json({ error: 'Invalid token' });
+    if (userError) {
+      console.error('Token validation error:', userError);
+      return res.status(401).json({ error: 'Invalid token: ' + userError.message });
     }
+    
+    if (!user) {
+      console.error('No user found for token');
+      return res.status(401).json({ error: 'Invalid token: No user found' });
+    }
+    
+    console.log('User authenticated:', user.id, user.email);
 
     // Parse form data
     const formData = req.body;
     const updates = {};
     const allowedFields = ['full_name', 'company_name', 'business_phone', 'business_address'];
+
+    console.log('Received form data:', formData);
 
     // Filter and validate allowed fields
     Object.keys(formData).forEach(key => {
@@ -60,6 +73,8 @@ module.exports = async (req, res) => {
     if (formData.avatar_url) {
       updates.avatar_url = formData.avatar_url.trim();
     }
+
+    console.log('Updates to apply:', updates);
 
     // Validate required fields
     if (!updates.full_name || updates.full_name === '') {
@@ -84,6 +99,8 @@ module.exports = async (req, res) => {
     }
 
     // Update profile in database
+    console.log('Updating profile for user:', user.id, 'with data:', updates);
+    
     const { data, error } = await supabase
       .from('user_profiles')
       .update(updates)
@@ -92,12 +109,20 @@ module.exports = async (req, res) => {
       .single();
 
     if (error) {
-      console.error('Profile update error:', error);
-      return res.status(500).json({ error: 'Failed to update profile' });
+      console.error('Profile update database error:', error);
+      console.error('Error details:', {
+        message: error.message,
+        code: error.code,
+        hint: error.hint,
+        details: error.details
+      });
+      return res.status(500).json({ error: 'Failed to update profile: ' + error.message });
     }
 
     console.log('Profile updated successfully for user:', user.id);
-    return res.status(200).json({ 
+    console.log('Updated data:', data);
+    
+    return res.status(200).json({
       data: data,
       message: 'Profile updated successfully'
     });
