@@ -29,19 +29,49 @@ Ai-Auto is a comprehensive suite of AI tools designed to help freelancers, entre
 
 ```
 aiAuto/
-├── README.md                 # Project documentation
+├── README.md                 # Project documentation (you are here)
+├── CLAUDE.md                # Claude Code guidelines (required)
+├── design_system.md         # Design system and CSS tokens
 ├── .gitignore               # Git ignore rules
 ├── .gitattributes           # Git attributes
+├── package.json             # Project dependencies
+├── vercel.json              # Vercel deployment config
+│
 ├── index.html               # Homepage
 ├── about.html               # About page
+├── blog.html                # Blog listing page
 ├── tools.html               # Tools catalog page
-├── specifications.md        # Technical specifications
-├── design_system.md         # Design system guidelines
-├── Assets/                  # Static assets (images, icons, etc.)
-├── css/                     # Stylesheets (to be organized)
-├── js/                      # JavaScript files (to be organized)
-└── docs/                    # Additional documentation
+│
+├── admin/                   # Admin pages (dashboard, blog editor)
+├── user/                    # User pages (signup, login, dashboard)
+├── blog/                    # Blog detail pages
+├── tools/                   # Individual tool pages
+├── api/                     # Serverless API endpoints
+│
+├── supabase.js              # Core Supabase & auth library
+├── js/                      # JavaScript modules and components
+├── css/                     # Stylesheets (organized by category)
+├── images/                  # Images and media assets
+├── fonts/                   # Custom fonts
+├── icons/                   # SVG icons
+│
+└── docs/                    # Complete documentation
+    ├── README.md            # Documentation index
+    ├── sql/                 # Database setup scripts
+    ├── setup/               # Setup and onboarding guides
+    ├── deployment/          # Deployment and testing guides
+    └── guides/              # Phase documentation and references
 ```
+
+## 📚 Documentation
+
+For detailed setup and deployment guides, see `/docs`:
+- **Setup Guides**: `/docs/setup` - Database, Supabase, Stripe, etc.
+- **Deployment**: `/docs/deployment` - Vercel, testing, verification
+- **Database**: `/docs/sql` - SQL setup scripts
+- **References**: `/docs/guides` - Implementation phases and architecture notes
+
+See `docs/README.md` for a complete index of all documentation.
 
 ## 🎨 Design System
 
