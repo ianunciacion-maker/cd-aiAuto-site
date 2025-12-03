@@ -365,6 +365,11 @@
             return;
           }
 
+          // Debug: Log the user data to see what's happening
+          console.log('Login successful - user data:', data);
+          console.log('User ID:', data.user?.id);
+          console.log('User email:', data.user?.email);
+
           // Save email if remember me is checked
           if (this.rememberMe.checked) {
             localStorage.setItem('ai-auto-remember-email', email);
@@ -392,6 +397,9 @@
               window.location.href = './checkout.html';
               return;
             }
+
+            // Debug: Log the API response
+            console.log('Subscription check response:', result);
 
             // Only redirect to dashboard if user has an ACTIVE or TRIALING subscription
             if (result.data && (result.data.status === 'active' || result.data.status === 'trialing')) {
