@@ -34,12 +34,16 @@ module.exports = async (req, res) => {
       return res.status(400).json({ error: 'Missing user_id' });
     }
 
+    console.log(`Checking subscription for user: ${user_id}`);
+
     // First check database
     const { data: subscription, error: dbError } = await supabase
       .from('subscriptions')
       .select('stripe_customer_id, stripe_subscription_id, status, current_period_end')
       .eq('user_id', user_id)
       .single();
+
+    console.log(`Database query result:`, { subscription, dbError });
 
     // If we have a recent active subscription in DB, return it
     if (!dbError && subscription && (subscription.status === 'active' || subscription.status === 'trialing')) {
@@ -121,6 +125,7 @@ module.exports = async (req, res) => {
     }
 
     // No active subscription found
+    console.log(`No active subscription found for user: ${user_id}, returning inactive status`);
     return res.status(200).json({
       data: {
         user_id: user_id,
