@@ -10,7 +10,7 @@
 
 // Get credentials from environment or use defaults
 const SUPABASE_URL = 'https://evzitnywfgbxzymddvyl.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV2eml0bnl3ZmdieHp5bWRkdnlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ3MDM5NDIsImV4cCI6MjA4MDI3OTk0Mn0.VuAdTVfZfswJDVvQhVQ0L0QFmqDQ-K_4dwQ9MfKzSpM';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV2eml0bnl3ZmdieHp5bWRkdnlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ3MDM5MzksImV4cCI6MjA4MDI3OTkzOX0.ZO6JpU1N6gZisu2gD--CfBivfD-YUjwpH7Chso79feg';
 
 // Initialize Supabase client
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
