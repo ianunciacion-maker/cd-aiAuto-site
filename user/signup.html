@@ -466,7 +466,8 @@
         try {
           // Sign up with Supabase Auth
           const { data, error } = await authManager.signup(email, password, {
-            full_name: fullName
+            full_name: fullName,
+            emailRedirectTo: 'https://cd-ai-auto-site.vercel.app/user/login.html'
           });
 
           if (error) {

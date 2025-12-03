@@ -53,12 +53,22 @@ class AuthManager {
 
   async signup(email, password, metadata = {}) {
     try {
+      // Extract emailRedirectTo from metadata if provided
+      const { emailRedirectTo, ...userMetadata } = metadata;
+
+      const signupOptions = {
+        data: userMetadata
+      };
+
+      // Add emailRedirectTo if provided
+      if (emailRedirectTo) {
+        signupOptions.emailRedirectTo = emailRedirectTo;
+      }
+
       const { data, error } = await supabase.auth.signUp({
         email: email.trim(),
         password: password,
-        options: {
-          data: metadata
-        }
+        options: signupOptions
       });
 
       if (error) {
