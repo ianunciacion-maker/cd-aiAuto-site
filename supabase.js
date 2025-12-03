@@ -700,12 +700,32 @@ class StripeManager {
       });
 
       if (!response.ok) {
-        const error = await response.json();
-        console.error('Checkout error:', error);
-        return { error };
+        // Try to parse as JSON, but handle cases where response is HTML/plain text
+        let errorMessage = `Server error (${response.status})`;
+        try {
+          const contentType = response.headers.get('content-type');
+          if (contentType && contentType.includes('application/json')) {
+            const error = await response.json();
+            errorMessage = error.error || error.message || errorMessage;
+          } else {
+            // Response is not JSON, try to get text
+            const text = await response.text();
+            errorMessage = text.substring(0, 100) || errorMessage;
+          }
+        } catch (parseError) {
+          console.error('Error parsing error response:', parseError);
+        }
+        console.error('Checkout error:', errorMessage);
+        return { error: { message: errorMessage } };
       }
 
-      const { sessionId, url } = await response.json();
+      const responseData = await response.json();
+      const { sessionId, url } = responseData;
+
+      if (!url) {
+        console.error('Invalid checkout response:', responseData);
+        return { error: { message: 'Invalid response from server' } };
+      }
 
       // Redirect to Stripe Checkout
       window.location.href = url;
@@ -713,7 +733,7 @@ class StripeManager {
       return { data: { sessionId, url }, error: null };
     } catch (error) {
       console.error('Checkout exception:', error);
-      return { error };
+      return { error: { message: error.message || 'Checkout failed' } };
     }
   }
 
