@@ -372,15 +372,17 @@
             localStorage.removeItem('ai-auto-remember-email');
           }
 
-          // Check subscription status to determine redirect
-          const { data: subscription } = await userManager.getSubscriptionStatus();
+          // Check subscription status from Stripe (more reliable than database)
+          const { data: subscription } = await userManager.getSubscriptionStatusFromStripe();
 
           // Only redirect to dashboard if user has an ACTIVE subscription
           if (subscription && subscription.status === 'active') {
             // User has active subscription - redirect to dashboard
+            console.log('User has active subscription, redirecting to dashboard');
             window.location.href = './dashboard.html';
           } else {
-            // No active subscription or trialing - redirect to checkout
+            // No active subscription - redirect to checkout
+            console.log('User has no active subscription, redirecting to checkout');
             window.location.href = './checkout.html';
           }
 

@@ -601,6 +601,85 @@ class UserManager {
     }
   }
 
+  // Check subscription status by querying Stripe directly
+  // This is more reliable than checking the database in case webhook hasn't synced yet
+  async getSubscriptionStatusFromStripe() {
+    try {
+      const user = await authManager.getCurrentUser();
+      if (!user) {
+        return { data: null, error: { message: 'Not authenticated' } };
+      }
+
+      // First, get the customer ID from the database
+      const { data: subscription, error: dbError } = await supabase
+        .from('subscriptions')
+        .select('stripe_customer_id, stripe_subscription_id')
+        .eq('user_id', user.id)
+        .single();
+
+      if (dbError && dbError.code !== 'PGRST116') {
+        console.error('Database error:', dbError);
+        return { data: null, error: dbError };
+      }
+
+      // If no customer in database, return inactive
+      if (!subscription?.stripe_customer_id) {
+        return {
+          data: {
+            user_id: user.id,
+            status: 'inactive',
+            current_period_end: null,
+            source: 'database'
+          },
+          error: null
+        };
+      }
+
+      // Query Stripe for this customer's subscriptions
+      const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+      const subscriptions = await stripe.subscriptions.list({
+        customer: subscription.stripe_customer_id,
+        limit: 10,
+        status: 'all'
+      });
+
+      // Find the active or trialing subscription
+      const activeSubscription = subscriptions.data.find(
+        sub => sub.status === 'active' || sub.status === 'trialing'
+      );
+
+      if (activeSubscription) {
+        // User has an active subscription
+        return {
+          data: {
+            user_id: user.id,
+            stripe_subscription_id: activeSubscription.id,
+            stripe_customer_id: activeSubscription.customer,
+            status: activeSubscription.status,
+            current_period_end: new Date(activeSubscription.current_period_end * 1000).toISOString(),
+            source: 'stripe'
+          },
+          error: null
+        };
+      }
+
+      // No active subscription found
+      return {
+        data: {
+          user_id: user.id,
+          status: 'inactive',
+          current_period_end: null,
+          source: 'stripe'
+        },
+        error: null
+      };
+
+    } catch (error) {
+      console.error('Get subscription from Stripe error:', error);
+      return { data: null, error };
+    }
+  }
+
   // Check if user can access tools
   async canAccessTools() {
     try {
