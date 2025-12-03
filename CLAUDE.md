@@ -24,7 +24,7 @@ npm run dev
 npm start
 
 # Run linters
-npm run lint           # Run all linters
+npm run lint           # Run all linters (CSS + JS)
 npm run lint-css       # Lint CSS files only
 npm run lint-js        # Lint JavaScript files only
 
@@ -32,22 +32,40 @@ npm run lint-js        # Lint JavaScript files only
 npm run validate
 ```
 
-### Testing Locally
+### Local Testing
 ```bash
 # Install dependencies first
 npm install
 
-# For testing serverless functions locally, use Vercel CLI
+# Test entire application (site + API functions)
 npx vercel dev
 
-# For testing static site only
+# Test static site only (no API functions)
 npm run dev
+
+# Test Stripe webhook locally (requires ngrok or similar)
+# 1. Start Vercel functions: npx vercel dev
+# 2. Use ngrok to expose local port: ngrok http 3000
+# 3. Configure webhook endpoint in Stripe dashboard with exposed URL
 ```
 
 ### Deployment
 The site auto-deploys to Vercel on push to main branch. Manual deployment:
 ```bash
 vercel --prod
+
+# View live logs during deployment
+vercel logs --follow --prod
+```
+
+### Code Quality
+```bash
+# Check specific file
+npx eslint path/to/file.js
+npx stylelint css/path/to/file.css
+
+# Full validation (HTML + CSS + JS)
+npm run validate
 ```
 
 **Important Vercel Configuration Notes:**
@@ -147,7 +165,13 @@ All managers are instantiated and exposed globally via `window` object for use i
 **Admin Access:**
 - Admin login at `/admin/login.html`
 - Admin routes protected by `authManager.protectAdminRoute()`
-- Admin email whitelist in `supabase.js:24-26`
+- Admin email whitelist in `supabase.js:25-27`
+
+**Logout Flow:**
+- Logout method accepts optional `redirectUrl` parameter
+- If no redirect URL provided, defaults to `/user/login.html` (absolute path)
+- Admin pages should pass `/admin/login.html` as redirect destination
+- Always use absolute paths (starting with `/`) for redirects to ensure they work across nested routes
 
 #### 3. Blog System
 
@@ -276,14 +300,20 @@ authManager.protectAdminRoute().then(async (isAuthorized) => {
 ```javascript
 const postData = {
   title: 'My Post',
-  slug: 'my-post',
+  slug: 'my-post',           // Must be unique! Enforce frontend validation
   excerpt: 'Short description',
   content: quill.root.innerHTML,  // Get HTML from Quill
   status: 'published'             // or 'draft'
 };
 
 const { data, error } = await blogManager.createPost(postData);
+if (error) console.error('Slug may already exist:', error.message);
 ```
+
+**Slug Validation:**
+- Slugs must be unique per post and are enforced server-side
+- Frontend should validate slug doesn't already exist before submission
+- Use the BlogManager's `getPostBySlug()` method to check availability
 
 ### Checking Subscription Status
 ```javascript
@@ -298,6 +328,45 @@ if (!canAccess) {
 const priceId = 'price_xxx'; // From Stripe dashboard
 const { error } = await stripeManager.checkout(priceId);
 // Automatically redirects to Stripe if successful
+```
+
+## Debugging & Troubleshooting
+
+### Common Issues
+
+**Stripe Webhook Not Firing:**
+- Check webhook endpoint URL in Stripe dashboard matches your Vercel domain
+- Verify webhook signing secret is correct in environment variables
+- Review webhook events table in Supabase (`webhook_events`) for error logs
+- Test webhook locally using `npx vercel dev` + ngrok tunnel
+
+**Blog Posts Not Displaying:**
+- Verify content_type is 'html' in database (not 'markdown')
+- Check that `status: 'published'` is set
+- Ensure Quill CSS loads in page head (must come before custom CSS)
+- Check browser console for DOMPurify or content rendering errors
+
+**Authentication Issues:**
+- Session may not persist immediately after signup - check auth state with `authManager.isAuthenticated()`
+- Admin route protection uses email whitelist - verify user email in `supabase.js:25-27`
+- Logout redirects must use absolute paths (`/user/login.html`, not `user/login.html`)
+
+**Environment Variables:**
+- All `/api/` functions validate environment vars at startup
+- Missing vars show clear error messages on API calls
+- Local testing uses `/api/.env.local` (not committed)
+- Production uses Vercel dashboard configuration
+
+### Debugging Tools
+```bash
+# View function logs
+npx vercel logs
+
+# Test API function locally
+curl -X POST http://localhost:3000/api/checkout -H "Content-Type: application/json" -d '{"priceId":"price_xxx"}'
+
+# Check Supabase query performance
+# View in Supabase dashboard: Database → Queries
 ```
 
 ## Testing
