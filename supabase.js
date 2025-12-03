@@ -104,7 +104,7 @@ class AuthManager {
     }
   }
 
-  async logout() {
+  async logout(redirectUrl = null) {
     try {
       const { error } = await supabase.auth.signOut();
 
@@ -115,7 +115,14 @@ class AuthManager {
 
       console.log('Logout successful');
       this.clearSession();
-      window.location.href = '/admin/login.html';
+      
+      // Use provided redirect URL or default to appropriate login page
+      if (redirectUrl) {
+        window.location.href = redirectUrl;
+      } else {
+        // Default to user login page
+        window.location.href = './login.html';
+      }
     } catch (error) {
       console.error('Logout exception:', error);
     }
