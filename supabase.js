@@ -591,6 +591,40 @@ class UserManager {
     }
   }
 
+  // Update user email (requires email verification)
+  async updateEmail(newEmail) {
+    try {
+      const user = await authManager.getCurrentUser();
+      if (!user) {
+        return { data: null, error: { message: 'Not authenticated' } };
+      }
+
+      // Check if email is different
+      if (user.email === newEmail) {
+        return { data: null, error: { message: 'Email is the same as current email' } };
+      }
+
+      // Update email in Supabase Auth
+      const { data, error } = await supabase.auth.updateUser({
+        email: newEmail
+      });
+
+      if (error) {
+        console.error('Update email error:', error.message);
+        return { data: null, error };
+      }
+
+      console.log('Email update initiated, verification required');
+      return {
+        data: { message: 'Verification email sent. Please check your inbox and follow the verification link.' },
+        error: null
+      };
+    } catch (error) {
+      console.error('Update email exception:', error);
+      return { data: null, error };
+    }
+  }
+
   // Get user subscription status
   async getSubscriptionStatus() {
     try {

@@ -2,9 +2,9 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Dashboard – Ai-Auto</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Access your Ai-Auto tools and manage your subscription.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -339,6 +339,309 @@
         padding: var(--space-md);
       }
     }
+    /* Profile Header Styles */
+    .profile-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-md);
+      padding-bottom: var(--space-md);
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .edit-profile-btn {
+      padding: 8px 16px;
+      background: var(--blue);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .edit-profile-btn:hover {
+      background: var(--purple);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .current-avatar-img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: var(--z-modal);
+      backdrop-filter: blur(4px);
+    }
+
+    .modal.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      max-width: 600px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-lg);
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .modal-header h3 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--text-light);
+      padding: 4px;
+      border-radius: 50%;
+      transition: all 0.2s ease;
+    }
+
+    .modal-close:hover {
+      background: var(--bg-paper);
+      color: var(--text-dark);
+    }
+
+    .modal-body {
+      padding: var(--space-lg);
+    }
+
+    .form-section {
+      margin-bottom: var(--space-lg);
+    }
+
+    .form-section h4 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: var(--space-md);
+      padding-bottom: var(--space-sm);
+      border-bottom: 2px solid var(--blue);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--space-md);
+      margin-bottom: var(--space-md);
+    }
+
+    .form-row.full-width .form-group {
+      grid-column: 1 / -1;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .form-group input {
+      padding: 12px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      background: white;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    /* Avatar Section Styles */
+    .avatar-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-md);
+    }
+
+    .current-avatar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .current-avatar img {
+      border: 3px solid var(--blue);
+      box-shadow: var(--shadow-hard);
+    }
+
+    .change-avatar-btn {
+      padding: 8px 16px;
+      background: var(--gold);
+      color: var(--ink);
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .change-avatar-btn:hover {
+      background: var(--coral);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-hard);
+    }
+
+    .avatar-selection {
+      text-align: center;
+    }
+
+    .avatar-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+      gap: var(--space-md);
+      margin-bottom: var(--space-lg);
+      max-height: 200px;
+      overflow-y: auto;
+      padding: var(--space-md);
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      background: var(--bg-paper);
+    }
+
+    .avatar-option {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .avatar-option:hover {
+      border-color: var(--blue);
+      transform: scale(1.1);
+    }
+
+    .avatar-option.selected {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3);
+    }
+
+    .avatar-actions {
+      display: flex;
+      gap: var(--space-md);
+      justify-content: center;
+    }
+
+    .btn-primary {
+      background: var(--blue);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background: var(--purple);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: var(--space-md);
+      justify-content: flex-end;
+      padding-top: var(--space-lg);
+      border-top: 1px solid #f0f0f0;
+    }
+
+    /* Enhanced Responsive Design */
+    @media (max-width: 768px) {
+      .modal-content {
+        width: 95%;
+        margin: var(--space-md);
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+        gap: var(--space-sm);
+      }
+
+      .avatar-grid {
+        grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+        gap: var(--space-sm);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .modal-content {
+        width: 98%;
+        margin: var(--space-sm);
+      }
+
+      .modal-header {
+        padding: var(--space-md);
+      }
+
+      .modal-body {
+        padding: var(--space-md);
+      }
+
+      .form-section h4 {
+        font-size: 14px;
+      }
+
+      .avatar-grid {
+        grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+        gap: var(--space-sm);
+      }
+    }
     }
   </style>
 </head>
@@ -351,8 +654,8 @@
         <h1>Welcome, <span id="userName">User</span>!</h1>
       </div>
       <div class="dashboard-actions">
-        <button class="btn-secondary" id="billingBtn">Manage Subscription</button>
-        <button class="btn-secondary" id="logoutBtn">Sign Out</button>
+        <button type="button" class="btn-secondary" id="billingBtn">Manage Subscription</button>
+        <button type="button" class="btn-secondary" id="logoutBtn">Sign Out</button>
       </div>
     </div>
 
@@ -369,8 +672,83 @@
     <div id="mainContent" style="display: none;">
       <!-- Profile -->
       <div class="section">
-        <h2 class="section-title">Profile</h2>
+        <div class="profile-header">
+          <h2 class="section-title">Profile</h2>
+          <button type="button" class="edit-profile-btn" id="editProfileBtn">✏️ Edit Profile</button>
+        </div>
         <div class="profile-section" id="profileSection"></div>
+      </div>
+
+      <!-- Edit Profile Modal -->
+      <div class="modal" id="editProfileModal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3>Edit Profile</h3>
+            <button type="button" class="modal-close" id="closeModalBtn">×</button>
+          </div>
+          <div class="modal-body">
+            <form id="editProfileForm">
+              <!-- Avatar Section -->
+              <div class="form-section">
+                <h4>Profile Picture</h4>
+                <div class="avatar-section">
+                  <div class="current-avatar" id="currentAvatarDisplay">
+                    <img id="currentAvatarImg" src="#" alt="Current avatar" class="current-avatar-img">
+                    <button type="button" class="change-avatar-btn" id="changeAvatarBtn">📷 Change</button>
+                  </div>
+                  <div class="avatar-selection" id="avatarSelection" style="display: none;">
+                    <div class="avatar-grid" id="avatarGrid"></div>
+                    <div class="avatar-actions">
+                      <button type="button" class="btn-secondary" id="cancelAvatarBtn">Cancel</button>
+                      <button type="button" class="btn-primary" id="uploadAvatarBtn">Upload Custom</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Personal Information -->
+              <div class="form-section">
+                <h4>Personal Information</h4>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="editFullName">Display Name</label>
+                    <input type="text" id="editFullName" name="full_name" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="editEmail">Email Address</label>
+                    <input type="email" id="editEmail" name="email" required>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Business Information -->
+              <div class="form-section">
+                <h4>Business Information</h4>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="editCompanyName">Company Name</label>
+                    <input type="text" id="editCompanyName" name="company_name">
+                  </div>
+                  <div class="form-group">
+                    <label for="editBusinessPhone">Business Phone</label>
+                    <input type="tel" id="editBusinessPhone" name="business_phone" placeholder="+1 (555) 123-4567">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group full-width">
+                    <label for="editBusinessAddress">Business Address</label>
+                    <input type="text" id="editBusinessAddress" name="business_address" placeholder="123 Business St, Suite 100, City, State 12345, USA">
+                  </div>
+                </div>
+              </div>
+
+              <div class="modal-actions">
+                <button type="button" class="btn-secondary" id="cancelEditBtn">Cancel</button>
+                <button type="submit" class="btn-primary" id="saveProfileBtn">Save Changes</button>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
 
       <!-- Tools -->
@@ -402,6 +780,20 @@
           { id: 'email_campaigns', name: 'Email Campaigns', desc: 'Write compelling email campaigns' },
           { id: 'product_descriptions', name: 'Product Descriptions', desc: 'Create product descriptions' }
         ];
+        
+        // Avatar options
+        this.avatarOptions = [
+          { emoji: '👤', name: 'Default', color: '#2357ff' },
+          { emoji: '👨‍💼', name: 'Professional', color: '#2d3748' },
+          { emoji: '🎨', name: 'Creative', color: '#8b5cf6' },
+          { emoji: '🚀', name: 'Tech', color: '#ef4444' },
+          { emoji: '🌟', name: 'Gold', color: '#f59e0b' },
+          { emoji: '💎', name: 'Diamond', color: '#6366f1' },
+          { emoji: '🌈', name: 'Rainbow', color: 'linear-gradient(45deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3)' },
+          { emoji: '🦄', name: 'Ninja', color: '#000000' }
+        ];
+        
+        this.selectedAvatar = null;
         this.init();
       }
 
