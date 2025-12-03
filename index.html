@@ -928,46 +928,6 @@
 <body>
 
   <!-- NAV -->
-  <nav class="nav">
-    <div class="container nav-inner">
-      <a href="index.html" class="logo">Ai-Auto</a>
-      <div class="nav-links">
-        <a href="index.html" class="nav-link"
-          style="text-decoration: underline; text-decoration-thickness: 3px; text-decoration-color: var(--gold);">Home</a>
-        <a href="about.html" class="nav-link">About</a>
-        <a href="tools.html" class="nav-link">Tools</a>
-        <a href="blog.html" class="nav-link">Blog</a>
-      </div>
-      <div style="display: flex; gap: 12px; align-items: center;">
-        <a href="user/login.html" style="font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink);">Log In</a>
-        <a href="user/signup.html" class="btn btn-gold">Get Started</a>
-      </div>
-      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
-  </nav>
-
-  <!-- MOBILE MENU -->
-  <div class="mobile-menu" id="mobileMenu">
-    <div class="mobile-menu-header">
-      <button class="hamburger active" id="closeMenu" aria-label="Close menu" style="margin-left: auto;">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
-    <div class="mobile-menu-links">
-      <a href="index.html" class="mobile-menu-link">Home</a>
-      <a href="about.html" class="mobile-menu-link">About</a>
-      <a href="tools.html" class="mobile-menu-link">Tools</a>
-      <a href="blog.html" class="mobile-menu-link">Blog</a>
-      <a href="user/login.html" class="mobile-menu-link">Log In</a>
-      <a href="user/signup.html" class="btn btn-gold" style="width: 100%; margin-top: 16px;">Get Started</a>
-    </div>
-  </div>
 
   <!-- HERO -->
   <section class="hero">
@@ -1178,77 +1138,8 @@
   </section>
 
   <!-- FOOTER CTA -->
-  <section class="footer-cta">
-    <div class="container">
-      <h2>Ready to Automate?</h2>
-      <p>Join thousands building their automated future</p>
-      <a href="user/signup.html" class="btn"
-        style="background: var(--bg-white); color: var(--blue); font-size: 16px; padding: 18px 36px; display: inline-block;">Get Started
-        Free</a>
-    </div>
-  </section>
 
-  <!-- SITE FOOTER -->
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-inner">
-        <div class="footer-brand">
-          <h3>Ai-Auto</h3>
-          <p style="max-width: 300px;">
-            Building the future of work, one automation at a time. Set your own salary with AI-powered tools.
-          </p>
-        </div>
-        <div class="footer-links">
-          <h4>Product</h4>
-          <ul>
-            <li><a href="tools.html">Tools</a></li>
-            <li><a href="blog.html">Blog</a></li>
-            <li><a href="#">Pricing</a></li>
-            <li><a href="#">Features</a></li>
-            <li><a href="#">Roadmap</a></li>
-          </ul>
-        </div>
-        <div class="footer-links">
-          <h4>Company</h4>
-          <ul>
-            <li><a href="about.html">About</a></li>
-            <li><a href="#">Blog</a></li>
-            <li><a href="#">Careers</a></li>
-            <li><a href="#">Contact</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        &copy; 2024 Ai-Auto. All rights reserved. Built with AI.
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    // Mobile menu toggle
-    const hamburger = document.getElementById('hamburger');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const closeMenu = document.getElementById('closeMenu');
-
-    hamburger.addEventListener('click', () => {
-      mobileMenu.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    });
-
-    closeMenu.addEventListener('click', () => {
-      mobileMenu.classList.remove('active');
-      document.body.style.overflow = '';
-    });
-
-    // Close menu when clicking on a link
-    const mobileLinks = document.querySelectorAll('.mobile-menu-link');
-    mobileLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        mobileMenu.classList.remove('active');
-        document.body.style.overflow = '';
-      });
-    });
-  </script>
+  <script src="js/components/navigation.js"></script>
 
 </body>
 
