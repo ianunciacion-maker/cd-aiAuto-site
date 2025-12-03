@@ -643,6 +643,148 @@
       }
     }
     }
+
+    /* Inline Editing Styles */
+    .profile-avatar-container {
+      position: relative;
+      display: inline-block;
+    }
+
+    .profile-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--blue);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .profile-avatar:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .editable-field {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+
+    .edit-icon-btn {
+      background: none;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+      opacity: 0.7;
+    }
+
+    .edit-icon-btn:hover {
+      background: var(--bg-paper);
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    .inline-input {
+      padding: 8px 12px;
+      border: 2px solid var(--blue);
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      background: white;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+      width: 100%;
+    }
+
+    .inline-input:focus {
+      border-color: var(--purple);
+      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+    }
+
+    /* Avatar Selection Overlay */
+    .avatar-selection-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: var(--z-modal);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .avatar-selection-modal {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      max-width: 500px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .avatar-selection-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-lg);
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .avatar-selection-header h3 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--text-light);
+      padding: 4px;
+      border-radius: 50%;
+      transition: all 0.2s ease;
+    }
+
+    .close-btn:hover {
+      background: var(--bg-paper);
+      color: var(--text-dark);
+    }
+
+    /* Responsive Inline Editing */
+    @media (max-width: 768px) {
+      .profile-avatar {
+        width: 50px;
+        height: 50px;
+      }
+
+      .editable-field {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-xs);
+      }
+
+      .edit-icon-btn {
+        align-self: flex-end;
+      }
+
+      .avatar-selection-modal {
+        width: 95%;
+        margin: var(--space-md);
+      }
+    }
   </style>
 </head>
 
@@ -674,81 +816,8 @@
       <div class="section">
         <div class="profile-header">
           <h2 class="section-title">Profile</h2>
-          <button type="button" class="edit-profile-btn" id="editProfileBtn">✏️ Edit Profile</button>
         </div>
         <div class="profile-section" id="profileSection"></div>
-      </div>
-
-      <!-- Edit Profile Modal -->
-      <div class="modal" id="editProfileModal">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h3>Edit Profile</h3>
-            <button type="button" class="modal-close" id="closeModalBtn">×</button>
-          </div>
-          <div class="modal-body">
-            <form id="editProfileForm">
-              <!-- Avatar Section -->
-              <div class="form-section">
-                <h4>Profile Picture</h4>
-                <div class="avatar-section">
-                  <div class="current-avatar" id="currentAvatarDisplay">
-                    <img id="currentAvatarImg" src="#" alt="Current avatar" class="current-avatar-img">
-                    <button type="button" class="change-avatar-btn" id="changeAvatarBtn">📷 Change</button>
-                  </div>
-                  <div class="avatar-selection" id="avatarSelection" style="display: none;">
-                    <div class="avatar-grid" id="avatarGrid"></div>
-                    <div class="avatar-actions">
-                      <button type="button" class="btn-secondary" id="cancelAvatarBtn">Cancel</button>
-                      <button type="button" class="btn-primary" id="uploadAvatarBtn">Upload Custom</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Personal Information -->
-              <div class="form-section">
-                <h4>Personal Information</h4>
-                <div class="form-row">
-                  <div class="form-group">
-                    <label for="editFullName">Display Name</label>
-                    <input type="text" id="editFullName" name="full_name" required>
-                  </div>
-                  <div class="form-group">
-                    <label for="editEmail">Email Address</label>
-                    <input type="email" id="editEmail" name="email" required>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Business Information -->
-              <div class="form-section">
-                <h4>Business Information</h4>
-                <div class="form-row">
-                  <div class="form-group">
-                    <label for="editCompanyName">Company Name</label>
-                    <input type="text" id="editCompanyName" name="company_name">
-                  </div>
-                  <div class="form-group">
-                    <label for="editBusinessPhone">Business Phone</label>
-                    <input type="tel" id="editBusinessPhone" name="business_phone" placeholder="+1 (555) 123-4567">
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="form-group full-width">
-                    <label for="editBusinessAddress">Business Address</label>
-                    <input type="text" id="editBusinessAddress" name="business_address" placeholder="123 Business St, Suite 100, City, State 12345, USA">
-                  </div>
-                </div>
-              </div>
-
-              <div class="modal-actions">
-                <button type="button" class="btn-secondary" id="cancelEditBtn">Cancel</button>
-                <button type="submit" class="btn-primary" id="saveProfileBtn">Save Changes</button>
-              </div>
-            </form>
-          </div>
-        </div>
       </div>
 
       <!-- Tools -->
@@ -924,12 +993,46 @@
       renderProfile() {
         const profileHtml = `
           <div class="info-card">
+            <label>Avatar</label>
+            <div class="profile-avatar-container">
+              <img id="profileAvatar" src="${this.userProfile?.avatar_url || '#'}" alt="Profile Avatar" class="profile-avatar">
+              <button type="button" class="edit-icon-btn" id="editAvatarBtn" title="Change Avatar">📷</button>
+            </div>
+          </div>
+          <div class="info-card">
             <label>Full Name</label>
-            <div class="value">${this.userProfile?.full_name || 'Not set'}</div>
+            <div class="editable-field">
+              <span class="value" id="displayName">${this.userProfile?.full_name || 'Not set'}</span>
+              <button type="button" class="edit-icon-btn" id="editNameBtn" title="Edit Name">✏️</button>
+            </div>
           </div>
           <div class="info-card">
             <label>Email</label>
-            <div class="value">${this.currentUser?.email || 'N/A'}</div>
+            <div class="editable-field">
+              <span class="value" id="displayEmail">${this.currentUser?.email || 'N/A'}</span>
+              <button type="button" class="edit-icon-btn" id="editEmailBtn" title="Edit Email">✏️</button>
+            </div>
+          </div>
+          <div class="info-card">
+            <label>Company Name</label>
+            <div class="editable-field">
+              <span class="value" id="displayCompany">${this.userProfile?.company_name || 'Not set'}</span>
+              <button type="button" class="edit-icon-btn" id="editCompanyBtn" title="Edit Company">✏️</button>
+            </div>
+          </div>
+          <div class="info-card">
+            <label>Business Phone</label>
+            <div class="editable-field">
+              <span class="value" id="displayPhone">${this.userProfile?.business_phone || 'Not set'}</span>
+              <button type="button" class="edit-icon-btn" id="editPhoneBtn" title="Edit Phone">✏️</button>
+            </div>
+          </div>
+          <div class="info-card">
+            <label>Business Address</label>
+            <div class="editable-field">
+              <span class="value" id="displayAddress">${this.userProfile?.business_address || 'Not set'}</span>
+              <button type="button" class="edit-icon-btn" id="editAddressBtn" title="Edit Address">✏️</button>
+            </div>
           </div>
           <div class="info-card">
             <label>Member Since</label>
@@ -938,6 +1041,212 @@
         `;
 
         document.getElementById('profileSection').innerHTML = profileHtml;
+        this.setupInlineEditing();
+      }
+
+      setupInlineEditing() {
+        // Setup inline editing for each field
+        this.setupFieldEditor('editNameBtn', 'displayName', 'full_name', 'text');
+        this.setupFieldEditor('editEmailBtn', 'displayEmail', 'email', 'email');
+        this.setupFieldEditor('editCompanyBtn', 'displayCompany', 'company_name', 'text');
+        this.setupFieldEditor('editPhoneBtn', 'displayPhone', 'business_phone', 'tel');
+        this.setupFieldEditor('editAddressBtn', 'displayAddress', 'business_address', 'text');
+        this.setupAvatarEditor();
+      }
+
+      setupFieldEditor(buttonId, displayId, fieldName, inputType) {
+        const button = document.getElementById(buttonId);
+        const display = document.getElementById(displayId);
+        
+        if (!button || !display) return;
+
+        button.addEventListener('click', () => {
+          const currentValue = display.textContent;
+          const input = document.createElement('input');
+          input.type = inputType;
+          input.value = currentValue === 'Not set' ? '' : currentValue;
+          input.className = 'inline-input';
+          
+          if (inputType === 'tel') {
+            input.placeholder = '+1 (555) 123-4567';
+          }
+          
+          display.replaceWith(input);
+          input.focus();
+          input.select();
+
+          const saveEdit = async () => {
+            const newValue = input.value.trim();
+            const newDisplay = document.createElement('span');
+            newDisplay.className = 'value';
+            newDisplay.id = displayId;
+            newDisplay.textContent = newValue || 'Not set';
+            
+            input.replaceWith(newDisplay);
+            
+            if (newValue && newValue !== currentValue) {
+              await this.updateProfileField(fieldName, newValue);
+            }
+            
+            // Re-setup edit button
+            this.setupFieldEditor(buttonId, displayId, fieldName, inputType);
+          };
+
+          const cancelEdit = () => {
+            const newDisplay = document.createElement('span');
+            newDisplay.className = 'value';
+            newDisplay.id = displayId;
+            newDisplay.textContent = currentValue;
+            input.replaceWith(newDisplay);
+            this.setupFieldEditor(buttonId, displayId, fieldName, inputType);
+          };
+
+          input.addEventListener('blur', saveEdit);
+          input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              saveEdit();
+            } else if (e.key === 'Escape') {
+              e.preventDefault();
+              cancelEdit();
+            }
+          });
+        });
+      }
+
+      setupAvatarEditor() {
+        const button = document.getElementById('editAvatarBtn');
+        const avatar = document.getElementById('profileAvatar');
+        
+        if (!button || !avatar) return;
+
+        button.addEventListener('click', () => {
+          this.showAvatarSelection();
+        });
+      }
+
+      showAvatarSelection() {
+        const avatarHtml = `
+          <div class="avatar-selection-overlay" id="avatarSelectionOverlay">
+            <div class="avatar-selection-modal">
+              <div class="avatar-selection-header">
+                <h3>Choose Avatar</h3>
+                <button type="button" class="close-btn" id="closeAvatarSelection">×</button>
+              </div>
+              <div class="avatar-grid" id="avatarGrid"></div>
+              <div class="avatar-actions">
+                <button type="button" class="btn-secondary" id="cancelAvatarBtn">Cancel</button>
+                <button type="button" class="btn-primary" id="uploadAvatarBtn">Upload Custom</button>
+              </div>
+            </div>
+          </div>
+        `;
+
+        document.body.insertAdjacentHTML('beforeend', avatarHtml);
+        this.renderAvatarGrid();
+        this.setupAvatarSelectionEvents();
+      }
+
+      renderAvatarGrid() {
+        const grid = document.getElementById('avatarGrid');
+        if (!grid) return;
+
+        const avatarOptions = this.avatarOptions.map(avatar => `
+          <div class="avatar-option ${this.userProfile?.avatar_url === avatar.emoji ? 'selected' : ''}"
+               data-avatar="${avatar.emoji}"
+               style="background: ${avatar.color};">
+            ${avatar.emoji}
+          </div>
+        `).join('');
+
+        grid.innerHTML = avatarOptions;
+      }
+
+      setupAvatarSelectionEvents() {
+        const overlay = document.getElementById('avatarSelectionOverlay');
+        const closeBtn = document.getElementById('closeAvatarSelection');
+        const cancelBtn = document.getElementById('cancelAvatarBtn');
+        const uploadBtn = document.getElementById('uploadAvatarBtn');
+        const avatarOptions = overlay?.querySelectorAll('.avatar-option');
+
+        closeBtn?.addEventListener('click', () => this.closeAvatarSelection());
+        cancelBtn?.addEventListener('click', () => this.closeAvatarSelection());
+        
+        uploadBtn?.addEventListener('click', () => {
+          this.closeAvatarSelection();
+          this.triggerAvatarUpload();
+        });
+
+        avatarOptions?.forEach(option => {
+          option.addEventListener('click', async () => {
+            const avatar = option.dataset.avatar;
+            await this.updateProfileField('avatar_url', avatar);
+            this.closeAvatarSelection();
+          });
+        });
+
+        overlay?.addEventListener('click', (e) => {
+          if (e.target === overlay) {
+            this.closeAvatarSelection();
+          }
+        });
+      }
+
+      closeAvatarSelection() {
+        const overlay = document.getElementById('avatarSelectionOverlay');
+        if (overlay) {
+          overlay.remove();
+        }
+      }
+
+      triggerAvatarUpload() {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        input.max = '2MB';
+        
+        input.addEventListener('change', async (e) => {
+          const file = e.target.files[0];
+          if (file && file.size <= 2 * 1024 * 1024) {
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+              await this.updateProfileField('avatar_url', e.target.result);
+            };
+            reader.readAsDataURL(file);
+          } else {
+            alert('File size must be less than 2MB');
+          }
+        });
+        
+        input.click();
+      }
+
+      async updateProfileField(fieldName, value) {
+        try {
+          const token = localStorage.getItem('authToken');
+          const response = await fetch('/api/update-profile', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ [fieldName]: value })
+          });
+
+          if (response.ok) {
+            const result = await response.json();
+            if (result.data) {
+              this.userProfile = { ...this.userProfile, ...result.data };
+              this.renderProfile();
+            }
+          } else {
+            const error = await response.json();
+            alert(error.error || 'Failed to update profile');
+          }
+        } catch (error) {
+          console.error('Profile update error:', error);
+          alert('Failed to update profile');
+        }
       }
 
       setupEventListeners() {
