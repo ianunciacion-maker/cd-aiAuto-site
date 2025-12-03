@@ -270,6 +270,88 @@
       text-decoration: underline;
     }
 
+    .verification-state {
+      display: none;
+      text-align: center;
+    }
+
+    .verification-state h2 {
+      font-size: 24px;
+      margin-bottom: var(--space-md);
+      color: var(--green);
+    }
+
+    .verification-message {
+      background: var(--lavender);
+      border: var(--border-thin);
+      box-shadow: var(--shadow-hard);
+      padding: var(--space-md);
+      margin-bottom: var(--space-lg);
+      border-radius: var(--radius-sm);
+      line-height: 1.6;
+    }
+
+    .verification-message p {
+      font-size: 14px;
+      color: var(--ink);
+      margin-bottom: var(--space-sm);
+    }
+
+    .verification-message strong {
+      color: var(--blue);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 700;
+    }
+
+    .verification-email {
+      background: var(--bg-paper);
+      border: var(--border-thin);
+      padding: var(--space-md);
+      border-radius: var(--radius-sm);
+      word-break: break-all;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: var(--space-lg);
+    }
+
+    .verify-button {
+      width: 100%;
+      padding: 16px;
+      background: var(--green);
+      color: white;
+      border: var(--border-thick);
+      border-color: var(--ink);
+      font-size: 16px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: var(--shadow-hard);
+      margin-bottom: var(--space-md);
+    }
+
+    .verify-button:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: var(--shadow-hover);
+      filter: brightness(1.05);
+    }
+
+    .resend-link {
+      font-size: 13px;
+      color: var(--blue);
+      text-decoration: underline;
+      cursor: pointer;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .resend-link:hover {
+      text-decoration: none;
+    }
+
     @media (max-width: 640px) {
       .auth-container {
         padding: var(--space-sm);
@@ -331,6 +413,23 @@
         <p>Already have an account? <a href="./login.html">Sign in</a></p>
       </div>
     </div>
+
+    <!-- Email Verification State -->
+    <div class="auth-card" id="verificationCard" style="display: none;">
+      <div class="verification-state">
+        <h2>Verify Your Email</h2>
+        <div class="verification-message">
+          <p>We've sent a confirmation link to:</p>
+          <div class="verification-email" id="verificationEmail"></div>
+          <p>Click the link in the email to verify your account and unlock access to all features.</p>
+        </div>
+        <button class="verify-button" id="verifyLoginBtn">Email Verified – Log In</button>
+        <p style="font-size: 13px; color: var(--ink); margin-top: var(--space-md);">
+          Didn't receive the email? Check your spam folder or
+          <span class="resend-link" id="resendLink">send again</span>
+        </p>
+      </div>
+    </div>
   </div>
 
   <!-- Scripts -->
@@ -376,10 +475,17 @@
             return;
           }
 
-          // User created - wait a moment for session to be established, then redirect
-          setTimeout(() => {
-            window.location.href = './checkout.html';
-          }, 1000);
+          // Check if user needs email verification or is already logged in
+          const user = await authManager.getCurrentUser();
+
+          if (user && user.email_confirmed_at) {
+            // User is already verified (email confirmation is disabled in Supabase)
+            // Show verification prompt anyway for consistency
+            this.showVerificationPrompt(email);
+          } else {
+            // User needs to verify email
+            this.showVerificationPrompt(email);
+          }
 
         } catch (error) {
           console.error('Signup error:', error);
@@ -454,6 +560,67 @@
         } else {
           this.submitBtn.classList.remove('loading');
           this.submitBtn.textContent = 'Create Account';
+        }
+      }
+
+      showVerificationPrompt(email) {
+        this.setSubmitting(false);
+
+        // Hide signup card, show verification card
+        const signupCard = document.querySelector('.auth-container .auth-card:first-of-type');
+        const verificationCard = document.getElementById('verificationCard');
+
+        if (signupCard) {
+          signupCard.style.display = 'none';
+        }
+        verificationCard.style.display = 'block';
+        document.getElementById('verificationEmail').textContent = email;
+
+        // Setup verification button
+        const verifyBtn = document.getElementById('verifyLoginBtn');
+        verifyBtn.addEventListener('click', () => this.handleVerificationComplete());
+
+        // Setup resend link
+        const resendLink = document.getElementById('resendLink');
+        resendLink.addEventListener('click', () => this.resendVerificationEmail(email));
+      }
+
+      async handleVerificationComplete() {
+        // Redirect to login page where they'll enter credentials
+        window.location.href = 'https://cd-ai-auto-site.vercel.app/user/login.html';
+      }
+
+      async resendVerificationEmail(email) {
+        const resendLink = document.getElementById('resendLink');
+        const originalText = resendLink.textContent;
+        resendLink.style.pointerEvents = 'none';
+        resendLink.style.opacity = '0.5';
+        resendLink.textContent = 'Sending...';
+
+        try {
+          const { error } = await supabase.auth.resend({
+            type: 'signup',
+            email: email
+          });
+
+          if (error) {
+            console.error('Resend error:', error);
+            resendLink.textContent = 'Failed - try again';
+            resendLink.style.color = 'var(--coral)';
+          } else {
+            resendLink.textContent = 'Email sent!';
+            resendLink.style.color = 'var(--green)';
+            setTimeout(() => {
+              resendLink.style.pointerEvents = 'auto';
+              resendLink.style.opacity = '1';
+              resendLink.textContent = 'send again';
+              resendLink.style.color = 'var(--blue)';
+            }, 3000);
+          }
+        } catch (error) {
+          console.error('Resend exception:', error);
+          resendLink.textContent = 'Error - try again';
+          resendLink.style.color = 'var(--coral)';
         }
       }
     }
