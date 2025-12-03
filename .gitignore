@@ -142,3 +142,5 @@ coverage/
 # MISC
 # ============================================
 .git-credentials
+.vercel
+.env*.local

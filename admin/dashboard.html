@@ -428,26 +428,48 @@
       }
 
       async loadDashboard() {
-        // Load posts for admin
-        const { data: posts, error } = await blogManager.getAllPostsAdmin();
+        try {
+          // Load posts for admin
+          const { data: posts, error: postsError } = await blogManager.getAllPostsAdmin();
 
-        if (error) {
-          throw error;
-        }
-
-        // Load users and subscriptions
-        const { data: users } = await adminUserManager.getAllUsers();
-        const subscriptions = {};
-        if (users) {
-          for (const user of users) {
-            const { data: sub } = await adminUserManager.getUserSubscription(user.id);
-            subscriptions[user.id] = sub;
+          if (postsError) {
+            console.error('Error loading posts:', postsError);
+            if (postsError.code === '42501') {  // PostgreSQL permission denied
+              this.showError('Permission denied. Your account does not have admin privileges.');
+              return;
+            }
+            this.showError('Failed to load blog posts: ' + postsError.message);
+            return;
           }
-        }
 
-        this.renderStats(posts, users);
-        this.renderUsers(users, subscriptions);
-        this.renderPosts(posts);
+          // Load users and subscriptions
+          const { data: users, error: usersError } = await adminUserManager.getAllUsers();
+
+          if (usersError) {
+            console.error('Error loading users:', usersError);
+            if (usersError.code === '42501') {
+              this.showError('Permission denied. Your account does not have admin privileges.');
+              return;
+            }
+            this.showError('Failed to load users: ' + usersError.message);
+            return;
+          }
+
+          const subscriptions = {};
+          if (users) {
+            for (const user of users) {
+              const { data: sub } = await adminUserManager.getUserSubscription(user.id);
+              subscriptions[user.id] = sub;
+            }
+          }
+
+          this.renderStats(posts, users);
+          this.renderUsers(users, subscriptions);
+          this.renderPosts(posts);
+        } catch (error) {
+          console.error('Dashboard load exception:', error);
+          this.showError('Failed to load dashboard. Please refresh the page or contact support.');
+        }
       }
 
       renderStats(posts, users) {

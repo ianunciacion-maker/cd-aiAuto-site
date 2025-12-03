@@ -494,6 +494,17 @@
           const { data, error } = await blogManager.updatePost(this.postId, postData);
 
           if (error) {
+            console.error('Save error:', error);
+
+            // Check for permission errors
+            if (error.code === '42501') {
+              this.showError('Permission Denied: You do not have admin privileges to modify blog posts.');
+              setTimeout(() => {
+                window.location.href = '/user/dashboard.html';
+              }, 2000);
+              return;
+            }
+
             throw error;
           }
 
@@ -523,6 +534,17 @@
           const { data, error } = await blogManager.updatePost(this.postId, postData);
 
           if (error) {
+            console.error('Save error:', error);
+
+            // Check for permission errors
+            if (error.code === '42501') {
+              this.showError('Permission Denied: You do not have admin privileges to modify blog posts.');
+              setTimeout(() => {
+                window.location.href = '/user/dashboard.html';
+              }, 2000);
+              return;
+            }
+
             throw error;
           }
 

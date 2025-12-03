@@ -151,11 +151,17 @@ class AuthManager {
   async isAdmin() {
     try {
       const user = await this.getCurrentUser();
-      if (!user) return false;
+      if (!user) {
+        console.log('[isAdmin] No authenticated user');
+        return false;
+      }
 
-      return this.adminEmails.includes(user.email);
+      const isAdminUser = this.adminEmails.includes(user.email);
+      console.log('[isAdmin] User:', user.email, 'Is Admin:', isAdminUser);
+
+      return isAdminUser;
     } catch (error) {
-      console.error('Admin check error:', error);
+      console.error('[isAdmin] Error checking admin status:', error);
       return false;
     }
   }
@@ -169,6 +175,17 @@ class AuthManager {
       return false;
     }
 
+    // Check if authenticated user is actually an admin
+    const isAdminUser = await this.isAdmin();
+
+    if (!isAdminUser) {
+      console.warn('Non-admin user attempted to access admin route');
+      alert('Access Denied: This page is restricted to administrators only.');
+      window.location.href = '/user/dashboard.html';
+      return false;
+    }
+
+    console.log('Admin access granted');
     return true;
   }
 
@@ -211,19 +228,21 @@ class BlogManager {
   // Get all posts including drafts (admin)
   async getAllPostsAdmin() {
     try {
+      console.log('[BlogManager] Fetching all posts for admin...');
       const { data, error } = await supabase
         .from(this.tableName)
         .select('*')
         .order('created_at', { ascending: false });
 
       if (error) {
-        console.error('Get admin posts error:', error.message);
+        console.error('[BlogManager] Get admin posts error:', error);
         return { data: null, error };
       }
 
+      console.log('[BlogManager] Retrieved', data?.length || 0, 'posts');
       return { data, error: null };
     } catch (error) {
-      console.error('Get admin posts exception:', error);
+      console.error('[BlogManager] Get admin posts exception:', error);
       return { data: null, error };
     }
   }
@@ -907,19 +926,26 @@ class AdminUserManager {
   // Get all users (admin only)
   async getAllUsers() {
     try {
+      console.log('[AdminUserManager] Fetching all users...');
       const { data, error } = await supabase
         .from(this.userProfileTable)
         .select('*')
         .order('created_at', { ascending: false });
 
       if (error) {
-        console.error('Get all users error:', error.message);
+        console.error('[AdminUserManager] Get all users error:', error);
+        console.error('[AdminUserManager] Error details:', {
+          message: error.message,
+          code: error.code,
+          hint: error.hint
+        });
         return { data: null, error };
       }
 
+      console.log('[AdminUserManager] Retrieved', data?.length || 0, 'users');
       return { data, error: null };
     } catch (error) {
-      console.error('Get all users exception:', error);
+      console.error('[AdminUserManager] Get all users exception:', error);
       return { data: null, error };
     }
   }
