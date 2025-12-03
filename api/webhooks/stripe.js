@@ -145,10 +145,35 @@ async function handleSubscriptionChange(event) {
     const subscription = event.data.object;
     const userId = subscription.metadata?.supabase_user_id;
     const customerId = subscription.customer;
-
+    
     if (!userId) {
       console.warn('Subscription missing user metadata:', subscription.id);
       return false;
+    }
+
+    // Create user profile if it doesn't exist
+    const { data: existingProfile } = await supabase
+      .from('user_profiles')
+      .select('id')
+      .eq('id', userId)
+      .single();
+    
+    if (!existingProfile) {
+      console.log(`Creating user profile for user: ${userId}`);
+      const { error: createError } = await supabase
+        .from('user_profiles')
+        .insert({
+          id: userId,
+          email: subscription.customer_email || subscription.customer_details?.email,
+          full_name: subscription.customer_details?.name || 'User',
+          created_at: new Date().toISOString()
+        });
+      
+      if (createError) {
+        console.error('Error creating user profile:', createError);
+      } else {
+        console.log(`User profile created successfully for user: ${userId}`);
+      }
     }
 
     const subscriptionStatus = mapStripeStatus(subscription.status);
