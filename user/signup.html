@@ -376,8 +376,10 @@
             return;
           }
 
-          // User created - redirect to checkout
-          window.location.href = './checkout.html';
+          // User created - wait a moment for session to be established, then redirect
+          setTimeout(() => {
+            window.location.href = './checkout.html';
+          }, 1000);
 
         } catch (error) {
           console.error('Signup error:', error);
