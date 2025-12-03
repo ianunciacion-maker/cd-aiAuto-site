@@ -120,8 +120,8 @@ class AuthManager {
       if (redirectUrl) {
         window.location.href = redirectUrl;
       } else {
-        // Default to user login page
-        window.location.href = './login.html';
+        // Default to user login page - use absolute path to ensure correct redirect
+        window.location.href = '/user/login.html';
       }
     } catch (error) {
       console.error('Logout exception:', error);

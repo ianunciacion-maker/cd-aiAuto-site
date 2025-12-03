@@ -418,7 +418,7 @@
           return;
         }
 
-        this.logoutBtn.addEventListener('click', () => authManager.logout('./login.html'));
+        this.logoutBtn.addEventListener('click', () => authManager.logout('/admin/login.html'));
 
         try {
           await this.loadDashboard();
