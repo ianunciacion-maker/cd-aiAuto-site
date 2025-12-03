@@ -418,7 +418,12 @@
           return;
         }
 
-        this.logoutBtn.addEventListener('click', () => authManager.logout('/admin/login.html'));
+        this.logoutBtn.addEventListener('click', async (e) => {
+          e.preventDefault();
+          this.logoutBtn.disabled = true;
+          this.logoutBtn.textContent = 'Logging out...';
+          await authManager.logout('/admin/login.html');
+        });
 
         try {
           await this.loadDashboard();

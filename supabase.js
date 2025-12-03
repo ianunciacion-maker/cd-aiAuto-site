@@ -106,25 +106,27 @@ class AuthManager {
 
   async logout(redirectUrl = null) {
     try {
+      console.log('[AuthManager] Starting logout...');
       const { error } = await supabase.auth.signOut();
 
       if (error) {
-        console.error('Logout error:', error.message);
-        return;
+        console.error('[AuthManager] Logout error:', error.message);
+        // Continue with redirect even if error occurs
+      } else {
+        console.log('[AuthManager] Logout successful');
       }
 
-      console.log('Logout successful');
       this.clearSession();
-      
-      // Use provided redirect URL or default to appropriate login page
-      if (redirectUrl) {
-        window.location.href = redirectUrl;
-      } else {
-        // Default to user login page - use absolute path to ensure correct redirect
-        window.location.href = '/user/login.html';
-      }
+
+      // Use provided redirect URL or default to user login page
+      const finalUrl = redirectUrl || '/user/login.html';
+      console.log('[AuthManager] Redirecting to:', finalUrl);
+      window.location.href = finalUrl;
     } catch (error) {
-      console.error('Logout exception:', error);
+      console.error('[AuthManager] Logout exception:', error);
+      // Force redirect even on exception
+      const finalUrl = redirectUrl || '/user/login.html';
+      window.location.href = finalUrl;
     }
   }
 
