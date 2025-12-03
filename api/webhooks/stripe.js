@@ -6,14 +6,8 @@
  * Headers: stripe-signature (Stripe webhook signature)
  */
 
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const stripe = require('stripe');
 const { createClient } = require('@supabase/supabase-js');
-
-// Initialize Supabase admin client
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_KEY
-);
 
 // Supported webhook events
 const SUPPORTED_EVENTS = [
@@ -30,11 +24,29 @@ module.exports = async (req, res) => {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
+  // Validate environment variables FIRST
+  if (!process.env.STRIPE_SECRET_KEY || !process.env.STRIPE_WEBHOOK_SECRET) {
+    console.error('Missing Stripe environment variables');
+    return res.status(500).json({ error: 'Server configuration error: Missing Stripe configuration' });
+  }
+
+  if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_KEY) {
+    console.error('Missing Supabase environment variables');
+    return res.status(500).json({ error: 'Server configuration error: Missing Supabase configuration' });
+  }
+
+  // Initialize Stripe and Supabase AFTER validating environment variables
+  const stripeInstance = stripe(process.env.STRIPE_SECRET_KEY);
+  const supabase = createClient(
+    process.env.SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_KEY
+  );
+
   const signature = req.headers['stripe-signature'];
 
   try {
     // Verify webhook signature
-    const event = stripe.webhooks.constructEvent(
+    const event = stripeInstance.webhooks.constructEvent(
       req.body,
       signature,
       process.env.STRIPE_WEBHOOK_SECRET
@@ -211,7 +223,7 @@ async function handlePaymentSucceeded(event) {
     const subscriptionId = invoice.subscription;
 
     // Get subscription to update if needed
-    const subscription = await stripe.subscriptions.retrieve(subscriptionId);
+    const subscription = await stripeInstance.subscriptions.retrieve(subscriptionId);
     const userId = subscription.metadata?.supabase_user_id;
 
     if (!userId) {
@@ -237,7 +249,7 @@ async function handlePaymentFailed(event) {
     const subscriptionId = invoice.subscription;
 
     // Get subscription to update
-    const subscription = await stripe.subscriptions.retrieve(subscriptionId);
+    const subscription = await stripeInstance.subscriptions.retrieve(subscriptionId);
     const userId = subscription.metadata?.supabase_user_id;
 
     if (!userId) {
