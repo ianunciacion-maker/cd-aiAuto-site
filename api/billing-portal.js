@@ -62,9 +62,15 @@ module.exports = async (req, res) => {
     }
 
     // Create portal session
+    // Build the base URL - Vercel provides VERCEL_URL without https://
+    let baseUrl = process.env.VERCEL_URL || 'http://localhost:3000';
+    if (!baseUrl.startsWith('http://') && !baseUrl.startsWith('https://')) {
+      baseUrl = `https://${baseUrl}`;
+    }
+
     const portalSession = await stripeInstance.billingPortal.sessions.create({
       customer: subscription.stripe_customer_id,
-      return_url: `${process.env.VERCEL_URL || 'http://localhost:3000'}/user/dashboard.html`
+      return_url: `${baseUrl}/user/dashboard.html`
     });
 
     return res.status(200).json({

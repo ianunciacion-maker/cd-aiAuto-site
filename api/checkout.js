@@ -104,12 +104,18 @@ module.exports = async (req, res) => {
     }
 
     // Create checkout session
+    // Build the base URL - Vercel provides VERCEL_URL without https://
+    let baseUrl = process.env.VERCEL_URL || 'http://localhost:3000';
+    if (!baseUrl.startsWith('http://') && !baseUrl.startsWith('https://')) {
+      baseUrl = `https://${baseUrl}`;
+    }
+
     const session = await stripeInstance.checkout.sessions.create({
       payment_method_types: ['card'],
       customer: customerId,
       client_reference_id: user_id,
-      success_url: `${process.env.VERCEL_URL || 'http://localhost:3000'}/user/dashboard.html?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.VERCEL_URL || 'http://localhost:3000'}/user/signup.html`,
+      success_url: `${baseUrl}/user/dashboard.html?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${baseUrl}/user/signup.html`,
       mode: 'subscription',
       line_items: [
         {
