@@ -372,8 +372,17 @@
             localStorage.removeItem('ai-auto-remember-email');
           }
 
-          // Redirect to dashboard
-          window.location.href = './dashboard.html';
+          // Check subscription status to determine redirect
+          const { data: subscription } = await userManager.getSubscriptionStatus();
+
+          // Only redirect to dashboard if user has an ACTIVE subscription
+          if (subscription && subscription.status === 'active') {
+            // User has active subscription - redirect to dashboard
+            window.location.href = './dashboard.html';
+          } else {
+            // No active subscription or trialing - redirect to checkout
+            window.location.href = './checkout.html';
+          }
 
         } catch (error) {
           console.error('Login error:', error);
