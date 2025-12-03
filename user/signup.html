@@ -570,11 +570,15 @@
         // Hide signup card, show verification card
         const signupCard = document.querySelector('.auth-container .auth-card:first-of-type');
         const verificationCard = document.getElementById('verificationCard');
+        const verificationState = document.querySelector('.verification-state');
 
         if (signupCard) {
           signupCard.style.display = 'none';
         }
         verificationCard.style.display = 'block';
+        if (verificationState) {
+          verificationState.style.display = 'block';
+        }
         document.getElementById('verificationEmail').textContent = email;
 
         // Setup verification button
