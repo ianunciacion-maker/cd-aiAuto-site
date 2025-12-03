@@ -271,6 +271,74 @@
       font-size: 16px;
       font-weight: 600;
       color: var(--text-dark);
+    /* Enhanced info card interactions */
+    .info-card {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .info-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Enhanced responsive design for reordered layout */
+    @media (max-width: 768px) {
+      .dashboard-container {
+        padding: var(--space-md);
+      }
+
+      .dashboard-header {
+        flex-direction: column;
+        gap: var(--space-md);
+        text-align: center;
+      }
+
+      .dashboard-actions {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .section {
+        margin-bottom: var(--space-md);
+      }
+
+      .profile-section {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+      }
+
+      .tools-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+      }
+
+      .subscription-status {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .dashboard-container {
+        padding: var(--space-sm);
+      }
+
+      .section {
+        padding: var(--space-md);
+      }
+
+      .info-card {
+        padding: var(--space-md);
+      }
+
+      .tool-card {
+        padding: var(--space-md);
+      }
+
+      .status-card {
+        padding: var(--space-md);
+      }
+    }
     }
   </style>
 </head>
@@ -299,10 +367,10 @@
 
     <!-- Main Content -->
     <div id="mainContent" style="display: none;">
-      <!-- Subscription Status -->
+      <!-- Profile -->
       <div class="section">
-        <h2 class="section-title">Subscription Status</h2>
-        <div class="subscription-status" id="subscriptionStatus"></div>
+        <h2 class="section-title">Profile</h2>
+        <div class="profile-section" id="profileSection"></div>
       </div>
 
       <!-- Tools -->
@@ -311,10 +379,10 @@
         <div class="tools-grid" id="toolsGrid"></div>
       </div>
 
-      <!-- Profile -->
+      <!-- Subscription Status -->
       <div class="section">
-        <h2 class="section-title">Profile</h2>
-        <div class="profile-section" id="profileSection"></div>
+        <h2 class="section-title">Subscription Status</h2>
+        <div class="subscription-status" id="subscriptionStatus"></div>
       </div>
     </div>
   </div>
@@ -380,9 +448,9 @@
 
       render() {
         this.renderHeader();
-        this.renderSubscriptionStatus();
-        this.renderTools();
         this.renderProfile();
+        this.renderTools();
+        this.renderSubscriptionStatus();
       }
 
       renderHeader() {
