@@ -28,7 +28,24 @@ module.exports = async (req, res) => {
   );
 
   try {
-    const { user_id } = req.body;
+    // Parse the request body more carefully
+    let user_id;
+    try {
+      const requestBody = req.body;
+      console.log('Request body:', requestBody);
+      
+      if (typeof requestBody === 'string') {
+        user_id = requestBody;
+      } else if (requestBody && typeof requestBody === 'object' && requestBody.user_id) {
+        user_id = requestBody.user_id;
+      } else {
+        console.error('Invalid request body format:', requestBody);
+        return res.status(400).json({ error: 'Invalid request body format' });
+      }
+    } catch (parseError) {
+      console.error('Error parsing request body:', parseError);
+      return res.status(400).json({ error: 'Invalid request body format' });
+    }
 
     if (!user_id) {
       return res.status(400).json({ error: 'Missing user_id' });
