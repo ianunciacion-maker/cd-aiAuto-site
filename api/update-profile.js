@@ -55,7 +55,7 @@ module.exports = async (req, res) => {
     // Parse form data
     const formData = req.body;
     const updates = {};
-    const allowedFields = ['full_name', 'company_name', 'business_phone', 'business_address'];
+    const allowedFields = ['full_name', 'company_name', 'business_phone', 'business_address', 'target_market', 'business_industry'];
 
     console.log('Received form data:', formData);
 

@@ -206,6 +206,8 @@ All API endpoints are in `/api/` and deployed as Vercel serverless functions:
 - **POST /api/billing-portal**: Generates Stripe billing portal URL
 - **POST /api/webhooks/stripe**: Handles Stripe events (subscription updates)
 - **POST /api/tools/use-tool**: Increments tool usage counter
+- **POST /api/check-subscription**: Checks subscription status from both database and Stripe, syncs data
+- **POST /api/update-profile**: Updates user profile information
 
 **Environment Variables Required:**
 ```bash
@@ -231,10 +233,15 @@ The design uses a bold, accessible neobrutalist aesthetic with:
 - **Serif headers** (Playfair Display) + **Sans-serif body** (Inter)
 
 **Dark Mode:**
-- Theme toggle in navigation
-- Preference saved to localStorage
-- CSS variables defined in `/css/themes/`
-- ThemeManager class in `/js/modules/theme.js`
+- Theme toggle in navigation (top-right corner)
+- Preference saved to localStorage (`ai-auto-theme` key)
+- CSS variables defined in `/css/themes/` and `/css/base/variables.css`
+- ThemeManager class in `/js/modules/theme.js` handles switching
+- Applied via `data-theme="dark"` attribute on `<html>` element
+- Keyboard shortcut: Ctrl/Cmd + Shift + T
+- Detects system preference on first visit
+- Theme changes dispatch `themechange` custom event
+- See `design_system.md` for complete semantic variable mapping
 
 ## Critical Implementation Details
 
@@ -268,6 +275,11 @@ The design uses a bold, accessible neobrutalist aesthetic with:
    - `getSubscriptionStatus()`: Checks database (faster, may be stale)
    - `getSubscriptionStatusFromStripe()`: Queries Stripe API directly (more reliable, client-side only in supabase.js:606-681)
 7. **Environment validation**: All API endpoints validate environment variables before initialization to provide clear error messages
+8. **Subscription sync endpoint**: `/api/check-subscription` checks both database and Stripe, automatically syncing stale data
+   - First checks database for quick response if subscription is valid
+   - Falls back to Stripe API if database is stale or missing
+   - Updates database with latest Stripe data when needed
+   - Returns source ('database', 'stripe', or 'none') to indicate data origin
 
 ## Styling Guidelines
 
@@ -281,9 +293,11 @@ The design uses a bold, accessible neobrutalist aesthetic with:
 ### When Modifying Styles
 
 1. **Never override Quill styles** directly without `!important`
-2. **Always test dark mode** after CSS changes
+2. **Always test dark mode** after CSS changes - use Ctrl/Cmd + Shift + T to toggle
 3. **Maintain thick borders & hard shadows** for consistency
 4. **Use uppercase** for primary headings
+5. **Use semantic variables** (e.g., `--bg-primary`, `--text-main`) instead of hardcoded colors
+6. **Reference design_system.md** for complete token documentation and theming guide
 
 ## Common Patterns
 
@@ -422,7 +436,9 @@ curl -X POST http://localhost:3000/api/checkout -H "Content-Type: application/js
 - **Stripe Dashboard**: Configure webhooks, view subscriptions
 - **Vercel Dashboard**: View deployments, set environment variables
 - **Quill.js Docs**: https://quilljs.com/docs/
-- **Setup Guides**: See VERCEL_SETUP.md, STRIPE_WEBHOOK_SETUP.md, SUPABASE_SETUP_GUIDE.md for detailed configuration
+- **Design System**: See `design_system.md` for complete design tokens, theming, and component guidelines
+- **Setup Guides**: See `docs/setup/` directory for SUPABASE_SETUP_GUIDE.md, SETUP_CHECKLIST.md, etc.
+- **Deployment Guides**: See `docs/deployment/` for deployment workflows and testing
 
 ## Performance Considerations
 

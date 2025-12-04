@@ -12,877 +12,42 @@
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Playfair+Display:wght@500;600;700;900&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="../css/main.css">
-  <style>
-    /* CSS Variables for Light and Dark Themes */
-    :root {
-      /* Light Theme (Default) */
-      --bg-primary: #f8f9fa;
-      --bg-secondary: white;
-      --bg-tertiary: #f9fafb;
-      --bg-paper: white;
-      --text-primary: #1a202c;
-      --text-secondary: #4a5568;
-      --text-light: #718096;
-      --text-dark: #2d3748;
-      --border-color: #e2e8f0;
-      --border-light: #f0f0f0;
-      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
-      --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.08);
-      --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.1);
-      --shadow-hard: 0 8px 24px rgba(0, 0, 0, 0.15);
-    }
-
-    [data-theme="dark"] {
-      /* Dark Theme */
-      --bg-primary: #1a202c;
-      --bg-secondary: #2d3748;
-      --bg-tertiary: #374151;
-      --bg-paper: #2d3748;
-      --text-primary: #f7fafc;
-      --text-secondary: #e2e8f0;
-      --text-light: #cbd5e0;
-      --text-dark: #f7fafc;
-      --border-color: #4a5568;
-      --border-light: #4a5568;
-      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
-      --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.3);
-      --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.3);
-      --shadow-hard: 0 8px 24px rgba(0, 0, 0, 0.4);
-    }
-
-    body {
-      background: var(--bg-primary);
-      color: var(--text-primary);
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
-
-    .dashboard-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: var(--space-lg);
-      position: relative;
-    }
-
-    /* Theme Toggle Styles */
-    .theme-toggle {
-      position: absolute;
-      top: var(--space-lg);
-      right: var(--space-lg);
-      background: var(--bg-secondary);
-      border: 2px solid var(--border-color);
-      border-radius: 50px;
-      width: 50px;
-      height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: var(--shadow-md);
-      z-index: 100;
-      padding: 8px;
-    }
-
-    .theme-toggle:hover {
-      transform: scale(1.1);
-      box-shadow: var(--shadow-lg);
-      border-color: var(--blue);
-    }
-
-    .theme-toggle-icon {
-      font-size: 20px;
-      transition: transform 0.3s ease;
-    }
-
-    .theme-toggle:active .theme-toggle-icon {
-      transform: rotate(180deg);
-    }
-
-    .dashboard-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: var(--space-xl);
-      background: var(--bg-secondary);
-      padding: var(--space-lg);
-      border-radius: 12px;
-      box-shadow: var(--shadow-md);
-      transition: background-color 0.3s ease;
-    }
-
-    .dashboard-header h1 {
-      font-size: 28px;
-      color: var(--text-dark);
-      margin: 0;
-      transition: color 0.3s ease;
-    }
-
-    .dashboard-actions {
-      display: flex;
-      gap: var(--space-md);
-    }
-
-    .dashboard-actions button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-size: 14px;
-    }
-
-    .btn-secondary {
-      background: white;
-      color: var(--blue);
-      border: 1px solid var(--blue);
-    }
-
-    .btn-secondary:hover {
-      background: #f0f9ff;
-    }
-
-    .btn-danger {
-      background: #fee;
-      color: #c33;
-    }
-
-    .btn-danger:hover {
-      background: #fdd;
-    }
-
-    .loading-state {
-      text-align: center;
-      padding: var(--space-xl);
-      color: var(--text-light);
-      transition: color 0.3s ease;
-    }
-
-    .loading-spinner {
-      width: 40px;
-      height: 40px;
-      border: 3px solid #f0f0f0;
-      border-top-color: var(--blue);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin: 0 auto var(--space-md);
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    .error-banner {
-      background: #fee;
-      border-left: 4px solid #c33;
-      padding: var(--space-lg);
-      border-radius: 8px;
-      margin-bottom: var(--space-lg);
-      color: #c33;
-      display: none;
-    }
-
-    .error-banner.show {
-      display: block;
-    }
-
-    .section {
-      background: var(--bg-secondary);
-      border-radius: 12px;
-      padding: var(--space-lg);
-      margin-bottom: var(--space-lg);
-      box-shadow: var(--shadow-md);
-      transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .section-title {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--text-dark);
-      margin-bottom: var(--space-md);
-      padding-bottom: var(--space-md);
-      border-bottom: 1px solid var(--border-light);
-      transition: color 0.3s ease, border-color 0.3s ease;
-    }
-
-    .subscription-status {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: var(--space-lg);
-      margin-bottom: var(--space-lg);
-    }
-
-    .status-card {
-      padding: var(--space-lg);
-      background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%);
-      border-radius: 12px;
-      color: white;
-    }
-
-    .status-card h3 {
-      font-size: 14px;
-      font-weight: 500;
-      opacity: 0.9;
-      margin: 0 0 8px 0;
-    }
-
-    .status-card .value {
-      font-size: 24px;
-      font-weight: 700;
-      margin: 0;
-    }
-
-    .status-card.inactive {
-      background: linear-gradient(135deg, #ccc 0%, #aaa 100%);
-    }
-
-    .tools-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: var(--space-lg);
-      margin-bottom: var(--space-lg);
-    }
-
-    .tool-card {
-      padding: var(--space-lg);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      text-align: center;
-      transition: all 0.3s ease;
-      cursor: pointer;
-      background: var(--bg-secondary);
-    }
-
-    .tool-card:hover {
-      border-color: var(--blue);
-      box-shadow: 0 8px 24px rgba(59, 130, 246, 0.15);
-      transform: translateY(-4px);
-      background: var(--bg-tertiary);
-    }
-
-    .tool-card.locked {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-
-    .tool-card.locked:hover {
-      border-color: #e0e0e0;
-      box-shadow: none;
-      transform: none;
-    }
-
-    .tool-card h3 {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--text-dark);
-      margin: 0 0 var(--space-sm) 0;
-      transition: color 0.3s ease;
-    }
-
-    .tool-card p {
-      color: var(--text-light);
-      font-size: 13px;
-      margin: 0 0 var(--space-md) 0;
-    }
-
-    .tool-card .usage {
-      font-size: 13px;
-      color: var(--text-light);
-      margin-bottom: var(--space-sm);
-    }
-
-    .usage-bar {
-      width: 100%;
-      height: 8px;
-      background: var(--border-light);
-      border-radius: 4px;
-      overflow: hidden;
-      margin-bottom: var(--space-md);
-      transition: background-color 0.3s ease;
-    }
-
-    .usage-bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--blue), var(--purple));
-      width: 0%;
-      transition: width 0.3s ease;
-    }
-
-    .tool-card button {
-      width: 100%;
-      padding: 10px;
-      background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .tool-card button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 16px rgba(59, 130, 246, 0.3);
-    }
-
-    .tool-card.locked button {
-      background: #ccc;
-      cursor: not-allowed;
-    }
-
-    .profile-section {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: var(--space-lg);
-    }
-
-    .info-card {
-      padding: var(--space-lg);
-      background: var(--bg-tertiary);
-      border-radius: 8px;
-      transition: background-color 0.3s ease;
-    }
-
-    .info-card label {
-      display: block;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text-light);
-      text-transform: uppercase;
-      margin-bottom: 4px;
-      transition: color 0.3s ease;
-    }
-
-    .info-card .value {
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--text-dark);
-      transition: color 0.3s ease;
-    /* Enhanced info card interactions */
-    .info-card {
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .info-card:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-lg);
-      background: var(--bg-secondary);
-    }
-
-    /* Enhanced responsive design for reordered layout */
-    @media (max-width: 768px) {
-      .dashboard-container {
-        padding: var(--space-md);
-      }
-
-      .dashboard-header {
-        flex-direction: column;
-        gap: var(--space-md);
-        text-align: center;
-      }
-
-      .dashboard-actions {
-        width: 100%;
-        justify-content: center;
-      }
-
-      .section {
-        margin-bottom: var(--space-md);
-      }
-
-      .profile-section {
-        grid-template-columns: 1fr;
-        gap: var(--space-md);
-      }
-
-      .tools-grid {
-        grid-template-columns: 1fr;
-        gap: var(--space-md);
-      }
-
-      .subscription-status {
-        grid-template-columns: 1fr;
-        gap: var(--space-md);
-      }
-    }
-
-    @media (max-width: 480px) {
-      .dashboard-container {
-        padding: var(--space-sm);
-      }
-
-      .section {
-        padding: var(--space-md);
-      }
-
-      .info-card {
-        padding: var(--space-md);
-      }
-
-      .tool-card {
-        padding: var(--space-md);
-      }
-
-      .status-card {
-        padding: var(--space-md);
-      }
-    }
-    /* Profile Header Styles */
-    .profile-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: var(--space-md);
-      padding-bottom: var(--space-md);
-      border-bottom: 1px solid var(--border-light);
-    }
-
-    .edit-profile-btn {
-      padding: 8px 16px;
-      background: var(--blue);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .edit-profile-btn:hover {
-      background: var(--purple);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-    }
-
-    .current-avatar-img {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-
-    /* Modal Styles */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: var(--z-modal);
-      backdrop-filter: blur(4px);
-    }
-
-    .modal.active {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .modal-content {
-      background: white;
-      border-radius: 16px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-      max-width: 600px;
-      width: 90%;
-      max-height: 90vh;
-      overflow-y: auto;
-      position: relative;
-    }
-
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: var(--space-lg);
-      border-bottom: 1px solid var(--border-light);
-    }
-
-    .modal-header h3 {
-      margin: 0;
-      font-size: 24px;
-      font-weight: 700;
-      color: var(--text-dark);
-    }
-
-    .modal-close {
-      background: none;
-      border: none;
-      font-size: 24px;
-      cursor: pointer;
-      color: var(--text-light);
-      padding: 4px;
-      border-radius: 50%;
-      transition: all 0.2s ease;
-    }
-
-    .modal-close:hover {
-      background: var(--bg-tertiary);
-      color: var(--text-dark);
-    }
-
-    .modal-body {
-      padding: var(--space-lg);
-    }
-
-    .form-section {
-      margin-bottom: var(--space-lg);
-    }
-
-    .form-section h4 {
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--text-dark);
-      margin-bottom: var(--space-md);
-      padding-bottom: var(--space-sm);
-      border-bottom: 2px solid var(--blue);
-    }
-
-    .form-row {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: var(--space-md);
-      margin-bottom: var(--space-md);
-    }
-
-    .form-row.full-width .form-group {
-      grid-column: 1 / -1;
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .form-group label {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-dark);
-      margin-bottom: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .form-group input {
-      padding: 12px;
-      border: 2px solid var(--border-color);
-      border-radius: 8px;
-      font-size: 14px;
-      transition: all 0.3s ease;
-      background: var(--bg-paper);
-    }
-
-    .form-group input:focus {
-      outline: none;
-      border-color: var(--blue);
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-    }
-
-    /* Avatar Section Styles */
-    .avatar-section {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: var(--space-md);
-    }
-
-    .current-avatar {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: var(--space-sm);
-    }
-
-    .current-avatar img {
-      border: 3px solid var(--blue);
-      box-shadow: var(--shadow-hard);
-    }
-
-    .change-avatar-btn {
-      padding: 8px 16px;
-      background: var(--gold);
-      color: var(--ink);
-      border: none;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .change-avatar-btn:hover {
-      background: var(--coral);
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-hard);
-    }
-
-    .avatar-selection {
-      text-align: center;
-    }
-
-    .avatar-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-      gap: var(--space-md);
-      margin-bottom: var(--space-lg);
-      max-height: 200px;
-      overflow-y: auto;
-      padding: var(--space-md);
-      border: 2px solid var(--border-color);
-      border-radius: 12px;
-      background: var(--bg-tertiary);
-    }
-
-    .avatar-option {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      border: 3px solid transparent;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-    }
-
-    .avatar-option:hover {
-      border-color: var(--blue);
-      transform: scale(1.1);
-    }
-
-    .avatar-option.selected {
-      border-color: var(--blue);
-      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3);
-    }
-
-    .avatar-actions {
-      display: flex;
-      gap: var(--space-md);
-      justify-content: center;
-    }
-
-    .btn-primary {
-      background: var(--blue);
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .btn-primary:hover {
-      background: var(--purple);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-    }
-
-    .modal-actions {
-      display: flex;
-      gap: var(--space-md);
-      justify-content: flex-end;
-      padding-top: var(--space-lg);
-      border-top: 1px solid var(--border-light);
-    }
-
-    /* Enhanced Responsive Design */
-    @media (max-width: 768px) {
-      .modal-content {
-        width: 95%;
-        margin: var(--space-md);
-      }
-
-      .form-row {
-        grid-template-columns: 1fr;
-        gap: var(--space-sm);
-      }
-
-      .avatar-grid {
-        grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
-        gap: var(--space-sm);
-      }
-    }
-
-    @media (max-width: 480px) {
-      .modal-content {
-        width: 98%;
-        margin: var(--space-sm);
-      }
-
-      .modal-header {
-        padding: var(--space-md);
-      }
-
-      .modal-body {
-        padding: var(--space-md);
-      }
-
-      .form-section h4 {
-        font-size: 14px;
-      }
-
-      .avatar-grid {
-        grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
-        gap: var(--space-sm);
-      }
-    }
-    }
-
-    /* Inline Editing Styles */
-    .profile-avatar-container {
-      position: relative;
-      display: inline-block;
-    }
-
-    .profile-avatar {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid var(--blue);
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .profile-avatar:hover {
-      transform: scale(1.05);
-      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-    }
-
-    .editable-field {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: var(--space-sm);
-    }
-
-    .edit-icon-btn {
-      background: none;
-      border: none;
-      font-size: 16px;
-      cursor: pointer;
-      padding: 4px;
-      border-radius: 4px;
-      transition: all 0.2s ease;
-      opacity: 0.7;
-    }
-
-    .edit-icon-btn:hover {
-      background: var(--bg-paper);
-      opacity: 1;
-      transform: scale(1.1);
-    }
-
-    .inline-input {
-      padding: 8px 12px;
-      border: 2px solid var(--blue);
-      border-radius: 6px;
-      font-size: 14px;
-      font-weight: 600;
-      background: var(--bg-paper);
-      outline: none;
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-      width: 100%;
-    }
-
-    .inline-input:focus {
-      border-color: var(--purple);
-      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
-    }
-
-    /* Avatar Selection Overlay */
-    .avatar-selection-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: var(--z-modal);
-      backdrop-filter: blur(4px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .avatar-selection-modal {
-      background: white;
-      border-radius: 16px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-      max-width: 500px;
-      width: 90%;
-      max-height: 80vh;
-      overflow-y: auto;
-      position: relative;
-    }
-
-    .avatar-selection-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: var(--space-lg);
-      border-bottom: 1px solid var(--border-light);
-    }
-
-    .avatar-selection-header h3 {
-      margin: 0;
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--text-dark);
-    }
-
-    .close-btn {
-      background: none;
-      border: none;
-      font-size: 24px;
-      cursor: pointer;
-      color: var(--text-light);
-      padding: 4px;
-      border-radius: 50%;
-      transition: all 0.2s ease;
-    }
-
-    .close-btn:hover {
-      background: var(--bg-tertiary);
-      color: var(--text-dark);
-    }
-
-    /* Responsive Inline Editing */
-    @media (max-width: 768px) {
-      .profile-avatar {
-        width: 50px;
-        height: 50px;
-      }
-
-      .editable-field {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: var(--space-xs);
-      }
-
-      .edit-icon-btn {
-        align-self: flex-end;
-      }
-
-      .avatar-selection-modal {
-        width: 95%;
-        margin: var(--space-md);
-      }
-    }
-  </style>
 </head>
 
 <body>
+  <!-- Simplified Dashboard Navigation -->
+  <nav class="dashboard-nav">
+    <div class="dashboard-nav-left">
+      <a href="/" class="dashboard-logo">Ai-Auto</a>
+      <span class="dashboard-title">Dashboard</span>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: var(--space-md);">
+      <!-- iOS-style Theme Toggle -->
+      <div class="theme-toggle-wrapper">
+        <span class="theme-toggle-label" id="themeLabel">Light</span>
+        <button class="theme-toggle" id="themeToggle" title="Toggle dark/light mode">
+          <span class="theme-toggle-slider">
+            <span class="theme-toggle-icon" id="themeIcon">🌙</span>
+          </span>
+        </button>
+      </div>
+
+      <!-- User Menu Dropdown -->
+      <div class="user-menu" id="userMenu">
+        <button class="user-menu-trigger" id="userMenuTrigger">
+          <span id="userName">User</span>
+          <span>▼</span>
+        </button>
+        <div class="user-menu-dropdown">
+          <div class="user-menu-item" id="billingBtn">💳 Manage Subscription</div>
+          <div class="user-menu-item" id="logoutBtn">🚪 Sign Out</div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
   <div class="dashboard-container">
-    <!-- Theme Toggle -->
-    <button class="theme-toggle" id="themeToggle" title="Toggle dark/light mode">
-      <span class="theme-toggle-icon">🌙</span>
-    </button>
-    
     <!-- Header -->
     <div class="dashboard-header">
       <div>
@@ -938,7 +103,7 @@
         this.toolUsage = null;
         
         // Initialize theme from localStorage or default to light
-        this.currentTheme = localStorage.getItem('theme') || 'light';
+        this.currentTheme = localStorage.getItem('ai-auto-theme') || 'light';
         this.toolTypes = [
           { id: 'blog_generator', name: 'Blog Generator', desc: 'Create engaging blog posts with AI' },
           { id: 'social_captions', name: 'Social Captions', desc: 'Generate perfect social media captions' },
@@ -1131,7 +296,7 @@
           <div class="info-card">
             <label>Avatar</label>
             <div class="profile-avatar-container">
-              <img id="profileAvatar" src="${this.userProfile?.avatar_url || '#'}" alt="Profile Avatar" class="profile-avatar">
+              <div id="profileAvatar" class="profile-avatar">${this.userProfile?.avatar_url || '👤'}</div>
               <button type="button" class="edit-icon-btn" id="editAvatarBtn" title="Change Avatar">📷</button>
             </div>
           </div>
@@ -1171,6 +336,20 @@
             </div>
           </div>
           <div class="info-card">
+            <label>Target Market</label>
+            <div class="editable-field">
+              <span class="value" id="displayTargetMarket">${this.userProfile?.target_market || 'Not set'}</span>
+              <button type="button" class="edit-icon-btn" id="editTargetMarketBtn" title="Edit Target Market">✏️</button>
+            </div>
+          </div>
+          <div class="info-card">
+            <label>Business Industry</label>
+            <div class="editable-field">
+              <span class="value" id="displayBusinessIndustry">${this.userProfile?.business_industry || 'Not set'}</span>
+              <button type="button" class="edit-icon-btn" id="editBusinessIndustryBtn" title="Edit Business Industry">✏️</button>
+            </div>
+          </div>
+          <div class="info-card">
             <label>Member Since</label>
             <div class="value">${new Date(this.userProfile?.created_at).toLocaleDateString('en-US')}</div>
           </div>
@@ -1187,6 +366,8 @@
         this.setupFieldEditor('editCompanyBtn', 'displayCompany', 'company_name', 'text');
         this.setupFieldEditor('editPhoneBtn', 'displayPhone', 'business_phone', 'tel');
         this.setupFieldEditor('editAddressBtn', 'displayAddress', 'business_address', 'text');
+        this.setupFieldEditor('editTargetMarketBtn', 'displayTargetMarket', 'target_market', 'text');
+        this.setupFieldEditor('editBusinessIndustryBtn', 'displayBusinessIndustry', 'business_industry', 'text');
         this.setupAvatarEditor();
       }
 
@@ -1409,21 +590,46 @@
         document.getElementById('logoutBtn').addEventListener('click', async () => {
           await authManager.logout();
         });
+
+        // User menu dropdown toggle
+        const userMenuTrigger = document.getElementById('userMenuTrigger');
+        const userMenu = document.getElementById('userMenu');
+
+        userMenuTrigger?.addEventListener('click', (e) => {
+          e.stopPropagation();
+          userMenu.classList.toggle('active');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+          if (!userMenu?.contains(e.target)) {
+            userMenu?.classList.remove('active');
+          }
+        });
       }
 
       applyTheme(theme) {
-        // Apply theme to document
-        document.documentElement.setAttribute('data-theme', theme);
-        
-        // Update theme toggle icon
-        const themeToggle = document.getElementById('themeToggle');
-        const icon = themeToggle?.querySelector('.theme-toggle-icon');
+        // Apply theme to document root
+        if (theme === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+          document.documentElement.removeAttribute('data-theme');
+        }
+
+        // Update toggle UI
+        const icon = document.getElementById('themeIcon');
+        const label = document.getElementById('themeLabel');
+
         if (icon) {
           icon.textContent = theme === 'dark' ? '☀️' : '🌙';
         }
-        
+
+        if (label) {
+          label.textContent = theme === 'dark' ? 'Dark' : 'Light';
+        }
+
         // Save theme preference
-        localStorage.setItem('theme', theme);
+        localStorage.setItem('ai-auto-theme', theme);
       }
 
       toggleTheme() {
