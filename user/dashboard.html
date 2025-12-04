@@ -115,17 +115,45 @@
           { id: 'marketing_engine_distribution', name: 'Distribution (The Cannon)', desc: 'Automate daily publishing with N8N or Zapier workflows at 9:00 AM', comingSoon: true }
         ];
         
-        // Avatar options
-        this.avatarOptions = [
-          { emoji: '👤', name: 'Default', color: '#2357ff' },
-          { emoji: '👨‍💼', name: 'Professional', color: '#2d3748' },
-          { emoji: '🎨', name: 'Creative', color: '#8b5cf6' },
-          { emoji: '🚀', name: 'Tech', color: '#ef4444' },
-          { emoji: '🌟', name: 'Gold', color: '#f59e0b' },
-          { emoji: '💎', name: 'Diamond', color: '#6366f1' },
-          { emoji: '🌈', name: 'Rainbow', color: 'linear-gradient(45deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3)' },
-          { emoji: '🦄', name: 'Ninja', color: '#000000' }
-        ];
+        // Avatar options organized by categories with neobrutalist design
+        this.avatarOptions = {
+          professional: [
+            { emoji: '👨‍💼', name: 'Business', color: 'var(--ink)' },
+            { emoji: '👩‍💻', name: 'Developer', color: 'var(--blue)' },
+            { emoji: '👨‍🔬', name: 'Scientist', color: 'var(--purple)' },
+            { emoji: '👨‍🎓', name: 'Academic', color: 'var(--coral)' }
+          ],
+          creative: [
+            { emoji: '🎨', name: 'Artist', color: 'var(--pink)' },
+            { emoji: '🎭', name: 'Performer', color: 'var(--gold)' },
+            { emoji: '🎪', name: 'Entertainer', color: 'var(--coral)' },
+            { emoji: '🎸', name: 'Musician', color: 'var(--purple)' }
+          ],
+          tech: [
+            { emoji: '🚀', name: 'Space', color: 'var(--blue)' },
+            { emoji: '🤖', name: 'Robot', color: 'var(--ink)' },
+            { emoji: '👾', name: 'Gaming', color: 'var(--green)' },
+            { emoji: '💻', name: 'Computer', color: 'var(--coral)' }
+          ],
+          nature: [
+            { emoji: '🌿', name: 'Botanical', color: 'var(--green)' },
+            { emoji: '🌊', name: 'Ocean', color: 'var(--blue)' },
+            { emoji: '🏔', name: 'Mountain', color: 'var(--ink)' },
+            { emoji: '🌸', name: 'Floral', color: 'var(--pink)' }
+          ],
+          abstract: [
+            { emoji: '🎯', name: 'Target', color: 'var(--coral)' },
+            { emoji: '💎', name: 'Diamond', color: 'var(--blue)' },
+            { emoji: '🌟', name: 'Star', color: 'var(--gold)' },
+            { emoji: '🔮', name: 'Crystal', color: 'var(--purple)' }
+          ],
+          fun: [
+            { emoji: '🦄', name: 'Unicorn', color: 'var(--pink)' },
+            { emoji: '🌈', name: 'Rainbow', color: 'linear-gradient(45deg, var(--coral), var(--gold), var(--green), var(--blue))' },
+            { emoji: '🎪', name: 'Circus', color: 'var(--purple)' },
+            { emoji: '🎭', name: 'Mystery', color: 'var(--ink)' }
+          ]
+        };
         
         this.selectedAvatar = null;
         this.init();
@@ -449,19 +477,35 @@
           <div class="avatar-selection-overlay" id="avatarSelectionOverlay">
             <div class="avatar-selection-modal">
               <div class="avatar-selection-header">
-                <h3>Choose Avatar</h3>
-                <button type="button" class="close-btn" id="closeAvatarSelection">×</button>
+                <h3>Choose Your Avatar</h3>
+                <button type="button" class="close-btn" id="closeAvatarSelection" aria-label="Close avatar selection">×</button>
               </div>
-              <div class="avatar-grid" id="avatarGrid"></div>
+              
+              <!-- Category Tabs -->
+              <div class="avatar-categories" role="tablist">
+                <button class="avatar-category-tab active" data-category="professional" role="tab" aria-selected="true">Professional</button>
+                <button class="avatar-category-tab" data-category="creative" role="tab" aria-selected="false">Creative</button>
+                <button class="avatar-category-tab" data-category="tech" role="tab" aria-selected="false">Tech</button>
+                <button class="avatar-category-tab" data-category="nature" role="tab" aria-selected="false">Nature</button>
+                <button class="avatar-category-tab" data-category="abstract" role="tab" aria-selected="false">Abstract</button>
+                <button class="avatar-category-tab" data-category="fun" role="tab" aria-selected="false">Fun</button>
+              </div>
+              
+              <!-- Avatar Grid -->
+              <div class="avatar-grid-container">
+                <div class="avatar-grid" id="avatarGrid" role="tabpanel" aria-labelledby="professional"></div>
+              </div>
+              
               <div class="avatar-actions">
-                <button type="button" class="btn-secondary" id="cancelAvatarBtn">Cancel</button>
-                <button type="button" class="btn-primary" id="uploadAvatarBtn">Upload Custom</button>
+                <button type="button" class="btn btn-outline" id="cancelAvatarBtn">Cancel</button>
+                <button type="button" class="btn" id="uploadAvatarBtn">Upload Custom</button>
               </div>
             </div>
           </div>
         `;
 
         document.body.insertAdjacentHTML('beforeend', avatarHtml);
+        this.currentCategory = 'professional';
         this.renderAvatarGrid();
         this.setupAvatarSelectionEvents();
       }
@@ -470,11 +514,17 @@
         const grid = document.getElementById('avatarGrid');
         if (!grid) return;
 
-        const avatarOptions = this.avatarOptions.map(avatar => `
+        const currentAvatars = this.avatarOptions[this.currentCategory] || [];
+        const avatarOptions = currentAvatars.map(avatar => `
           <div class="avatar-option ${this.userProfile?.avatar_url === avatar.emoji ? 'selected' : ''}"
                data-avatar="${avatar.emoji}"
-               style="background: ${avatar.color};">
-            ${avatar.emoji}
+               data-name="${avatar.name}"
+               style="background: ${avatar.color};"
+               role="option"
+               aria-label="${avatar.name} avatar"
+               tabindex="0">
+            <span class="avatar-emoji">${avatar.emoji}</span>
+            <span class="avatar-name">${avatar.name}</span>
           </div>
         `).join('');
 
@@ -486,29 +536,104 @@
         const closeBtn = document.getElementById('closeAvatarSelection');
         const cancelBtn = document.getElementById('cancelAvatarBtn');
         const uploadBtn = document.getElementById('uploadAvatarBtn');
+        const categoryTabs = overlay?.querySelectorAll('.avatar-category-tab');
         const avatarOptions = overlay?.querySelectorAll('.avatar-option');
 
+        // Close button functionality
         closeBtn?.addEventListener('click', () => this.closeAvatarSelection());
         cancelBtn?.addEventListener('click', () => this.closeAvatarSelection());
         
+        // Upload button functionality
         uploadBtn?.addEventListener('click', () => {
           this.closeAvatarSelection();
           this.triggerAvatarUpload();
         });
 
-        avatarOptions?.forEach(option => {
-          option.addEventListener('click', async () => {
-            const avatar = option.dataset.avatar;
-            await this.updateProfileField('avatar_url', avatar);
-            this.closeAvatarSelection();
+        // Category tab switching
+        categoryTabs?.forEach(tab => {
+          tab.addEventListener('click', () => {
+            const category = tab.dataset.category;
+            this.switchAvatarCategory(category);
+          });
+
+          // Keyboard navigation
+          tab.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              const category = tab.dataset.category;
+              this.switchAvatarCategory(category);
+            }
           });
         });
 
+        // Avatar selection with hover states
+        avatarOptions?.forEach(option => {
+          option.addEventListener('click', () => {
+            this.selectAvatar(option);
+          });
+
+          // Keyboard navigation
+          option.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              this.selectAvatar(option);
+            }
+          });
+
+          // Hover effects
+          option.addEventListener('mouseenter', () => {
+            option.style.transform = 'translate(-2px, -2px) scale(1.05)';
+            option.style.boxShadow = 'var(--shadow-hover)';
+          });
+
+          option.addEventListener('mouseleave', () => {
+            if (!option.classList.contains('selected')) {
+              option.style.transform = '';
+              option.style.boxShadow = '';
+            }
+          });
+        });
+      }
+
+      async selectAvatar(option) {
+        const avatar = option.dataset.avatar;
+        await this.updateProfileField('avatar_url', avatar);
+        this.closeAvatarSelection();
+
+        // Close overlay when clicking outside
         overlay?.addEventListener('click', (e) => {
           if (e.target === overlay) {
             this.closeAvatarSelection();
           }
         });
+
+        // Escape key to close
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && overlay?.classList.contains('active')) {
+            this.closeAvatarSelection();
+          }
+        });
+      }
+
+      switchAvatarCategory(category) {
+        const tabs = document.querySelectorAll('.avatar-category-tab');
+        const grid = document.getElementById('avatarGrid');
+        
+        // Update tab states
+        tabs.forEach(tab => {
+          const isActive = tab.dataset.category === category;
+          tab.classList.toggle('active', isActive);
+          tab.setAttribute('aria-selected', isActive.toString());
+        });
+
+        // Update grid aria-labelledby
+        if (grid) {
+          grid.setAttribute('aria-labelledby', category);
+        }
+
+        // Update current category and re-render
+        this.currentCategory = category;
+        this.renderAvatarGrid();
       }
 
       closeAvatarSelection() {
