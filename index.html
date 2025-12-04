@@ -10,8 +10,6 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Playfair+Display:wght@500;600;700;900&display=swap"
     rel="stylesheet">
-  <!-- Import 3D Carousel CSS -->
-  <link rel="stylesheet" href="css/components/video-carousel-3d.css">
   
   <style>
     :root {
@@ -926,187 +924,48 @@
       }
     }
 
-    /* Enhanced 3D Carousel Section Integration */
-    .carousel-section {
-      padding: var(--space-xl) 0;
-      background: linear-gradient(135deg,
-        var(--bg-paper) 0%,
-        var(--lavender) 50%,
-        var(--bg-white) 100%);
-      border-bottom: var(--border-thick);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .carousel-section::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-        background:
-        radial-gradient(circle at 20% 50%, rgba(35, 87, 255, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 50%, rgba(255, 204, 0, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 50% 50%, rgba(147, 51, 234, 0.05) 0%, transparent 70%);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .carousel-section .container {
-      position: relative;
-      z-index: 1;
-    }
-
-    .carousel-header {
-      text-align: center;
-      margin-bottom: var(--space-lg);
-    }
-
-    .carousel-header h2 {
-      font-size: clamp(48px, 8vw, 80px);
-      margin-bottom: var(--space-sm);
-      text-transform: uppercase;
-      letter-spacing: -0.02em;
-      background: linear-gradient(45deg, var(--blue), var(--coral), var(--gold));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      text-shadow: 4px 4px 0px var(--ink);
-      position: relative;
-    }
-
-    .carousel-header p {
-      font-size: 20px;
-      color: var(--ink);
-      opacity: 0.8;
-      max-width: 600px;
-      margin: 0 auto;
-      font-weight: 600;
-    }
-
-    /* 3D Carousel Container */
-    .carousel-3d-container {
-      position: relative;
-      width: 100%;
-      height: 600px;
-      margin: var(--space-lg) 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    /* Loading and Error States for Carousel */
-    .carousel-loading {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: var(--space-sm);
-      z-index: 300;
-    }
-
-    .carousel-loading-spinner {
-      width: 60px;
-      height: 60px;
-      border: 6px solid var(--text-dark);
-      border-top: 6px solid var(--primary-color);
-      border-radius: 50%;
-      animation: carousel-spin 1s linear infinite;
-    }
-
-    .carousel-loading-text {
-      font-family: var(--font-family-display);
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--text-light);
-      text-shadow: 2px 2px 0px var(--shadow-color);
-    }
-
-    @keyframes carousel-spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    /* Carousel Info Section */
-    .carousel-info {
-      margin-top: var(--space-lg);
-      padding: var(--space-md);
-      background: var(--bg-white);
-      border: var(--border-thick);
-      box-shadow: var(--shadow-hard);
-      border-radius: var(--radius-sm);
-      text-align: center;
-    }
-
-    .carousel-info h3 {
-      font-size: 24px;
-      margin-bottom: var(--space-sm);
-      color: var(--ink);
-    }
-
-    .carousel-info p {
-      font-size: 16px;
-      line-height: 1.6;
-      margin-bottom: var(--space-md);
-      color: var(--ink);
-      opacity: 0.8;
-    }
-
-    .carousel-actions {
-      display: flex;
-      gap: var(--space-sm);
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    /* Responsive Design for 3D Carousel */
-    @media (max-width: 900px) {
-      .carousel-3d-container {
-        height: 500px;
-      }
-      
-      .carousel-header h2 {
-        font-size: clamp(36px, 6vw, 60px);
-      }
-      
-      .carousel-header p {
-        font-size: 18px;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .carousel-3d-container {
-        height: 400px;
-      }
-      
-      .carousel-header h2 {
-        font-size: clamp(28px, 5vw, 48px);
-      }
-      
-      .carousel-header p {
-        font-size: 16px;
-      }
-      
-      .carousel-actions {
-        flex-direction: column;
-        align-items: center;
-      }
-      
-      .carousel-actions .btn {
-        width: 100%;
-        max-width: 300px;
-      }
-    }
   </style>
 </head>
 
 <body>
 
   <!-- NAV -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="logo">Ai-Auto</a>
+      <div class="nav-links">
+        <a href="tools.html" class="nav-link">Tools</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="blog.html" class="nav-link">Blog</a>
+        <a href="user/login.html" class="btn btn-outline">Login</a>
+        <a href="user/signup.html" class="btn">Get Started</a>
+      </div>
+      <button class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-header">
+      <div class="logo">Ai-Auto</div>
+      <button class="hamburger active" id="closeMobile">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div class="mobile-menu-links">
+      <a href="tools.html" class="mobile-menu-link">Tools</a>
+      <a href="about.html" class="mobile-menu-link">About</a>
+      <a href="blog.html" class="mobile-menu-link">Blog</a>
+      <a href="user/login.html" class="mobile-menu-link">Login</a>
+      <a href="user/signup.html" class="mobile-menu-link">Sign Up</a>
+    </div>
+  </div>
 
   <!-- HERO -->
   <section class="hero">
@@ -1177,33 +1036,6 @@
             </div>
           </div>
         </div>    </div>
-  </section>
-
-  <!-- IMMERSIVE 3D VIDEO CAROUSEL -->
-  <section class="carousel-section" id="videoCarousel">
-    <div class="container">
-      <div class="carousel-header">
-        <h2>Experience AI in 3D</h2>
-        <p>Immerse yourself in our circular carousel showcasing AI-powered content creation</p>
-      </div>
-      
-      <div class="carousel-3d-container" id="carousel3D">
-        <!-- Loading State -->
-        <div class="carousel-loading" id="carouselLoading">
-          <div class="carousel-loading-spinner"></div>
-          <div class="carousel-loading-text">Loading 3D Carousel...</div>
-        </div>
-      </div>
-      
-      <div class="carousel-info">
-        <h3>Revolutionary 3D Video Experience</h3>
-        <p>Navigate through our AI demos with momentum-based physics, touch gestures, and ambient particle effects. Experience content like never before.</p>
-        <div class="carousel-actions">
-          <button class="btn" id="exploreTools">Explore All Tools</button>
-          <button class="btn btn-outline" id="learnMore">Learn More</button>
-        </div>
-      </div>
-    </div>
   </section>
 
   <!-- WHO IT'S FOR -->
@@ -1344,213 +1176,45 @@
   </section>
 
   <!-- FOOTER CTA -->
+  <section class="footer-cta">
+    <div class="container">
+      <h2>Ready to Automate?</h2>
+      <p>Join thousands of creators and entrepreneurs using AI to scale their content</p>
+      <a href="user/signup.html" class="btn btn-gold">Start Your Journey</a>
+    </div>
+  </section>
 
-  <script>
-    // 3D Video Carousel Implementation
-    let carousel3D;
-    
-    // Sample video data for the carousel
-    const carouselVideoData = [
-      {
-        id: 'ai-blog-demo',
-        title: 'AI Blog Generation',
-        description: 'Watch AI create engaging blog posts in seconds with advanced natural language processing',
-        src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-        poster: 'https://picsum.photos/seed/ai-blog-generation/280/500.jpg',
-        duration: '2:45',
-        views: '12.5K'
-      },
-      {
-        id: 'social-media-demo',
-        title: 'Social Media Captions',
-        description: 'Generate viral-worthy social media content with AI-powered caption generation',
-        src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
-        poster: 'https://picsum.photos/seed/social-media-ai/280/500.jpg',
-        duration: '1:32',
-        views: '8.2K'
-      },
-      {
-        id: 'email-campaign-demo',
-        title: 'Email Campaigns',
-        description: 'AI-powered email marketing automation that drives results',
-        src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        poster: 'https://picsum.photos/seed/email-marketing/280/500.jpg',
-        duration: '2:15',
-        views: '6.7K'
-      },
-      {
-        id: 'product-descriptions-demo',
-        title: 'Product Descriptions',
-        description: 'Compelling product copy that converts browsers into buyers',
-        src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        poster: 'https://picsum.photos/seed/product-descriptions/280/500.jpg',
-        duration: '1:48',
-        views: '5.3K'
-      },
-      {
-        id: 'content-automation-demo',
-        title: 'Content Automation',
-        description: 'Automate your entire content workflow with intelligent AI systems',
-        src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
-        poster: 'https://picsum.photos/seed/content-automation/280/500.jpg',
-        duration: '3:20',
-        views: '9.8K'
-      },
-      {
-        id: 'seo-optimization-demo',
-        title: 'SEO Optimization',
-        description: 'AI-driven SEO optimization for maximum search visibility',
-        src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',
-        poster: 'https://picsum.photos/seed/seo-optimization/280/500.jpg',
-        duration: '2:05',
-        views: '7.1K'
-      },
-      {
-        id: 'analytics-dashboard-demo',
-        title: 'Analytics Dashboard',
-        description: 'Real-time analytics and insights for your content performance',
-        src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        poster: 'https://picsum.photos/seed/analytics-dashboard/280/500.jpg',
-        duration: '1:55',
-        views: '4.9K'
-      }
-    ];
+  <!-- SITE FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <h3>Ai-Auto</h3>
+        <p>AI-powered content creation tools that help you scale your business and automate your workflow.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="tools.html">Tools</a></li>
+          <li><a href="user/dashboard.html">Dashboard</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2024 Ai-Auto. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
 
-    // Initialize 3D Carousel when DOM is ready
-    document.addEventListener('DOMContentLoaded', async () => {
-      try {
-        // Load the VideoCarousel3D module
-        if (typeof VideoCarousel3D !== 'undefined') {
-          // Initialize carousel with enhanced options
-          carousel3D = new VideoCarousel3D('#carousel3D', {
-            radius: 350,
-            itemWidth: 280,
-            itemHeight: 500,
-            perspective: 1400,
-            friction: 0.94,
-            springStrength: 0.06,
-            autoRotate: false,
-            autoRotateSpeed: 0.3,
-            visibleItems: 7,
-            enableGestures: true,
-            enableKeyboard: true,
-            enableParticles: true,
-            particleCount: 75
-          });
-
-          // Load video data
-          carousel3D.loadVideos(carouselVideoData);
-
-          // Hide loading state
-          setTimeout(() => {
-            const loadingElement = document.getElementById('carouselLoading');
-            if (loadingElement) {
-              loadingElement.style.opacity = '0';
-              setTimeout(() => loadingElement.style.display = 'none', 300);
-            }
-          }, 1500);
-
-          // Setup action buttons
-          document.getElementById('exploreTools')?.addEventListener('click', () => {
-            window.location.href = 'tools.html';
-          });
-
-          document.getElementById('learnMore')?.addEventListener('click', () => {
-            window.location.href = 'about.html';
-          });
-
-          // Add keyboard navigation hints
-          console.log('3D Carousel Controls: Arrow Keys (navigate), Space (play/pause), Home/End (first/last)');
-          
-        } else {
-          console.error('VideoCarousel3D class not found. Make sure the module is loaded.');
-          // Fallback: hide loading and show error message
-          const loadingElement = document.getElementById('carouselLoading');
-          if (loadingElement) {
-            loadingElement.innerHTML = `
-              <div class="carousel-error">
-                <div class="error-icon">⚠️</div>
-                <h4>3D Carousel Unavailable</h4>
-                <p>Please refresh the page or try a different browser.</p>
-                <button class="btn btn-outline" onclick="window.location.reload()">Refresh Page</button>
-              </div>
-            `;
-          }
-        }
-
-      } catch (error) {
-        console.error('Error initializing 3D carousel:', error);
-        // Show error state
-        const loadingElement = document.getElementById('carouselLoading');
-        if (loadingElement) {
-          loadingElement.innerHTML = `
-            <div class="carousel-error">
-              <div class="error-icon">⚠️</div>
-              <h4>Initialization Error</h4>
-              <p>Unable to load the 3D carousel. Please try again later.</p>
-              <button class="btn btn-outline" onclick="window.location.reload()">Try Again</button>
-            </div>
-          `;
-        }
-      }
-    });
-
-    // Add screen reader only styles for accessibility
-    const style = document.createElement('style');
-    style.textContent = `
-      .sr-only {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        white-space: nowrap;
-        border: 0;
-      }
-      
-      .carousel-error {
-        background: var(--bg-white);
-        border: var(--border-thick);
-        border-color: var(--coral);
-        border-radius: 16px;
-        padding: 32px;
-        text-align: center;
-        box-shadow:
-          6px 6px 0px var(--shadow-color),
-          0 0 30px rgba(239, 68, 68, 0.3);
-        max-width: 400px;
-        margin: 0 auto;
-      }
-
-      .carousel-error .error-icon {
-        font-size: 48px;
-        margin-bottom: var(--space-sm);
-      }
-
-      .carousel-error h4 {
-        font-family: var(--font-family-display);
-        font-size: 1.5rem;
-        font-weight: 900;
-        color: var(--coral);
-        margin: 0 0 16px 0;
-        text-shadow: 2px 2px 0px var(--shadow-color);
-      }
-
-      .carousel-error p {
-        font-family: var(--font-family-body);
-        font-size: 1rem;
-        color: var(--text-dark);
-        margin: 0 0 24px 0;
-        line-height: 1.5;
-      }
-    `;
-    document.head.appendChild(style);
-  </script>
-
-  <!-- Import 3D Carousel Module -->
-  <script src="js/modules/video-carousel-3d.js"></script>
   <script src="js/components/navigation.js"></script>
 
 </body>

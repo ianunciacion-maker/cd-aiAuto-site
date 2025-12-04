@@ -347,6 +347,447 @@
         justify-content: flex-end;
       }
     }
+
+    /* Video Management Styles */
+    .videos-section {
+      background: var(--bg-white);
+      border: var(--border-thick);
+      box-shadow: var(--shadow-hard);
+      margin-bottom: var(--space-lg);
+    }
+
+    .videos-header {
+      padding: var(--space-md);
+      border-bottom: var(--border-thick);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .videos-title {
+      font-size: 24px;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    .videos-list {
+      max-height: 600px;
+      overflow-y: auto;
+    }
+
+    .video-item {
+      padding: var(--space-md);
+      border-bottom: var(--border-thin);
+      display: grid;
+      grid-template-columns: 120px 1fr auto;
+      gap: var(--space-md);
+      align-items: center;
+      transition: background 0.2s;
+    }
+
+    .video-item:hover {
+      background: var(--bg-paper);
+    }
+
+    .video-item:last-child {
+      border-bottom: none;
+    }
+
+    .video-thumbnail {
+      width: 120px;
+      height: 68px;
+      background: var(--bg-paper);
+      border: var(--border-thin);
+      border-radius: var(--border-radius-sm);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .video-thumbnail img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .video-thumbnail-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%);
+      color: white;
+      font-size: 24px;
+    }
+
+    .video-info {
+      flex: 1;
+    }
+
+    .video-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: var(--space-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .video-meta {
+      font-size: 12px;
+      opacity: 0.7;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: flex;
+      gap: var(--space-sm);
+      align-items: center;
+    }
+
+    .video-source {
+      padding: 2px 6px;
+      background: var(--bg-paper);
+      border: var(--border-thin);
+      border-radius: var(--border-radius-sm);
+      font-weight: 600;
+    }
+
+    .video-source.youtube {
+      background: #ff0000;
+      color: white;
+    }
+
+    .video-source.vimeo {
+      background: #00adef;
+      color: white;
+    }
+
+    .video-source.upload {
+      background: var(--green);
+      color: white;
+    }
+
+    .video-status {
+      padding: 4px 8px;
+      border: var(--border-thin);
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .video-status.active {
+      background: var(--green);
+      color: #000;
+    }
+
+    .video-status.inactive {
+      background: var(--gold);
+      color: #000;
+    }
+
+    .video-status.processing {
+      background: var(--blue);
+      color: white;
+    }
+
+    .video-actions {
+      display: flex;
+      gap: var(--space-xs);
+      align-items: center;
+    }
+
+    .video-position {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      margin-right: var(--space-sm);
+    }
+
+    .position-btn {
+      width: 24px;
+      height: 24px;
+      border: var(--border-thin);
+      background: var(--bg-paper);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      transition: all 0.2s;
+    }
+
+    .position-btn:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 2px 2px 0 var(--ink);
+    }
+
+    .position-display {
+      font-size: 12px;
+      font-weight: 600;
+      min-width: 20px;
+      text-align: center;
+    }
+
+    /* Video Modal Styles */
+    .video-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .video-modal.active {
+      display: flex;
+    }
+
+    .video-modal-content {
+      background: var(--bg-white);
+      border: var(--border-thick);
+      border-radius: var(--border-radius-lg);
+      box-shadow: var(--shadow-hard);
+      max-width: 600px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .video-modal-header {
+      padding: var(--space-md);
+      border-bottom: var(--border-thick);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .video-modal-title {
+      font-size: 20px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    .video-modal-close {
+      width: 32px;
+      height: 32px;
+      border: var(--border-thin);
+      background: var(--bg-paper);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      transition: all 0.2s;
+    }
+
+    .video-modal-close:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 2px 2px 0 var(--ink);
+    }
+
+    .video-modal-body {
+      padding: var(--space-md);
+    }
+
+    .form-group {
+      margin-bottom: var(--space-md);
+    }
+
+    .form-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-xs);
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      width: 100%;
+      padding: var(--space-sm);
+      border: var(--border-thick);
+      background: var(--bg-paper);
+      font-family: inherit;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: var(--blue);
+      box-shadow: 0 0 0 2px rgba(35, 87, 255, 0.2);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .form-help {
+      font-size: 12px;
+      opacity: 0.7;
+      margin-top: var(--space-xs);
+    }
+
+    .form-actions {
+      display: flex;
+      gap: var(--space-sm);
+      justify-content: flex-end;
+      margin-top: var(--space-lg);
+    }
+
+    .btn-primary {
+      background: var(--blue);
+      color: white;
+      border: var(--border-thick);
+      padding: var(--space-sm) var(--space-md);
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-primary:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .btn-secondary {
+      background: var(--bg-paper);
+      border: var(--border-thick);
+      padding: var(--space-sm) var(--space-md);
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-secondary:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 2px 2px 0 var(--ink);
+    }
+
+    .url-input-group {
+      display: flex;
+      gap: var(--space-sm);
+    }
+
+    .url-input {
+      flex: 1;
+    }
+
+    .source-select {
+      min-width: 120px;
+    }
+
+    .video-preview {
+      margin-top: var(--space-md);
+      padding: var(--space-md);
+      background: var(--bg-paper);
+      border: var(--border-thin);
+      border-radius: var(--border-radius-sm);
+    }
+
+    .video-preview-title {
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-sm);
+    }
+
+    .video-preview-content {
+      display: none;
+    }
+
+    .video-preview-content.active {
+      display: block;
+    }
+
+    .video-preview-thumbnail {
+      width: 100%;
+      max-width: 300px;
+      height: 169px;
+      background: var(--bg-paper);
+      border: var(--border-thin);
+      border-radius: var(--border-radius-sm);
+      overflow: hidden;
+      margin-bottom: var(--space-sm);
+    }
+
+    .video-preview-thumbnail img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .video-preview-info {
+      font-size: 12px;
+      opacity: 0.8;
+    }
+
+    .video-preview-info p {
+      margin: var(--space-xs) 0;
+    }
+
+    .loading-spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid var(--bg-paper);
+      border-top: 2px solid var(--blue);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 768px) {
+      .video-item {
+        grid-template-columns: 80px 1fr;
+        gap: var(--space-sm);
+      }
+
+      .video-thumbnail {
+        width: 80px;
+        height: 45px;
+      }
+
+      .video-actions {
+        grid-column: 1 / -1;
+        justify-content: flex-end;
+        margin-top: var(--space-sm);
+      }
+
+      .video-modal-content {
+        width: 95%;
+        margin: var(--space-md);
+      }
+
+      .url-input-group {
+        flex-direction: column;
+      }
+
+      .source-select {
+        min-width: auto;
+      }
+    }
   </style>
 </head>
 
@@ -358,6 +799,7 @@
       <h1 class="admin-title">Admin Dashboard</h1>
       <div class="admin-actions">
         <a href="create-post.html" class="create-btn">+ New Post</a>
+        <button class="create-btn" id="addVideoBtn">+ Add Video</button>
         <button class="btn btn-outline" id="logoutBtn">Logout</button>
       </div>
     </div>
@@ -391,21 +833,181 @@
           <div class="loading">Loading posts...</div>
         </div>
       </section>
+
+      <!-- Video Management Section -->
+      <section class="videos-section">
+        <div class="videos-header">
+          <h2 class="videos-title">Video Carousel</h2>
+          <button class="create-btn" id="addVideoBtn">+ Add Video</button>
+        </div>
+        <div class="videos-list" id="videosList">
+          <div class="loading">Loading videos...</div>
+        </div>
+      </section>
     </div>
   </main>
+
+  <!-- Video Add/Edit Modal -->
+  <div class="video-modal" id="videoModal">
+    <div class="video-modal-content">
+      <div class="video-modal-header">
+        <h3 class="video-modal-title" id="videoModalTitle">Add Video</h3>
+        <button class="video-modal-close" id="videoModalClose">×</button>
+      </div>
+      <div class="video-modal-body">
+        <form id="videoForm">
+          <div class="form-group">
+            <label class="form-label" for="videoSource">Video Source</label>
+            <select class="form-select source-select" id="videoSource" required>
+              <option value="">Select source...</option>
+              <option value="youtube">YouTube</option>
+              <option value="vimeo">Vimeo</option>
+              <option value="upload">Upload File</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="videoUrl">Video URL</label>
+            <div class="url-input-group">
+              <input
+                type="url"
+                class="form-input url-input"
+                id="videoUrl"
+                placeholder="https://youtube.com/watch?v=... or https://vimeo.com/..."
+                required
+              >
+            </div>
+            <div class="form-help">Enter a YouTube or Vimeo URL, or upload a video file</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="videoTitle">Title</label>
+            <input
+              type="text"
+              class="form-input"
+              id="videoTitle"
+              placeholder="Video title (auto-filled from URL if empty)"
+            >
+            <div class="form-help">Leave empty to auto-fill from video source</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="videoDescription">Description</label>
+            <textarea
+              class="form-textarea"
+              id="videoDescription"
+              placeholder="Video description (auto-filled from URL if empty)"
+            ></textarea>
+            <div class="form-help">Leave empty to auto-fill from video source</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="videoCategory">Category</label>
+            <select class="form-select" id="videoCategory">
+              <option value="">No category</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="videoTags">Tags</label>
+            <input
+              type="text"
+              class="form-input"
+              id="videoTags"
+              placeholder="tag1, tag2, tag3"
+            >
+            <div class="form-help">Comma-separated tags</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="videoStatus">Status</label>
+            <select class="form-select" id="videoStatus">
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+              <option value="scheduled">Scheduled</option>
+            </select>
+          </div>
+
+          <div class="video-preview" id="videoPreview" style="display: none;">
+            <div class="video-preview-title">Video Preview</div>
+            <div class="video-preview-content" id="videoPreviewContent">
+              <div class="video-preview-thumbnail">
+                <img id="previewThumbnail" src="" alt="Video thumbnail">
+              </div>
+              <div class="video-preview-info">
+                <p><strong>Title:</strong> <span id="previewTitle"></span></p>
+                <p><strong>Duration:</strong> <span id="previewDuration"></span></p>
+                <p><strong>Views:</strong> <span id="previewViews"></span></p>
+                <p><strong>Source:</strong> <span id="previewSource"></span></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn-secondary" id="videoModalCancel">Cancel</button>
+            <button type="submit" class="btn-primary" id="videoModalSave">
+              <span id="saveButtonText">Add Video</span>
+              <span class="loading-spinner" id="saveSpinner" style="display: none;"></span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
   <!-- Scripts -->
   <!-- Supabase client -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../supabase.js"></script>
   <script>
+    // Video Platform Integration
+    import('../js/services/video-platform-integration.js').then(module => {
+      window.videoPlatformIntegration = module.default;
+    });
+
     // Admin dashboard functionality
     class AdminDashboard {
       constructor() {
         this.statsContainer = document.getElementById('dashboardStats');
         this.usersContainer = document.getElementById('usersContainer');
         this.postsList = document.getElementById('postsList');
+        this.videosList = document.getElementById('videosList');
         this.logoutBtn = document.getElementById('logoutBtn');
+        
+        // Video modal elements
+        this.videoModal = document.getElementById('videoModal');
+        this.videoForm = document.getElementById('videoForm');
+        this.addVideoBtn = document.getElementById('addVideoBtn');
+        this.videoModalClose = document.getElementById('videoModalClose');
+        this.videoModalCancel = document.getElementById('videoModalCancel');
+        this.videoModalSave = document.getElementById('videoModalSave');
+        this.videoModalTitle = document.getElementById('videoModalTitle');
+        this.saveButtonText = document.getElementById('saveButtonText');
+        this.saveSpinner = document.getElementById('saveSpinner');
+        
+        // Form elements
+        this.videoSource = document.getElementById('videoSource');
+        this.videoUrl = document.getElementById('videoUrl');
+        this.videoTitle = document.getElementById('videoTitle');
+        this.videoDescription = document.getElementById('videoDescription');
+        this.videoCategory = document.getElementById('videoCategory');
+        this.videoTags = document.getElementById('videoTags');
+        this.videoStatus = document.getElementById('videoStatus');
+        
+        // Preview elements
+        this.videoPreview = document.getElementById('videoPreview');
+        this.videoPreviewContent = document.getElementById('videoPreviewContent');
+        this.previewThumbnail = document.getElementById('previewThumbnail');
+        this.previewTitle = document.getElementById('previewTitle');
+        this.previewDuration = document.getElementById('previewDuration');
+        this.previewViews = document.getElementById('previewViews');
+        this.previewSource = document.getElementById('previewSource');
+        
+        // State
+        this.currentEditingVideo = null;
+        this.videos = [];
+        this.categories = [];
+        
         this.init();
       }
 
@@ -631,6 +1233,9 @@
     let dashboard;
     document.addEventListener('DOMContentLoaded', () => {
       dashboard = new AdminDashboard();
+      
+      // Initialize video manager after dashboard is ready
+      window.videoManager = new AdminVideoManager(dashboard);
     });
   </script>
 
