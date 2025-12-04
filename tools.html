@@ -791,6 +791,44 @@
       font-weight: 700;
     }
 
+    /* COMING SOON BANNER */
+    .coming-soon-banner {
+      position: absolute;
+      top: 20px;
+      right: -40px;
+      width: 200px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--coral) 0%, var(--pink) 100%);
+      transform: rotate(45deg);
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 4px 4px 0px 0px var(--ink);
+      border: 3px solid var(--ink);
+      overflow: hidden;
+    }
+
+    .banner-content {
+      color: #fff;
+      font-weight: 900;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      white-space: nowrap;
+      animation: slideText 3s linear infinite;
+      padding-left: 100%;
+    }
+
+    @keyframes slideText {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+
     /* RESPONSIVE */
     @media (max-width: 900px) {
 
@@ -798,6 +836,11 @@
       .features-grid,
       .comparison-grid {
         grid-template-columns: 1fr;
+        gap: var(--space-md);
+      }
+
+      .tool-card {
+        padding: var(--space-md);
       }
 
       .pricing-row {
@@ -840,6 +883,19 @@
         transform: scale(1);
       }
     }
+
+    @media (max-width: 768px) {
+      .coming-soon-banner {
+        top: 15px;
+        right: -30px;
+        width: 150px;
+        height: 30px;
+      }
+
+      .banner-content {
+        font-size: 10px;
+      }
+    }
   </style>
 </head>
 
@@ -875,7 +931,6 @@
               <div class="tool-badge">Writing Tool</div>
               <h3>Blog Generator</h3>
             </div>
-            <div class="tool-price">$19.99</div>
           </div>
           <p class="tool-description">
             Generate engaging blog posts with AI. Perfect for content marketers, bloggers, and businesses looking to scale their content production.
@@ -895,7 +950,6 @@
               <div class="tool-badge">Social Tool</div>
               <h3>Social Captions</h3>
             </div>
-            <div class="tool-price">$14.99</div>
           </div>
           <p class="tool-description">
             Create compelling social media captions for all platforms. Instagram, Twitter, LinkedIn, Facebook, and TikTok ready content.
@@ -915,7 +969,6 @@
               <div class="tool-badge">Email Tool</div>
               <h3>Email Campaigns</h3>
             </div>
-            <div class="tool-price">$24.99</div>
           </div>
           <p class="tool-description">
             Craft professional email campaigns that convert. From newsletters to promotional emails, create content that drives action.
@@ -935,7 +988,6 @@
               <div class="tool-badge">E-commerce Tool</div>
               <h3>Product Descriptions</h3>
             </div>
-            <div class="tool-price">$19.99</div>
           </div>
           <p class="tool-description">
             Write compelling product descriptions that sell. Perfect for e-commerce stores, marketplaces, and product catalogs.
@@ -948,6 +1000,123 @@
           </ul>
           <a href="tools/product-descriptions.html" class="tool-cta">Try Product Descriptions →</a>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- UNSTOPPABLE MARKETING ENGINE -->
+  <section class="category-section">
+    <div class="container">
+      <div class="category-header">
+        <h2>The "Unstoppable" Marketing Engine</h2>
+        <p>Complete 4-step automated system for scaling your content creation and distribution across every platform.</p>
+      </div>
+      <div class="tools-grid">
+
+        <!-- Card 1: Ideation (Blue) -->
+        <div class="tool-card blue" style="position: relative; overflow: hidden;">
+          <!-- Coming Soon Banner -->
+          <div class="coming-soon-banner">
+            <div class="banner-content">
+              🚀 COMING SOON
+            </div>
+          </div>
+
+          <div class="tool-header">
+            <div>
+              <div class="tool-badge">Step 1: Research</div>
+              <h3>🕵️ Ideation (The Spy)</h3>
+            </div>
+          </div>
+          <p class="tool-description">
+            Use ChatGPT Deep Research to uncover profitable niches, trending topics, and audience pain points. Never run out of content ideas again.
+          </p>
+          <ul class="tool-features">
+            <li>Deep market research automation</li>
+            <li>Competitor content analysis</li>
+            <li>Trending topic discovery</li>
+            <li>Audience pain point identification</li>
+          </ul>
+        </div>
+
+        <!-- Card 2: Creation (Coral) -->
+        <div class="tool-card coral" style="position: relative; overflow: hidden;">
+          <!-- Coming Soon Banner -->
+          <div class="coming-soon-banner">
+            <div class="banner-content">
+              🚀 COMING SOON
+            </div>
+          </div>
+
+          <div class="tool-header">
+            <div>
+              <div class="tool-badge">Step 2: Content</div>
+              <h3>🏭 Creation (The Factory)</h3>
+            </div>
+          </div>
+          <p class="tool-description">
+            Claude AI generates comprehensive, high-quality content tailored to your target audience. From blog posts to scripts, create it all.
+          </p>
+          <ul class="tool-features">
+            <li>Long-form content generation</li>
+            <li>Multi-format output (blogs, videos, social)</li>
+            <li>Brand voice consistency</li>
+            <li>SEO-optimized writing</li>
+          </ul>
+        </div>
+
+        <!-- Card 3: Multiplication (Gold) -->
+        <div class="tool-card gold" style="position: relative; overflow: hidden;">
+          <!-- Coming Soon Banner -->
+          <div class="coming-soon-banner">
+            <div class="banner-content">
+              🚀 COMING SOON
+            </div>
+          </div>
+
+          <div class="tool-header">
+            <div>
+              <div class="tool-badge">Step 3: Adaptation</div>
+              <h3>⚡️ Multiplication (The Cloner)</h3>
+            </div>
+          </div>
+          <p class="tool-description">
+            Transform one piece of content into unlimited variations. Adapt for every platform, format, and audience segment automatically.
+          </p>
+          <ul class="tool-features">
+            <li>Platform-specific formatting</li>
+            <li>Automatic content repurposing</li>
+            <li>Multiple tone variations</li>
+            <li>A/B testing versions</li>
+          </ul>
+        </div>
+
+        <!-- Card 4: Distribution (Green) -->
+        <div class="tool-card green" style="position: relative; overflow: hidden;">
+          <!-- Coming Soon Banner -->
+          <div class="coming-soon-banner">
+            <div class="banner-content">
+              🚀 COMING SOON
+            </div>
+          </div>
+
+          <div class="tool-header">
+            <div>
+              <div class="tool-badge">Step 4: Automation</div>
+              <h3>🚀 Distribution (The Cannon)</h3>
+            </div>
+          </div>
+          <p class="tool-description">
+            Deploy content across 50+ platforms with N8N/Zapier automation. Schedule, publish, and track performance—all on autopilot.
+          </p>
+          <ul class="tool-features">
+            <li>Multi-platform publishing</li>
+            <li>Automated scheduling</li>
+            <li>Cross-channel distribution</li>
+            <li>Performance tracking</li>
+          </ul>
+        </div>
+
       </div>
     </div>
   </section>

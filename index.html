@@ -578,6 +578,10 @@
       padding: var(--space-lg);
       box-shadow: var(--shadow-brutal);
       transition: all 0.2s;
+      aspect-ratio: 4 / 3;
+      min-height: 550px;
+      display: flex;
+      flex-direction: column;
     }
 
     .core-card:hover {
@@ -872,6 +876,13 @@
       .app-inner,
       .core-grid {
         grid-template-columns: 1fr;
+        gap: var(--space-md);
+      }
+
+      .core-card {
+        padding: var(--space-md);
+        aspect-ratio: auto;
+        min-height: auto;
       }
 
       .who-grid,
@@ -1129,7 +1140,7 @@
         <h2>Core Tools</h2>
         <p>Premium automation for serious builders</p>
       </div>
-      <div class="core-grid" style="grid-template-columns: 1fr 1fr; gap: var(--space-lg);">
+      <div class="core-grid" style="grid-template-columns: 1fr 1fr; gap: var(--space-lg); align-items: stretch;">
         <div class="core-card">
           <div class="core-header">
             <div>
@@ -1147,7 +1158,7 @@
             <li>Email campaign creation - AI drafts marketing emails and newsletters</li>
             <li>Product description writing - Generates copy for product listings and catalogs</li>
           </ul>
-          <a href="user/signup.html" class="btn" style="width: 100%; display: inline-block; text-align: center;">Get Started Now</a>
+          <a href="user/signup.html" class="btn" style="width: 100%; display: inline-block; text-align: center; margin-top: auto;">Get Started Now</a>
         </div>
         <div class="core-card" style="position: relative; overflow: hidden;">
           <!-- Coming Soon Banner -->
