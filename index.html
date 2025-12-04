@@ -924,6 +924,58 @@
       }
     }
 
+    /* COMING SOON BANNER */
+    .coming-soon-banner {
+      position: absolute;
+      top: 20px;
+      right: -40px;
+      width: 200px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--coral) 0%, var(--pink) 100%);
+      transform: rotate(45deg);
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 4px 4px 0px 0px var(--ink);
+      border: 3px solid var(--ink);
+      overflow: hidden;
+    }
+
+    .banner-content {
+      color: #fff;
+      font-weight: 900;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      white-space: nowrap;
+      animation: slideText 3s linear infinite;
+      padding-left: 100%;
+    }
+
+    @keyframes slideText {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+
+    /* Responsive banner for mobile */
+    @media (max-width: 768px) {
+      .coming-soon-banner {
+        top: 15px;
+        right: -30px;
+        width: 150px;
+        height: 30px;
+      }
+      
+      .banner-content {
+        font-size: 10px;
+      }
+    }
+
   </style>
 </head>
 
@@ -1097,7 +1149,14 @@
           </ul>
           <a href="user/signup.html" class="btn" style="width: 100%; display: inline-block; text-align: center;">Get Started Now</a>
         </div>
-        <div class="core-card">
+        <div class="core-card" style="position: relative; overflow: hidden;">
+          <!-- Coming Soon Banner -->
+          <div class="coming-soon-banner">
+            <div class="banner-content">
+              🚀 COMING SOON
+            </div>
+          </div>
+          
           <div class="core-header">
             <div>
               <div class="core-badge">Advanced</div>
