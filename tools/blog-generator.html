@@ -508,7 +508,8 @@
           };
 
           console.log('Sending payload to n8n:', payload);
-
+          console.log('Webhook URL:', this.n8nWebhookUrl);
+  
           // Call n8n webhook
           const response = await fetch(this.n8nWebhookUrl, {
             method: 'POST',
@@ -517,15 +518,28 @@
             },
             body: JSON.stringify(payload)
           });
-
+  
           console.log('n8n response status:', response.status);
+          console.log('n8n response headers:', [...response.headers.entries()]);
 
           if (!response.ok) {
+            console.error('Webhook failed. Response:', {
+              status: response.status,
+              statusText: response.statusText,
+              headers: Object.fromEntries(response.headers.entries())
+            });
             throw new Error(`Webhook failed with status: ${response.status}`);
           }
-
-          const data = await response.json();
-          console.log('n8n response data:', data);
+  
+          let data;
+          try {
+            data = await response.json();
+            console.log('n8n response data:', data);
+          } catch (parseError) {
+            console.error('Failed to parse n8n response as JSON:', parseError);
+            console.error('Response text:', await response.text());
+            throw new Error('Invalid response format from n8n webhook');
+          }
           
           // Handle different response formats
           if (data.content) {
