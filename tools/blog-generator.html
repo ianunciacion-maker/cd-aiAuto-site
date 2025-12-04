@@ -251,6 +251,31 @@
       display: block;
     }
 
+    /* Loading button state */
+    .btn.loading {
+      position: relative;
+      color: transparent;
+    }
+
+    .btn.loading::after {
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      top: 50%;
+      left: 50%;
+      margin-left: -8px;
+      margin-top: -8px;
+      border: 2px solid #ffffff;
+      border-radius: 50%;
+      border-top-color: transparent;
+      animation: spin 0.6s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
     /* Loading Spinner - matches dashboard loading styles */
     .loading-spinner {
       display: inline-block;
@@ -426,6 +451,66 @@
         }
       }
 
+      async callN8nWebhook(formData, userData) {
+        const webhookUrl = 'https://n8n.autonoiq.com/webhook-test/blog-generator';
+
+        try {
+          console.log('Sending to webhook:', { formData, userData });
+
+          const response = await fetch(webhookUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              // Form data
+              topic: formData.topic,
+              length: formData.length,
+              tone: formData.tone,
+              keywords: formData.keywords,
+
+              // User data
+              userId: userData.id,
+              userEmail: userData.email,
+
+              // Metadata
+              timestamp: new Date().toISOString(),
+              toolType: this.toolType
+            })
+          });
+
+          if (!response.ok) {
+            throw new Error(`Webhook returned ${response.status}: ${response.statusText}`);
+          }
+
+          const result = await response.json();
+          console.log('Webhook response:', result);
+
+          // Handle different response formats
+          // If n8n returns { content: "..." }
+          if (result.content) {
+            return result.content;
+          }
+
+          // If n8n returns { output: "..." }
+          if (result.output) {
+            return result.output;
+          }
+
+          // If n8n returns the content directly as string
+          if (typeof result === 'string') {
+            return result;
+          }
+
+          // If n8n returns the entire result object, stringify it
+          return JSON.stringify(result, null, 2);
+
+        } catch (error) {
+          console.error('n8n webhook error:', error);
+          throw new Error('Failed to generate content. Please try again.');
+        }
+      }
+
       async handleSubmit(e) {
         e.preventDefault();
         this.clearError();
@@ -456,12 +541,31 @@
             return;
           }
 
-          // Simulate API call to n8n backend
-          // In production, this would call your n8n webhook
-          const content = this.generatePlaceholderContent(topic, length);
+          // Get current user data
+          const user = await authManager.getCurrentUser();
 
+          // Prepare form data
+          const formData = {
+            topic: topic,
+            length: length,
+            tone: tone,
+            keywords: keywords
+          };
+
+          // Prepare user data
+          const userData = {
+            id: user.id,
+            email: user.email
+          };
+
+          // Call n8n webhook
+          const content = await this.callN8nWebhook(formData, userData);
+
+          // Display the generated content
           this.displayOutput(content);
-          await this.loadUsage(); // Reload usage after generation
+
+          // Reload usage after successful generation
+          await this.loadUsage();
 
         } catch (error) {
           console.error('Generation error:', error);
@@ -469,26 +573,6 @@
         } finally {
           this.setSubmitting(false);
         }
-      }
-
-      generatePlaceholderContent(topic, length) {
-        // Placeholder - in production this would call your n8n webhook
-        const wordCount = length === 'short' ? 400 : length === 'long' ? 1200 : 750;
-        const loremWords = [
-          'Lorem', 'ipsum', 'dolor', 'sit', 'amet', 'consectetur', 'adipiscing', 'elit',
-          'sed', 'do', 'eiusmod', 'tempor', 'incididunt', 'ut', 'labore', 'et', 'dolore', 'magna'
-        ];
-
-        let content = `# ${topic}\n\n`;
-        let words = 0;
-
-        while (words < wordCount) {
-          content += loremWords[Math.floor(Math.random() * loremWords.length)] + ' ';
-          words++;
-          if (words % 15 === 0) content += '\n\n';
-        }
-
-        return content;
       }
 
       displayOutput(content) {
