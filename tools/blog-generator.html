@@ -452,6 +452,15 @@
         this.setSubmitting(true);
 
         try {
+          // First sync subscription status from Stripe to database
+          const { error: syncError } = await this.syncSubscription();
+          
+          if (syncError) {
+            this.showError('Failed to sync subscription. Please try again.');
+            this.setSubmitting(false);
+            return;
+          }
+
           // Check if user can use tool
           const { error, code } = await stripeManager.useTool(this.toolType);
 
@@ -562,6 +571,33 @@
         }
 
         return content;
+      }
+
+      async syncSubscription() {
+        try {
+          const response = await fetch(`${window.location.origin}/api/check-subscription`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              user_id: this.currentUser?.id
+            })
+          });
+
+          const result = await response.json();
+          
+          if (response.ok && result.data) {
+            console.log('Subscription synced successfully:', result.data);
+            return { error: null };
+          } else {
+            console.error('Subscription sync failed:', result);
+            return { error: result.error || 'Sync failed' };
+          }
+        } catch (error) {
+          console.error('Subscription sync exception:', error);
+          return { error: error.message || 'Sync failed' };
+        }
       }
 
       displayOutput(content) {
