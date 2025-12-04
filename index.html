@@ -10,6 +10,9 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Playfair+Display:wght@500;600;700;900&display=swap"
     rel="stylesheet">
+  <!-- Import 3D Carousel CSS -->
+  <link rel="stylesheet" href="css/components/video-carousel-3d.css">
+  
   <style>
     :root {
       /* Neobrutalist Palette */
@@ -923,711 +926,179 @@
       }
     }
 
-    /* VERTICAL VIDEO SHOWCASE SECTION */
-    .video-showcase {
+    /* Enhanced 3D Carousel Section Integration */
+    .carousel-section {
       padding: var(--space-xl) 0;
-      background: linear-gradient(135deg, var(--bg-paper) 0%, var(--lavender) 100%);
+      background: linear-gradient(135deg,
+        var(--bg-paper) 0%,
+        var(--lavender) 50%,
+        var(--bg-white) 100%);
       border-bottom: var(--border-thick);
       position: relative;
       overflow: hidden;
     }
 
-    .video-showcase::before {
+    .carousel-section::before {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
-      background:
+        background:
         radial-gradient(circle at 20% 50%, rgba(35, 87, 255, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 50%, rgba(255, 204, 0, 0.1) 0%, transparent 50%);
+        radial-gradient(circle at 80% 50%, rgba(255, 204, 0, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(147, 51, 234, 0.05) 0%, transparent 70%);
       pointer-events: none;
       z-index: 0;
     }
 
-    .video-showcase .container {
+    .carousel-section .container {
       position: relative;
       z-index: 1;
     }
 
-    .video-showcase-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: var(--space-lg);
-      align-items: start;
+    .carousel-header {
+      text-align: center;
+      margin-bottom: var(--space-lg);
     }
 
-    /* Main Video Container */
-    .video-showcase-main {
-      position: relative;
-    }
-
-    .video-container {
-      background: var(--bg-white);
-      border: var(--border-thick);
-      box-shadow: var(--shadow-brutal);
-      border-radius: var(--radius-sm);
-      overflow: hidden;
-      position: relative;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .video-container:hover {
-      transform: translateY(-4px);
-      box-shadow: 12px 12px 0 var(--ink);
-      border-color: var(--blue);
-    }
-
-    /* Video Player Wrapper with Gradient Borders */
-    .video-player-wrapper {
-      position: relative;
-      width: 100%;
-      max-width: 400px;
-      margin: 0 auto;
-      aspect-ratio: 9/16;
+    .carousel-header h2 {
+      font-size: clamp(48px, 8vw, 80px);
+      margin-bottom: var(--space-sm);
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
       background: linear-gradient(45deg, var(--blue), var(--coral), var(--gold));
-      padding: 3px;
-      border-radius: var(--radius-sm);
-      box-shadow:
-        0 0 20px rgba(35, 87, 255, 0.3),
-        0 0 40px rgba(255, 204, 0, 0.1),
-        var(--shadow-hard);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 4px 4px 0px var(--ink);
+      position: relative;
     }
 
-    .video-player {
+    .carousel-header p {
+      font-size: 20px;
+      color: var(--ink);
+      opacity: 0.8;
+      max-width: 600px;
+      margin: 0 auto;
+      font-weight: 600;
+    }
+
+    /* 3D Carousel Container */
+    .carousel-3d-container {
+      position: relative;
       width: 100%;
-      height: 100%;
-      object-fit: cover;
-      background: var(--ink);
-      border-radius: calc(var(--radius-sm) - 3px);
-      display: block;
-    }
-
-    /* Custom Video Controls */
-    .video-controls {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: linear-gradient(transparent, rgba(18, 18, 18, 0.95));
-      backdrop-filter: blur(10px);
-      padding: var(--space-md);
-      display: flex;
-      align-items: center;
-      gap: var(--space-sm);
-      opacity: 0;
-      transform: translateY(100%);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      border-radius: 0 0 calc(var(--radius-sm) - 3px) calc(var(--radius-sm) - 3px);
-    }
-
-    .video-container:hover .video-controls,
-    .video-controls:focus-within {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .control-btn {
-      background: var(--bg-white);
-      border: var(--border-thin);
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
+      height: 600px;
+      margin: var(--space-lg) 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--ink);
-      position: relative;
-      overflow: hidden;
     }
 
-    .control-btn:hover,
-    .control-btn:focus {
-      transform: scale(1.1);
-      background: var(--blue);
-      color: white;
-      box-shadow: 0 0 15px rgba(35, 87, 255, 0.4);
-    }
-
-    .control-btn:active {
-      transform: scale(0.95);
-    }
-
-    .control-btn .pause-icon,
-    .control-btn .mute-icon {
-      display: none;
-    }
-
-    .control-btn[data-playing="true"] .play-icon,
-    .control-btn[data-muted="true"] .volume-icon {
-      display: none;
-    }
-
-    .control-btn[data-playing="true"] .pause-icon,
-    .control-btn[data-muted="true"] .mute-icon {
-      display: block;
-    }
-
-    /* Progress Bar */
-    .progress-container {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      gap: var(--space-xs);
-      cursor: pointer;
-    }
-
-    .progress-bar {
-      flex: 1;
-      height: 6px;
-      background: rgba(255, 255, 255, 0.3);
-      border-radius: 3px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--blue), var(--gold));
-      border-radius: 3px;
-      width: 0%;
-      transition: width 0.1s linear;
-      position: relative;
-    }
-
-    .progress-fill::after {
-      content: '';
+    /* Loading and Error States for Carousel */
+    .carousel-loading {
       position: absolute;
-      right: 0;
       top: 50%;
-      transform: translateY(-50%);
-      width: 12px;
-      height: 12px;
-      background: var(--gold);
-      border-radius: 50%;
-      border: 2px solid var(--bg-white);
-      box-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
-    }
-
-    .progress-buffer {
-      height: 100%;
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 3px;
-      width: 0%;
-      position: absolute;
-      top: 0;
-      left: 0;
-    }
-
-    .time-display {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--bg-white);
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-      min-width: 80px;
-      text-align: center;
-    }
-
-    /* Volume Controls */
-    .volume-controls {
-      display: flex;
-      align-items: center;
-      gap: var(--space-xs);
-    }
-
-    .volume-slider {
-      width: 0;
-      opacity: 0;
-      transform: translateX(-10px);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .volume-controls:hover .volume-slider {
-      width: 60px;
-      opacity: 1;
-      transform: translateX(0);
-    }
-
-    .volume-slider {
-      -webkit-appearance: none;
-      appearance: none;
-      height: 4px;
-      background: rgba(255, 255, 255, 0.3);
-      border-radius: 2px;
-      outline: none;
-    }
-
-    .volume-slider::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 14px;
-      height: 14px;
-      background: var(--gold);
-      border-radius: 50%;
-      cursor: pointer;
-      border: 2px solid var(--bg-white);
-    }
-
-    .volume-slider::-moz-range-thumb {
-      width: 14px;
-      height: 14px;
-      background: var(--gold);
-      border-radius: 50%;
-      cursor: pointer;
-      border: 2px solid var(--bg-white);
-    }
-
-    /* Secondary Controls */
-    .secondary-controls {
-      display: flex;
-      gap: var(--space-xs);
-    }
-
-    /* Loading and Error States */
-    .video-loading,
-    .video-error {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      left: 50%;
+      transform: translate(-50%, -50%);
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      background: rgba(18, 18, 18, 0.9);
-      backdrop-filter: blur(5px);
-      color: var(--bg-white);
-      z-index: 10;
+      gap: var(--space-sm);
+      z-index: 300;
     }
 
-    .loading-spinner {
-      width: 40px;
-      height: 40px;
-      border: 3px solid rgba(255, 255, 255, 0.3);
-      border-top-color: var(--gold);
+    .carousel-loading-spinner {
+      width: 60px;
+      height: 60px;
+      border: 6px solid var(--text-dark);
+      border-top: 6px solid var(--primary-color);
       border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin-bottom: var(--space-sm);
+      animation: carousel-spin 1s linear infinite;
     }
 
-    .error-content {
-      text-align: center;
+    .carousel-loading-text {
+      font-family: var(--font-family-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-light);
+      text-shadow: 2px 2px 0px var(--shadow-color);
     }
 
-    .error-icon {
-      font-size: 48px;
-      margin-bottom: var(--space-sm);
+    @keyframes carousel-spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
-    .video-fallback {
-      display: none;
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: var(--ink);
-      color: var(--bg-white);
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: var(--space-md);
-    }
-
-    /* Video Info Section */
-    .video-info {
-      margin-top: var(--space-md);
+    /* Carousel Info Section */
+    .carousel-info {
+      margin-top: var(--space-lg);
       padding: var(--space-md);
       background: var(--bg-white);
       border: var(--border-thick);
       box-shadow: var(--shadow-hard);
       border-radius: var(--radius-sm);
+      text-align: center;
     }
 
-    .video-badge {
-      display: inline-block;
-      background: linear-gradient(45deg, var(--blue), var(--coral));
-      color: white;
-      padding: 6px 12px;
-      border-radius: var(--radius-sm);
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: var(--space-sm);
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    }
-
-    .video-info h3 {
+    .carousel-info h3 {
       font-size: 24px;
       margin-bottom: var(--space-sm);
       color: var(--ink);
     }
 
-    .video-info p {
-      font-size: 14px;
+    .carousel-info p {
+      font-size: 16px;
       line-height: 1.6;
       margin-bottom: var(--space-md);
       color: var(--ink);
       opacity: 0.8;
     }
 
-    .video-meta {
+    .carousel-actions {
       display: flex;
-      gap: var(--space-md);
-      margin-bottom: var(--space-md);
+      gap: var(--space-sm);
+      justify-content: center;
       flex-wrap: wrap;
     }
 
-    .meta-item {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--ink);
-      opacity: 0.7;
-    }
-
-    .video-actions {
-      display: flex;
-      gap: var(--space-sm);
-    }
-
-    /* Sidebar Video Thumbnails */
-    .video-showcase-sidebar {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-md);
-    }
-
-    .video-thumbnail-grid {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-md);
-    }
-
-    .video-thumbnail {
-      background: var(--bg-white);
-      border: var(--border-thick);
-      box-shadow: var(--shadow-hard);
-      border-radius: var(--radius-sm);
-      overflow: hidden;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      cursor: pointer;
-    }
-
-    .video-thumbnail:hover {
-      transform: translate(-4px, -4px);
-      box-shadow: 8px 8px 0 var(--ink);
-      border-color: var(--blue);
-    }
-
-    .thumbnail-container {
-      position: relative;
-      aspect-ratio: 9/16;
-      max-width: 200px;
-      margin: 0 auto;
-      overflow: hidden;
-    }
-
-    .thumbnail-image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .video-thumbnail:hover .thumbnail-image {
-      transform: scale(1.05);
-    }
-
-    .thumbnail-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(transparent, rgba(18, 18, 18, 0.8));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    .video-thumbnail:hover .thumbnail-overlay {
-      opacity: 1;
-    }
-
-    .play-overlay-btn {
-      background: var(--gold);
-      border: var(--border-thick);
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      color: var(--ink);
-      cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: var(--shadow-hard);
-    }
-
-    .play-overlay-btn:hover {
-      transform: scale(1.1);
-      background: var(--blue);
-      color: white;
-      box-shadow: 0 0 20px rgba(35, 87, 255, 0.5);
-    }
-
-    .thumbnail-duration {
-      position: absolute;
-      bottom: 8px;
-      right: 8px;
-      background: rgba(18, 18, 18, 0.9);
-      color: var(--bg-white);
-      padding: 4px 8px;
-      border-radius: var(--radius-sm);
-      font-size: 11px;
-      font-weight: 600;
-    }
-
-    .thumbnail-info {
-      padding: var(--space-sm);
-    }
-
-    .thumbnail-info h4 {
-      font-size: 14px;
-      margin-bottom: 4px;
-      color: var(--ink);
-    }
-
-    .thumbnail-info p {
-      font-size: 12px;
-      margin-bottom: var(--space-sm);
-      color: var(--ink);
-      opacity: 0.7;
-      line-height: 1.4;
-    }
-
-    .thumbnail-stats {
-      display: flex;
-      gap: var(--space-sm);
-      font-size: 11px;
-      color: var(--ink);
-      opacity: 0.6;
-    }
-
-    /* Social Sharing Modal */
-    .share-modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-    }
-
-    .share-modal.active {
-      opacity: 1;
-      pointer-events: all;
-    }
-
-    .share-modal-content {
-      background: var(--bg-white);
-      border: var(--border-thick);
-      box-shadow: var(--shadow-brutal);
-      padding: var(--space-lg);
-      border-radius: var(--radius-sm);
-      max-width: 400px;
-      width: 90%;
-      transform: scale(0.9);
-      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .share-modal.active .share-modal-content {
-      transform: scale(1);
-    }
-
-    .share-modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: var(--space-md);
-      padding-bottom: var(--space-sm);
-      border-bottom: var(--border-thin);
-    }
-
-    .share-modal-header h3 {
-      font-size: 20px;
-      color: var(--ink);
-      margin: 0;
-    }
-
-    .close-modal-btn {
-      background: var(--bg-paper);
-      border: var(--border-thin);
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 18px;
-      color: var(--ink);
-      transition: all 0.2s ease;
-    }
-
-    .close-modal-btn:hover {
-      background: var(--coral);
-      color: white;
-      transform: rotate(90deg);
-    }
-
-    .share-options {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: var(--space-sm);
-    }
-
-    .share-btn {
-      background: var(--bg-paper);
-      border: var(--border-thick);
-      padding: var(--space-sm);
-      border-radius: var(--radius-sm);
-      display: flex;
-      align-items: center;
-      gap: var(--space-xs);
-      cursor: pointer;
-      transition: all 0.2s ease;
-      font-weight: 600;
-      color: var(--ink);
-      box-shadow: var(--shadow-hard);
-    }
-
-    .share-btn:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: var(--shadow-hover);
-      background: var(--blue);
-      color: white;
-    }
-
-    .share-icon {
-      font-size: 18px;
-      font-weight: 700;
-    }
-
-    /* Responsive Design for Video Showcase */
+    /* Responsive Design for 3D Carousel */
     @media (max-width: 900px) {
-      .video-showcase-grid {
-        grid-template-columns: 1fr;
-        gap: var(--space-md);
+      .carousel-3d-container {
+        height: 500px;
       }
-
-      .video-showcase-main {
-        order: 1;
+      
+      .carousel-header h2 {
+        font-size: clamp(36px, 6vw, 60px);
       }
-
-      .video-showcase-sidebar {
-        order: 2;
-      }
-
-      .video-thumbnail-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: var(--space-sm);
-      }
-
-      .video-player-wrapper {
-        max-width: 300px;
-      }
-
-      .share-options {
-        grid-template-columns: 1fr;
+      
+      .carousel-header p {
+        font-size: 18px;
       }
     }
 
     @media (max-width: 600px) {
-      .video-controls {
-        flex-wrap: wrap;
-        gap: var(--space-xs);
-        padding: var(--space-sm);
+      .carousel-3d-container {
+        height: 400px;
       }
-
-      .progress-container {
-        order: 1;
-        flex-basis: 100%;
-        margin-top: var(--space-xs);
+      
+      .carousel-header h2 {
+        font-size: clamp(28px, 5vw, 48px);
       }
-
-      .secondary-controls {
-        order: 2;
+      
+      .carousel-header p {
+        font-size: 16px;
       }
-
-      .volume-controls {
-        order: 3;
-      }
-
-      .control-btn {
-        width: 36px;
-        height: 36px;
-        font-size: 14px;
-      }
-
-      .video-info h3 {
-        font-size: 20px;
-      }
-
-      .video-actions {
+      
+      .carousel-actions {
         flex-direction: column;
-      }
-
-      .thumbnail-container {
-        max-width: 150px;
-      }
-    }
-
-    /* High Contrast Mode Support */
-    @media (prefers-contrast: high) {
-      .video-controls {
-        background: rgba(0, 0, 0, 0.98);
+        align-items: center;
       }
       
-      .control-btn {
-        border-width: 2px;
-      }
-      
-      .progress-fill {
-        background: var(--gold);
-      }
-    }
-
-    /* Reduced Motion Support */
-    @media (prefers-reduced-motion: reduce) {
-      .video-controls,
-      .control-btn,
-      .video-thumbnail,
-      .thumbnail-overlay,
-      .share-modal-content {
-        transition: none;
-      }
-      
-      .loading-spinner {
-        animation: none;
+      .carousel-actions .btn {
+        width: 100%;
+        max-width: 300px;
       }
     }
   </style>
@@ -1708,248 +1179,28 @@
         </div>    </div>
   </section>
 
-  <!-- VERTICAL VIDEO SHOWCASE -->
-  <section class="video-showcase" id="videoShowcase">
+  <!-- IMMERSIVE 3D VIDEO CAROUSEL -->
+  <section class="carousel-section" id="videoCarousel">
     <div class="container">
-      <div class="section-header">
-        <h2>See AI in Action</h2>
-        <p>Watch how our tools transform your workflow with real-world examples</p>
+      <div class="carousel-header">
+        <h2>Experience AI in 3D</h2>
+        <p>Immerse yourself in our circular carousel showcasing AI-powered content creation</p>
       </div>
       
-      <div class="video-showcase-grid">
-        <!-- Main Featured Video -->
-        <div class="video-showcase-main">
-          <div class="video-container" data-video-id="demo-1">
-            <!-- Custom Video Player -->
-            <div class="video-player-wrapper">
-              <video
-                class="video-player"
-                id="mainVideoPlayer"
-                poster="https://picsum.photos/seed/ai-demo-poster/400/700.jpg"
-                preload="metadata"
-                playsinline
-                aria-label="AI Content Generation Demo"
-                data-hls="https://example.com/demo1.m3u8"
-                data-mp4="https://example.com/demo1.mp4">
-                
-                <!-- Fallback for older browsers -->
-                <div class="video-fallback">
-                  <div class="fallback-content">
-                    <div class="fallback-icon">🎬</div>
-                    <h4>Video Demo</h4>
-                    <p>Your browser doesn't support this video format.</p>
-                    <a href="https://example.com/demo1.mp4" class="btn btn-outline" download>Download Video</a>
-                  </div>
-                </div>
-              </video>
-              
-              <!-- Custom Controls Overlay -->
-              <div class="video-controls" role="toolbar" aria-label="Video controls">
-                <!-- Play/Pause Button -->
-                <button
-                  class="control-btn play-pause-btn"
-                  id="mainPlayPause"
-                  aria-label="Play video"
-                  data-playing="false">
-                  <span class="play-icon">▶</span>
-                  <span class="pause-icon">⏸</span>
-                </button>
-                
-                <!-- Progress Bar -->
-                <div class="progress-container" role="timer" aria-label="Video progress">
-                  <div class="progress-bar">
-                    <div class="progress-fill" id="mainProgressFill"></div>
-                    <div class="progress-buffer" id="mainProgressBuffer"></div>
-                  </div>
-                  <div class="time-display">
-                    <span id="mainCurrentTime">0:00</span> / <span id="mainDuration">0:00</span>
-                  </div>
-                </div>
-                
-                <!-- Volume Controls -->
-                <div class="volume-controls">
-                  <button
-                    class="control-btn volume-btn"
-                    id="mainVolumeBtn"
-                    aria-label="Toggle mute"
-                    data-muted="false">
-                    <span class="volume-icon">🔊</span>
-                    <span class="mute-icon">🔇</span>
-                  </button>
-                  <input
-                    type="range"
-                    class="volume-slider"
-                    id="mainVolumeSlider"
-                    min="0"
-                    max="100"
-                    value="70"
-                    aria-label="Volume control">
-                </div>
-                
-                <!-- Additional Controls -->
-                <div class="secondary-controls">
-                  <button
-                    class="control-btn settings-btn"
-                    id="mainSettingsBtn"
-                    aria-label="Video settings">
-                    ⚙️
-                  </button>
-                  <button
-                    class="control-btn fullscreen-btn"
-                    id="mainFullscreenBtn"
-                    aria-label="Toggle fullscreen">
-                    ⛶
-                  </button>
-                  <button
-                    class="control-btn share-btn"
-                    id="mainShareBtn"
-                    aria-label="Share video">
-                    📤
-                  </button>
-                </div>
-              </div>
-              
-              <!-- Loading Overlay -->
-              <div class="video-loading" id="mainVideoLoading">
-                <div class="loading-spinner"></div>
-                <p>Loading video...</p>
-              </div>
-              
-              <!-- Error Overlay -->
-              <div class="video-error" id="mainVideoError" style="display: none;">
-                <div class="error-content">
-                  <div class="error-icon">⚠️</div>
-                  <h4>Video Loading Error</h4>
-                  <p>Unable to load video. Please try again later.</p>
-                  <button class="btn btn-outline" id="retryVideoBtn">Retry</button>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Video Info Card -->
-            <div class="video-info">
-              <div class="video-badge">Featured Demo</div>
-              <h3>AI Content Generation in Action</h3>
-              <p>Watch how our AI creates high-quality blog posts, social media content, and marketing materials in seconds.</p>
-              <div class="video-meta">
-                <span class="meta-item">📹 2:45</span>
-                <span class="meta-item">👁 12.5K views</span>
-                <span class="meta-item">⭐ 4.9 rating</span>
-              </div>
-              <div class="video-actions">
-                <button class="btn" id="watchMainDemo">Watch Full Demo</button>
-                <button class="btn btn-outline" id="shareMainDemo">Share</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Side Video Grid -->
-        <div class="video-showcase-sidebar">
-          <div class="video-thumbnail-grid">
-            <!-- Video Thumbnail 1 -->
-            <div class="video-thumbnail" data-video-id="demo-2">
-              <div class="thumbnail-container">
-                <img
-                  src="https://picsum.photos/seed/ai-blogging/300/400.jpg"
-                  alt="AI Blog Generation Demo"
-                  loading="lazy"
-                  class="thumbnail-image">
-                <div class="thumbnail-overlay">
-                  <button class="play-overlay-btn" aria-label="Play video">
-                    <span>▶</span>
-                  </button>
-                  <div class="thumbnail-duration">1:32</div>
-                </div>
-              </div>
-              <div class="thumbnail-info">
-                <h4>Blog Post Generation</h4>
-                <p>AI creates engaging blog content in seconds</p>
-                <div class="thumbnail-stats">
-                  <span>👁 8.2K</span>
-                  <span>⭐ 4.8</span>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Video Thumbnail 2 -->
-            <div class="video-thumbnail" data-video-id="demo-3">
-              <div class="thumbnail-container">
-                <img
-                  src="https://picsum.photos/seed/ai-social/300/400.jpg"
-                  alt="Social Media AI Demo"
-                  loading="lazy"
-                  class="thumbnail-image">
-                <div class="thumbnail-overlay">
-                  <button class="play-overlay-btn" aria-label="Play video">
-                    <span>▶</span>
-                  </button>
-                  <div class="thumbnail-duration">2:15</div>
-                </div>
-              </div>
-              <div class="thumbnail-info">
-                <h4>Social Media Captions</h4>
-                <p>Generate viral-worthy social content</p>
-                <div class="thumbnail-stats">
-                  <span>👁 6.7K</span>
-                  <span>⭐ 4.9</span>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Video Thumbnail 3 -->
-            <div class="video-thumbnail" data-video-id="demo-4">
-              <div class="thumbnail-container">
-                <img
-                  src="https://picsum.photos/seed/ai-email/300/400.jpg"
-                  alt="Email Campaign AI Demo"
-                  loading="lazy"
-                  class="thumbnail-image">
-                <div class="thumbnail-overlay">
-                  <button class="play-overlay-btn" aria-label="Play video">
-                    <span>▶</span>
-                  </button>
-                  <div class="thumbnail-duration">1:48</div>
-                </div>
-              </div>
-              <div class="thumbnail-info">
-                <h4>Email Campaigns</h4>
-                <p>AI-powered email marketing automation</p>
-                <div class="thumbnail-stats">
-                  <span>👁 5.3K</span>
-                  <span>⭐ 4.7</span>
-                </div>
-              </div>
-            </div>
-          </div>
+      <div class="carousel-3d-container" id="carousel3D">
+        <!-- Loading State -->
+        <div class="carousel-loading" id="carouselLoading">
+          <div class="carousel-loading-spinner"></div>
+          <div class="carousel-loading-text">Loading 3D Carousel...</div>
         </div>
       </div>
       
-      <!-- Social Sharing Modal -->
-      <div class="share-modal" id="shareModal" style="display: none;">
-        <div class="share-modal-content">
-          <div class="share-modal-header">
-            <h3>Share Video</h3>
-            <button class="close-modal-btn" id="closeShareModal" aria-label="Close share modal">×</button>
-          </div>
-          <div class="share-options">
-            <button class="share-btn" data-platform="twitter">
-              <span class="share-icon">𝕏</span>
-              Twitter
-            </button>
-            <button class="share-btn" data-platform="facebook">
-              <span class="share-icon">f</span>
-              Facebook
-            </button>
-            <button class="share-btn" data-platform="linkedin">
-              <span class="share-icon">in</span>
-              LinkedIn
-            </button>
-            <button class="share-btn" data-platform="copy">
-              <span class="share-icon">📋</span>
-              Copy Link
-            </button>
-          </div>
+      <div class="carousel-info">
+        <h3>Revolutionary 3D Video Experience</h3>
+        <p>Navigate through our AI demos with momentum-based physics, touch gestures, and ambient particle effects. Experience content like never before.</p>
+        <div class="carousel-actions">
+          <button class="btn" id="exploreTools">Explore All Tools</button>
+          <button class="btn btn-outline" id="learnMore">Learn More</button>
         </div>
       </div>
     </div>
@@ -2095,450 +1346,156 @@
   <!-- FOOTER CTA -->
 
   <script>
-    // Video Player Class with Advanced Features
-    class AdvancedVideoPlayer {
-      constructor(containerId) {
-        this.container = document.getElementById(containerId);
-        this.video = this.container.querySelector('.video-player');
-        this.controls = this.container.querySelector('.video-controls');
-        this.playPauseBtn = this.container.querySelector('.play-pause-btn');
-        this.progressFill = this.container.querySelector('#mainProgressFill');
-        this.progressBuffer = this.container.querySelector('#mainProgressBuffer');
-        this.currentTimeDisplay = this.container.querySelector('#mainCurrentTime');
-        this.durationDisplay = this.container.querySelector('#mainDuration');
-        this.volumeBtn = this.container.querySelector('.volume-btn');
-        this.volumeSlider = this.container.querySelector('.volume-slider');
-        this.fullscreenBtn = this.container.querySelector('.fullscreen-btn');
-        this.shareBtn = this.container.querySelector('.share-btn');
-        this.settingsBtn = this.container.querySelector('.settings-btn');
-        this.loadingOverlay = this.container.querySelector('.video-loading');
-        this.errorOverlay = this.container.querySelector('.video-error');
-        this.retryBtn = this.container.querySelector('#retryVideoBtn');
-        
-        this.isLoaded = false;
-        this.isPlaying = false;
-        this.isMuted = false;
-        this.progressInterval = null;
-        
-        this.init();
-      }
-
-      init() {
-        this.setupEventListeners();
-        this.setupHLS();
-        this.setupTouchGestures();
-        this.setupKeyboardControls();
-        this.setupAccessibility();
-      }
-
-      setupEventListeners() {
-        // Play/Pause
-        this.playPauseBtn.addEventListener('click', () => this.togglePlayPause());
-        this.video.addEventListener('click', () => this.togglePlayPause());
-        
-        // Progress Bar
-        const progressContainer = this.container.querySelector('.progress-container');
-        progressContainer.addEventListener('click', (e) => this.seek(e));
-        progressContainer.addEventListener('keydown', (e) => this.handleProgressKeydown(e));
-        
-        // Volume
-        this.volumeBtn.addEventListener('click', () => this.toggleMute());
-        this.volumeSlider.addEventListener('input', (e) => this.setVolume(e.target.value));
-        
-        // Fullscreen
-        this.fullscreenBtn.addEventListener('click', () => this.toggleFullscreen());
-        
-        // Share
-        this.shareBtn.addEventListener('click', () => this.openShareModal());
-        
-        // Video Events
-        this.video.addEventListener('loadedmetadata', () => this.onMetadataLoaded());
-        this.video.addEventListener('timeupdate', () => this.updateProgress());
-        this.video.addEventListener('progress', () => this.updateBuffer());
-        this.video.addEventListener('ended', () => this.onVideoEnded());
-        this.video.addEventListener('error', (e) => this.onVideoError(e));
-        this.video.addEventListener('waiting', () => this.showLoading());
-        this.video.addEventListener('canplay', () => this.hideLoading());
-        
-        // Retry button
-        this.retryBtn?.addEventListener('click', () => this.retryLoad());
-        
-        // Show controls on video hover
-        this.video.addEventListener('mouseenter', () => this.showControls());
-        this.video.addEventListener('mouseleave', () => this.hideControls());
-      }
-
-      setupHLS() {
-        // Check for HLS support and fallback to MP4
-        const hlsUrl = this.video.dataset.hls;
-        const mp4Url = this.video.dataset.mp4;
-        
-        if (typeof Hls !== 'undefined' && Hls.isSupported() && hlsUrl) {
-          this.hls = new Hls({
-            debug: false,
-            enableWorker: true,
-            lowLatencyMode: true,
-            backBufferLength: 90
-          });
-          
-          this.hls.loadSource(hlsUrl);
-          this.hls.attachMedia(this.video);
-          
-          this.hls.on(Hls.Events.MANIFEST_PARSED, () => {
-            console.log('HLS manifest loaded');
-          });
-          
-          this.hls.on(Hls.Events.ERROR, (event, data) => {
-            console.error('HLS error:', data);
-            if (data.fatal && mp4Url) {
-              this.fallbackToMP4(mp4Url);
-            }
-          });
-        } else if (mp4Url) {
-          this.fallbackToMP4(mp4Url);
-        }
-      }
-
-      fallbackToMP4(mp4Url) {
-        this.video.src = mp4Url;
-        this.video.load();
-      }
-
-      setupTouchGestures() {
-        let touchStartX = 0;
-        let touchStartY = 0;
-        
-        this.video.addEventListener('touchstart', (e) => {
-          touchStartX = e.touches[0].clientX;
-          touchStartY = e.touches[0].clientY;
-        });
-        
-        this.video.addEventListener('touchend', (e) => {
-          const touchEndX = e.changedTouches[0].clientX;
-          const touchEndY = e.changedTouches[0].clientY;
-          const deltaX = touchEndX - touchStartX;
-          const deltaY = touchEndY - touchStartY;
-          
-          // Swipe horizontally to seek
-          if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
-            const seekTime = (deltaX > 0) ? 10 : -10;
-            this.seekTime(seekTime);
-          }
-          
-          // Swipe vertically to adjust volume
-          if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > 50) {
-            const volumeChange = (deltaY > 0) ? -10 : 10;
-            this.adjustVolume(volumeChange);
-          }
-        });
-      }
-
-      setupKeyboardControls() {
-        document.addEventListener('keydown', (e) => {
-          if (!this.container.contains(document.activeElement)) return;
-          
-          switch(e.key) {
-            case ' ':
-            case 'k':
-              e.preventDefault();
-              this.togglePlayPause();
-              break;
-            case 'ArrowLeft':
-              e.preventDefault();
-              this.seekTime(-5);
-              break;
-            case 'ArrowRight':
-              e.preventDefault();
-              this.seekTime(5);
-              break;
-            case 'ArrowUp':
-              e.preventDefault();
-              this.adjustVolume(10);
-              break;
-            case 'ArrowDown':
-              e.preventDefault();
-              this.adjustVolume(-10);
-              break;
-            case 'm':
-              e.preventDefault();
-              this.toggleMute();
-              break;
-            case 'f':
-              e.preventDefault();
-              this.toggleFullscreen();
-              break;
-          }
-        });
-      }
-
-      setupAccessibility() {
-        // Add ARIA labels
-        this.video.setAttribute('role', 'application');
-        this.controls.setAttribute('role', 'toolbar');
-        this.playPauseBtn.setAttribute('aria-pressed', 'false');
-        this.volumeBtn.setAttribute('aria-pressed', 'false');
-        
-        // Announce changes to screen readers
-        this.announceToScreenReader = (message) => {
-          const announcement = document.createElement('div');
-          announcement.setAttribute('aria-live', 'polite');
-          announcement.setAttribute('aria-atomic', 'true');
-          announcement.className = 'sr-only';
-          announcement.textContent = message;
-          document.body.appendChild(announcement);
-          setTimeout(() => announcement.remove(), 1000);
-        };
-      }
-
-      togglePlayPause() {
-        if (this.video.paused) {
-          this.video.play();
-          this.isPlaying = true;
-          this.playPauseBtn.setAttribute('data-playing', 'true');
-          this.playPauseBtn.setAttribute('aria-pressed', 'true');
-          this.announceToScreenReader('Video playing');
-        } else {
-          this.video.pause();
-          this.isPlaying = false;
-          this.playPauseBtn.setAttribute('data-playing', 'false');
-          this.playPauseBtn.setAttribute('aria-pressed', 'false');
-          this.announceToScreenReader('Video paused');
-        }
-      }
-
-      seek(e) {
-        const rect = this.container.querySelector('.progress-bar').getBoundingClientRect();
-        const percent = (e.clientX - rect.left) / rect.width;
-        this.video.currentTime = percent * this.video.duration;
-        this.updateProgress();
-      }
-
-      seekTime(seconds) {
-        this.video.currentTime = Math.max(0, Math.min(this.video.duration, this.video.currentTime + seconds));
-        this.updateProgress();
-      }
-
-      setVolume(value) {
-        this.video.volume = value / 100;
-        this.volumeSlider.value = value;
-        this.updateVolumeButton();
-      }
-
-      adjustVolume(change) {
-        const newVolume = Math.max(0, Math.min(100, parseInt(this.volumeSlider.value) + change));
-        this.setVolume(newVolume);
-      }
-
-      toggleMute() {
-        this.video.muted = !this.video.muted;
-        this.isMuted = this.video.muted;
-        this.volumeBtn.setAttribute('data-muted', this.isMuted.toString());
-        this.volumeBtn.setAttribute('aria-pressed', this.isMuted.toString());
-        this.announceToScreenReader(this.isMuted ? 'Video muted' : 'Video unmuted');
-      }
-
-      updateVolumeButton() {
-        this.volumeBtn.setAttribute('data-muted', this.video.muted.toString());
-        this.volumeBtn.setAttribute('aria-pressed', this.video.muted.toString());
-      }
-
-      toggleFullscreen() {
-        if (!document.fullscreenElement) {
-          this.container.requestFullscreen().catch(err => {
-            console.error('Error attempting to enable fullscreen:', err);
-          });
-        } else {
-          document.exitFullscreen();
-        }
-      }
-
-      onMetadataLoaded() {
-        this.isLoaded = true;
-        this.hideLoading();
-        this.durationDisplay.textContent = this.formatTime(this.video.duration);
-        this.announceToScreenReader(`Video duration: ${this.formatTime(this.video.duration)}`);
-      }
-
-      updateProgress() {
-        if (!this.isLoaded) return;
-        
-        const percent = (this.video.currentTime / this.video.duration) * 100;
-        this.progressFill.style.width = `${percent}%`;
-        this.currentTimeDisplay.textContent = this.formatTime(this.video.currentTime);
-      }
-
-      updateBuffer() {
-        if (this.video.buffered.length > 0) {
-          const bufferedEnd = this.video.buffered.end(this.video.buffered.length - 1);
-          const duration = this.video.duration;
-          if (duration > 0) {
-            const percent = (bufferedEnd / duration) * 100;
-            this.progressBuffer.style.width = `${percent}%`;
-          }
-        }
-      }
-
-      onVideoEnded() {
-        this.isPlaying = false;
-        this.playPauseBtn.setAttribute('data-playing', 'false');
-        this.playPauseBtn.setAttribute('aria-pressed', 'false');
-        this.announceToScreenReader('Video ended');
-      }
-
-      onVideoError(e) {
-        console.error('Video error:', e);
-        this.showError();
-        this.announceToScreenReader('Video failed to load');
-      }
-
-      showLoading() {
-        this.loadingOverlay.style.display = 'flex';
-      }
-
-      hideLoading() {
-        this.loadingOverlay.style.display = 'none';
-      }
-
-      showError() {
-        this.errorOverlay.style.display = 'flex';
-      }
-
-      hideError() {
-        this.errorOverlay.style.display = 'none';
-      }
-
-      retryLoad() {
-        this.hideError();
-        this.showLoading();
-        this.video.load();
-      }
-
-      showControls() {
-        this.controls.style.opacity = '1';
-        this.controls.style.transform = 'translateY(0)';
-      }
-
-      hideControls() {
-        if (this.isPlaying) {
-          this.controls.style.opacity = '0';
-          this.controls.style.transform = 'translateY(100%)';
-        }
-      }
-
-      openShareModal() {
-        const modal = document.getElementById('shareModal');
-        modal.style.display = 'flex';
-        setTimeout(() => modal.classList.add('active'), 10);
-        this.setupShareModal();
-      }
-
-      setupShareModal() {
-        const modal = document.getElementById('shareModal');
-        const closeBtn = document.getElementById('closeShareModal');
-        const shareBtns = modal.querySelectorAll('.share-btn');
-        
-        closeBtn.addEventListener('click', () => this.closeShareModal());
-        modal.addEventListener('click', (e) => {
-          if (e.target === modal) this.closeShareModal();
-        });
-        
-        shareBtns.forEach(btn => {
-          btn.addEventListener('click', () => this.shareVideo(btn.dataset.platform));
-        });
-      }
-
-      closeShareModal() {
-        const modal = document.getElementById('shareModal');
-        modal.classList.remove('active');
-        setTimeout(() => modal.style.display = 'none', 300);
-      }
-
-      shareVideo(platform) {
-        const url = window.location.href;
-        const title = 'AI Content Generation Demo';
-        
-        const shareUrls = {
-          twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`,
-          facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
-          linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
-          copy: url
-        };
-        
-        if (platform === 'copy') {
-          navigator.clipboard.writeText(url).then(() => {
-            this.announceToScreenReader('Link copied to clipboard');
-            alert('Link copied to clipboard!');
-          });
-        } else {
-          window.open(shareUrls[platform], '_blank', 'width=600,height=400');
-        }
-      }
-
-      formatTime(seconds) {
-        const minutes = Math.floor(seconds / 60);
-        const secs = Math.floor(seconds % 60);
-        return `${minutes}:${secs.toString().padStart(2, '0')}`;
-      }
-
-      handleProgressKeydown(e) {
-        if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
-          e.preventDefault();
-          const change = e.key === 'ArrowLeft' ? -5 : 5;
-          this.seekTime(change);
-        }
-      }
-    }
-
-    // Initialize Video Player
-    let mainVideoPlayer;
+    // 3D Video Carousel Implementation
+    let carousel3D;
     
-    // Load HLS.js library
-    function loadHLS() {
-      return new Promise((resolve, reject) => {
-        if (window.Hls) {
-          resolve();
-          return;
-        }
-        
-        const script = document.createElement('script');
-        script.src = 'https://cdn.jsdelivr.net/npm/hls.js@latest';
-        script.onload = resolve;
-        script.onerror = reject;
-        document.head.appendChild(script);
-      });
-    }
+    // Sample video data for the carousel
+    const carouselVideoData = [
+      {
+        id: 'ai-blog-demo',
+        title: 'AI Blog Generation',
+        description: 'Watch AI create engaging blog posts in seconds with advanced natural language processing',
+        src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+        poster: 'https://picsum.photos/seed/ai-blog-generation/280/500.jpg',
+        duration: '2:45',
+        views: '12.5K'
+      },
+      {
+        id: 'social-media-demo',
+        title: 'Social Media Captions',
+        description: 'Generate viral-worthy social media content with AI-powered caption generation',
+        src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+        poster: 'https://picsum.photos/seed/social-media-ai/280/500.jpg',
+        duration: '1:32',
+        views: '8.2K'
+      },
+      {
+        id: 'email-campaign-demo',
+        title: 'Email Campaigns',
+        description: 'AI-powered email marketing automation that drives results',
+        src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+        poster: 'https://picsum.photos/seed/email-marketing/280/500.jpg',
+        duration: '2:15',
+        views: '6.7K'
+      },
+      {
+        id: 'product-descriptions-demo',
+        title: 'Product Descriptions',
+        description: 'Compelling product copy that converts browsers into buyers',
+        src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+        poster: 'https://picsum.photos/seed/product-descriptions/280/500.jpg',
+        duration: '1:48',
+        views: '5.3K'
+      },
+      {
+        id: 'content-automation-demo',
+        title: 'Content Automation',
+        description: 'Automate your entire content workflow with intelligent AI systems',
+        src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
+        poster: 'https://picsum.photos/seed/content-automation/280/500.jpg',
+        duration: '3:20',
+        views: '9.8K'
+      },
+      {
+        id: 'seo-optimization-demo',
+        title: 'SEO Optimization',
+        description: 'AI-driven SEO optimization for maximum search visibility',
+        src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',
+        poster: 'https://picsum.photos/seed/seo-optimization/280/500.jpg',
+        duration: '2:05',
+        views: '7.1K'
+      },
+      {
+        id: 'analytics-dashboard-demo',
+        title: 'Analytics Dashboard',
+        description: 'Real-time analytics and insights for your content performance',
+        src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+        poster: 'https://picsum.photos/seed/analytics-dashboard/280/500.jpg',
+        duration: '1:55',
+        views: '4.9K'
+      }
+    ];
 
-    // Initialize when DOM is ready
+    // Initialize 3D Carousel when DOM is ready
     document.addEventListener('DOMContentLoaded', async () => {
       try {
-        await loadHLS();
-        mainVideoPlayer = new AdvancedVideoPlayer('mainVideoPlayer');
-        
-        // Setup thumbnail click handlers
-        const thumbnails = document.querySelectorAll('.video-thumbnail');
-        thumbnails.forEach(thumb => {
-          thumb.addEventListener('click', () => {
-            const videoId = thumb.dataset.videoId;
-            console.log('Load video:', videoId);
-            // Here you would implement video switching logic
+        // Load the VideoCarousel3D module
+        if (typeof VideoCarousel3D !== 'undefined') {
+          // Initialize carousel with enhanced options
+          carousel3D = new VideoCarousel3D('#carousel3D', {
+            radius: 350,
+            itemWidth: 280,
+            itemHeight: 500,
+            perspective: 1400,
+            friction: 0.94,
+            springStrength: 0.06,
+            autoRotate: false,
+            autoRotateSpeed: 0.3,
+            visibleItems: 7,
+            enableGestures: true,
+            enableKeyboard: true,
+            enableParticles: true,
+            particleCount: 75
           });
-        });
-        
-        // Setup action buttons
-        document.getElementById('watchMainDemo')?.addEventListener('click', () => {
-          mainVideoPlayer.togglePlayPause();
-        });
-        
-        document.getElementById('shareMainDemo')?.addEventListener('click', () => {
-          mainVideoPlayer.openShareModal();
-        });
-        
+
+          // Load video data
+          carousel3D.loadVideos(carouselVideoData);
+
+          // Hide loading state
+          setTimeout(() => {
+            const loadingElement = document.getElementById('carouselLoading');
+            if (loadingElement) {
+              loadingElement.style.opacity = '0';
+              setTimeout(() => loadingElement.style.display = 'none', 300);
+            }
+          }, 1500);
+
+          // Setup action buttons
+          document.getElementById('exploreTools')?.addEventListener('click', () => {
+            window.location.href = 'tools.html';
+          });
+
+          document.getElementById('learnMore')?.addEventListener('click', () => {
+            window.location.href = 'about.html';
+          });
+
+          // Add keyboard navigation hints
+          console.log('3D Carousel Controls: Arrow Keys (navigate), Space (play/pause), Home/End (first/last)');
+          
+        } else {
+          console.error('VideoCarousel3D class not found. Make sure the module is loaded.');
+          // Fallback: hide loading and show error message
+          const loadingElement = document.getElementById('carouselLoading');
+          if (loadingElement) {
+            loadingElement.innerHTML = `
+              <div class="carousel-error">
+                <div class="error-icon">⚠️</div>
+                <h4>3D Carousel Unavailable</h4>
+                <p>Please refresh the page or try a different browser.</p>
+                <button class="btn btn-outline" onclick="window.location.reload()">Refresh Page</button>
+              </div>
+            `;
+          }
+        }
+
       } catch (error) {
-        console.error('Error initializing video player:', error);
+        console.error('Error initializing 3D carousel:', error);
+        // Show error state
+        const loadingElement = document.getElementById('carouselLoading');
+        if (loadingElement) {
+          loadingElement.innerHTML = `
+            <div class="carousel-error">
+              <div class="error-icon">⚠️</div>
+              <h4>Initialization Error</h4>
+              <p>Unable to load the 3D carousel. Please try again later.</p>
+              <button class="btn btn-outline" onclick="window.location.reload()">Try Again</button>
+            </div>
+          `;
+        }
       }
     });
 
-    // Add screen reader only styles
+    // Add screen reader only styles for accessibility
     const style = document.createElement('style');
     style.textContent = `
       .sr-only {
@@ -2552,10 +1509,48 @@
         white-space: nowrap;
         border: 0;
       }
+      
+      .carousel-error {
+        background: var(--bg-white);
+        border: var(--border-thick);
+        border-color: var(--coral);
+        border-radius: 16px;
+        padding: 32px;
+        text-align: center;
+        box-shadow:
+          6px 6px 0px var(--shadow-color),
+          0 0 30px rgba(239, 68, 68, 0.3);
+        max-width: 400px;
+        margin: 0 auto;
+      }
+
+      .carousel-error .error-icon {
+        font-size: 48px;
+        margin-bottom: var(--space-sm);
+      }
+
+      .carousel-error h4 {
+        font-family: var(--font-family-display);
+        font-size: 1.5rem;
+        font-weight: 900;
+        color: var(--coral);
+        margin: 0 0 16px 0;
+        text-shadow: 2px 2px 0px var(--shadow-color);
+      }
+
+      .carousel-error p {
+        font-family: var(--font-family-body);
+        font-size: 1rem;
+        color: var(--text-dark);
+        margin: 0 0 24px 0;
+        line-height: 1.5;
+      }
     `;
     document.head.appendChild(style);
   </script>
 
+  <!-- Import 3D Carousel Module -->
+  <script src="js/modules/video-carousel-3d.js"></script>
   <script src="js/components/navigation.js"></script>
 
 </body>
