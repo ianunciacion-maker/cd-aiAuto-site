@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>Email Campaigns Generator – Ai-Auto</title>
+  <title>Email Campaigns – Ai-Auto</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,106 +12,393 @@
     rel="stylesheet">
   <link rel="stylesheet" href="../css/main.css">
   <style>
-    body { background: #f8f9fa; }
-    .tool-container { max-width: 1400px; margin: 0 auto; padding: var(--space-lg); }
-    .tool-header { background: white; padding: var(--space-lg); border-radius: 12px; margin-bottom: var(--space-lg); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); display: flex; justify-content: space-between; align-items: center; }
-    .tool-header h1 { font-size: 28px; font-weight: 700; color: var(--text-dark); margin: 0; }
-    .tool-header a { padding: 10px 20px; background: white; color: var(--blue); border: 1px solid var(--blue); border-radius: 8px; text-decoration: none; font-weight: 600; }
-    .tool-header a:hover { background: #f0f9ff; }
-    .tool-content { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg); }
-    @media (max-width: 768px) { .tool-content { grid-template-columns: 1fr; } }
-    .form-section, .output-section { background: white; padding: var(--space-lg); border-radius: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); }
-    .form-section h2, .output-section h2 { font-size: 18px; font-weight: 700; color: var(--text-dark); margin-top: 0; margin-bottom: var(--space-md); padding-bottom: var(--space-md); border-bottom: 1px solid #f0f0f0; }
-    .form-group { margin-bottom: var(--space-md); }
-    .form-group label { display: block; font-size: 14px; font-weight: 600; color: var(--text-dark); margin-bottom: 8px; }
-    .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 14px; font-family: inherit; }
-    .form-group textarea { resize: vertical; min-height: 100px; }
-    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
-    .usage-info { background: #f0f9ff; border-left: 4px solid var(--blue); padding: var(--space-md); border-radius: 4px; margin-bottom: var(--space-md); }
-    .usage-info p { margin: 0; font-size: 14px; color: var(--text-dark); }
-    .usage-bar { width: 100%; height: 8px; background: #e0e7ff; border-radius: 4px; overflow: hidden; margin-top: 8px; }
-    .usage-bar-fill { height: 100%; background: linear-gradient(90deg, var(--blue), var(--purple)); }
-    .submit-btn { width: 100%; padding: 12px; background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%); color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; }
-    .submit-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3); }
-    .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-    .output-content { min-height: 300px; padding: var(--space-md); background: #f9fafb; border-radius: 8px; line-height: 1.6; color: var(--text-dark); }
-    .output-content.empty { display: flex; align-items: center; justify-content: center; color: var(--text-light); font-style: italic; }
-    .copy-btn { padding: 8px 16px; background: var(--blue); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: var(--space-md); }
-    .copy-btn:hover { background: var(--purple); }
-    .error-message { background: #fee; border-left: 4px solid #c33; padding: var(--space-md); border-radius: 4px; margin-bottom: var(--space-md); color: #c33; display: none; }
-    .error-message.show { display: block; }
+    /* Tool-specific styles that extend dashboard design system */
+    .tool-page {
+      background: var(--bg-paper);
+      min-height: 100vh;
+      padding-bottom: var(--space-lg);
+    }
+
+    .tool-container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: var(--space-md);
+      position: relative;
+    }
+
+    /* Tool Header - matches dashboard header structure */
+    .tool-header {
+      background: var(--bg-white);
+      border: var(--border-thick);
+      box-shadow: var(--shadow-hard);
+      padding: var(--space-md);
+      margin-bottom: var(--space-lg);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.2s ease;
+    }
+
+    .tool-header:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .tool-header-left {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+
+    .tool-header h1 {
+      font-size: 28px;
+      font-weight: 900;
+      font-family: var(--font-heading);
+      color: var(--ink);
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: -0.5px;
+    }
+
+    .tool-badge {
+      background: var(--blue);
+      color: #fff;
+      padding: 4px 12px;
+      border: var(--border-thin);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      border-radius: var(--radius-sm);
+    }
+
+    /* Tool Content Grid - matches dashboard grid system */
+    .tool-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-lg);
+      margin-bottom: var(--space-lg);
+    }
+
+    /* Form Section - uses dashboard card styles */
+    .form-section {
+      background: var(--bg-white);
+      border: var(--border-thick);
+      box-shadow: var(--shadow-hard);
+      padding: var(--space-lg);
+      border-radius: var(--radius-sm);
+      transition: all 0.2s ease;
+    }
+
+    .form-section:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .form-section h2 {
+      font-size: 24px;
+      font-weight: 900;
+      font-family: var(--font-heading);
+      color: var(--ink);
+      margin: 0 0 var(--space-md) 0;
+      text-transform: uppercase;
+      letter-spacing: -0.5px;
+      padding-bottom: var(--space-sm);
+      border-bottom: var(--border-thick);
+    }
+
+    /* Usage Info - matches dashboard status cards */
+    .usage-info {
+      background: var(--lavender);
+      border: var(--border-thick);
+      padding: var(--space-md);
+      margin-bottom: var(--space-md);
+      box-shadow: var(--shadow-hard);
+      border-radius: var(--radius-sm);
+    }
+
+    .usage-info p {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .usage-bar {
+      width: 100%;
+      height: 8px;
+      background: var(--bg-white);
+      border: var(--border-thin);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: var(--space-sm);
+    }
+
+    .usage-bar-fill {
+      height: 100%;
+      background: var(--blue);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    /* Form Groups - uses dashboard form styles */
+    .form-group {
+      margin-bottom: var(--space-md);
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--ink);
+      margin-bottom: var(--space-xs);
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: var(--border-thick);
+      background: var(--bg-white);
+      color: var(--ink);
+      font-size: 15px;
+      font-family: var(--font-primary);
+      transition: all 0.2s ease;
+      border-radius: var(--radius-sm);
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--blue);
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hard);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+      font-family: inherit;
+    }
+
+    /* Output Section - uses dashboard card styles */
+    .output-section {
+      background: var(--bg-white);
+      border: var(--border-thick);
+      box-shadow: var(--shadow-hard);
+      padding: var(--space-lg);
+      border-radius: var(--radius-sm);
+      transition: all 0.2s ease;
+    }
+
+    .output-section:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .output-section h2 {
+      font-size: 24px;
+      font-weight: 900;
+      font-family: var(--font-heading);
+      color: var(--ink);
+      margin: 0 0 var(--space-md) 0;
+      text-transform: uppercase;
+      letter-spacing: -0.5px;
+      padding-bottom: var(--space-sm);
+      border-bottom: var(--border-thick);
+    }
+
+    .output-content {
+      min-height: 300px;
+      padding: var(--space-md);
+      background: var(--bg-paper);
+      border: var(--border-thin);
+      border-radius: var(--radius-sm);
+      line-height: 1.6;
+      color: var(--ink);
+      font-family: var(--font-primary);
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    .output-content.empty {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ink);
+      opacity: 0.6;
+      font-style: italic;
+    }
+
+    /* Error Message - matches dashboard error styles */
+    .error-message {
+      background: var(--coral);
+      color: #fff;
+      padding: var(--space-md);
+      border: var(--border-thick);
+      margin-bottom: var(--space-md);
+      font-weight: 600;
+      text-align: center;
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-hard);
+      display: none;
+    }
+
+    .error-message.show {
+      display: block;
+    }
+
+    /* Loading Spinner - matches dashboard loading styles */
+    .loading-spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 1s linear infinite;
+      margin-right: var(--space-xs);
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Responsive Design - matches dashboard breakpoints */
+    @media (max-width: 900px) {
+      .tool-content {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+      }
+
+      .tool-header {
+        flex-direction: column;
+        gap: var(--space-sm);
+        align-items: flex-start;
+      }
+
+      .tool-header h1 {
+        font-size: 24px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .tool-container {
+        padding: var(--space-sm);
+      }
+
+      .form-section,
+      .output-section {
+        padding: var(--space-md);
+      }
+
+      .tool-header h1 {
+        font-size: 20px;
+      }
+    }
   </style>
 </head>
 
 <body>
-  <div class="tool-container">
-    <div class="tool-header">
-      <h1>✉️ Email Campaigns</h1>
-      <a href="../user/dashboard.html">← Back to Dashboard</a>
-    </div>
+  <!-- Tool Navigation Component -->
+  <script src="../js/components/tool-navigation.js"></script>
 
-    <div class="tool-content">
-      <div class="form-section">
-        <h2>Generate Email Campaign</h2>
-
-        <div class="error-message" id="errorMessage"></div>
-
-        <div class="usage-info">
-          <p><strong id="usageText">0/100</strong> generations used this month</p>
-          <div class="usage-bar">
-            <div class="usage-bar-fill" id="usageBar" style="width: 0%"></div>
-          </div>
+  <div class="tool-page">
+    <div class="tool-container">
+      <!-- Tool Header -->
+      <div class="tool-header">
+        <div class="tool-header-left">
+          <h1>📧 Email Campaigns</h1>
+          <div class="tool-badge">AI Tool</div>
         </div>
-
-        <form id="generatorForm">
-          <div class="form-group">
-            <label for="product">Product/Service</label>
-            <input type="text" id="product" name="product" placeholder="What are you promoting?" required>
-          </div>
-
-          <div class="form-group">
-            <label for="audience">Target Audience</label>
-            <input type="text" id="audience" name="audience" placeholder="e.g., Small business owners" required>
-          </div>
-
-          <div class="form-group">
-            <label for="cta">Call to Action</label>
-            <select id="cta" name="cta">
-              <option value="buy">Buy Now</option>
-              <option value="learn">Learn More</option>
-              <option value="trial">Start Free Trial</option>
-              <option value="contact">Contact Us</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="style">Email Style</label>
-            <select id="style" name="style">
-              <option value="promotional">Promotional</option>
-              <option value="educational">Educational</option>
-              <option value="newsletter">Newsletter</option>
-              <option value="personal">Personal</option>
-            </select>
-          </div>
-
-          <button type="submit" class="submit-btn" id="submitBtn">Generate Email</button>
-        </form>
       </div>
 
-      <div class="output-section">
-        <h2>Output</h2>
-        <div class="output-content empty" id="outputContent">
-          Fill in the form and click "Generate" to create email campaigns
+      <!-- Tool Content Grid -->
+      <div class="tool-content">
+        <!-- Input Form Section -->
+        <div class="form-section">
+          <h2>Generate Email Campaign</h2>
+          
+          <!-- Error Message -->
+          <div class="error-message" id="errorMessage"></div>
+          
+          <!-- Usage Information -->
+          <div class="usage-info">
+            <p><strong id="usageText">0/100</strong> campaigns generated this month</p>
+            <div class="usage-bar">
+              <div class="usage-bar-fill" id="usageBar" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <!-- Generation Form -->
+          <form id="generatorForm">
+            <div class="form-group">
+              <label for="subject">Subject Line</label>
+              <input type="text" id="subject" name="subject" placeholder="e.g., Special Offer, New Product Launch" required>
+            </div>
+
+            <div class="form-group">
+              <label for="purpose">Campaign Purpose</label>
+              <select id="purpose" name="purpose">
+                <option value="promotion">Promotional</option>
+                <option value="newsletter">Newsletter</option>
+                <option value="announcement">Announcement</option>
+                <option value="followup">Follow-up</option>
+                <option value="welcome">Welcome Email</option>
+                <option value="survey">Survey/Feedback</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="audience">Target Audience</label>
+              <input type="text" id="audience" name="audience" placeholder="e.g., New customers, VIP clients, All subscribers">
+            </div>
+
+            <div class="form-group">
+              <label for="tone">Email Tone</label>
+              <select id="tone" name="tone">
+                <option value="professional">Professional</option>
+                <option value="friendly" selected>Friendly</option>
+                <option value="casual">Casual</option>
+                <option value="urgent">Urgent</option>
+                <option value="celebratory">Celebratory</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="keyPoints">Key Points (one per line)</label>
+              <textarea id="keyPoints" name="keyPoints" placeholder="e.g.,&#10;50% off all products&#10;Limited time offer&#10;Free shipping on orders over $50"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="cta">Call to Action</label>
+              <input type="text" id="cta" name="cta" placeholder="e.g., Shop Now, Learn More, Claim Your Discount">
+            </div>
+
+            <button type="submit" class="btn btn-large" id="submitBtn">Generate Email Campaign</button>
+          </form>
         </div>
-        <button class="copy-btn" id="copyBtn" style="display: none;">📋 Copy to Clipboard</button>
+
+        <!-- Output Section -->
+        <div class="output-section">
+          <h2>Generated Email Campaign</h2>
+          <div class="output-content empty" id="outputContent">
+            Fill in the form and click "Generate" to create your email campaign
+          </div>
+          <button class="btn btn-outline" id="copyBtn" style="display: none; margin-top: var(--space-md);">📋 Copy to Clipboard</button>
+        </div>
       </div>
     </div>
   </div>
 
+  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../supabase.js"></script>
   <script>
-    class EmailGenerator {
+    class EmailCampaignGenerator {
       constructor() {
         this.form = document.getElementById('generatorForm');
         this.submitBtn = document.getElementById('submitBtn');
@@ -125,14 +412,23 @@
       }
 
       async init() {
-        const isAuth = await authManager.isAuthenticated();
-        if (!isAuth) {
-          window.location.href = '../user/login.html';
-          return;
+        try {
+          // Check authentication
+          const isAuth = await authManager.isAuthenticated();
+          if (!isAuth) {
+            window.location.href = '../user/login.html';
+            return;
+          }
+
+          // Check access and load usage
+          await this.loadUsage();
+          this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+          this.copyBtn.addEventListener('click', () => this.copyOutput());
+
+        } catch (error) {
+          console.error('Init error:', error);
+          this.showError('Failed to load tool');
         }
-        await this.loadUsage();
-        this.form.addEventListener('submit', (e) => this.handleSubmit(e));
-        this.copyBtn.addEventListener('click', () => this.copyOutput());
       }
 
       async loadUsage() {
@@ -148,64 +444,187 @@
         e.preventDefault();
         this.clearError();
 
-        const product = document.getElementById('product').value.trim();
-        if (!product) {
-          this.showError('Please enter a product or service');
+        const subject = document.getElementById('subject').value.trim();
+        const purpose = document.getElementById('purpose').value;
+        const audience = document.getElementById('audience').value.trim();
+        const tone = document.getElementById('tone').value;
+        const keyPoints = document.getElementById('keyPoints').value.trim();
+        const cta = document.getElementById('cta').value.trim();
+
+        if (!subject) {
+          this.showError('Please enter a subject line');
           return;
         }
 
         this.setSubmitting(true);
 
         try {
+          // Check if user can use tool
           const { error, code } = await stripeManager.useTool(this.toolType);
 
           if (error) {
             if (code === 'USAGE_LIMIT_EXCEEDED') {
-              this.showError('Monthly limit reached.');
+              this.showError('You\'ve reached your monthly usage limit. Upgrade your plan or try again next month.');
             } else {
-              this.showError(error.message || 'Unable to generate content.');
+              this.showError(error.message || 'Unable to generate content. Check your subscription.');
             }
             this.setSubmitting(false);
             return;
           }
 
-          const output = `Subject: Discover ${product}\n\nHi there,\n\nWe're excited to share ${product} with you!\n\nBest regards,\nThe Team`;
-          this.displayOutput(output);
-          await this.loadUsage();
+          // Simulate API call to n8n backend
+          // In production, this would call your n8n webhook
+          const content = this.generatePlaceholderEmail(subject, purpose, audience, tone, keyPoints, cta);
+
+          this.displayOutput(content);
+          await this.loadUsage(); // Reload usage after generation
 
         } catch (error) {
-          this.showError('Failed. Try again.');
+          console.error('Generation error:', error);
+          this.showError('Failed to generate email campaign. Please try again.');
         } finally {
           this.setSubmitting(false);
         }
       }
 
+      generatePlaceholderEmail(subject, purpose, audience, tone, keyPoints, cta) {
+        // Placeholder - in production this would call your n8n webhook
+        const keyPointsArray = keyPoints.split('\n').filter(point => point.trim());
+        
+        let content = `Subject: ${subject}\n\n`;
+        
+        // Generate greeting based on audience and tone
+        if (audience.toLowerCase().includes('new') || purpose === 'welcome') {
+          if (tone === 'professional') {
+            content += `Dear ${audience || 'Subscriber'},\n\n`;
+          } else if (tone === 'friendly') {
+            content += `Hi ${audience || 'there'}! 👋\n\n`;
+          } else if (tone === 'casual') {
+            content += `Hey ${audience || 'everyone'}!\n\n`;
+          } else {
+            content += `Welcome ${audience || 'aboard'}!\n\n`;
+          }
+        } else {
+          if (tone === 'professional') {
+            content += `Dear ${audience || 'Valued Customer'},\n\n`;
+          } else if (tone === 'friendly') {
+            content += `Hi ${audience || 'there'}! 👋\n\n`;
+          } else if (tone === 'casual') {
+            content += `Hey ${audience || 'everyone'}!\n\n`;
+          } else if (tone === 'urgent') {
+            content += `URGENT: ${audience || 'Attention needed'}!\n\n`;
+          } else if (tone === 'celebratory') {
+            content += `🎉 Exciting news for ${audience || 'our community'}!\n\n`;
+          }
+        }
+
+        // Generate opening based on purpose
+        if (purpose === 'promotion') {
+          content += `We're thrilled to announce an exclusive offer just for you! This is your chance to take advantage of something special.\n\n`;
+        } else if (purpose === 'newsletter') {
+          content += `Welcome to our latest newsletter! We've got some exciting updates and valuable information to share with you.\n\n`;
+        } else if (purpose === 'announcement') {
+          content += `We have some important news to share with you today. This announcement marks an exciting milestone for our community.\n\n`;
+        } else if (purpose === 'followup') {
+          content += `Following up on our recent interaction, we wanted to reach out with some additional information that might interest you.\n\n`;
+        } else if (purpose === 'welcome') {
+          content += `Welcome to our community! We're so excited to have you join us on this journey.\n\n`;
+        } else if (purpose === 'survey') {
+          content += `Your feedback is incredibly valuable to us. We'd love to hear your thoughts to help us improve our services.\n\n`;
+        }
+
+        // Add key points
+        if (keyPointsArray.length > 0) {
+          content += `Here's what you need to know:\n\n`;
+          keyPointsArray.forEach((point, index) => {
+            content += `${index + 1}. ${point.trim()}\n`;
+          });
+          content += `\n`;
+        }
+
+        // Generate call to action
+        if (cta) {
+          if (tone === 'urgent') {
+            content += `⏰ Time is limited! ${cta} now before it's too late.\n\n`;
+          } else if (tone === 'celebratory') {
+            content += `🎊 Join the celebration! ${cta} and be part of something amazing.\n\n`;
+          } else {
+            content += `${cta} today and discover what makes this opportunity special.\n\n`;
+          }
+        }
+
+        // Add closing based on tone
+        if (tone === 'professional') {
+          content += `Best regards,\nThe Team`;
+        } else if (tone === 'friendly') {
+          content += `Warm wishes,\nThe Team`;
+        } else if (tone === 'casual') {
+          content += `Cheers,\nThe Team`;
+        } else if (tone === 'urgent') {
+          content += `Act now!\nThe Team`;
+        } else if (tone === 'celebratory') {
+          content += `Celebrate with us!\nThe Team`;
+        }
+
+        content += `\n\n---\nGenerated with AI by Ai-Auto\n`;
+        return content;
+      }
+
       displayOutput(content) {
-        this.outputContent.innerHTML = `<pre style="white-space: pre-wrap;">${this.escapeHtml(content)}</pre>`;
+        this.outputContent.innerHTML = `<pre style="white-space: pre-wrap; word-wrap: break-word;">${this.escapeHtml(content)}</pre>`;
         this.outputContent.classList.remove('empty');
-        this.copyBtn.style.display = 'block';
+        this.copyBtn.style.display = 'inline-block';
         this.currentOutput = content;
       }
 
       copyOutput() {
         if (this.currentOutput) {
-          navigator.clipboard.writeText(this.currentOutput);
-          this.copyBtn.textContent = '✓ Copied!';
-          setTimeout(() => { this.copyBtn.textContent = '📋 Copy to Clipboard'; }, 2000);
+          navigator.clipboard.writeText(this.currentOutput).then(() => {
+            const originalText = this.copyBtn.textContent;
+            this.copyBtn.textContent = '✓ Copied!';
+            setTimeout(() => {
+              this.copyBtn.textContent = originalText;
+            }, 2000);
+          });
         }
       }
 
       escapeHtml(text) {
-        const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+        const map = {
+          '&': '&',
+          '<': '<',
+          '>': '>',
+          '"': '"',
+          "'": '&#039;'
+        };
         return text.replace(/[&<>"']/g, m => map[m]);
       }
 
-      showError(msg) { this.errorMessage.textContent = msg; this.errorMessage.classList.add('show'); }
-      clearError() { this.errorMessage.classList.remove('show'); }
-      setSubmitting(is) { this.submitBtn.disabled = is; this.submitBtn.textContent = is ? '⏳ Generating...' : 'Generate Email'; }
+      showError(message) {
+        this.errorMessage.textContent = message;
+        this.errorMessage.classList.add('show');
+      }
+
+      clearError() {
+        this.errorMessage.classList.remove('show');
+      }
+
+      setSubmitting(isSubmitting) {
+        this.submitBtn.disabled = isSubmitting;
+        if (isSubmitting) {
+          this.submitBtn.innerHTML = '<span class="loading-spinner"></span>Generating...';
+          this.submitBtn.classList.add('loading');
+        } else {
+          this.submitBtn.textContent = 'Generate Email Campaign';
+          this.submitBtn.classList.remove('loading');
+        }
+      }
     }
 
-    document.addEventListener('DOMContentLoaded', () => { new EmailGenerator(); });
+    // Initialize email campaign generator when DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+      new EmailCampaignGenerator();
+    });
   </script>
 </body>
 

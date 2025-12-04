@@ -12,78 +12,135 @@
     rel="stylesheet">
   <link rel="stylesheet" href="../css/main.css">
   <style>
-    body {
-      background: #f8f9fa;
+    /* Tool-specific styles that extend dashboard design system */
+    .tool-page {
+      background: var(--bg-paper);
+      min-height: 100vh;
+      padding-bottom: var(--space-lg);
     }
 
     .tool-container {
-      max-width: 1400px;
+      max-width: var(--max-width);
       margin: 0 auto;
-      padding: var(--space-lg);
+      padding: var(--space-md);
+      position: relative;
     }
 
+    /* Tool Header - matches dashboard header structure */
     .tool-header {
-      background: white;
-      padding: var(--space-lg);
-      border-radius: 12px;
+      background: var(--bg-white);
+      border: var(--border-thick);
+      box-shadow: var(--shadow-hard);
+      padding: var(--space-md);
       margin-bottom: var(--space-lg);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
       display: flex;
       justify-content: space-between;
       align-items: center;
+      transition: all 0.2s ease;
+    }
+
+    .tool-header:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .tool-header-left {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
     }
 
     .tool-header h1 {
       font-size: 28px;
-      font-weight: 700;
-      color: var(--text-dark);
+      font-weight: 900;
+      font-family: var(--font-heading);
+      color: var(--ink);
       margin: 0;
+      text-transform: uppercase;
+      letter-spacing: -0.5px;
     }
 
-    .tool-header a {
-      padding: 10px 20px;
-      background: white;
-      color: var(--blue);
-      border: 1px solid var(--blue);
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 600;
-      transition: all 0.3s ease;
+    .tool-badge {
+      background: var(--blue);
+      color: #fff;
+      padding: 4px 12px;
+      border: var(--border-thin);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      border-radius: var(--radius-sm);
     }
 
-    .tool-header a:hover {
-      background: #f0f9ff;
-    }
-
+    /* Tool Content Grid - matches dashboard grid system */
     .tool-content {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: var(--space-lg);
+      margin-bottom: var(--space-lg);
     }
 
-    @media (max-width: 768px) {
-      .tool-content {
-        grid-template-columns: 1fr;
-      }
-    }
-
+    /* Form Section - uses dashboard card styles */
     .form-section {
-      background: white;
+      background: var(--bg-white);
+      border: var(--border-thick);
+      box-shadow: var(--shadow-hard);
       padding: var(--space-lg);
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      border-radius: var(--radius-sm);
+      transition: all 0.2s ease;
+    }
+
+    .form-section:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
     }
 
     .form-section h2 {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--text-dark);
-      margin-top: 0;
-      margin-bottom: var(--space-md);
-      padding-bottom: var(--space-md);
-      border-bottom: 1px solid #f0f0f0;
+      font-size: 24px;
+      font-weight: 900;
+      font-family: var(--font-heading);
+      color: var(--ink);
+      margin: 0 0 var(--space-md) 0;
+      text-transform: uppercase;
+      letter-spacing: -0.5px;
+      padding-bottom: var(--space-sm);
+      border-bottom: var(--border-thick);
     }
 
+    /* Usage Info - matches dashboard status cards */
+    .usage-info {
+      background: var(--lavender);
+      border: var(--border-thick);
+      padding: var(--space-md);
+      margin-bottom: var(--space-md);
+      box-shadow: var(--shadow-hard);
+      border-radius: var(--radius-sm);
+    }
+
+    .usage-info p {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .usage-bar {
+      width: 100%;
+      height: 8px;
+      background: var(--bg-white);
+      border: var(--border-thin);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: var(--space-sm);
+    }
+
+    .usage-bar-fill {
+      height: 100%;
+      background: var(--blue);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    /* Form Groups - uses dashboard form styles */
     .form-group {
       margin-bottom: var(--space-md);
     }
@@ -91,233 +148,234 @@
     .form-group label {
       display: block;
       font-size: 14px;
-      font-weight: 600;
-      color: var(--text-dark);
-      margin-bottom: 8px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--ink);
+      margin-bottom: var(--space-xs);
     }
 
     .form-group input,
-    .form-group textarea,
-    .form-group select {
+    .form-group select,
+    .form-group textarea {
       width: 100%;
-      padding: 12px;
-      border: 1px solid #e0e0e0;
-      border-radius: 8px;
-      font-size: 14px;
-      font-family: inherit;
-      transition: all 0.3s ease;
+      padding: 12px 16px;
+      border: var(--border-thick);
+      background: var(--bg-white);
+      color: var(--ink);
+      font-size: 15px;
+      font-family: var(--font-primary);
+      transition: all 0.2s ease;
+      border-radius: var(--radius-sm);
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--blue);
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hard);
     }
 
     .form-group textarea {
       resize: vertical;
       min-height: 100px;
+      font-family: inherit;
     }
 
-    .form-group input:focus,
-    .form-group textarea:focus,
-    .form-group select:focus {
-      outline: none;
-      border-color: var(--blue);
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-    }
-
-    .usage-info {
-      background: #f0f9ff;
-      border-left: 4px solid var(--blue);
-      padding: var(--space-md);
-      border-radius: 4px;
-      margin-bottom: var(--space-md);
-    }
-
-    .usage-info p {
-      margin: 0;
-      font-size: 14px;
-      color: var(--text-dark);
-    }
-
-    .usage-bar {
-      width: 100%;
-      height: 8px;
-      background: #e0e7ff;
-      border-radius: 4px;
-      overflow: hidden;
-      margin-top: 8px;
-    }
-
-    .usage-bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--blue), var(--purple));
-      width: 0%;
-    }
-
-    .submit-btn {
-      width: 100%;
-      padding: 12px;
-      background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .submit-btn:hover:not(:disabled) {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
-    }
-
-    .submit-btn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-
+    /* Output Section - uses dashboard card styles */
     .output-section {
-      background: white;
+      background: var(--bg-white);
+      border: var(--border-thick);
+      box-shadow: var(--shadow-hard);
       padding: var(--space-lg);
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      border-radius: var(--radius-sm);
+      transition: all 0.2s ease;
+    }
+
+    .output-section:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
     }
 
     .output-section h2 {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--text-dark);
-      margin-top: 0;
-      margin-bottom: var(--space-md);
-      padding-bottom: var(--space-md);
-      border-bottom: 1px solid #f0f0f0;
+      font-size: 24px;
+      font-weight: 900;
+      font-family: var(--font-heading);
+      color: var(--ink);
+      margin: 0 0 var(--space-md) 0;
+      text-transform: uppercase;
+      letter-spacing: -0.5px;
+      padding-bottom: var(--space-sm);
+      border-bottom: var(--border-thick);
     }
 
     .output-content {
       min-height: 300px;
       padding: var(--space-md);
-      background: #f9fafb;
-      border-radius: 8px;
+      background: var(--bg-paper);
+      border: var(--border-thin);
+      border-radius: var(--radius-sm);
       line-height: 1.6;
-      color: var(--text-dark);
+      color: var(--ink);
+      font-family: var(--font-primary);
+      white-space: pre-wrap;
+      word-wrap: break-word;
     }
 
     .output-content.empty {
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--text-light);
+      color: var(--ink);
+      opacity: 0.6;
       font-style: italic;
     }
 
-    .copy-btn {
-      padding: 8px 16px;
-      background: var(--blue);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-      margin-top: var(--space-md);
-      transition: all 0.3s ease;
-    }
-
-    .copy-btn:hover {
-      background: var(--purple);
-    }
-
-    .loading-spinner {
-      display: inline-block;
-      width: 16px;
-      height: 16px;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      border-radius: 50%;
-      border-top-color: white;
-      animation: spin 0.8s linear infinite;
-      margin-right: 8px;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
+    /* Error Message - matches dashboard error styles */
     .error-message {
-      background: #fee;
-      border-left: 4px solid #c33;
+      background: var(--coral);
+      color: #fff;
       padding: var(--space-md);
-      border-radius: 4px;
+      border: var(--border-thick);
       margin-bottom: var(--space-md);
-      color: #c33;
+      font-weight: 600;
+      text-align: center;
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-hard);
       display: none;
     }
 
     .error-message.show {
       display: block;
     }
+
+    /* Loading Spinner - matches dashboard loading styles */
+    .loading-spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 1s linear infinite;
+      margin-right: var(--space-xs);
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Responsive Design - matches dashboard breakpoints */
+    @media (max-width: 900px) {
+      .tool-content {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+      }
+
+      .tool-header {
+        flex-direction: column;
+        gap: var(--space-sm);
+        align-items: flex-start;
+      }
+
+      .tool-header h1 {
+        font-size: 24px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .tool-container {
+        padding: var(--space-sm);
+      }
+
+      .form-section,
+      .output-section {
+        padding: var(--space-md);
+      }
+
+      .tool-header h1 {
+        font-size: 20px;
+      }
+    }
   </style>
 </head>
 
 <body>
-  <div class="tool-container">
-    <!-- Header -->
-    <div class="tool-header">
-      <h1>📝 Blog Generator</h1>
-      <a href="../user/dashboard.html">← Back to Dashboard</a>
-    </div>
+  <!-- Tool Navigation Component -->
+  <script src="../js/components/tool-navigation.js"></script>
 
-    <!-- Content -->
-    <div class="tool-content">
-      <!-- Input Form -->
-      <div class="form-section">
-        <h2>Generate Blog Post</h2>
-
-        <div class="error-message" id="errorMessage"></div>
-
-        <div class="usage-info">
-          <p><strong id="usageText">0/100</strong> generations used this month</p>
-          <div class="usage-bar">
-            <div class="usage-bar-fill" id="usageBar" style="width: 0%"></div>
-          </div>
+  <div class="tool-page">
+    <div class="tool-container">
+      <!-- Tool Header -->
+      <div class="tool-header">
+        <div class="tool-header-left">
+          <h1>📝 Blog Generator</h1>
+          <div class="tool-badge">AI Tool</div>
         </div>
-
-        <form id="generatorForm">
-          <div class="form-group">
-            <label for="topic">Topic</label>
-            <input type="text" id="topic" name="topic" placeholder="e.g., AI content creation" required>
-          </div>
-
-          <div class="form-group">
-            <label for="length">Length</label>
-            <select id="length" name="length">
-              <option value="short">Short (300-500 words)</option>
-              <option value="medium" selected>Medium (500-1000 words)</option>
-              <option value="long">Long (1000+ words)</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="tone">Tone</label>
-            <select id="tone" name="tone">
-              <option value="professional">Professional</option>
-              <option value="casual" selected>Casual</option>
-              <option value="friendly">Friendly</option>
-              <option value="expert">Expert</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="keywords">Keywords (comma-separated)</label>
-            <input type="text" id="keywords" name="keywords" placeholder="e.g., AI, automation, productivity">
-          </div>
-
-          <button type="submit" class="submit-btn" id="submitBtn">Generate Blog Post</button>
-        </form>
       </div>
 
-      <!-- Output -->
-      <div class="output-section">
-        <h2>Output</h2>
-        <div class="output-content empty" id="outputContent">
-          Fill in the form and click "Generate" to create your blog post
+      <!-- Tool Content Grid -->
+      <div class="tool-content">
+        <!-- Input Form Section -->
+        <div class="form-section">
+          <h2>Generate Blog Post</h2>
+          
+          <!-- Error Message -->
+          <div class="error-message" id="errorMessage"></div>
+          
+          <!-- Usage Information -->
+          <div class="usage-info">
+            <p><strong id="usageText">0/100</strong> generations used this month</p>
+            <div class="usage-bar">
+              <div class="usage-bar-fill" id="usageBar" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <!-- Generation Form -->
+          <form id="generatorForm">
+            <div class="form-group">
+              <label for="topic">Topic</label>
+              <input type="text" id="topic" name="topic" placeholder="e.g., AI content creation" required>
+            </div>
+
+            <div class="form-group">
+              <label for="length">Length</label>
+              <select id="length" name="length">
+                <option value="short">Short (300-500 words)</option>
+                <option value="medium" selected>Medium (500-1000 words)</option>
+                <option value="long">Long (1000+ words)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="tone">Tone</label>
+              <select id="tone" name="tone">
+                <option value="professional">Professional</option>
+                <option value="casual" selected>Casual</option>
+                <option value="friendly">Friendly</option>
+                <option value="expert">Expert</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="keywords">Keywords (comma-separated)</label>
+              <input type="text" id="keywords" name="keywords" placeholder="e.g., AI, automation, productivity">
+            </div>
+
+            <button type="submit" class="btn btn-large" id="submitBtn">Generate Blog Post</button>
+          </form>
         </div>
-        <button class="copy-btn" id="copyBtn" style="display: none;">📋 Copy to Clipboard</button>
+
+        <!-- Output Section -->
+        <div class="output-section">
+          <h2>Output</h2>
+          <div class="output-content empty" id="outputContent">
+            Fill in the form and click "Generate" to create your blog post
+          </div>
+          <button class="btn btn-outline" id="copyBtn" style="display: none; margin-top: var(--space-md);">📋 Copy to Clipboard</button>
+        </div>
       </div>
     </div>
   </div>
@@ -390,7 +448,7 @@
 
           if (error) {
             if (code === 'USAGE_LIMIT_EXCEEDED') {
-              this.showError('You've reached your monthly usage limit. Upgrade your plan or try again next month.');
+              this.showError('You\'ve reached your monthly usage limit. Upgrade your plan or try again next month.');
             } else {
               this.showError(error.message || 'Unable to generate content. Check your subscription.');
             }
@@ -436,7 +494,7 @@
       displayOutput(content) {
         this.outputContent.innerHTML = `<pre style="white-space: pre-wrap; word-wrap: break-word;">${this.escapeHtml(content)}</pre>`;
         this.outputContent.classList.remove('empty');
-        this.copyBtn.style.display = 'block';
+        this.copyBtn.style.display = 'inline-block';
         this.currentOutput = content;
       }
 
@@ -454,10 +512,10 @@
 
       escapeHtml(text) {
         const map = {
-          '&': '&amp;',
-          '<': '&lt;',
-          '>': '&gt;',
-          '"': '&quot;',
+          '&': '&',
+          '<': '<',
+          '>': '>',
+          '"': '"',
           "'": '&#039;'
         };
         return text.replace(/[&<>"']/g, m => map[m]);
@@ -476,12 +534,15 @@
         this.submitBtn.disabled = isSubmitting;
         if (isSubmitting) {
           this.submitBtn.innerHTML = '<span class="loading-spinner"></span>Generating...';
+          this.submitBtn.classList.add('loading');
         } else {
           this.submitBtn.textContent = 'Generate Blog Post';
+          this.submitBtn.classList.remove('loading');
         }
       }
     }
 
+    // Initialize blog generator when DOM is ready
     document.addEventListener('DOMContentLoaded', () => {
       new BlogGenerator();
     });

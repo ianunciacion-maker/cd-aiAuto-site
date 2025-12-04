@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>Social Captions Generator – Ai-Auto</title>
+  <title>Social Captions – Ai-Auto</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,111 +12,391 @@
     rel="stylesheet">
   <link rel="stylesheet" href="../css/main.css">
   <style>
-    body { background: #f8f9fa; }
-    .tool-container { max-width: 1400px; margin: 0 auto; padding: var(--space-lg); }
-    .tool-header { background: white; padding: var(--space-lg); border-radius: 12px; margin-bottom: var(--space-lg); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); display: flex; justify-content: space-between; align-items: center; }
-    .tool-header h1 { font-size: 28px; font-weight: 700; color: var(--text-dark); margin: 0; }
-    .tool-header a { padding: 10px 20px; background: white; color: var(--blue); border: 1px solid var(--blue); border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.3s ease; }
-    .tool-header a:hover { background: #f0f9ff; }
-    .tool-content { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg); }
-    @media (max-width: 768px) { .tool-content { grid-template-columns: 1fr; } }
-    .form-section, .output-section { background: white; padding: var(--space-lg); border-radius: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); }
-    .form-section h2, .output-section h2 { font-size: 18px; font-weight: 700; color: var(--text-dark); margin-top: 0; margin-bottom: var(--space-md); padding-bottom: var(--space-md); border-bottom: 1px solid #f0f0f0; }
-    .form-group { margin-bottom: var(--space-md); }
-    .form-group label { display: block; font-size: 14px; font-weight: 600; color: var(--text-dark); margin-bottom: 8px; }
-    .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 14px; font-family: inherit; transition: all 0.3s ease; }
-    .form-group textarea { resize: vertical; min-height: 100px; }
-    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
-    .usage-info { background: #f0f9ff; border-left: 4px solid var(--blue); padding: var(--space-md); border-radius: 4px; margin-bottom: var(--space-md); }
-    .usage-info p { margin: 0; font-size: 14px; color: var(--text-dark); }
-    .usage-bar { width: 100%; height: 8px; background: #e0e7ff; border-radius: 4px; overflow: hidden; margin-top: 8px; }
-    .usage-bar-fill { height: 100%; background: linear-gradient(90deg, var(--blue), var(--purple)); width: 0%; }
-    .submit-btn { width: 100%; padding: 12px; background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%); color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; }
-    .submit-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3); }
-    .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-    .output-content { min-height: 300px; padding: var(--space-md); background: #f9fafb; border-radius: 8px; line-height: 1.6; color: var(--text-dark); }
-    .output-content.empty { display: flex; align-items: center; justify-content: center; color: var(--text-light); font-style: italic; }
-    .copy-btn { padding: 8px 16px; background: var(--blue); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: var(--space-md); transition: all 0.3s ease; }
-    .copy-btn:hover { background: var(--purple); }
-    .loading-spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255, 255, 255, 0.3); border-radius: 50%; border-top-color: white; animation: spin 0.8s linear infinite; margin-right: 8px; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .error-message { background: #fee; border-left: 4px solid #c33; padding: var(--space-md); border-radius: 4px; margin-bottom: var(--space-md); color: #c33; display: none; }
-    .error-message.show { display: block; }
+    /* Tool-specific styles that extend dashboard design system */
+    .tool-page {
+      background: var(--bg-paper);
+      min-height: 100vh;
+      padding-bottom: var(--space-lg);
+    }
+
+    .tool-container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: var(--space-md);
+      position: relative;
+    }
+
+    /* Tool Header - matches dashboard header structure */
+    .tool-header {
+      background: var(--bg-white);
+      border: var(--border-thick);
+      box-shadow: var(--shadow-hard);
+      padding: var(--space-md);
+      margin-bottom: var(--space-lg);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.2s ease;
+    }
+
+    .tool-header:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .tool-header-left {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+
+    .tool-header h1 {
+      font-size: 28px;
+      font-weight: 900;
+      font-family: var(--font-heading);
+      color: var(--ink);
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: -0.5px;
+    }
+
+    .tool-badge {
+      background: var(--blue);
+      color: #fff;
+      padding: 4px 12px;
+      border: var(--border-thin);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      border-radius: var(--radius-sm);
+    }
+
+    /* Tool Content Grid - matches dashboard grid system */
+    .tool-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-lg);
+      margin-bottom: var(--space-lg);
+    }
+
+    /* Form Section - uses dashboard card styles */
+    .form-section {
+      background: var(--bg-white);
+      border: var(--border-thick);
+      box-shadow: var(--shadow-hard);
+      padding: var(--space-lg);
+      border-radius: var(--radius-sm);
+      transition: all 0.2s ease;
+    }
+
+    .form-section:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .form-section h2 {
+      font-size: 24px;
+      font-weight: 900;
+      font-family: var(--font-heading);
+      color: var(--ink);
+      margin: 0 0 var(--space-md) 0;
+      text-transform: uppercase;
+      letter-spacing: -0.5px;
+      padding-bottom: var(--space-sm);
+      border-bottom: var(--border-thick);
+    }
+
+    /* Usage Info - matches dashboard status cards */
+    .usage-info {
+      background: var(--lavender);
+      border: var(--border-thick);
+      padding: var(--space-md);
+      margin-bottom: var(--space-md);
+      box-shadow: var(--shadow-hard);
+      border-radius: var(--radius-sm);
+    }
+
+    .usage-info p {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .usage-bar {
+      width: 100%;
+      height: 8px;
+      background: var(--bg-white);
+      border: var(--border-thin);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: var(--space-sm);
+    }
+
+    .usage-bar-fill {
+      height: 100%;
+      background: var(--blue);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    /* Form Groups - uses dashboard form styles */
+    .form-group {
+      margin-bottom: var(--space-md);
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--ink);
+      margin-bottom: var(--space-xs);
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: var(--border-thick);
+      background: var(--bg-white);
+      color: var(--ink);
+      font-size: 15px;
+      font-family: var(--font-primary);
+      transition: all 0.2s ease;
+      border-radius: var(--radius-sm);
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--blue);
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hard);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+      font-family: inherit;
+    }
+
+    /* Output Section - uses dashboard card styles */
+    .output-section {
+      background: var(--bg-white);
+      border: var(--border-thick);
+      box-shadow: var(--shadow-hard);
+      padding: var(--space-lg);
+      border-radius: var(--radius-sm);
+      transition: all 0.2s ease;
+    }
+
+    .output-section:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .output-section h2 {
+      font-size: 24px;
+      font-weight: 900;
+      font-family: var(--font-heading);
+      color: var(--ink);
+      margin: 0 0 var(--space-md) 0;
+      text-transform: uppercase;
+      letter-spacing: -0.5px;
+      padding-bottom: var(--space-sm);
+      border-bottom: var(--border-thick);
+    }
+
+    .output-content {
+      min-height: 300px;
+      padding: var(--space-md);
+      background: var(--bg-paper);
+      border: var(--border-thin);
+      border-radius: var(--radius-sm);
+      line-height: 1.6;
+      color: var(--ink);
+      font-family: var(--font-primary);
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    .output-content.empty {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ink);
+      opacity: 0.6;
+      font-style: italic;
+    }
+
+    /* Error Message - matches dashboard error styles */
+    .error-message {
+      background: var(--coral);
+      color: #fff;
+      padding: var(--space-md);
+      border: var(--border-thick);
+      margin-bottom: var(--space-md);
+      font-weight: 600;
+      text-align: center;
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-hard);
+      display: none;
+    }
+
+    .error-message.show {
+      display: block;
+    }
+
+    /* Loading Spinner - matches dashboard loading styles */
+    .loading-spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 1s linear infinite;
+      margin-right: var(--space-xs);
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Responsive Design - matches dashboard breakpoints */
+    @media (max-width: 900px) {
+      .tool-content {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+      }
+
+      .tool-header {
+        flex-direction: column;
+        gap: var(--space-sm);
+        align-items: flex-start;
+      }
+
+      .tool-header h1 {
+        font-size: 24px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .tool-container {
+        padding: var(--space-sm);
+      }
+
+      .form-section,
+      .output-section {
+        padding: var(--space-md);
+      }
+
+      .tool-header h1 {
+        font-size: 20px;
+      }
+    }
   </style>
 </head>
 
 <body>
-  <div class="tool-container">
-    <div class="tool-header">
-      <h1>📱 Social Media Captions</h1>
-      <a href="../user/dashboard.html">← Back to Dashboard</a>
-    </div>
+  <!-- Tool Navigation Component -->
+  <script src="../js/components/tool-navigation.js"></script>
 
-    <div class="tool-content">
-      <div class="form-section">
-        <h2>Generate Captions</h2>
-
-        <div class="error-message" id="errorMessage"></div>
-
-        <div class="usage-info">
-          <p><strong id="usageText">0/100</strong> generations used this month</p>
-          <div class="usage-bar">
-            <div class="usage-bar-fill" id="usageBar" style="width: 0%"></div>
-          </div>
+  <div class="tool-page">
+    <div class="tool-container">
+      <!-- Tool Header -->
+      <div class="tool-header">
+        <div class="tool-header-left">
+          <h1>💬 Social Captions</h1>
+          <div class="tool-badge">AI Tool</div>
         </div>
-
-        <form id="generatorForm">
-          <div class="form-group">
-            <label for="content">Content Description</label>
-            <textarea id="content" name="content" placeholder="Describe what your post is about" required></textarea>
-          </div>
-
-          <div class="form-group">
-            <label for="platform">Platform</label>
-            <select id="platform" name="platform">
-              <option value="instagram">Instagram</option>
-              <option value="twitter">Twitter/X</option>
-              <option value="linkedin">LinkedIn</option>
-              <option value="tiktok">TikTok</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="tone">Tone</label>
-            <select id="tone" name="tone">
-              <option value="engaging">Engaging</option>
-              <option value="professional">Professional</option>
-              <option value="casual">Casual</option>
-              <option value="funny">Funny</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="hashtags">Include Hashtags?</label>
-            <select id="hashtags" name="hashtags">
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
-            </select>
-          </div>
-
-          <button type="submit" class="submit-btn" id="submitBtn">Generate Captions</button>
-        </form>
       </div>
 
-      <div class="output-section">
-        <h2>Output</h2>
-        <div class="output-content empty" id="outputContent">
-          Fill in the form and click "Generate" to create social media captions
+      <!-- Tool Content Grid -->
+      <div class="tool-content">
+        <!-- Input Form Section -->
+        <div class="form-section">
+          <h2>Generate Social Media Captions</h2>
+          
+          <!-- Error Message -->
+          <div class="error-message" id="errorMessage"></div>
+          
+          <!-- Usage Information -->
+          <div class="usage-info">
+            <p><strong id="usageText">0/100</strong> generations used this month</p>
+            <div class="usage-bar">
+              <div class="usage-bar-fill" id="usageBar" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <!-- Generation Form -->
+          <form id="generatorForm">
+            <div class="form-group">
+              <label for="topic">Topic/Content</label>
+              <input type="text" id="topic" name="topic" placeholder="e.g., New product launch, team celebration" required>
+            </div>
+
+            <div class="form-group">
+              <label for="platform">Platform</label>
+              <select id="platform" name="platform">
+                <option value="instagram">Instagram</option>
+                <option value="facebook">Facebook</option>
+                <option value="twitter">Twitter</option>
+                <option value="linkedin">LinkedIn</option>
+                <option value="tiktok">TikTok</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="tone">Tone</label>
+              <select id="tone" name="tone">
+                <option value="professional">Professional</option>
+                <option value="casual" selected>Casual</option>
+                <option value="friendly">Friendly</option>
+                <option value="witty">Witty</option>
+                <option value="inspiring">Inspiring</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="hashtags">Hashtags (comma-separated)</label>
+              <input type="text" id="hashtags" name="hashtags" placeholder="e.g., #AI #automation #productivity">
+            </div>
+
+            <div class="form-group">
+              <label for="length">Caption Length</label>
+              <select id="length" name="length">
+                <option value="short">Short (1-2 sentences)</option>
+                <option value="medium" selected>Medium (2-3 sentences)</option>
+                <option value="long">Long (3-4 sentences)</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn btn-large" id="submitBtn">Generate Captions</button>
+          </form>
         </div>
-        <button class="copy-btn" id="copyBtn" style="display: none;">📋 Copy to Clipboard</button>
+
+        <!-- Output Section -->
+        <div class="output-section">
+          <h2>Generated Captions</h2>
+          <div class="output-content empty" id="outputContent">
+            Fill in the form and click "Generate" to create social media captions
+          </div>
+          <button class="btn btn-outline" id="copyBtn" style="display: none; margin-top: var(--space-md);">📋 Copy to Clipboard</button>
+        </div>
       </div>
     </div>
   </div>
 
+  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../supabase.js"></script>
   <script>
-    class CaptionsGenerator {
+    class SocialCaptionsGenerator {
       constructor() {
         this.form = document.getElementById('generatorForm');
         this.submitBtn = document.getElementById('submitBtn');
@@ -130,14 +410,23 @@
       }
 
       async init() {
-        const isAuth = await authManager.isAuthenticated();
-        if (!isAuth) {
-          window.location.href = '../user/login.html';
-          return;
+        try {
+          // Check authentication
+          const isAuth = await authManager.isAuthenticated();
+          if (!isAuth) {
+            window.location.href = '../user/login.html';
+            return;
+          }
+
+          // Check access and load usage
+          await this.loadUsage();
+          this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+          this.copyBtn.addEventListener('click', () => this.copyOutput());
+
+        } catch (error) {
+          console.error('Init error:', error);
+          this.showError('Failed to load tool');
         }
-        await this.loadUsage();
-        this.form.addEventListener('submit', (e) => this.handleSubmit(e));
-        this.copyBtn.addEventListener('click', () => this.copyOutput());
       }
 
       async loadUsage() {
@@ -153,73 +442,147 @@
         e.preventDefault();
         this.clearError();
 
-        const content = document.getElementById('content').value.trim();
-        if (!content) {
-          this.showError('Please describe your content');
+        const topic = document.getElementById('topic').value.trim();
+        const platform = document.getElementById('platform').value;
+        const tone = document.getElementById('tone').value;
+        const hashtags = document.getElementById('hashtags').value.trim();
+        const length = document.getElementById('length').value;
+
+        if (!topic) {
+          this.showError('Please enter a topic or content description');
           return;
         }
 
         this.setSubmitting(true);
 
         try {
+          // Check if user can use tool
           const { error, code } = await stripeManager.useTool(this.toolType);
 
           if (error) {
             if (code === 'USAGE_LIMIT_EXCEEDED') {
-              this.showError('Monthly limit reached. Try again next month.');
+              this.showError('You\'ve reached your monthly usage limit. Upgrade your plan or try again next month.');
             } else {
-              this.showError(error.message || 'Unable to generate content.');
+              this.showError(error.message || 'Unable to generate content. Check your subscription.');
             }
             this.setSubmitting(false);
             return;
           }
 
-          const output = this.generatePlaceholderContent();
-          this.displayOutput(output);
-          await this.loadUsage();
+          // Simulate API call to n8n backend
+          // In production, this would call your n8n webhook
+          const content = this.generatePlaceholderCaptions(topic, platform, tone, hashtags, length);
+
+          this.displayOutput(content);
+          await this.loadUsage(); // Reload usage after generation
 
         } catch (error) {
-          this.showError('Failed to generate captions. Please try again.');
+          console.error('Generation error:', error);
+          this.showError('Failed to generate content. Please try again.');
         } finally {
           this.setSubmitting(false);
         }
       }
 
-      generatePlaceholderContent() {
-        const captions = [
-          'Check out our latest update! 🚀',
-          'Excited to share this with you all! 🎉',
-          'New content just dropped 💡'
-        ];
-        return captions.join('\n\n---\n\n');
+      generatePlaceholderCaptions(topic, platform, tone, hashtags, length) {
+        // Placeholder - in production this would call your n8n webhook
+        const captionCount = length === 'short' ? 3 : length === 'long' ? 8 : 5;
+        const platformEmoji = {
+          'instagram': '📷',
+          'facebook': '📘',
+          'twitter': '🐦',
+          'linkedin': '💼',
+          'tiktok': '🎵'
+        };
+
+        let content = `# ${topic} - Social Media Captions\n\n`;
+        
+        for (let i = 1; i <= captionCount; i++) {
+          const emoji = platformEmoji[platform] || '📝';
+          content += `${emoji} Caption ${i}:\n`;
+          
+          // Generate placeholder caption based on tone
+          if (tone === 'professional') {
+            content += `Excited to share our latest ${topic.toLowerCase()} with our community. This represents a significant milestone for our team and customers.\n\n`;
+          } else if (tone === 'casual') {
+            content += `Just dropped something amazing! Check out our new ${topic.toLowerCase()} - game changer alert! 🔥\n\n`;
+          } else if (tone === 'friendly') {
+            content += `We're thrilled to introduce our ${topic.toLowerCase()}! Made with love and designed to make your life better. ❤️\n\n`;
+          } else if (tone === 'witty') {
+            content += `${topic.toLowerCase()} alert! 🚨 We've got something that will make you say "Wow!" (in a good way)\n\n`;
+          } else if (tone === 'inspiring') {
+            content += `Dreaming big dreams with our new ${topic.toLowerCase()}! ✨ This is just the beginning of something extraordinary.\n\n`;
+          } else {
+            content += `Introducing our ${topic.toLowerCase()}! 🎉\n\n`;
+          }
+        }
+
+        // Add hashtags if provided
+        if (hashtags) {
+          const tagArray = hashtags.split(',').map(tag => tag.trim()).filter(tag => tag);
+          const relevantTags = tagArray.slice(0, 3); // Use first 3 hashtags
+          content += `Hashtags: ${relevantTags.map(tag => '#' + tag).join(' ')}\n\n`;
+        }
+
+        content += `---\nGenerated with AI by Ai-Auto\n`;
+        return content;
       }
 
       displayOutput(content) {
-        this.outputContent.innerHTML = `<pre style="white-space: pre-wrap;">${this.escapeHtml(content)}</pre>`;
+        this.outputContent.innerHTML = `<pre style="white-space: pre-wrap; word-wrap: break-word;">${this.escapeHtml(content)}</pre>`;
         this.outputContent.classList.remove('empty');
-        this.copyBtn.style.display = 'block';
+        this.copyBtn.style.display = 'inline-block';
         this.currentOutput = content;
       }
 
       copyOutput() {
         if (this.currentOutput) {
-          navigator.clipboard.writeText(this.currentOutput);
-          this.copyBtn.textContent = '✓ Copied!';
-          setTimeout(() => { this.copyBtn.textContent = '📋 Copy to Clipboard'; }, 2000);
+          navigator.clipboard.writeText(this.currentOutput).then(() => {
+            const originalText = this.copyBtn.textContent;
+            this.copyBtn.textContent = '✓ Copied!';
+            setTimeout(() => {
+              this.copyBtn.textContent = originalText;
+            }, 2000);
+          });
         }
       }
 
       escapeHtml(text) {
-        const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+        const map = {
+          '&': '&',
+          '<': '<',
+          '>': '>',
+          '"': '"',
+          "'": '&#039;'
+        };
         return text.replace(/[&<>"']/g, m => map[m]);
       }
 
-      showError(msg) { this.errorMessage.textContent = msg; this.errorMessage.classList.add('show'); }
-      clearError() { this.errorMessage.classList.remove('show'); }
-      setSubmitting(is) { this.submitBtn.disabled = is; this.submitBtn.textContent = is ? '⏳ Generating...' : 'Generate Captions'; }
+      showError(message) {
+        this.errorMessage.textContent = message;
+        this.errorMessage.classList.add('show');
+      }
+
+      clearError() {
+        this.errorMessage.classList.remove('show');
+      }
+
+      setSubmitting(isSubmitting) {
+        this.submitBtn.disabled = isSubmitting;
+        if (isSubmitting) {
+          this.submitBtn.innerHTML = '<span class="loading-spinner"></span>Generating...';
+          this.submitBtn.classList.add('loading');
+        } else {
+          this.submitBtn.textContent = 'Generate Captions';
+          this.submitBtn.classList.remove('loading');
+        }
+      }
     }
 
-    document.addEventListener('DOMContentLoaded', () => { new CaptionsGenerator(); });
+    // Initialize social captions generator when DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+      new SocialCaptionsGenerator();
+    });
   </script>
 </body>
 
