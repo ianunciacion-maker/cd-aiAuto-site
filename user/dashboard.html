@@ -13,14 +13,89 @@
     rel="stylesheet">
   <link rel="stylesheet" href="../css/main.css">
   <style>
+    /* CSS Variables for Light and Dark Themes */
+    :root {
+      /* Light Theme (Default) */
+      --bg-primary: #f8f9fa;
+      --bg-secondary: white;
+      --bg-tertiary: #f9fafb;
+      --bg-paper: white;
+      --text-primary: #1a202c;
+      --text-secondary: #4a5568;
+      --text-light: #718096;
+      --text-dark: #2d3748;
+      --border-color: #e2e8f0;
+      --border-light: #f0f0f0;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+      --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.1);
+      --shadow-hard: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    [data-theme="dark"] {
+      /* Dark Theme */
+      --bg-primary: #1a202c;
+      --bg-secondary: #2d3748;
+      --bg-tertiary: #374151;
+      --bg-paper: #2d3748;
+      --text-primary: #f7fafc;
+      --text-secondary: #e2e8f0;
+      --text-light: #cbd5e0;
+      --text-dark: #f7fafc;
+      --border-color: #4a5568;
+      --border-light: #4a5568;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.3);
+      --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.3);
+      --shadow-hard: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+
     body {
-      background: #f8f9fa;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     .dashboard-container {
       max-width: 1200px;
       margin: 0 auto;
       padding: var(--space-lg);
+      position: relative;
+    }
+
+    /* Theme Toggle Styles */
+    .theme-toggle {
+      position: absolute;
+      top: var(--space-lg);
+      right: var(--space-lg);
+      background: var(--bg-secondary);
+      border: 2px solid var(--border-color);
+      border-radius: 50px;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-md);
+      z-index: 100;
+      padding: 8px;
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.1);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--blue);
+    }
+
+    .theme-toggle-icon {
+      font-size: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .theme-toggle:active .theme-toggle-icon {
+      transform: rotate(180deg);
     }
 
     .dashboard-header {
@@ -28,16 +103,18 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: var(--space-xl);
-      background: white;
+      background: var(--bg-secondary);
       padding: var(--space-lg);
       border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      box-shadow: var(--shadow-md);
+      transition: background-color 0.3s ease;
     }
 
     .dashboard-header h1 {
       font-size: 28px;
       color: var(--text-dark);
       margin: 0;
+      transition: color 0.3s ease;
     }
 
     .dashboard-actions {
@@ -78,6 +155,7 @@
       text-align: center;
       padding: var(--space-xl);
       color: var(--text-light);
+      transition: color 0.3s ease;
     }
 
     .loading-spinner {
@@ -109,11 +187,12 @@
     }
 
     .section {
-      background: white;
+      background: var(--bg-secondary);
       border-radius: 12px;
       padding: var(--space-lg);
       margin-bottom: var(--space-lg);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      box-shadow: var(--shadow-md);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
     }
 
     .section-title {
@@ -122,7 +201,8 @@
       color: var(--text-dark);
       margin-bottom: var(--space-md);
       padding-bottom: var(--space-md);
-      border-bottom: 1px solid #f0f0f0;
+      border-bottom: 1px solid var(--border-light);
+      transition: color 0.3s ease, border-color 0.3s ease;
     }
 
     .subscription-status {
@@ -165,17 +245,19 @@
 
     .tool-card {
       padding: var(--space-lg);
-      border: 1px solid #e0e0e0;
+      border: 1px solid var(--border-color);
       border-radius: 12px;
       text-align: center;
       transition: all 0.3s ease;
       cursor: pointer;
+      background: var(--bg-secondary);
     }
 
     .tool-card:hover {
       border-color: var(--blue);
       box-shadow: 0 8px 24px rgba(59, 130, 246, 0.15);
       transform: translateY(-4px);
+      background: var(--bg-tertiary);
     }
 
     .tool-card.locked {
@@ -194,6 +276,7 @@
       font-weight: 700;
       color: var(--text-dark);
       margin: 0 0 var(--space-sm) 0;
+      transition: color 0.3s ease;
     }
 
     .tool-card p {
@@ -211,10 +294,11 @@
     .usage-bar {
       width: 100%;
       height: 8px;
-      background: #f0f0f0;
+      background: var(--border-light);
       border-radius: 4px;
       overflow: hidden;
       margin-bottom: var(--space-md);
+      transition: background-color 0.3s ease;
     }
 
     .usage-bar-fill {
@@ -254,8 +338,9 @@
 
     .info-card {
       padding: var(--space-lg);
-      background: #f9fafb;
+      background: var(--bg-tertiary);
       border-radius: 8px;
+      transition: background-color 0.3s ease;
     }
 
     .info-card label {
@@ -265,12 +350,14 @@
       color: var(--text-light);
       text-transform: uppercase;
       margin-bottom: 4px;
+      transition: color 0.3s ease;
     }
 
     .info-card .value {
       font-size: 16px;
       font-weight: 600;
       color: var(--text-dark);
+      transition: color 0.3s ease;
     /* Enhanced info card interactions */
     .info-card {
       transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -278,7 +365,8 @@
 
     .info-card:hover {
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      box-shadow: var(--shadow-lg);
+      background: var(--bg-secondary);
     }
 
     /* Enhanced responsive design for reordered layout */
@@ -346,7 +434,7 @@
       align-items: center;
       margin-bottom: var(--space-md);
       padding-bottom: var(--space-md);
-      border-bottom: 1px solid #f0f0f0;
+      border-bottom: 1px solid var(--border-light);
     }
 
     .edit-profile-btn {
@@ -409,7 +497,7 @@
       justify-content: space-between;
       align-items: center;
       padding: var(--space-lg);
-      border-bottom: 1px solid #f0f0f0;
+      border-bottom: 1px solid var(--border-light);
     }
 
     .modal-header h3 {
@@ -431,7 +519,7 @@
     }
 
     .modal-close:hover {
-      background: var(--bg-paper);
+      background: var(--bg-tertiary);
       color: var(--text-dark);
     }
 
@@ -479,11 +567,11 @@
 
     .form-group input {
       padding: 12px;
-      border: 2px solid #e0e0e0;
+      border: 2px solid var(--border-color);
       border-radius: 8px;
       font-size: 14px;
       transition: all 0.3s ease;
-      background: white;
+      background: var(--bg-paper);
     }
 
     .form-group input:focus {
@@ -542,9 +630,9 @@
       max-height: 200px;
       overflow-y: auto;
       padding: var(--space-md);
-      border: 2px solid #e0e0e0;
+      border: 2px solid var(--border-color);
       border-radius: 12px;
-      background: var(--bg-paper);
+      background: var(--bg-tertiary);
     }
 
     .avatar-option {
@@ -598,7 +686,7 @@
       gap: var(--space-md);
       justify-content: flex-end;
       padding-top: var(--space-lg);
-      border-top: 1px solid #f0f0f0;
+      border-top: 1px solid var(--border-light);
     }
 
     /* Enhanced Responsive Design */
@@ -695,7 +783,7 @@
       border-radius: 6px;
       font-size: 14px;
       font-weight: 600;
-      background: white;
+      background: var(--bg-paper);
       outline: none;
       box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
       width: 100%;
@@ -737,7 +825,7 @@
       justify-content: space-between;
       align-items: center;
       padding: var(--space-lg);
-      border-bottom: 1px solid #f0f0f0;
+      border-bottom: 1px solid var(--border-light);
     }
 
     .avatar-selection-header h3 {
@@ -759,7 +847,7 @@
     }
 
     .close-btn:hover {
-      background: var(--bg-paper);
+      background: var(--bg-tertiary);
       color: var(--text-dark);
     }
 
