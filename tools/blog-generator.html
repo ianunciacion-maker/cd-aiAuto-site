@@ -386,21 +386,16 @@
   <script>
     class BlogGenerator {
       constructor() {
-          this.form = document.getElementById('generatorForm');
-          this.submitBtn = document.getElementById('submitBtn');
-          this.outputContent = document.getElementById('outputContent');
-          this.copyBtn = document.getElementById('copyBtn');
-          this.errorMessage = document.getElementById('errorMessage');
-          this.usageBar = document.getElementById('usageBar');
-          this.usageText = document.getElementById('usageText');
-          this.toolType = 'blog_generator';
-          
-          // n8n webhook configuration
-          this.n8nWebhookUrl = 'https://n8n.autonoiq.com/webhook-test/blog-generator';
-          this.currentUser = null;
-          
-          this.init();
-        }
+        this.form = document.getElementById('generatorForm');
+        this.submitBtn = document.getElementById('submitBtn');
+        this.outputContent = document.getElementById('outputContent');
+        this.copyBtn = document.getElementById('copyBtn');
+        this.errorMessage = document.getElementById('errorMessage');
+        this.usageBar = document.getElementById('usageBar');
+        this.usageText = document.getElementById('usageText');
+        this.toolType = 'blog_generator';
+        this.init();
+      }
 
       async init() {
         try {
@@ -410,10 +405,6 @@
             window.location.href = '../user/login.html';
             return;
           }
-
-          // Get current user for webhook
-          const { data: { user } } = await authManager.supabase.auth.getUser();
-          this.currentUser = user;
 
           // Check access and load usage
           await this.loadUsage();
@@ -452,15 +443,6 @@
         this.setSubmitting(true);
 
         try {
-          // First sync subscription status from Stripe to database
-          const { error: syncError } = await this.syncSubscription();
-          
-          if (syncError) {
-            this.showError('Failed to sync subscription. Please try again.');
-            this.setSubmitting(false);
-            return;
-          }
-
           // Check if user can use tool
           const { error, code } = await stripeManager.useTool(this.toolType);
 
@@ -474,8 +456,9 @@
             return;
           }
 
-          // Call n8n webhook
-          const content = await this.generatePlaceholderContent(topic, length, tone, keywords);
+          // Simulate API call to n8n backend
+          // In production, this would call your n8n webhook
+          const content = this.generatePlaceholderContent(topic, length);
 
           this.displayOutput(content);
           await this.loadUsage(); // Reload usage after generation
@@ -488,96 +471,17 @@
         }
       }
 
-      async generatePlaceholderContent(topic, length, tone, keywords) {
-        try {
-          // Prepare keywords array
-          const keywordsArray = keywords
-            ? keywords.split(',').map(k => k.trim()).filter(k => k)
-            : [];
-
-          // Prepare payload for n8n
-          const payload = {
-            user_id: this.currentUser?.id || 'anonymous',
-            tool_type: this.toolType,
-            inputs: {
-              topic,
-              length,
-              tone,
-              keywords: keywordsArray
-            }
-          };
-
-          console.log('Sending payload to n8n:', payload);
-          console.log('Webhook URL:', this.n8nWebhookUrl);
-  
-          // Call n8n webhook
-          const response = await fetch(this.n8nWebhookUrl, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
-          });
-  
-          console.log('n8n response status:', response.status);
-          console.log('n8n response headers:', [...response.headers.entries()]);
-
-          if (!response.ok) {
-            console.error('Webhook failed. Response:', {
-              status: response.status,
-              statusText: response.statusText,
-              headers: Object.fromEntries(response.headers.entries())
-            });
-            throw new Error(`Webhook failed with status: ${response.status}`);
-          }
-  
-          let data;
-          try {
-            data = await response.json();
-            console.log('n8n response data:', data);
-          } catch (parseError) {
-            console.error('Failed to parse n8n response as JSON:', parseError);
-            console.error('Response text:', await response.text());
-            throw new Error('Invalid response format from n8n webhook');
-          }
-          
-          // Handle different response formats
-          if (data.content) {
-            return data.content;
-          } else if (data.blog_content) {
-            return data.blog_content;
-          } else if (data.result) {
-            return data.result;
-          } else if (data.output) {
-            return data.output;
-          } else {
-            console.warn('Unexpected response format from n8n:', data);
-            return this.generateFallbackContent(topic, length);
-          }
-
-        } catch (error) {
-          console.error('n8n webhook error:', error);
-          this.showError('Failed to generate content. Using fallback content.');
-          return this.generateFallbackContent(topic, length);
-        }
-      }
-
-      generateFallbackContent(topic, length) {
-        // Fallback content generation in case webhook fails
+      generatePlaceholderContent(topic, length) {
+        // Placeholder - in production this would call your n8n webhook
         const wordCount = length === 'short' ? 400 : length === 'long' ? 1200 : 750;
         const loremWords = [
           'Lorem', 'ipsum', 'dolor', 'sit', 'amet', 'consectetur', 'adipiscing', 'elit',
-          'sed', 'do', 'eiusmod', 'tempor', 'incididunt', 'ut', 'labore', 'et', 'dolore', 'magna',
-          'aliqua', 'enim', 'ad', 'minim', 'veniam', 'quis', 'nostrud', 'exercitation',
-          'ullamco', 'laboris', 'nisi', 'aliquip', 'ex', 'ea', 'commodo', 'consequat'
+          'sed', 'do', 'eiusmod', 'tempor', 'incididunt', 'ut', 'labore', 'et', 'dolore', 'magna'
         ];
 
         let content = `# ${topic}\n\n`;
-        content += `This is a fallback blog post about ${topic}. `;
-        content += 'The webhook integration is currently experiencing issues, but this demonstrates how the tool would work with your n8n backend.\n\n';
-        
-        let words = 50; // Start with 50 words from intro
-        
+        let words = 0;
+
         while (words < wordCount) {
           content += loremWords[Math.floor(Math.random() * loremWords.length)] + ' ';
           words++;
@@ -585,33 +489,6 @@
         }
 
         return content;
-      }
-
-      async syncSubscription() {
-        try {
-          const response = await fetch(`${window.location.origin}/api/check-subscription`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              user_id: this.currentUser?.id
-            })
-          });
-
-          const result = await response.json();
-          
-          if (response.ok && result.data) {
-            console.log('Subscription synced successfully:', result.data);
-            return { error: null };
-          } else {
-            console.error('Subscription sync failed:', result);
-            return { error: result.error || 'Sync failed' };
-          }
-        } catch (error) {
-          console.error('Subscription sync exception:', error);
-          return { error: error.message || 'Sync failed' };
-        }
       }
 
       displayOutput(content) {
