@@ -683,50 +683,75 @@
             throw new Error(`Webhook returned ${response.status}: ${response.statusText}`);
           }
 
-          const result = await response.json();
-          console.log('Webhook response:', result);
+          let result = await response.json();
+          console.log('Webhook response (raw):', result);
 
-          // Handle different response formats
-          // If n8n returns { output: "stringified JSON" }, parse it
-          if (result.output) {
-            try {
-              const parsed = JSON.parse(result.output);
-              console.log('Parsed output:', parsed);
+          // Helper function to recursively parse until we get an object
+          const deepParse = (data) => {
+            if (typeof data === 'string') {
+              try {
+                return deepParse(JSON.parse(data));
+              } catch (e) {
+                return data;
+              }
+            }
+            if (Array.isArray(data) && data.length > 0) {
+              return deepParse(data[0]);
+            }
+            return data;
+          };
 
-              if (parsed.blogTitle && parsed.blogContent) {
+          // Deep parse the result to handle nested JSON strings
+          result = deepParse(result);
+          console.log('Webhook response (parsed):', result);
+
+          // Helper function to extract blog data from any structure
+          const extractBlogData = (obj) => {
+            // Direct properties
+            if (obj.blogTitle && obj.blogContent) {
+              return {
+                title: obj.blogTitle,
+                content: obj.blogContent,
+                isHtml: true
+              };
+            }
+
+            // Check in output field
+            if (obj.output) {
+              const outputData = deepParse(obj.output);
+              if (outputData.blogTitle && outputData.blogContent) {
                 return {
-                  title: parsed.blogTitle,
-                  content: parsed.blogContent,
+                  title: outputData.blogTitle,
+                  content: outputData.blogContent,
                   isHtml: true
                 };
               }
-            } catch (e) {
-              // If parsing fails, treat as plain text
-              console.log('Output is not JSON, treating as plain text');
-              return { content: result.output, isHtml: false };
             }
+
+            // Check in content field
+            if (obj.content) {
+              const contentData = deepParse(obj.content);
+              if (contentData.blogTitle && contentData.blogContent) {
+                return {
+                  title: contentData.blogTitle,
+                  content: contentData.blogContent,
+                  isHtml: true
+                };
+              }
+              return { content: obj.content, isHtml: false };
+            }
+
+            return null;
+          };
+
+          // Try to extract blog data
+          const blogData = extractBlogData(result);
+          if (blogData) {
+            return blogData;
           }
 
-          // If n8n returns { blogTitle: "...", blogContent: "..." } directly
-          if (result.blogTitle && result.blogContent) {
-            return {
-              title: result.blogTitle,
-              content: result.blogContent,
-              isHtml: true
-            };
-          }
-
-          // If n8n returns { content: "..." }
-          if (result.content) {
-            return { content: result.content, isHtml: false };
-          }
-
-          // If n8n returns the content directly as string
-          if (typeof result === 'string') {
-            return { content: result, isHtml: false };
-          }
-
-          // If n8n returns the entire result object, stringify it
+          // If nothing worked, stringify for debugging
+          console.warn('Could not parse blog data from response:', result);
           return { content: JSON.stringify(result, null, 2), isHtml: false };
 
         } catch (error) {
