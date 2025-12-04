@@ -70,6 +70,16 @@ module.exports = async (req, res) => {
       
       if (endDate > now) {
         console.log(`Found valid subscription in database for user: ${user_id}, status: ${subscription.status}`);
+
+        // Initialize tool usage if subscription is active (in case it wasn't initialized before)
+        console.log(`Ensuring tool usage is initialized for user: ${user_id}`);
+        const { error: initError } = await supabase.rpc('initialize_tool_usage', { p_user_id: user_id });
+        if (initError) {
+          console.error('Error initializing tool usage:', initError);
+        } else {
+          console.log(`Tool usage initialized/verified for user: ${user_id}`);
+        }
+
         return res.status(200).json({
           data: {
             user_id: user_id,
@@ -121,6 +131,17 @@ module.exports = async (req, res) => {
             // Still return the Stripe data since it's more current
           } else {
             console.log(`Updated database with latest Stripe data for user: ${user_id}`);
+
+            // Initialize tool usage if subscription is active
+            if (activeSubscription.status === 'active' || activeSubscription.status === 'trialing') {
+              console.log(`Initializing tool usage for user: ${user_id}`);
+              const { error: initError } = await supabase.rpc('initialize_tool_usage', { p_user_id: user_id });
+              if (initError) {
+                console.error('Error initializing tool usage:', initError);
+              } else {
+                console.log(`Tool usage initialized successfully for user: ${user_id}`);
+              }
+            }
           }
 
           return res.status(200).json({

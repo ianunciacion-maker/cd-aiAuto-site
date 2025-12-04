@@ -451,6 +451,32 @@
         }
       }
 
+      async syncSubscription(userId) {
+        try {
+          console.log('Syncing subscription for user:', userId);
+          const response = await fetch('/api/check-subscription', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ user_id: userId })
+          });
+
+          const result = await response.json();
+          console.log('Subscription sync result:', result);
+
+          if (result.data && (result.data.status === 'active' || result.data.status === 'trialing')) {
+            console.log('Subscription synced successfully, tool usage should now be available');
+            return true;
+          }
+
+          return false;
+        } catch (error) {
+          console.error('Subscription sync error:', error);
+          return false;
+        }
+      }
+
       async callN8nWebhook(formData, userData) {
         const webhookUrl = 'https://n8n.autonoiq.com/webhook-test/blog-generator';
 
@@ -528,21 +554,34 @@
         this.setSubmitting(true);
 
         try {
-          // Check if user can use tool
-          const { error, code } = await stripeManager.useTool(this.toolType);
+          // Get current user data first
+          const user = await authManager.getCurrentUser();
 
-          if (error) {
-            if (code === 'USAGE_LIMIT_EXCEEDED') {
+          // Check if user can use tool
+          let usageCheck = await stripeManager.useTool(this.toolType);
+
+          // If we get a subscription error, try syncing once
+          if (usageCheck.error && usageCheck.code === 'USAGE_LIMIT_EXCEEDED') {
+            console.log('Got USAGE_LIMIT_EXCEEDED error, attempting to sync subscription...');
+            const synced = await this.syncSubscription(user.id);
+
+            if (synced) {
+              // Retry after syncing
+              console.log('Sync successful, retrying tool usage...');
+              usageCheck = await stripeManager.useTool(this.toolType);
+            }
+          }
+
+          // If still have error after sync attempt, show error message
+          if (usageCheck.error) {
+            if (usageCheck.code === 'USAGE_LIMIT_EXCEEDED') {
               this.showError('You\'ve reached your monthly usage limit. Upgrade your plan or try again next month.');
             } else {
-              this.showError(error.message || 'Unable to generate content. Check your subscription.');
+              this.showError(usageCheck.error.message || 'Unable to generate content. Check your subscription.');
             }
             this.setSubmitting(false);
             return;
           }
-
-          // Get current user data
-          const user = await authManager.getCurrentUser();
 
           // Prepare form data
           const formData = {
