@@ -293,65 +293,67 @@
 
       renderProfile() {
         const profileHtml = `
-          <div class="info-card">
-            <label>Avatar</label>
-            <div class="profile-avatar-container">
-              <div id="profileAvatar" class="profile-avatar">${this.userProfile?.avatar_url || '👤'}</div>
-              <button type="button" class="edit-icon-btn" id="editAvatarBtn" title="Change Avatar">📷</button>
+          <div class="profile-fields">
+            <div class="info-card">
+              <label>Avatar</label>
+              <div class="profile-avatar-container">
+                <div id="profileAvatar" class="profile-avatar">${this.userProfile?.avatar_url || '👤'}</div>
+                <button type="button" class="edit-icon-btn" id="editAvatarBtn" title="Change Avatar">📷</button>
+              </div>
             </div>
-          </div>
-          <div class="info-card">
-            <label>Full Name</label>
-            <div class="editable-field">
-              <span class="value" id="displayName">${this.userProfile?.full_name || 'Not set'}</span>
-              <button type="button" class="edit-icon-btn" id="editNameBtn" title="Edit Name">✏️</button>
+            <div class="info-card">
+              <label>Full Name</label>
+              <div class="editable-field">
+                <span class="value" id="displayName">${this.userProfile?.full_name || 'Not set'}</span>
+                <button type="button" class="edit-icon-btn" id="editNameBtn" title="Edit Name">✏️</button>
+              </div>
             </div>
-          </div>
-          <div class="info-card">
-            <label>Email</label>
-            <div class="editable-field">
-              <span class="value" id="displayEmail">${this.currentUser?.email || 'N/A'}</span>
-              <button type="button" class="edit-icon-btn" id="editEmailBtn" title="Edit Email">✏️</button>
+            <div class="info-card">
+              <label>Email</label>
+              <div class="editable-field">
+                <span class="value" id="displayEmail">${this.currentUser?.email || 'N/A'}</span>
+                <button type="button" class="edit-icon-btn" id="editEmailBtn" title="Edit Email">✏️</button>
+              </div>
             </div>
-          </div>
-          <div class="info-card">
-            <label>Company Name</label>
-            <div class="editable-field">
-              <span class="value" id="displayCompany">${this.userProfile?.company_name || 'Not set'}</span>
-              <button type="button" class="edit-icon-btn" id="editCompanyBtn" title="Edit Company">✏️</button>
+            <div class="info-card">
+              <label>Company Name</label>
+              <div class="editable-field">
+                <span class="value" id="displayCompany">${this.userProfile?.company_name || 'Not set'}</span>
+                <button type="button" class="edit-icon-btn" id="editCompanyBtn" title="Edit Company">✏️</button>
+              </div>
             </div>
-          </div>
-          <div class="info-card">
-            <label>Business Phone</label>
-            <div class="editable-field">
-              <span class="value" id="displayPhone">${this.userProfile?.business_phone || 'Not set'}</span>
-              <button type="button" class="edit-icon-btn" id="editPhoneBtn" title="Edit Phone">✏️</button>
+            <div class="info-card">
+              <label>Business Phone</label>
+              <div class="editable-field">
+                <span class="value" id="displayPhone">${this.userProfile?.business_phone || 'Not set'}</span>
+                <button type="button" class="edit-icon-btn" id="editPhoneBtn" title="Edit Phone">✏️</button>
+              </div>
             </div>
-          </div>
-          <div class="info-card">
-            <label>Business Address</label>
-            <div class="editable-field">
-              <span class="value" id="displayAddress">${this.userProfile?.business_address || 'Not set'}</span>
-              <button type="button" class="edit-icon-btn" id="editAddressBtn" title="Edit Address">✏️</button>
+            <div class="info-card">
+              <label>Business Address</label>
+              <div class="editable-field">
+                <span class="value" id="displayAddress">${this.userProfile?.business_address || 'Not set'}</span>
+                <button type="button" class="edit-icon-btn" id="editAddressBtn" title="Edit Address">✏️</button>
+              </div>
             </div>
-          </div>
-          <div class="info-card">
-            <label>Target Market</label>
-            <div class="editable-field">
-              <span class="value" id="displayTargetMarket">${this.userProfile?.target_market || 'Not set'}</span>
-              <button type="button" class="edit-icon-btn" id="editTargetMarketBtn" title="Edit Target Market">✏️</button>
+            <div class="info-card">
+              <label>Target Market</label>
+              <div class="editable-field">
+                <span class="value" id="displayTargetMarket">${this.userProfile?.target_market || 'Not set'}</span>
+                <button type="button" class="edit-icon-btn" id="editTargetMarketBtn" title="Edit Target Market">✏️</button>
+              </div>
             </div>
-          </div>
-          <div class="info-card">
-            <label>Business Industry</label>
-            <div class="editable-field">
-              <span class="value" id="displayBusinessIndustry">${this.userProfile?.business_industry || 'Not set'}</span>
-              <button type="button" class="edit-icon-btn" id="editBusinessIndustryBtn" title="Edit Business Industry">✏️</button>
+            <div class="info-card">
+              <label>Business Industry</label>
+              <div class="editable-field">
+                <span class="value" id="displayBusinessIndustry">${this.userProfile?.business_industry || 'Not set'}</span>
+                <button type="button" class="edit-icon-btn" id="editBusinessIndustryBtn" title="Edit Business Industry">✏️</button>
+              </div>
             </div>
-          </div>
-          <div class="info-card">
-            <label>Member Since</label>
-            <div class="value">${new Date(this.userProfile?.created_at).toLocaleDateString('en-US')}</div>
+            <div class="info-card">
+              <label>Member Since</label>
+              <div class="value">${new Date(this.userProfile?.created_at).toLocaleDateString('en-US')}</div>
+            </div>
           </div>
         `;
 
