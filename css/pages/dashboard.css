@@ -901,6 +901,53 @@ body {
   box-shadow: 8px 8px 0 var(--ink);
 }
 
+/* Avatar Actions */
+.avatar-actions {
+  display: flex;
+  gap: var(--space-sm);
+  justify-content: flex-end;
+  padding-top: var(--space-sm);
+  border-top: var(--border-thin);
+}
+
+.avatar-actions .btn {
+  padding: 10px 20px;
+  border: var(--border-thick);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: var(--font-primary);
+  box-shadow: var(--shadow-hard);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-actions .btn {
+  background: var(--blue);
+  color: white;
+}
+
+.avatar-actions .btn-outline {
+  background: var(--bg-paper);
+  color: var(--ink);
+}
+
+.avatar-actions .btn:hover,
+.avatar-actions .btn-outline:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-hover);
+}
+
+.avatar-actions .btn-outline:hover {
+  background: var(--lavender);
+}
+
 /* Responsive Design */
 @media (max-width: 900px) {
   .dashboard-nav {

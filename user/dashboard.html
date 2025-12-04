@@ -326,7 +326,7 @@
               <label>Avatar</label>
               <div class="profile-avatar-container">
                 <div id="profileAvatar" class="profile-avatar">${this.userProfile?.avatar_url || '👤'}</div>
-                <button type="button" class="edit-icon-btn" id="editAvatarBtn" title="Change Avatar">📷</button>
+                <button type="button" class="edit-icon-btn" id="editAvatarBtn" title="Change Avatar">✏️</button>
               </div>
             </div>
             <div class="info-card">
@@ -506,6 +506,15 @@
 
         document.body.insertAdjacentHTML('beforeend', avatarHtml);
         this.currentCategory = 'professional';
+        
+        // Show the overlay with a slight delay for smooth animation
+        setTimeout(() => {
+          const overlay = document.getElementById('avatarSelectionOverlay');
+          if (overlay) {
+            overlay.classList.add('active');
+          }
+        }, 10);
+        
         this.renderAvatarGrid();
         this.setupAvatarSelectionEvents();
       }
@@ -529,6 +538,35 @@
         `).join('');
 
         grid.innerHTML = avatarOptions;
+        
+        // Re-attach event listeners to new avatar options
+        const avatarOptionsElements = grid.querySelectorAll('.avatar-option');
+        avatarOptionsElements.forEach(option => {
+          option.addEventListener('click', () => {
+            this.selectAvatar(option);
+          });
+
+          // Keyboard navigation
+          option.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              this.selectAvatar(option);
+            }
+          });
+
+          // Hover effects
+          option.addEventListener('mouseenter', () => {
+            option.style.transform = 'translate(-2px, -2px) scale(1.05)';
+            option.style.boxShadow = 'var(--shadow-hover)';
+          });
+
+          option.addEventListener('mouseleave', () => {
+            if (!option.classList.contains('selected')) {
+              option.style.transform = '';
+              option.style.boxShadow = '';
+            }
+          });
+        });
       }
 
       setupAvatarSelectionEvents() {
@@ -537,7 +575,6 @@
         const cancelBtn = document.getElementById('cancelAvatarBtn');
         const uploadBtn = document.getElementById('uploadAvatarBtn');
         const categoryTabs = overlay?.querySelectorAll('.avatar-category-tab');
-        const avatarOptions = overlay?.querySelectorAll('.avatar-option');
 
         // Close button functionality
         closeBtn?.addEventListener('click', () => this.closeAvatarSelection());
@@ -566,40 +603,6 @@
           });
         });
 
-        // Avatar selection with hover states
-        avatarOptions?.forEach(option => {
-          option.addEventListener('click', () => {
-            this.selectAvatar(option);
-          });
-
-          // Keyboard navigation
-          option.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              this.selectAvatar(option);
-            }
-          });
-
-          // Hover effects
-          option.addEventListener('mouseenter', () => {
-            option.style.transform = 'translate(-2px, -2px) scale(1.05)';
-            option.style.boxShadow = 'var(--shadow-hover)';
-          });
-
-          option.addEventListener('mouseleave', () => {
-            if (!option.classList.contains('selected')) {
-              option.style.transform = '';
-              option.style.boxShadow = '';
-            }
-          });
-        });
-      }
-
-      async selectAvatar(option) {
-        const avatar = option.dataset.avatar;
-        await this.updateProfileField('avatar_url', avatar);
-        this.closeAvatarSelection();
-
         // Close overlay when clicking outside
         overlay?.addEventListener('click', (e) => {
           if (e.target === overlay) {
@@ -613,6 +616,35 @@
             this.closeAvatarSelection();
           }
         });
+      }
+
+      async selectAvatar(option) {
+        const avatar = option.dataset.avatar;
+        const avatarName = option.dataset.name;
+        
+        // Track avatar selection
+        try {
+          const { data: { session } } = await supabase.auth.getSession();
+          if (session?.access_token) {
+            await fetch('/api/track-avatar-selection', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${session.access_token}`
+              },
+              body: JSON.stringify({
+                avatar_url: avatar,
+                avatar_name: avatarName,
+                category: this.currentCategory
+              })
+            });
+          }
+        } catch (error) {
+          console.log('Avatar tracking failed:', error);
+        }
+        
+        await this.updateProfileField('avatar_url', avatar);
+        this.closeAvatarSelection();
       }
 
       switchAvatarCategory(category) {
@@ -639,7 +671,11 @@
       closeAvatarSelection() {
         const overlay = document.getElementById('avatarSelectionOverlay');
         if (overlay) {
-          overlay.remove();
+          overlay.classList.remove('active');
+          // Remove from DOM after animation completes
+          setTimeout(() => {
+            overlay.remove();
+          }, 300);
         }
       }
 
