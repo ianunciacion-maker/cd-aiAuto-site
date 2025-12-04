@@ -790,6 +790,11 @@
 
 <body>
   <div class="dashboard-container">
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="themeToggle" title="Toggle dark/light mode">
+      <span class="theme-toggle-icon">🌙</span>
+    </button>
+    
     <!-- Header -->
     <div class="dashboard-header">
       <div>
@@ -843,6 +848,9 @@
         this.currentUser = null;
         this.subscription = null;
         this.toolUsage = null;
+        
+        // Initialize theme from localStorage or default to light
+        this.currentTheme = localStorage.getItem('theme') || 'light';
         this.toolTypes = [
           { id: 'blog_generator', name: 'Blog Generator', desc: 'Create engaging blog posts with AI' },
           { id: 'social_captions', name: 'Social Captions', desc: 'Generate perfect social media captions' },
@@ -872,6 +880,9 @@
 
       async init() {
         try {
+          // Apply saved theme on load
+          this.applyTheme(this.currentTheme);
+          
           // Check authentication
           const isAuth = await authManager.isAuthenticated();
           if (!isAuth) {
@@ -1294,6 +1305,11 @@
       }
 
       setupEventListeners() {
+        // Theme toggle functionality
+        document.getElementById('themeToggle').addEventListener('click', () => {
+          this.toggleTheme();
+        });
+
         document.getElementById('billingBtn').addEventListener('click', async () => {
           try {
             await stripeManager.openBillingPortal();
@@ -1305,6 +1321,28 @@
         document.getElementById('logoutBtn').addEventListener('click', async () => {
           await authManager.logout();
         });
+      }
+
+      applyTheme(theme) {
+        // Apply theme to document
+        document.documentElement.setAttribute('data-theme', theme);
+        
+        // Update theme toggle icon
+        const themeToggle = document.getElementById('themeToggle');
+        const icon = themeToggle?.querySelector('.theme-toggle-icon');
+        if (icon) {
+          icon.textContent = theme === 'dark' ? '☀️' : '🌙';
+        }
+        
+        // Save theme preference
+        localStorage.setItem('theme', theme);
+      }
+
+      toggleTheme() {
+        // Toggle between light and dark themes
+        const currentTheme = this.currentTheme === 'light' ? 'dark' : 'light';
+        this.applyTheme(currentTheme);
+        this.currentTheme = currentTheme;
       }
 
       showError(message) {
