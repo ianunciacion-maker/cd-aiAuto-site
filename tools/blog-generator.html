@@ -687,7 +687,27 @@
           console.log('Webhook response:', result);
 
           // Handle different response formats
-          // If n8n returns { blogTitle: "...", blogContent: "..." }
+          // If n8n returns { output: "stringified JSON" }, parse it
+          if (result.output) {
+            try {
+              const parsed = JSON.parse(result.output);
+              console.log('Parsed output:', parsed);
+
+              if (parsed.blogTitle && parsed.blogContent) {
+                return {
+                  title: parsed.blogTitle,
+                  content: parsed.blogContent,
+                  isHtml: true
+                };
+              }
+            } catch (e) {
+              // If parsing fails, treat as plain text
+              console.log('Output is not JSON, treating as plain text');
+              return { content: result.output, isHtml: false };
+            }
+          }
+
+          // If n8n returns { blogTitle: "...", blogContent: "..." } directly
           if (result.blogTitle && result.blogContent) {
             return {
               title: result.blogTitle,
@@ -699,11 +719,6 @@
           // If n8n returns { content: "..." }
           if (result.content) {
             return { content: result.content, isHtml: false };
-          }
-
-          // If n8n returns { output: "..." }
-          if (result.output) {
-            return { content: result.output, isHtml: false };
           }
 
           // If n8n returns the content directly as string
