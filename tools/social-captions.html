@@ -1043,6 +1043,15 @@
           console.log('User Email:', webhookPayload.userEmail);
           console.log('Timestamp:', webhookPayload.timestamp);
           console.log('Tool Type:', webhookPayload.toolType);
+          
+          // Enhanced image logging
+          if (webhookPayload.image) {
+            console.log('📷 Image included in payload:', webhookPayload.image.substring(0, 50) + '...');
+            console.log('📷 Image type detection:', webhookPayload.image.substring(5, 15)); // data:image/jpeg
+          } else {
+            console.log('📷 No image included in payload');
+          }
+          
           console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
           console.log('Full payload:', JSON.stringify(webhookPayload, null, 2));
 
@@ -1149,13 +1158,17 @@
 
           // Helper function to extract captions from n8n workflow response
           const extractCaptions = (obj) => {
+            console.log('🔍 Extracting captions from response object:', obj);
+            
             // n8n workflow returns { json: { captions: {...} }
             if (obj.json && obj.json.captions) {
+              console.log('✅ Found captions in obj.json.captions:', obj.json.captions);
               return obj.json.captions;
             }
 
             // Direct captions property (fallback)
             if (obj.captions && typeof obj.captions === 'object') {
+              console.log('✅ Found captions in obj.captions:', obj.captions);
               return obj.captions;
             }
 
@@ -1172,6 +1185,7 @@
             });
 
             if (hasRootLevelCaptions) {
+              console.log('✅ Found captions at root level:', rootLevelCaptions);
               return rootLevelCaptions;
             }
 
@@ -1179,10 +1193,21 @@
             if (obj.output) {
               const outputData = deepParse(obj.output);
               if (outputData.captions) {
+                console.log('✅ Found captions in output field:', outputData.captions);
                 return outputData.captions;
               }
             }
 
+            // Check if the entire object is the captions (direct response)
+            if (typeof obj === 'object' && Object.keys(obj).length > 0) {
+              const hasValidPlatform = platforms.some(platform => obj[platform]);
+              if (hasValidPlatform) {
+                console.log('✅ Response object itself contains captions:', obj);
+                return obj;
+              }
+            }
+
+            console.log('❌ No captions found in response structure');
             return null;
           };
 
@@ -1229,7 +1254,7 @@
         try {
           const currentUser = await authManager.getCurrentUser();
           if (!currentUser) {
-            console.error('No authenticated user found for history saving');
+            console.error('❌ No authenticated user found for history saving');
             return;
           }
 
@@ -1247,6 +1272,8 @@
           console.log('📝 Saving to history with data:', historyData);
           const result = await socialCaptionsHistoryManager.saveGeneration(historyData);
           
+          console.log('📝 History save result:', result);
+          
           if (result.success !== false && !result.error) {
             console.log('✅ Social captions generation saved to history:', result.data);
             // Refresh history display if visible
@@ -1256,10 +1283,16 @@
           } else {
             console.error('❌ Failed to save to history:', result.error);
             console.error('❌ Full result object:', result);
+            // Show user-friendly error message
+            this.showError('Failed to save to history. Your captions were generated but not saved.');
+            setTimeout(() => this.clearError(), 5000);
           }
         } catch (error) {
           console.error('❌ Exception saving to history:', error);
           console.error('❌ Error stack:', error.stack);
+          // Show user-friendly error message
+          this.showError('Failed to save to history. Your captions were generated but not saved.');
+          setTimeout(() => this.clearError(), 5000);
         }
       }
 
@@ -1353,6 +1386,8 @@
       displayMultiPlatformOutput() {
         console.log('🎨 Displaying multi-platform output for:', Array.from(this.selectedPlatforms));
         console.log('📝 Generated captions:', this.generatedCaptions);
+        console.log('📝 Generated captions type:', typeof this.generatedCaptions);
+        console.log('📝 Generated captions keys:', Object.keys(this.generatedCaptions));
 
         // Hide default output
         if (this.defaultOutput) {
@@ -1368,6 +1403,29 @@
           console.error('❌ No captions to display!');
           this.showError('No captions were generated. Please try again.');
           return;
+        }
+
+        // Ensure we have captions for all selected platforms
+        const missingPlatforms = [];
+        this.selectedPlatforms.forEach(platform => {
+          if (!this.generatedCaptions[platform]) {
+            missingPlatforms.push(platform);
+          }
+        });
+
+        if (missingPlatforms.length > 0) {
+          console.warn('⚠️ Missing captions for platforms:', missingPlatforms);
+          // Generate fallback captions for missing platforms
+          missingPlatforms.forEach(platform => {
+            this.generatedCaptions[platform] = this.generatePlaceholderCaptions(
+              document.getElementById('topic').value,
+              platform,
+              document.getElementById('tone').value,
+              document.getElementById('hashtags').value,
+              document.getElementById('length').value
+            );
+          });
+          console.log('🔄 Generated fallback captions for missing platforms');
         }
 
         // Create tabs and content for each platform
@@ -1609,19 +1667,23 @@
           this.historyPagination.style.display = 'none';
 
           const offset = (page - 1) * this.itemsPerPage;
+          console.log(`📚 Loading history page ${page}, offset: ${offset}, limit: ${this.itemsPerPage}`);
+          
           const result = await socialCaptionsHistoryManager.getHistory(
             this.itemsPerPage,
             offset
           );
 
-          if (result.success && result.data.length > 0) {
+          console.log('📚 History load result:', result);
+
+          if (result.data && result.data.length > 0) {
             this.displayHistory(result.data);
-            this.displayPagination(result.total, page);
+            this.displayPagination(result.total || 0, page);
           } else {
             this.showEmptyHistory();
           }
         } catch (error) {
-          console.error('Error loading history:', error);
+          console.error('❌ Error loading history:', error);
           this.showError('Failed to load history. Please try again.');
         } finally {
           this.historyLoading.style.display = 'none';
