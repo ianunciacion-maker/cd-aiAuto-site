@@ -1029,15 +1029,19 @@
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
+              'Origin': window.location.origin, // Add Origin header for CORS
             },
             body: JSON.stringify(formData)
           });
 
           if (!response.ok) {
+            console.error(`Webhook HTTP error! status: ${response.status}`);
+            console.error('Response text:', await response.text());
             throw new Error(`HTTP error! status: ${response.status}`);
           }
 
           const result = await response.json();
+          console.log('n8n webhook response:', result);
           return result;
         } catch (error) {
           console.error('n8n webhook error:', error);
