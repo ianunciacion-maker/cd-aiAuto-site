@@ -1008,12 +1008,12 @@
             tone: formData.tone,
             hashtags: formData.hashtags,
             length: formData.length,
-            // n8n workflow expects 'image' field, not 'image_url'
-            // Only include image if it's reasonably small (avoid 413 errors)
-            image: formData.image_url && formData.image_url.length < 100000 ? formData.image_url : null,
             
-            // Also include image_url for compatibility (only if small)
-            image_url: formData.image_url && formData.image_url.length < 100000 ? formData.image_url : null,
+            // n8n workflow expects 'image' field - always include image for processing
+            image: formData.image_url || null,
+            
+            // Also include image_url for compatibility
+            image_url: formData.image_url || null,
 
             // User data
             userId: user.id,
@@ -1024,10 +1024,14 @@
             toolType: this.toolType
           };
 
-          // Log if image was excluded due to size
-          if (formData.image_url && formData.image_url.length >= 100000) {
-            console.warn('⚠️ Image too large for webhook (>100KB), excluding from payload');
-            console.warn('⚠️ Image size:', formData.image_url.length, 'bytes');
+          // Log image information regardless of size
+          if (formData.image_url) {
+            console.log('📷 Image included in payload:', formData.image_url.length, 'bytes');
+            if (formData.image_url.length >= 100000) {
+              console.warn('⚠️ Image is large (>100KB), but still including for n8n processing');
+            }
+          } else {
+            console.log('📷 No image included in payload');
           }
 
           // Log the complete payload being sent
@@ -1437,6 +1441,9 @@
           return;
         }
 
+        console.log('🎯 About to process platforms for display:', Array.from(this.selectedPlatforms));
+        console.log('🎯 Available captions in this.generatedCaptions:', Object.keys(this.generatedCaptions));
+
         // Ensure we have captions for all selected platforms
         const missingPlatforms = [];
         this.selectedPlatforms.forEach(platform => {
@@ -1459,6 +1466,8 @@
           });
           console.log('🔄 Generated fallback captions for missing platforms');
         }
+
+        console.log('🎯 Final captions to display after processing:', this.generatedCaptions);
 
         // Create tabs and content for each platform
         let firstTab = null;
@@ -1546,6 +1555,11 @@
             this.copyPlatformCaption(platform);
           });
         });
+
+        // Debug: Ensure platform outputs are visible
+        console.log('🎯 Platform outputs container after adding all platforms:', this.platformOutputs);
+        console.log('🎯 Platform outputs children count:', this.platformOutputs.children.length);
+        console.log('🎯 Platform outputs innerHTML:', this.platformOutputs.innerHTML);
 
         // Show action buttons
         this.outputActions.style.display = 'block';
