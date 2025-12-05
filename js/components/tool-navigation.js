@@ -68,13 +68,6 @@ class ToolNavigation {
     return `
       <section class="footer-cta">
         <div class="container">
-          <h2>Ready to Automate?</h2>
-          <p>Join thousands building their automated future</p>
-          <a href="${this.getBaseUrl()}user/signup.html" class="btn"
-            style="background: var(--bg-white); color: var(--blue); font-size: 16px; padding: 18px 36px; display: inline-block;">Get Started
-            Free</a>
-        </div>
-      </section>
 
       <!-- SITE FOOTER -->
       <footer class="site-footer">
