@@ -1486,6 +1486,36 @@
           tab.addEventListener('click', () => this.switchPlatformTab(platform));
           this.outputTabs.appendChild(tab);
 
+          // Extract actual caption text from object or string
+          let captionText = this.generatedCaptions[platform];
+          if (typeof captionText === 'object' && captionText !== null) {
+            // If it's an object, try to extract text content
+            console.log(`🔍 Processing caption object for ${platform}:`, captionText);
+            
+            // Try common properties where caption text might be stored
+            if (captionText.text) {
+              captionText = captionText.text;
+            } else if (captionText.caption) {
+              captionText = captionText.caption;
+            } else if (captionText.content) {
+              captionText = captionText.content;
+            } else if (captionText.output) {
+              captionText = captionText.output;
+            } else {
+              // If object has no recognizable text properties, stringify it for debugging
+              console.warn(`⚠️ Could not extract text from caption object for ${platform}:`, captionText);
+              captionText = JSON.stringify(captionText, null, 2);
+            }
+          }
+          
+          // Ensure we have a string to display
+          if (typeof captionText !== 'string') {
+            console.warn(`⚠️ Caption for ${platform} is not a string after processing:`, captionText);
+            captionText = String(captionText);
+          }
+          
+          console.log(`✅ Final caption text for ${platform}:`, captionText);
+
           // Create content container
           const contentContainer = document.createElement('div');
           contentContainer.className = 'platform-output';
@@ -1501,7 +1531,7 @@
               </div>
             </div>
             <div class="output-content">
-              <pre style="white-space: pre-wrap; word-wrap: break-word;">${this.escapeHtml(this.generatedCaptions[platform])}</pre>
+              <pre style="white-space: pre-wrap; word-wrap: break-word;">${this.escapeHtml(captionText)}</pre>
             </div>
           `;
 
@@ -1536,8 +1566,28 @@
       }
 
       copyPlatformCaption(platform) {
-        const content = this.generatedCaptions[platform];
-        navigator.clipboard.writeText(content).then(() => {
+        // Extract actual caption text from object or string (same logic as display)
+        let captionText = this.generatedCaptions[platform];
+        if (typeof captionText === 'object' && captionText !== null) {
+          if (captionText.text) {
+            captionText = captionText.text;
+          } else if (captionText.caption) {
+            captionText = captionText.caption;
+          } else if (captionText.content) {
+            captionText = captionText.content;
+          } else if (captionText.output) {
+            captionText = captionText.output;
+          } else {
+            captionText = String(captionText);
+          }
+        }
+        
+        // Ensure we have a string to copy
+        if (typeof captionText !== 'string') {
+          captionText = String(captionText);
+        }
+        
+        navigator.clipboard.writeText(captionText).then(() => {
           const button = document.querySelector(`[data-platform="${platform}"].btn-copy-platform`);
           const originalText = button.textContent;
           button.textContent = '✓ Copied!';
@@ -1551,8 +1601,30 @@
         let allContent = '';
         this.selectedPlatforms.forEach(platform => {
           const platformName = platform.charAt(0).toUpperCase() + platform.slice(1);
+          
+          // Extract actual caption text from object or string (same logic as display)
+          let captionText = this.generatedCaptions[platform];
+          if (typeof captionText === 'object' && captionText !== null) {
+            if (captionText.text) {
+              captionText = captionText.text;
+            } else if (captionText.caption) {
+              captionText = captionText.caption;
+            } else if (captionText.content) {
+              captionText = captionText.content;
+            } else if (captionText.output) {
+              captionText = captionText.output;
+            } else {
+              captionText = String(captionText);
+            }
+          }
+          
+          // Ensure we have a string to copy
+          if (typeof captionText !== 'string') {
+            captionText = String(captionText);
+          }
+          
           allContent += `=== ${platformName} ===\n`;
-          allContent += this.generatedCaptions[platform] + '\n\n';
+          allContent += captionText + '\n\n';
         });
 
         navigator.clipboard.writeText(allContent).then(() => {
@@ -1568,8 +1640,30 @@
         let allContent = '';
         this.selectedPlatforms.forEach(platform => {
           const platformName = platform.charAt(0).toUpperCase() + platform.slice(1);
+          
+          // Extract actual caption text from object or string (same logic as display)
+          let captionText = this.generatedCaptions[platform];
+          if (typeof captionText === 'object' && captionText !== null) {
+            if (captionText.text) {
+              captionText = captionText.text;
+            } else if (captionText.caption) {
+              captionText = captionText.caption;
+            } else if (captionText.content) {
+              captionText = captionText.content;
+            } else if (captionText.output) {
+              captionText = captionText.output;
+            } else {
+              captionText = String(captionText);
+            }
+          }
+          
+          // Ensure we have a string to download
+          if (typeof captionText !== 'string') {
+            captionText = String(captionText);
+          }
+          
           allContent += `=== ${platformName} ===\n`;
-          allContent += this.generatedCaptions[platform] + '\n\n';
+          allContent += captionText + '\n\n';
         });
 
         const blob = new Blob([allContent], { type: 'text/plain' });
