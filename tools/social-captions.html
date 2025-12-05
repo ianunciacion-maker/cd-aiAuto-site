@@ -1163,6 +1163,35 @@
           const extractCaptions = (obj) => {
             console.log('🔍 Extracting captions from response object:', obj);
             
+            // Check for pinData structure (new n8n format)
+            if (obj.pinData && obj.pinData['Social Media Captions'] && obj.pinData['Social Media Captions'].json) {
+              const pinDataContent = obj.pinData['Social Media Captions'].json;
+              console.log('✅ Found pinData structure:', pinDataContent);
+              
+              // Extract captions from pinData content
+              if (pinDataContent.captions) {
+                console.log('✅ Found captions in pinData.json.captions:', pinDataContent.captions);
+                return pinDataContent.captions;
+              }
+              
+              // Check if pinData content itself contains platform captions
+              const platforms = ['instagram', 'facebook', 'twitter', 'linkedin', 'tiktok'];
+              const pinDataCaptions = {};
+              let hasPinDataCaptions = false;
+              
+              platforms.forEach(platform => {
+                if (pinDataContent[platform]) {
+                  pinDataCaptions[platform] = pinDataContent[platform];
+                  hasPinDataCaptions = true;
+                }
+              });
+              
+              if (hasPinDataCaptions) {
+                console.log('✅ Found captions in pinData at platform level:', pinDataCaptions);
+                return pinDataCaptions;
+              }
+            }
+            
             // n8n workflow returns { json: { captions: {...} }
             if (obj.json && obj.json.captions) {
               console.log('✅ Found captions in obj.json.captions:', obj.json.captions);
@@ -1901,6 +1930,12 @@
       }
 
       escapeHtml(text) {
+        // Ensure text is a string
+        if (typeof text !== 'string') {
+          console.warn('escapeHtml: non-string value received:', text, typeof text);
+          return '';
+        }
+        
         const map = {
           '&': '&',
           '<': '<',

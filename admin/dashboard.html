@@ -960,11 +960,6 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../supabase.js"></script>
   <script>
-    // Video Platform Integration
-    import('../js/services/video-platform-integration.js').then(module => {
-      window.videoPlatformIntegration = module.default;
-    });
-
     // Admin dashboard functionality
     class AdminDashboard {
       constructor() {
@@ -1234,8 +1229,7 @@
     document.addEventListener('DOMContentLoaded', () => {
       dashboard = new AdminDashboard();
       
-      // Initialize video manager after dashboard is ready
-      window.videoManager = new AdminVideoManager(dashboard);
+      // Video manager functionality disabled - missing dependencies
     });
   </script>
 
