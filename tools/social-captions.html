@@ -1055,6 +1055,9 @@
           console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
           console.log('Full payload:', JSON.stringify(webhookPayload, null, 2));
 
+          // Show loading state in output section
+          this.showOutputLoading();
+
           // Call n8n webhook for processing
           const response = await this.callN8nWebhook(webhookPayload);
 
@@ -1926,6 +1929,31 @@
           this.submitBtn.textContent = 'Generate Captions';
           this.submitBtn.classList.remove('loading');
         }
+      }
+
+      showOutputLoading() {
+        // Clear existing content and show loading state
+        this.outputTabs.innerHTML = '';
+        this.platformOutputs.innerHTML = '';
+        
+        // Hide default output
+        if (this.defaultOutput) {
+          this.defaultOutput.style.display = 'none';
+        }
+        
+        // Hide action buttons
+        if (this.outputActions) {
+          this.outputActions.style.display = 'none';
+        }
+        
+        // Show loading message in platform outputs
+        this.platformOutputs.innerHTML = `
+          <div style="text-align: center; padding: var(--space-lg); color: var(--text-secondary);">
+            <div class="loading-spinner" style="margin: 0 auto var(--space-sm); display: block;"></div>
+            <p>Generating captions for your selected platforms...</p>
+            <p style="font-size: 14px; opacity: 0.8;">This may take a few seconds.</p>
+          </div>
+        `;
       }
     }
 
