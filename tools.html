@@ -192,6 +192,99 @@
       background: var(--blue);
     }
 
+    /* Mobile Menu Toggle */
+    .mobile-menu-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+    }
+
+    .mobile-menu-toggle span {
+      width: 24px;
+      height: 3px;
+      background: var(--ink);
+      transition: all 0.3s;
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 70%;
+      max-width: 300px;
+      height: 100vh;
+      background: var(--bg-white);
+      border-left: var(--border-thick);
+      box-shadow: -8px 0 0 var(--ink);
+      z-index: 1000;
+      transition: right 0.3s ease;
+      padding: var(--space-lg) var(--space-md);
+    }
+
+    .mobile-menu.active {
+      right: 0;
+    }
+
+    .mobile-menu-close {
+      position: absolute;
+      top: var(--space-sm);
+      right: var(--space-sm);
+      background: var(--ink);
+      color: var(--bg-white);
+      border: none;
+      width: 40px;
+      height: 40px;
+      font-size: 24px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+    }
+
+    .mobile-menu-links {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+      margin-top: var(--space-xl);
+    }
+
+    .mobile-menu-links a {
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 18px;
+      padding: var(--space-sm);
+      border: var(--border-thin);
+      background: var(--bg-paper);
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .mobile-menu-links a:hover {
+      background: var(--gold);
+      transform: translateX(-4px);
+    }
+
+    .mobile-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+    }
+
+    .mobile-overlay.active {
+      display: block;
+    }
+
     /* HERO */
     .hero {
       padding: var(--space-xl) 0;
@@ -744,10 +837,356 @@
         transform: scale(1);
       }
     }
+
+    /* MOBILE OPTIMIZATION - Standard Phones */
+    @media (max-width: 767px) {
+      /* Container & Spacing */
+      .container {
+        padding: 0 var(--space-sm);
+      }
+
+      /* Navigation */
+      .nav {
+        padding: 12px 0;
+      }
+
+      .nav-inner {
+        gap: var(--space-sm);
+      }
+
+      .logo {
+        font-size: 18px;
+        padding: 4px 10px;
+        box-shadow: 3px 3px 0 var(--blue);
+      }
+
+      .btn {
+        padding: 10px 16px;
+        font-size: 12px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .mobile-menu-toggle {
+        display: flex;
+      }
+
+      .mobile-menu {
+        display: block;
+      }
+
+      .nav .btn {
+        display: none;
+      }
+
+      /* Hero Section */
+      .hero {
+        padding: var(--space-lg) 0;
+      }
+
+      .hero h1 {
+        font-size: 40px;
+        margin-bottom: var(--space-sm);
+      }
+
+      .hero h1 .highlight {
+        padding: 0 12px;
+        font-size: 40px;
+      }
+
+      .hero-subtitle {
+        font-size: 16px;
+        margin-bottom: var(--space-md);
+      }
+
+      .tag {
+        font-size: 10px;
+        padding: 3px 10px;
+      }
+
+      /* Category Sections */
+      .category-section {
+        padding: var(--space-lg) 0;
+      }
+
+      .category-header {
+        margin-bottom: var(--space-md);
+      }
+
+      .category-header h2 {
+        font-size: 32px;
+        margin-bottom: var(--space-sm);
+      }
+
+      .category-header p {
+        font-size: 15px;
+      }
+
+      /* Tools Grid */
+      .tools-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+      }
+
+      .tool-card {
+        padding: var(--space-md);
+        box-shadow: 6px 6px 0 var(--ink);
+      }
+
+      .tool-card:hover {
+        transform: translate(-2px, -2px);
+        box-shadow: 8px 8px 0 var(--ink);
+      }
+
+      .tool-card::before {
+        height: 6px;
+      }
+
+      .tool-header {
+        flex-direction: column;
+        gap: var(--space-sm);
+        align-items: flex-start;
+        margin-bottom: var(--space-sm);
+        padding-bottom: var(--space-sm);
+      }
+
+      .tool-badge {
+        font-size: 9px;
+        padding: 3px 10px;
+      }
+
+      .tool-card h3 {
+        font-size: 24px;
+      }
+
+      .tool-price {
+        font-size: 20px;
+      }
+
+      .tool-description {
+        font-size: 14px;
+        margin-bottom: var(--space-sm);
+      }
+
+      .tool-features {
+        margin: var(--space-sm) 0;
+      }
+
+      .tool-features li {
+        padding: 6px 0;
+        font-size: 13px;
+      }
+
+      .tool-cta {
+        font-size: 12px;
+        margin-top: var(--space-sm);
+      }
+
+      /* Features Section */
+      .features-section {
+        padding: var(--space-lg) 0;
+      }
+
+      .features-header h2 {
+        font-size: 32px;
+      }
+
+      .features-header p {
+        font-size: 15px;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+      }
+
+      .feature-card {
+        padding: var(--space-md);
+      }
+
+      .feature-card:hover {
+        transform: rotate(0deg) scale(1);
+        box-shadow: 6px 6px 0 var(--ink);
+      }
+
+      .feature-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 32px;
+        margin-bottom: var(--space-sm);
+      }
+
+      .feature-card h3 {
+        font-size: 20px;
+        margin-bottom: 8px;
+      }
+
+      .feature-card p {
+        font-size: 14px;
+      }
+
+      /* Pricing Section */
+      .pricing-section {
+        padding: var(--space-lg) 0;
+      }
+
+      .pricing-header h2 {
+        font-size: 32px;
+      }
+
+      .pricing-table {
+        overflow-x: auto;
+      }
+
+      .pricing-row {
+        grid-template-columns: 1fr;
+      }
+
+      .pricing-cell {
+        padding: var(--space-sm);
+        border-right: none;
+        border-bottom: var(--border-thin);
+      }
+
+      .pricing-row:hover {
+        background: transparent;
+      }
+
+      .pricing-tool-name {
+        font-size: 16px;
+      }
+
+      .pricing-tool-type {
+        font-size: 11px;
+      }
+
+      .pricing-price {
+        font-size: 24px;
+        text-align: left;
+        margin-top: 8px;
+      }
+
+      /* Comparison Section */
+      .comparison-section {
+        padding: var(--space-lg) 0;
+      }
+
+      .comparison-header h2 {
+        font-size: 32px;
+      }
+
+      .comparison-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+      }
+
+      .plan-card {
+        margin-bottom: var(--space-sm);
+      }
+
+      .plan-card.featured {
+        transform: scale(1);
+      }
+
+      .plan-header {
+        padding: var(--space-sm);
+      }
+
+      .plan-header h3 {
+        font-size: 20px;
+      }
+
+      .plan-price {
+        font-size: 36px;
+      }
+
+      .plan-period {
+        font-size: 12px;
+      }
+
+      .plan-body {
+        padding: var(--space-sm);
+      }
+
+      .plan-features li {
+        padding: 10px 0;
+        font-size: 14px;
+      }
+
+      /* Footer CTA */
+      .footer-cta {
+        padding: var(--space-lg) 0;
+      }
+
+      .footer-cta h2 {
+        font-size: 48px;
+        text-shadow: 4px 4px 0 var(--ink);
+        margin-bottom: var(--space-sm);
+      }
+
+      .footer-cta p {
+        font-size: 18px;
+        margin-bottom: var(--space-md);
+      }
+
+      .footer-cta .btn {
+        width: 100%;
+        max-width: 300px;
+        font-size: 14px;
+        padding: 16px 24px;
+      }
+
+      /* Site Footer */
+      .site-footer {
+        padding: var(--space-md) 0;
+      }
+
+      .footer-inner {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+      }
+
+      .footer-brand h3 {
+        font-size: 24px;
+      }
+
+      .footer-brand p {
+        font-size: 14px;
+      }
+
+      .footer-links h4 {
+        font-size: 14px;
+      }
+
+      .footer-links li {
+        font-size: 14px;
+      }
+
+      .footer-bottom {
+        margin-top: var(--space-md);
+        font-size: 12px;
+      }
+    }
   </style>
 </head>
 
 <body>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-menu-close" id="mobileMenuClose">×</button>
+    <div class="mobile-menu-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="tools.html">Tools</a>
+      <a href="#" class="btn btn-gold" style="display: block; width: 100%;">Get Started</a>
+    </div>
+  </div>
 
   <!-- NAV -->
   <nav class="nav">
@@ -759,6 +1198,11 @@
         <a href="tools.html" class="nav-link"
           style="text-decoration: underline; text-decoration-thickness: 3px; text-decoration-color: var(--gold);">Tools</a>
       </div>
+      <button class="mobile-menu-toggle" id="mobileMenuToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
       <button class="btn btn-gold">Get Started</button>
     </div>
   </nav>
@@ -897,6 +1341,32 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    // Mobile Menu Toggle
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileMenuClose = document.getElementById('mobileMenuClose');
+    const mobileOverlay = document.getElementById('mobileOverlay');
+
+    mobileMenuToggle.addEventListener('click', () => {
+      mobileMenu.classList.add('active');
+      mobileOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+
+    mobileMenuClose.addEventListener('click', () => {
+      mobileMenu.classList.remove('active');
+      mobileOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+
+    mobileOverlay.addEventListener('click', () => {
+      mobileMenu.classList.remove('active');
+      mobileOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+  </script>
 
 </body>
 

@@ -214,6 +214,99 @@
       background: var(--blue);
     }
 
+    /* Mobile Menu Toggle */
+    .mobile-menu-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+    }
+
+    .mobile-menu-toggle span {
+      width: 24px;
+      height: 3px;
+      background: var(--ink);
+      transition: all 0.3s;
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 70%;
+      max-width: 300px;
+      height: 100vh;
+      background: var(--bg-white);
+      border-left: var(--border-thick);
+      box-shadow: -8px 0 0 var(--ink);
+      z-index: 1000;
+      transition: right 0.3s ease;
+      padding: var(--space-lg) var(--space-md);
+    }
+
+    .mobile-menu.active {
+      right: 0;
+    }
+
+    .mobile-menu-close {
+      position: absolute;
+      top: var(--space-sm);
+      right: var(--space-sm);
+      background: var(--ink);
+      color: var(--bg-white);
+      border: none;
+      width: 40px;
+      height: 40px;
+      font-size: 24px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+    }
+
+    .mobile-menu-links {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+      margin-top: var(--space-xl);
+    }
+
+    .mobile-menu-links a {
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 18px;
+      padding: var(--space-sm);
+      border: var(--border-thin);
+      background: var(--bg-paper);
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .mobile-menu-links a:hover {
+      background: var(--gold);
+      transform: translateX(-4px);
+    }
+
+    .mobile-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+    }
+
+    .mobile-overlay.active {
+      display: block;
+    }
+
     /* HERO SECTION */
     .hero {
       padding: var(--space-xl) 0;
@@ -811,10 +904,355 @@
         display: none;
       }
     }
+
+    /* MOBILE OPTIMIZATION - Standard Phones */
+    @media (max-width: 767px) {
+      /* Container & Spacing */
+      .container {
+        padding: 0 var(--space-sm);
+      }
+
+      /* Navigation */
+      .nav {
+        padding: 12px 0;
+      }
+
+      .nav-inner {
+        gap: var(--space-sm);
+      }
+
+      .logo {
+        font-size: 18px;
+        padding: 4px 10px;
+        box-shadow: 3px 3px 0 var(--blue);
+      }
+
+      .btn {
+        padding: 10px 16px;
+        font-size: 12px;
+      }
+
+      .mobile-menu-toggle {
+        display: flex;
+      }
+
+      .mobile-menu {
+        display: block;
+      }
+
+      .nav .btn {
+        display: none;
+      }
+
+      /* Hero Section */
+      .hero {
+        padding: var(--space-lg) 0;
+      }
+
+      .hero-inner {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+      }
+
+      .hero-content h1 {
+        font-size: 40px;
+        line-height: 1;
+        margin-bottom: var(--space-sm);
+      }
+
+      .hero-content h1 .highlight {
+        padding: 0 12px;
+        font-size: 40px;
+      }
+
+      .hero-subtitle {
+        font-size: 16px;
+        padding: var(--space-sm);
+        margin-bottom: var(--space-sm);
+      }
+
+      .hero-cta {
+        flex-direction: column;
+        gap: var(--space-sm);
+        margin-bottom: var(--space-sm);
+      }
+
+      .hero-cta .btn {
+        width: 100%;
+        padding: 14px 20px;
+        font-size: 13px;
+      }
+
+      .hero-stats {
+        grid-template-columns: 1fr;
+        gap: var(--space-sm);
+        margin-top: var(--space-md);
+      }
+
+      .stat-box {
+        padding: var(--space-sm);
+      }
+
+      .stat-val {
+        font-size: 28px;
+      }
+
+      .stat-label {
+        font-size: 11px;
+      }
+
+      /* Hero Visual Cards */
+      .hero-visual {
+        order: -1;
+      }
+
+      .hero-card-stack {
+        height: auto;
+        margin-bottom: var(--space-md);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-sm);
+      }
+
+      .hero-floating-card {
+        padding: var(--space-sm);
+        position: relative !important;
+        width: 100% !important;
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+        transform: rotate(0deg) !important;
+        animation: none !important;
+      }
+
+      .hero-floating-card h4 {
+        font-size: 14px;
+        margin-bottom: 6px;
+        padding-bottom: 6px;
+      }
+
+      .hero-floating-card p {
+        font-size: 11px !important;
+      }
+
+      /* Section Headers */
+      .section-header h2 {
+        font-size: 32px;
+      }
+
+      .section-header p {
+        font-size: 15px;
+      }
+
+      /* Who Section */
+      .who-section {
+        padding: var(--space-lg) 0;
+      }
+
+      .who-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-sm);
+      }
+
+      .who-card {
+        padding: var(--space-sm);
+      }
+
+      .who-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+        margin-bottom: 12px;
+      }
+
+      .who-card h3 {
+        font-size: 18px;
+      }
+
+      .who-card p {
+        font-size: 14px;
+      }
+
+      /* Core Section */
+      .core-section {
+        padding: var(--space-lg) 0;
+      }
+
+      .core-card {
+        padding: var(--space-md);
+        box-shadow: 6px 6px 0 var(--ink);
+      }
+
+      .core-card:hover {
+        transform: translate(-2px, -2px);
+        box-shadow: 8px 8px 0 var(--ink);
+      }
+
+      .core-card h3 {
+        font-size: 24px;
+      }
+
+      .core-price {
+        font-size: 20px;
+      }
+
+      .core-card li {
+        font-size: 14px;
+        padding: 6px 0;
+      }
+
+      /* Daily Tools Section */
+      .daily-section {
+        padding: var(--space-lg) 0;
+      }
+
+      .tools-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-sm);
+      }
+
+      .tool-card {
+        padding: var(--space-sm);
+      }
+
+      .tool-card h4 {
+        font-size: 16px;
+      }
+
+      .tool-price {
+        font-size: 14px;
+      }
+
+      /* App Section */
+      .app-section {
+        padding: var(--space-lg) 0;
+      }
+
+      .app-inner {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+      }
+
+      .app-content h2 {
+        font-size: 40px;
+        text-shadow: 3px 3px 0 var(--bg-paper);
+      }
+
+      .app-content p {
+        font-size: 16px;
+      }
+
+      .app-mockup {
+        padding: var(--space-md);
+        min-height: 250px;
+        font-size: 32px;
+        box-shadow: 6px 6px 0 var(--gold);
+      }
+
+      /* Pricing Section */
+      .pricing-section {
+        padding: var(--space-lg) 0;
+      }
+
+      .pricing-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+      }
+
+      .pricing-card {
+        margin-bottom: var(--space-sm);
+      }
+
+      .pricing-header h3 {
+        font-size: 24px;
+      }
+
+      .pricing-amount {
+        font-size: 36px;
+      }
+
+      .pricing-body {
+        padding: var(--space-sm);
+      }
+
+      .pricing-features li {
+        padding: 10px 0;
+        font-size: 14px;
+      }
+
+      /* Footer CTA */
+      .footer-cta {
+        padding: var(--space-lg) 0;
+      }
+
+      .footer-cta h2 {
+        font-size: 48px;
+        text-shadow: 4px 4px 0 var(--ink);
+      }
+
+      .footer-cta p {
+        font-size: 18px;
+        margin-bottom: var(--space-md);
+      }
+
+      .footer-cta .btn {
+        width: 100%;
+        max-width: 300px;
+        font-size: 14px;
+        padding: 16px 24px;
+      }
+
+      /* Site Footer */
+      .site-footer {
+        padding: var(--space-md) 0;
+      }
+
+      .footer-inner {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+      }
+
+      .footer-brand h3 {
+        font-size: 24px;
+      }
+
+      .footer-brand p {
+        font-size: 14px;
+      }
+
+      .footer-links h4 {
+        font-size: 14px;
+      }
+
+      .footer-links li {
+        font-size: 14px;
+      }
+
+      .footer-bottom {
+        margin-top: var(--space-md);
+        font-size: 12px;
+      }
+    }
   </style>
 </head>
 
 <body>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-menu-close" id="mobileMenuClose">×</button>
+    <div class="mobile-menu-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="tools.html">Tools</a>
+      <a href="#" class="btn btn-gold" style="display: block; width: 100%;">Get Started</a>
+    </div>
+  </div>
 
   <!-- NAV -->
   <nav class="nav">
@@ -826,6 +1264,11 @@
         <a href="about.html" class="nav-link">About</a>
         <a href="tools.html" class="nav-link">Tools</a>
       </div>
+      <button class="mobile-menu-toggle" id="mobileMenuToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
       <button class="btn btn-gold">Get Started</button>
     </div>
   </nav>
@@ -1084,6 +1527,32 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    // Mobile Menu Toggle
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileMenuClose = document.getElementById('mobileMenuClose');
+    const mobileOverlay = document.getElementById('mobileOverlay');
+
+    mobileMenuToggle.addEventListener('click', () => {
+      mobileMenu.classList.add('active');
+      mobileOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+
+    mobileMenuClose.addEventListener('click', () => {
+      mobileMenu.classList.remove('active');
+      mobileOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+
+    mobileOverlay.addEventListener('click', () => {
+      mobileMenu.classList.remove('active');
+      mobileOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+  </script>
 
 </body>
 
