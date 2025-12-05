@@ -1062,44 +1062,56 @@
           // Show loading state in output section
           this.showOutputLoading();
 
-          // Call n8n webhook for processing
-          const response = await this.callN8nWebhook(webhookPayload);
+          try {
+            console.log('🚀 About to call n8n webhook...');
+            
+            // Call n8n webhook for processing
+            const response = await this.callN8nWebhook(webhookPayload);
+            
+            console.log('📡 Webhook response received:', response);
 
-          if (response.success) {
-            // Process webhook response
-            this.generatedCaptions = response.captions || {};
+            if (response.success) {
+              // Process webhook response
+              this.generatedCaptions = response.captions || {};
 
-            // Show feedback about the source
-            if (response.fallback) {
-              console.log('ℹ️ Using placeholder captions (webhook unavailable)');
-              // Show info message to user
-              const infoMsg = document.createElement('div');
-              infoMsg.style.cssText = `
-                background: var(--gold);
-                color: var(--ink);
-                padding: var(--space-sm);
-                border: var(--border-thin);
-                margin-bottom: var(--space-md);
-                font-weight: 600;
-                text-align: center;
-                border-radius: var(--radius-sm);
-              `;
-              infoMsg.textContent = '⚡ Quick Mode: Generated locally (webhook connection issue)';
-              document.querySelector('.output-section').insertBefore(infoMsg, document.querySelector('.output-section').firstChild);
-              setTimeout(() => infoMsg.remove(), 5000);
+              // Show feedback about the source
+              if (response.fallback) {
+                console.log('ℹ️ Using placeholder captions (webhook unavailable)');
+                // Show info message to user
+                const infoMsg = document.createElement('div');
+                infoMsg.style.cssText = `
+                  background: var(--gold);
+                  color: var(--ink);
+                  padding: var(--space-sm);
+                  border: var(--border-thin);
+                  margin-bottom: var(--space-md);
+                  font-weight: 600;
+                  text-align: center;
+                  border-radius: var(--radius-sm);
+                `;
+                infoMsg.textContent = '⚡ Quick Mode: Generated locally (webhook connection issue)';
+                document.querySelector('.output-section').insertBefore(infoMsg, document.querySelector('.output-section').firstChild);
+                setTimeout(() => infoMsg.remove(), 5000);
+              } else {
+                console.log('✅ Using AI-generated captions from webhook');
+              }
+
+              console.log('🎨 About to call displayMultiPlatformOutput...');
+              this.displayMultiPlatformOutput();
+
+              // Save to history
+              await this.saveToHistory(webhookPayload, response.captions);
+
+              // Reload usage after generation
+              await this.loadUsage();
             } else {
-              console.log('✅ Using AI-generated captions from webhook');
+              console.error('❌ Webhook call failed:', response.error);
+              throw new Error(response.error || 'Failed to generate captions');
             }
-
-            this.displayMultiPlatformOutput();
-
-            // Save to history
-            await this.saveToHistory(webhookPayload, response.captions);
-
-            // Reload usage after generation
-            await this.loadUsage();
-          } else {
-            throw new Error(response.error || 'Failed to generate captions');
+          } catch (error) {
+            console.error('❌ Error in webhook call or processing:', error);
+            console.error('❌ Error stack:', error.stack);
+            this.showError('Failed to generate content. Please try again.');
           }
 
         } catch (error) {
@@ -1115,12 +1127,14 @@
         const webhookUrl = 'https://n8n.autonoiq.com/webhook/social-caption-generator';
 
         try {
-          console.log('🚀 Sending to webhook:', webhookPayload);
+          console.log('🚀 Sending to webhook:', webhookUrl);
+          console.log('🚀 Payload size:', JSON.stringify(webhookPayload).length, 'characters');
 
           // Create abort controller for timeout
           const controller = new AbortController();
           const timeoutId = setTimeout(() => controller.abort(), 25000); // 25 second timeout
 
+          console.log('🚀 Making fetch request...');
           const response = await fetch(webhookUrl, {
             method: 'POST',
             mode: 'cors', // Explicitly enable CORS
@@ -1136,11 +1150,14 @@
           });
 
           clearTimeout(timeoutId);
+          console.log('🚀 Fetch completed, response status:', response.status, response.statusText);
 
           if (!response.ok) {
+            console.error('❌ Webhook HTTP error:', response.status, response.statusText);
             throw new Error(`Webhook returned ${response.status}: ${response.statusText}`);
           }
 
+          console.log('🚀 Parsing JSON response...');
           let result = await response.json();
           console.log('📡 Webhook response (raw):', result);
 
