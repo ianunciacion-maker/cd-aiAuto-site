@@ -1000,14 +1000,18 @@
             image_url: this.uploadedImage || null
           };
 
-          // Prepare complete payload with user data and metadata (matching blog generator structure)
+          // Prepare complete payload with user data and metadata (matching n8n workflow expectations)
           const webhookPayload = {
-            // Form data
+            // Form data - matching n8n workflow field names
             topic: formData.topic,
             platforms: formData.platforms,
             tone: formData.tone,
             hashtags: formData.hashtags,
             length: formData.length,
+            // n8n workflow expects 'image' field, not 'image_url'
+            image: formData.image_url,
+            
+            // Also include image_url for compatibility
             image_url: formData.image_url,
 
             // User data
@@ -1129,9 +1133,14 @@
           result = deepParse(result);
           console.log('📡 Webhook response (parsed):', result);
 
-          // Helper function to extract captions from any structure
+          // Helper function to extract captions from n8n workflow response
           const extractCaptions = (obj) => {
-            // Direct captions property
+            // n8n workflow returns { json: { captions: {...} }
+            if (obj.json && obj.json.captions) {
+              return obj.json.captions;
+            }
+
+            // Direct captions property (fallback)
             if (obj.captions && typeof obj.captions === 'object') {
               return obj.captions;
             }
