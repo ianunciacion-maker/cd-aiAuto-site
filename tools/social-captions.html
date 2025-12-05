@@ -1122,256 +1122,57 @@
         }
       }
 
-      // n8n Webhook Integration Methods
+      // API Proxy Integration Method
       async callN8nWebhook(webhookPayload) {
-        const webhookUrl = 'https://n8n.autonoiq.com/webhook/social-caption-generator';
+        // Use our Vercel API proxy instead of calling n8n directly
+        // This bypasses CORS restrictions
+        const apiUrl = '/api/tools/generate-captions';
 
         try {
-          console.log('🚀 Sending to webhook:', webhookUrl);
+          console.log('🚀 Sending to API proxy:', apiUrl);
           console.log('🚀 Payload size:', JSON.stringify(webhookPayload).length, 'characters');
 
           // Create abort controller for timeout
           const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 25000); // 25 second timeout
+          const timeoutId = setTimeout(() => controller.abort(), 35000); // 35 second timeout
 
           console.log('🚀 Making fetch request...');
-          
-          // Try different methods to bypass CORS issues
-          let response;
-          let fetchMethod = 'direct';
-          
-          try {
-            // Method 1: Direct fetch with CORS headers
-            console.log('🚀 Attempting direct fetch with CORS headers...');
-            response = await fetch(webhookUrl, {
-              method: 'POST',
-              mode: 'cors',
-              headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
-                'Access-Control-Allow-Headers': 'Content-Type, Authorization'
-              },
-              body: JSON.stringify(webhookPayload),
-              signal: controller.signal
-            });
-            
-            if (response.ok) {
-              console.log('✅ Direct fetch successful, status:', response.status);
-              fetchMethod = 'direct';
-            } else {
-              console.log('❌ Direct fetch failed, trying alternative method...');
-              throw new Error(`Direct fetch failed: ${response.status} ${response.statusText}`);
-            }
-          } catch (directError) {
-            console.log('❌ Direct fetch error:', directError.message);
-            console.log('🔄 Trying fetch without CORS mode...');
-            
-            // Method 2: Fetch without CORS mode (might work if n8n allows it)
-            try {
-              response = await fetch(webhookUrl, {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                  'Accept': 'application/json'
-                },
-                body: JSON.stringify(webhookPayload),
-                signal: controller.signal
-              });
-              
-              if (response.ok) {
-                console.log('✅ Non-CORS fetch successful, status:', response.status);
-                fetchMethod = 'non-cors';
-              } else {
-                console.log('❌ Non-CORS fetch also failed');
-                throw new Error(`Non-CORS fetch failed: ${response.status} ${response.statusText}`);
-              }
-            } catch (nonCorsError) {
-              console.log('❌ Non-CORS fetch error:', nonCorsError.message);
-              console.log('🔄 Trying JSONP fallback method...');
-              
-              // Method 3: JSONP fallback (last resort)
-              try {
-                const jsonpCallback = 'jsonp_callback_' + Date.now();
-                const jsonpUrl = webhookUrl + (webhookUrl.includes('?') ? '&' : '?') + 'callback=' + jsonpCallback;
-                
-                // Create JSONP script element
-                const script = document.createElement('script');
-                script.src = jsonpUrl;
-                script.onerror = () => {
-                  console.log('❌ JSONP script failed to load');
-                  throw new Error('JSONP fallback failed');
-                };
-                
-                // Set up global callback
-                window[jsonpCallback] = (data) => {
-                  console.log('📡 JSONP response received:', data);
-                  try {
-                    // Clean up global callback
-                    delete window[jsonpCallback];
-                    document.head.removeChild(script);
-                    
-                    result = { success: true, data: data };
-                    fetchMethod = 'jsonp';
-                  } catch (parseError) {
-                    console.error('❌ JSONP response parse error:', parseError);
-                    throw new Error('JSONP response parse error');
-                  }
-                };
-                
-                document.head.appendChild(script);
-                
-                // Wait for JSONP response (with timeout)
-                const jsonpTimeout = setTimeout(() => {
-                  if (fetchMethod === 'jsonp') {
-                    console.log('❌ JSONP timeout');
-                    throw new Error('JSONP request timeout');
-                  }
-                }, 15000); // 15 second timeout for JSONP
-                
-                // Wait for response
-                await new Promise((resolve, reject) => {
-                  if (fetchMethod !== 'jsonp') {
-                    resolve(result);
-                  }
-                });
-                
-              } catch (jsonpError) {
-                console.log('❌ JSONP setup error:', jsonpError.message);
-                throw new Error('JSONP setup failed');
-              }
-            }
-          }
+
+          const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify(webhookPayload),
+            signal: controller.signal
+          });
 
           clearTimeout(timeoutId);
-          console.log('🚀 Fetch completed using method:', fetchMethod, 'response status:', response.status, response.statusText);
+          console.log('🚀 Response received, status:', response.status);
 
           if (!response.ok) {
-            console.error('❌ Webhook HTTP error:', response.status, response.statusText);
-            throw new Error(`Webhook returned ${response.status}: ${response.statusText}`);
+            console.error('❌ API error:', response.status, response.statusText);
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(errorData.error || `API returned ${response.status}: ${response.statusText}`);
           }
 
           console.log('🚀 Parsing JSON response...');
-          let result = await response.json();
-          console.log('📡 Webhook response (raw):', result);
+          const result = await response.json();
+          console.log('📡 API response:', result);
 
-          // Helper function to recursively parse until we get an object
-          const deepParse = (data) => {
-            if (typeof data === 'string') {
-              try {
-                return deepParse(JSON.parse(data));
-              } catch (e) {
-                return data;
-              }
-            }
-            if (Array.isArray(data) && data.length > 0) {
-              return deepParse(data[0]);
-            }
-            return data;
-          };
-
-          // Deep parse result to handle nested JSON strings
-          result = deepParse(result);
-          console.log('📡 Webhook response (parsed):', result);
-
-          // Helper function to extract captions from n8n workflow response
-          const extractCaptions = (obj) => {
-            console.log('🔍 Extracting captions from response object:', obj);
-            
-            // Check for pinData structure (new n8n format)
-            if (obj.pinData && obj.pinData['Social Media Captions'] && obj.pinData['Social Media Captions'].json) {
-              const pinDataContent = obj.pinData['Social Media Captions'].json;
-              console.log('✅ Found pinData structure:', pinDataContent);
-              
-              // Extract captions from pinData content
-              if (pinDataContent.captions) {
-                console.log('✅ Found captions in pinData.json.captions:', pinDataContent.captions);
-                return pinDataContent.captions;
-              }
-              
-              // Check if pinData content itself contains platform captions
-              const platforms = ['instagram', 'facebook', 'twitter', 'linkedin', 'tiktok'];
-              const pinDataCaptions = {};
-              let hasPinDataCaptions = false;
-              
-              platforms.forEach(platform => {
-                if (pinDataContent[platform]) {
-                  pinDataCaptions[platform] = pinDataContent[platform];
-                  hasPinDataCaptions = true;
-                }
-              });
-              
-              if (hasPinDataCaptions) {
-                console.log('✅ Found captions in pinData at platform level:', pinDataCaptions);
-                return pinDataCaptions;
-              }
-            }
-            
-            // n8n workflow returns { json: { captions: {...} }
-            if (obj.json && obj.json.captions) {
-              console.log('✅ Found captions in obj.json.captions:', obj.json.captions);
-              return obj.json.captions;
-            }
-
-            // Direct captions property (fallback)
-            if (obj.captions && typeof obj.captions === 'object') {
-              console.log('✅ Found captions in obj.captions:', obj.captions);
-              return obj.captions;
-            }
-
-            // Check if platforms are at root level
-            const platforms = ['instagram', 'facebook', 'twitter', 'linkedin', 'tiktok'];
-            const rootLevelCaptions = {};
-            let hasRootLevelCaptions = false;
-            
-            platforms.forEach(platform => {
-              if (obj[platform]) {
-                rootLevelCaptions[platform] = obj[platform];
-                hasRootLevelCaptions = true;
-              }
-            });
-
-            if (hasRootLevelCaptions) {
-              console.log('✅ Found captions at root level:', rootLevelCaptions);
-              return rootLevelCaptions;
-            }
-
-            // Check in output field
-            if (obj.output) {
-              const outputData = deepParse(obj.output);
-              if (outputData.captions) {
-                console.log('✅ Found captions in output field:', outputData.captions);
-                return outputData.captions;
-              }
-            }
-
-            // Check if the entire object is the captions (direct response)
-            if (typeof obj === 'object' && Object.keys(obj).length > 0) {
-              const hasValidPlatform = platforms.some(platform => obj[platform]);
-              if (hasValidPlatform) {
-                console.log('✅ Response object itself contains captions:', obj);
-                return obj;
-              }
-            }
-
-            console.log('❌ No captions found in response structure');
-            return null;
-          };
-
-          // Try to extract captions
-          const captions = extractCaptions(result);
-          if (captions) {
+          // API already extracts captions and returns standardized format
+          if (result.success && result.captions) {
+            console.log('✅ Captions successfully received from API');
             return {
               success: true,
-              captions: captions
+              captions: result.captions
             };
           }
 
-          // If nothing worked, log warning and use fallback
-          console.warn('⚠️ Could not parse captions from webhook response, using fallback');
-          console.warn('Response was:', result);
-          throw new Error('Invalid response structure from webhook');
+          // If response indicates failure
+          console.error('❌ API returned unsuccessful response:', result);
+          throw new Error(result.error || 'Invalid response from API');
 
         } catch (error) {
           console.error('❌ n8n webhook error:', error.message);
@@ -1612,12 +1413,19 @@
           if (typeof captionText === 'object' && captionText !== null) {
             // If it's an object, try to extract text content
             console.log(`🔍 Processing caption object for ${platform}:`, captionText);
-            
+
             // Try common properties where caption text might be stored
-            if (captionText.text) {
-              captionText = captionText.text;
+            // n8n returns: { caption: "text", hashtags: "#tags", fullCaption: "text + tags" }
+            if (captionText.fullCaption) {
+              captionText = captionText.fullCaption;
             } else if (captionText.caption) {
+              // If caption and hashtags exist separately, combine them
               captionText = captionText.caption;
+              if (captionText.hashtags) {
+                captionText += '\n\n' + captionText.hashtags;
+              }
+            } else if (captionText.text) {
+              captionText = captionText.text;
             } else if (captionText.content) {
               captionText = captionText.content;
             } else if (captionText.output) {
@@ -1628,13 +1436,13 @@
               captionText = JSON.stringify(captionText, null, 2);
             }
           }
-          
+
           // Ensure we have a string to display
           if (typeof captionText !== 'string') {
             console.warn(`⚠️ Caption for ${platform} is not a string after processing:`, captionText);
             captionText = String(captionText);
           }
-          
+
           console.log(`✅ Final caption text for ${platform}:`, captionText);
 
           // Create content container
@@ -1695,10 +1503,16 @@
         // Extract actual caption text from object or string (same logic as display)
         let captionText = this.generatedCaptions[platform];
         if (typeof captionText === 'object' && captionText !== null) {
-          if (captionText.text) {
-            captionText = captionText.text;
+          // n8n returns: { caption: "text", hashtags: "#tags", fullCaption: "text + tags" }
+          if (captionText.fullCaption) {
+            captionText = captionText.fullCaption;
           } else if (captionText.caption) {
             captionText = captionText.caption;
+            if (captionText.hashtags) {
+              captionText += '\n\n' + captionText.hashtags;
+            }
+          } else if (captionText.text) {
+            captionText = captionText.text;
           } else if (captionText.content) {
             captionText = captionText.content;
           } else if (captionText.output) {
@@ -1707,12 +1521,12 @@
             captionText = String(captionText);
           }
         }
-        
+
         // Ensure we have a string to copy
         if (typeof captionText !== 'string') {
           captionText = String(captionText);
         }
-        
+
         navigator.clipboard.writeText(captionText).then(() => {
           const button = document.querySelector(`[data-platform="${platform}"].btn-copy-platform`);
           const originalText = button.textContent;
@@ -1727,14 +1541,20 @@
         let allContent = '';
         this.selectedPlatforms.forEach(platform => {
           const platformName = platform.charAt(0).toUpperCase() + platform.slice(1);
-          
+
           // Extract actual caption text from object or string (same logic as display)
           let captionText = this.generatedCaptions[platform];
           if (typeof captionText === 'object' && captionText !== null) {
-            if (captionText.text) {
-              captionText = captionText.text;
+            // n8n returns: { caption: "text", hashtags: "#tags", fullCaption: "text + tags" }
+            if (captionText.fullCaption) {
+              captionText = captionText.fullCaption;
             } else if (captionText.caption) {
               captionText = captionText.caption;
+              if (captionText.hashtags) {
+                captionText += '\n\n' + captionText.hashtags;
+              }
+            } else if (captionText.text) {
+              captionText = captionText.text;
             } else if (captionText.content) {
               captionText = captionText.content;
             } else if (captionText.output) {
@@ -1743,12 +1563,12 @@
               captionText = String(captionText);
             }
           }
-          
+
           // Ensure we have a string to copy
           if (typeof captionText !== 'string') {
             captionText = String(captionText);
           }
-          
+
           allContent += `=== ${platformName} ===\n`;
           allContent += captionText + '\n\n';
         });
@@ -1766,14 +1586,20 @@
         let allContent = '';
         this.selectedPlatforms.forEach(platform => {
           const platformName = platform.charAt(0).toUpperCase() + platform.slice(1);
-          
+
           // Extract actual caption text from object or string (same logic as display)
           let captionText = this.generatedCaptions[platform];
           if (typeof captionText === 'object' && captionText !== null) {
-            if (captionText.text) {
-              captionText = captionText.text;
+            // n8n returns: { caption: "text", hashtags: "#tags", fullCaption: "text + tags" }
+            if (captionText.fullCaption) {
+              captionText = captionText.fullCaption;
             } else if (captionText.caption) {
               captionText = captionText.caption;
+              if (captionText.hashtags) {
+                captionText += '\n\n' + captionText.hashtags;
+              }
+            } else if (captionText.text) {
+              captionText = captionText.text;
             } else if (captionText.content) {
               captionText = captionText.content;
             } else if (captionText.output) {
@@ -1782,12 +1608,12 @@
               captionText = String(captionText);
             }
           }
-          
+
           // Ensure we have a string to download
           if (typeof captionText !== 'string') {
             captionText = String(captionText);
           }
-          
+
           allContent += `=== ${platformName} ===\n`;
           allContent += captionText + '\n\n';
         });
