@@ -12,8 +12,31 @@
 const SUPABASE_URL = 'https://evzitnywfgbxzymddvyl.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV2eml0bnl3ZmdieHp5bWRkdnlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ3MDM5MzksImV4cCI6MjA4MDI3OTkzOX0.ZO6JpU1N6gZisu2gD--CfBivfD-YUjwpH7Chso79feg';
 
-// Initialize Supabase client
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+// Dynamic URL detection for different environments
+function getSupabaseUrl() {
+  const isLocalhost = window.location.hostname === 'localhost' ||
+                    window.location.hostname === '127.0.0.1' ||
+                    window.location.hostname.includes('192.168.') ||
+                    window.location.hostname.includes('10.0.0.');
+  
+  if (isLocalhost) {
+    return 'https://evzitnywfgbxzymddvyl.supabase.co';
+  }
+  
+  // Check if we're on Vercel
+  const isVercel = window.location.hostname.includes('vercel.app');
+  
+  if (isVercel) {
+    // Use the production Vercel URL
+    return 'https://evzitnywfgbxzymddvyl.supabase.co';
+  }
+  
+  // Default to the configured URL
+  return SUPABASE_URL;
+}
+
+// Initialize Supabase client with dynamic URL
+const supabase = window.supabase.createClient(getSupabaseUrl(), SUPABASE_ANON_KEY);
 
 // ============================================
 // AUTHENTICATION MANAGER

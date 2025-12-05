@@ -328,6 +328,25 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../supabase.js"></script>
   <script>
+    // Use dynamic Supabase URL based on current domain
+    const getSupabaseUrl = () => {
+      const hostname = window.location.hostname;
+      
+      // Check if we're on Vercel
+      if (hostname.includes('vercel.app')) {
+        return 'https://evzitnywfgbxzymddvyl.supabase.co';
+      }
+      
+      // Default to localhost development
+      if (hostname === 'localhost' || hostname === '127.0.0.1') {
+        return 'https://evzitnywfgbxzymddvyl.supabase.co';
+      }
+      
+      // Default for other environments
+      return 'https://evzitnywfgbxzymddvyl.supabase.co';
+    };
+  </script>
+  <script>
     class LoginForm {
       constructor() {
         this.form = document.getElementById('loginForm');
