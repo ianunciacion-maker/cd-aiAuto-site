@@ -1135,22 +1135,117 @@
           const timeoutId = setTimeout(() => controller.abort(), 25000); // 25 second timeout
 
           console.log('🚀 Making fetch request...');
-          const response = await fetch(webhookUrl, {
-            method: 'POST',
-            mode: 'cors', // Explicitly enable CORS
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json',
-              'Access-Control-Allow-Origin': '*', // Add CORS header
-              'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
-              'Access-Control-Allow-Headers': 'Content-Type, Authorization'
-            },
-            body: JSON.stringify(webhookPayload),
-            signal: controller.signal
-          });
+          
+          // Try different methods to bypass CORS issues
+          let response;
+          let fetchMethod = 'direct';
+          
+          try {
+            // Method 1: Direct fetch with CORS headers
+            console.log('🚀 Attempting direct fetch with CORS headers...');
+            response = await fetch(webhookUrl, {
+              method: 'POST',
+              mode: 'cors',
+              headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization'
+              },
+              body: JSON.stringify(webhookPayload),
+              signal: controller.signal
+            });
+            
+            if (response.ok) {
+              console.log('✅ Direct fetch successful, status:', response.status);
+              fetchMethod = 'direct';
+            } else {
+              console.log('❌ Direct fetch failed, trying alternative method...');
+              throw new Error(`Direct fetch failed: ${response.status} ${response.statusText}`);
+            }
+          } catch (directError) {
+            console.log('❌ Direct fetch error:', directError.message);
+            console.log('🔄 Trying fetch without CORS mode...');
+            
+            // Method 2: Fetch without CORS mode (might work if n8n allows it)
+            try {
+              response = await fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/json'
+                },
+                body: JSON.stringify(webhookPayload),
+                signal: controller.signal
+              });
+              
+              if (response.ok) {
+                console.log('✅ Non-CORS fetch successful, status:', response.status);
+                fetchMethod = 'non-cors';
+              } else {
+                console.log('❌ Non-CORS fetch also failed');
+                throw new Error(`Non-CORS fetch failed: ${response.status} ${response.statusText}`);
+              }
+            } catch (nonCorsError) {
+              console.log('❌ Non-CORS fetch error:', nonCorsError.message);
+              console.log('🔄 Trying JSONP fallback method...');
+              
+              // Method 3: JSONP fallback (last resort)
+              try {
+                const jsonpCallback = 'jsonp_callback_' + Date.now();
+                const jsonpUrl = webhookUrl + (webhookUrl.includes('?') ? '&' : '?') + 'callback=' + jsonpCallback;
+                
+                // Create JSONP script element
+                const script = document.createElement('script');
+                script.src = jsonpUrl;
+                script.onerror = () => {
+                  console.log('❌ JSONP script failed to load');
+                  throw new Error('JSONP fallback failed');
+                };
+                
+                // Set up global callback
+                window[jsonpCallback] = (data) => {
+                  console.log('📡 JSONP response received:', data);
+                  try {
+                    // Clean up global callback
+                    delete window[jsonpCallback];
+                    document.head.removeChild(script);
+                    
+                    result = { success: true, data: data };
+                    fetchMethod = 'jsonp';
+                  } catch (parseError) {
+                    console.error('❌ JSONP response parse error:', parseError);
+                    throw new Error('JSONP response parse error');
+                  }
+                };
+                
+                document.head.appendChild(script);
+                
+                // Wait for JSONP response (with timeout)
+                const jsonpTimeout = setTimeout(() => {
+                  if (fetchMethod === 'jsonp') {
+                    console.log('❌ JSONP timeout');
+                    throw new Error('JSONP request timeout');
+                  }
+                }, 15000); // 15 second timeout for JSONP
+                
+                // Wait for response
+                await new Promise((resolve, reject) => {
+                  if (fetchMethod !== 'jsonp') {
+                    resolve(result);
+                  }
+                });
+                
+              } catch (jsonpError) {
+                console.log('❌ JSONP setup error:', jsonpError.message);
+                throw new Error('JSONP setup failed');
+              }
+            }
+          }
 
           clearTimeout(timeoutId);
-          console.log('🚀 Fetch completed, response status:', response.status, response.statusText);
+          console.log('🚀 Fetch completed using method:', fetchMethod, 'response status:', response.status, response.statusText);
 
           if (!response.ok) {
             console.error('❌ Webhook HTTP error:', response.status, response.statusText);
