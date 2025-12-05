@@ -1092,9 +1092,13 @@
 
           const response = await fetch(webhookUrl, {
             method: 'POST',
+            mode: 'cors', // Explicitly enable CORS
             headers: {
               'Content-Type': 'application/json',
-              'Accept': 'application/json'
+              'Accept': 'application/json',
+              'Access-Control-Allow-Origin': '*', // Add CORS header
+              'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
+              'Access-Control-Allow-Headers': 'Content-Type, Authorization'
             },
             body: JSON.stringify(webhookPayload)
           });
@@ -1217,19 +1221,22 @@
             generated_captions: captions
           };
 
+          console.log('📝 Saving to history with data:', historyData);
           const result = await socialCaptionsHistoryManager.saveGeneration(historyData);
           
-          if (result.success) {
-            console.log('Social captions generation saved to history');
+          if (result.success !== false && !result.error) {
+            console.log('✅ Social captions generation saved to history:', result.data);
             // Refresh history display if visible
             if (this.historySection && this.historySection.style.display !== 'none') {
               await this.loadHistory();
             }
           } else {
-            console.error('Failed to save to history:', result.error);
+            console.error('❌ Failed to save to history:', result.error);
+            console.error('❌ Full result object:', result);
           }
         } catch (error) {
-          console.error('Error saving to history:', error);
+          console.error('❌ Exception saving to history:', error);
+          console.error('❌ Error stack:', error.stack);
         }
       }
 

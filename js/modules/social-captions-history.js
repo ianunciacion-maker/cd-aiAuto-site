@@ -24,7 +24,7 @@ class SocialCaptionsHistoryManager {
       const historyEntry = {
         user_id: user.id,
         topic: params.topic,
-        platforms: Array.from(params.platforms),
+        platforms: params.platforms || [],
         tone: params.tone,
         hashtags: params.hashtags || null,
         length: params.length,
