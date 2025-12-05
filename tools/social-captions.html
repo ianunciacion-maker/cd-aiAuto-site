@@ -1009,10 +1009,11 @@
             hashtags: formData.hashtags,
             length: formData.length,
             // n8n workflow expects 'image' field, not 'image_url'
-            image: formData.image_url,
+            // Only include image if it's reasonably small (avoid 413 errors)
+            image: formData.image_url && formData.image_url.length < 100000 ? formData.image_url : null,
             
-            // Also include image_url for compatibility
-            image_url: formData.image_url,
+            // Also include image_url for compatibility (only if small)
+            image_url: formData.image_url && formData.image_url.length < 100000 ? formData.image_url : null,
 
             // User data
             userId: user.id,
@@ -1022,6 +1023,12 @@
             timestamp: new Date().toISOString(),
             toolType: this.toolType
           };
+
+          // Log if image was excluded due to size
+          if (formData.image_url && formData.image_url.length >= 100000) {
+            console.warn('⚠️ Image too large for webhook (>100KB), excluding from payload');
+            console.warn('⚠️ Image size:', formData.image_url.length, 'bytes');
+          }
 
           // Log the complete payload being sent
           console.log('📤 COMPLETE PAYLOAD BEING SENT TO WEBHOOK:');
@@ -1094,6 +1101,10 @@
         try {
           console.log('🚀 Sending to webhook:', webhookPayload);
 
+          // Create abort controller for timeout
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 25000); // 25 second timeout
+
           const response = await fetch(webhookUrl, {
             method: 'POST',
             mode: 'cors', // Explicitly enable CORS
@@ -1104,8 +1115,11 @@
               'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
               'Access-Control-Allow-Headers': 'Content-Type, Authorization'
             },
-            body: JSON.stringify(webhookPayload)
+            body: JSON.stringify(webhookPayload),
+            signal: controller.signal
           });
+
+          clearTimeout(timeoutId);
 
           if (!response.ok) {
             throw new Error(`Webhook returned ${response.status}: ${response.statusText}`);
