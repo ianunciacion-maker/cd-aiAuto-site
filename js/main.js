@@ -8,6 +8,7 @@ import { Navigation } from './components/navigation.js';
 import { ThemeManager } from './modules/theme.js';
 import { AnimationController } from './modules/animations.js';
 import { FormHandler } from './components/forms.js';
+import './modules/social-captions-history.js';
 
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', () => {

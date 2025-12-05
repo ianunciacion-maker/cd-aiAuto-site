@@ -71,8 +71,7 @@ class ToolNavigation {
 
       <!-- SITE FOOTER -->
       <footer class="site-footer">
-        <div class="container">
-          <div class="footer-inner">
+        <div class="footer-inner">
             <div class="footer-brand">
               <h3>Ai-Auto</h3>
               <p style="max-width: 300px;">
@@ -107,10 +106,9 @@ class ToolNavigation {
               </ul>
             </div>
           </div>
-          <div class="footer-bottom">
+        <div class="footer-bottom">
             &copy; 2024 Ai-Auto. All rights reserved. Built with AI.
           </div>
-        </div>
       </footer>
     `;
   }

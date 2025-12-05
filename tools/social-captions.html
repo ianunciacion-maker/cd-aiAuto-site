@@ -804,6 +804,37 @@
             <button class="btn btn-download-all" id="downloadAllBtn">💾 Download All</button>
           </div>
         </div>
+
+        <!-- History Section -->
+        <div class="history-section" id="historySection" style="display: none; margin-top: var(--space-lg);">
+          <div class="form-section">
+            <h2>📜 Generation History</h2>
+            
+            <div class="history-controls" style="margin-bottom: var(--space-md);">
+              <button class="btn btn-outline" id="toggleHistoryBtn">Show History</button>
+              <button class="btn btn-outline" id="refreshHistoryBtn" style="display: none;">🔄 Refresh</button>
+            </div>
+            
+            <div id="historyContent" style="display: none;">
+              <div class="history-loading" id="historyLoading" style="text-align: center; padding: var(--space-lg); display: none;">
+                <div class="loading-spinner"></div>
+                Loading history...
+              </div>
+              
+              <div class="history-list" id="historyList">
+                <!-- History items will be dynamically generated -->
+              </div>
+              
+              <div class="history-pagination" id="historyPagination" style="margin-top: var(--space-md); text-align: center;">
+                <!-- Pagination controls will be dynamically generated -->
+              </div>
+              
+              <div class="history-empty" id="historyEmpty" style="text-align: center; padding: var(--space-lg); color: var(--text-secondary); display: none;">
+                <p>No generation history yet. Start creating some amazing social media captions!</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -811,6 +842,7 @@
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../supabase.js"></script>
+  <script src="../js/modules/social-captions-history.js"></script>
   <script>
     class SocialCaptionsGenerator {
       constructor() {
@@ -838,10 +870,23 @@
         this.copyAllBtn = document.getElementById('copyAllBtn');
         this.downloadAllBtn = document.getElementById('downloadAllBtn');
         
+        // History elements
+        this.historySection = document.getElementById('historySection');
+        this.toggleHistoryBtn = document.getElementById('toggleHistoryBtn');
+        this.refreshHistoryBtn = document.getElementById('refreshHistoryBtn');
+        this.historyContent = document.getElementById('historyContent');
+        this.historyLoading = document.getElementById('historyLoading');
+        this.historyList = document.getElementById('historyList');
+        this.historyPagination = document.getElementById('historyPagination');
+        this.historyEmpty = document.getElementById('historyEmpty');
+        
         // State management
         this.uploadedImage = null;
         this.selectedPlatforms = new Set();
         this.generatedCaptions = {};
+        this.historyVisible = false;
+        this.currentPage = 1;
+        this.itemsPerPage = 10;
         
         this.init();
       }
@@ -879,6 +924,13 @@
           // Action buttons event listeners
           this.copyAllBtn.addEventListener('click', () => this.copyAllCaptions());
           this.downloadAllBtn.addEventListener('click', () => this.downloadAllCaptions());
+          
+          // History event listeners
+          this.toggleHistoryBtn.addEventListener('click', () => this.toggleHistory());
+          this.refreshHistoryBtn.addEventListener('click', () => this.loadHistory());
+          
+          // Show history section
+          this.historySection.style.display = 'block';
           
           // Show default output initially
           if (this.defaultOutput) {
@@ -935,21 +987,114 @@
             return;
           }
 
-          // Generate captions for each selected platform
-          this.generatedCaptions = {};
-          for (const platform of this.selectedPlatforms) {
-            const content = this.generatePlaceholderCaptions(topic, platform, tone, hashtags, length);
-            this.generatedCaptions[platform] = content;
-          }
+          // Prepare form data for n8n webhook
+          const formData = {
+            topic,
+            platforms: Array.from(this.selectedPlatforms),
+            tone,
+            hashtags,
+            length,
+            image_url: this.uploadedImage
+          };
 
-          this.displayMultiPlatformOutput();
-          await this.loadUsage(); // Reload usage after generation
+          // Call n8n webhook for processing
+          const response = await this.callN8nWebhook(formData);
+
+          if (response.success) {
+            // Process webhook response
+            this.generatedCaptions = response.captions || {};
+            this.displayMultiPlatformOutput();
+            
+            // Save to history
+            await this.saveToHistory(formData, response.captions);
+            
+            // Reload usage after generation
+            await this.loadUsage();
+          } else {
+            throw new Error(response.error || 'Failed to generate captions');
+          }
 
         } catch (error) {
           console.error('Generation error:', error);
           this.showError('Failed to generate content. Please try again.');
         } finally {
           this.setSubmitting(false);
+        }
+      }
+
+      // n8n Webhook Integration Methods
+      async callN8nWebhook(formData) {
+        try {
+          const response = await fetch('https://n8n.autonoiq.com/webhook/social-caption-generator', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          const result = await response.json();
+          return result;
+        } catch (error) {
+          console.error('n8n webhook error:', error);
+          
+          // Fallback to placeholder generation if webhook fails
+          console.log('Falling back to placeholder generation');
+          const fallbackCaptions = {};
+          for (const platform of formData.platforms) {
+            fallbackCaptions[platform] = this.generatePlaceholderCaptions(
+              formData.topic,
+              platform,
+              formData.tone,
+              formData.hashtags,
+              formData.length
+            );
+          }
+          
+          return {
+            success: true,
+            captions: fallbackCaptions,
+            fallback: true
+          };
+        }
+      }
+
+      async saveToHistory(formData, captions) {
+        try {
+          const currentUser = await authManager.getCurrentUser();
+          if (!currentUser) {
+            console.error('No authenticated user found for history saving');
+            return;
+          }
+
+          const historyData = {
+            user_id: currentUser.id,
+            topic: formData.topic,
+            platforms: formData.platforms,
+            tone: formData.tone,
+            hashtags: formData.hashtags,
+            length: formData.length,
+            image_url: formData.image_url,
+            generated_captions: captions
+          };
+
+          const result = await socialCaptionsHistoryManager.saveGeneration(historyData);
+          
+          if (result.success) {
+            console.log('Social captions generation saved to history');
+            // Refresh history display if visible
+            if (this.historySection && this.historySection.style.display !== 'none') {
+              await this.loadHistory();
+            }
+          } else {
+            console.error('Failed to save to history:', result.error);
+          }
+        } catch (error) {
+          console.error('Error saving to history:', error);
         }
       }
 
@@ -1260,6 +1405,256 @@
         return content;
       }
 
+      // History Management Methods
+      async toggleHistory() {
+        this.historyVisible = !this.historyVisible;
+        
+        if (this.historyVisible) {
+          this.historyContent.style.display = 'block';
+          this.toggleHistoryBtn.textContent = 'Hide History';
+          this.refreshHistoryBtn.style.display = 'inline-block';
+          await this.loadHistory();
+        } else {
+          this.historyContent.style.display = 'none';
+          this.toggleHistoryBtn.textContent = 'Show History';
+          this.refreshHistoryBtn.style.display = 'none';
+        }
+      }
+
+      async loadHistory(page = 1) {
+        try {
+          this.historyLoading.style.display = 'block';
+          this.historyList.style.display = 'none';
+          this.historyEmpty.style.display = 'none';
+          this.historyPagination.style.display = 'none';
+
+          const offset = (page - 1) * this.itemsPerPage;
+          const result = await socialCaptionsHistoryManager.getHistory(
+            this.itemsPerPage,
+            offset
+          );
+
+          if (result.success && result.data.length > 0) {
+            this.displayHistory(result.data);
+            this.displayPagination(result.total, page);
+          } else {
+            this.showEmptyHistory();
+          }
+        } catch (error) {
+          console.error('Error loading history:', error);
+          this.showError('Failed to load history. Please try again.');
+        } finally {
+          this.historyLoading.style.display = 'none';
+        }
+      }
+
+      displayHistory(historyItems) {
+        this.historyList.style.display = 'block';
+        this.historyList.innerHTML = '';
+
+        historyItems.forEach(item => {
+          const historyElement = this.createHistoryElement(item);
+          this.historyList.appendChild(historyElement);
+        });
+      }
+
+      createHistoryElement(item) {
+        const historyDiv = document.createElement('div');
+        historyDiv.className = 'history-item';
+        historyDiv.style.cssText = `
+          background: var(--bg-white);
+          border: var(--border-thin);
+          border-radius: var(--radius-sm);
+          padding: var(--space-md);
+          margin-bottom: var(--space-md);
+          transition: all 0.2s ease;
+        `;
+
+        const createdDate = new Date(item.created_at).toLocaleDateString();
+        const platformEmojis = {
+          'instagram': '📷',
+          'facebook': '📘',
+          'twitter': '🐦',
+          'linkedin': '💼',
+          'tiktok': '🎵'
+        };
+
+        const platformIcons = item.platforms.map(platform =>
+          platformEmojis[platform] || '📝'
+        ).join(' ');
+
+        historyDiv.innerHTML = `
+          <div class="history-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-sm);">
+            <div>
+              <strong style="color: var(--ink);">${this.escapeHtml(item.topic)}</strong>
+              <div style="color: var(--text-secondary); font-size: 14px; margin-top: 4px;">
+                ${platformIcons} • ${item.tone} • ${createdDate}
+              </div>
+            </div>
+            <div class="history-actions" style="display: flex; gap: var(--space-xs);">
+              <button class="btn btn-outline btn-sm" onclick="socialCaptionsGenerator.loadHistoryItem('${item.id}')">📋 Load</button>
+              <button class="btn btn-outline btn-sm" onclick="socialCaptionsGenerator.deleteHistoryItem('${item.id}')">🗑️</button>
+            </div>
+          </div>
+          <div class="history-preview" style="color: var(--text-secondary); font-size: 14px; line-height: 1.4;">
+            ${item.hashtags ? `<div>Hashtags: ${this.escapeHtml(item.hashtags)}</div>` : ''}
+            ${item.image_url ? '<div>📷 Image included</div>' : ''}
+            <div style="margin-top: var(--space-xs); font-style: italic;">
+              ${item.platforms.length} platform${item.platforms.length > 1 ? 's' : ''} generated
+            </div>
+          </div>
+        `;
+
+        historyDiv.addEventListener('mouseenter', () => {
+          historyDiv.style.transform = 'translate(-2px, -2px)';
+          historyDiv.style.boxShadow = 'var(--shadow-hard)';
+        });
+
+        historyDiv.addEventListener('mouseleave', () => {
+          historyDiv.style.transform = 'translate(0, 0)';
+          historyDiv.style.boxShadow = 'none';
+        });
+
+        return historyDiv;
+      }
+
+      async loadHistoryItem(itemId) {
+        try {
+          const result = await socialCaptionsHistoryManager.getEntryById(itemId);
+          
+          if (result.success && result.data) {
+            const item = result.data;
+            
+            // Load the item data back into the form
+            document.getElementById('topic').value = item.topic;
+            document.getElementById('tone').value = item.tone;
+            document.getElementById('hashtags').value = item.hashtags || '';
+            document.getElementById('length').value = item.length || 'medium';
+            
+            // Clear and set platform selections
+            this.selectedPlatforms.clear();
+            this.platformCheckboxes.forEach(checkbox => {
+              const isChecked = item.platforms.includes(checkbox.value);
+              checkbox.checked = isChecked;
+              const platformItem = checkbox.closest('.platform-item');
+              if (isChecked) {
+                this.selectedPlatforms.add(checkbox.value);
+                platformItem.classList.add('selected');
+              } else {
+                platformItem.classList.remove('selected');
+              }
+            });
+            
+            // Load image if available
+            if (item.image_url) {
+              this.uploadedImage = item.image_url;
+              this.displayImagePreview(item.image_url);
+            } else {
+              this.removeImage();
+            }
+            
+            // Load generated captions
+            this.generatedCaptions = item.generated_captions || {};
+            this.displayMultiPlatformOutput();
+            
+            // Scroll to form
+            this.form.scrollIntoView({ behavior: 'smooth' });
+            
+            // Show success message
+            this.showError('History item loaded successfully!');
+            setTimeout(() => this.clearError(), 3000);
+          } else {
+            this.showError('Failed to load history item');
+          }
+        } catch (error) {
+          console.error('Error loading history item:', error);
+          this.showError('Failed to load history item. Please try again.');
+        }
+      }
+
+      async deleteHistoryItem(itemId) {
+        if (!confirm('Are you sure you want to delete this history item?')) {
+          return;
+        }
+
+        try {
+          const result = await socialCaptionsHistoryManager.deleteEntry(itemId);
+          
+          if (result.success) {
+            // Reload current history page
+            await this.loadHistory(this.currentPage);
+            
+            // Show success message
+            this.showError('History item deleted successfully!');
+            setTimeout(() => this.clearError(), 3000);
+          } else {
+            this.showError('Failed to delete history item');
+          }
+        } catch (error) {
+          console.error('Error deleting history item:', error);
+          this.showError('Failed to delete history item. Please try again.');
+        }
+      }
+
+      showEmptyHistory() {
+        this.historyEmpty.style.display = 'block';
+        this.historyList.style.display = 'none';
+        this.historyPagination.style.display = 'none';
+      }
+
+      displayPagination(totalItems, currentPage) {
+        const totalPages = Math.ceil(totalItems / this.itemsPerPage);
+        
+        if (totalPages <= 1) {
+          this.historyPagination.style.display = 'none';
+          return;
+        }
+
+        this.historyPagination.style.display = 'block';
+        this.historyPagination.innerHTML = '';
+
+        // Previous button
+        if (currentPage > 1) {
+          const prevBtn = this.createPaginationButton('Previous', currentPage - 1);
+          this.historyPagination.appendChild(prevBtn);
+        }
+
+        // Page numbers
+        const startPage = Math.max(1, currentPage - 2);
+        const endPage = Math.min(totalPages, currentPage + 2);
+
+        for (let i = startPage; i <= endPage; i++) {
+          const pageBtn = this.createPaginationButton(i.toString(), i);
+          if (i === currentPage) {
+            pageBtn.classList.add('active');
+            pageBtn.style.cssText += `
+              background: var(--blue);
+              color: white;
+              border-color: var(--blue);
+            `;
+          }
+          this.historyPagination.appendChild(pageBtn);
+        }
+
+        // Next button
+        if (currentPage < totalPages) {
+          const nextBtn = this.createPaginationButton('Next', currentPage + 1);
+          this.historyPagination.appendChild(nextBtn);
+        }
+      }
+
+      createPaginationButton(text, page) {
+        const button = document.createElement('button');
+        button.className = 'btn btn-outline btn-sm';
+        button.textContent = text;
+        button.style.margin = '0 4px';
+        button.addEventListener('click', () => {
+          this.currentPage = page;
+          this.loadHistory(page);
+        });
+        return button;
+      }
+
       escapeHtml(text) {
         const map = {
           '&': '&',
@@ -1294,7 +1689,7 @@
 
     // Initialize social captions generator when DOM is ready
     document.addEventListener('DOMContentLoaded', () => {
-      new SocialCaptionsGenerator();
+      window.socialCaptionsGenerator = new SocialCaptionsGenerator();
     });
   </script>
 </body>
