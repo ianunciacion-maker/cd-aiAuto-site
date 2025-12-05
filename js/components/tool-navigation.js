@@ -66,12 +66,10 @@ class ToolNavigation {
   // Generate footer HTML
   generateFooter() {
     return `
-      <section class="footer-cta">
-        <div class="container">
-
       <!-- SITE FOOTER -->
       <footer class="site-footer">
-        <div class="footer-inner">
+        <div class="container">
+          <div class="footer-inner">
             <div class="footer-brand">
               <h3>Ai-Auto</h3>
               <p style="max-width: 300px;">
@@ -106,9 +104,10 @@ class ToolNavigation {
               </ul>
             </div>
           </div>
-        <div class="footer-bottom">
+          <div class="footer-bottom">
             &copy; 2024 Ai-Auto. All rights reserved. Built with AI.
           </div>
+        </div>
       </footer>
     `;
   }
@@ -140,9 +139,11 @@ class ToolNavigation {
 
   // Render footer (append at the end of body before closing tag)
   renderFooter() {
-    const footer = document.createElement('div');
-    footer.innerHTML = this.generateFooter();
-    document.body.appendChild(footer);
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = this.generateFooter();
+    // Extract the footer element from the temp div and append it directly
+    const footerElement = tempDiv.firstElementChild;
+    document.body.appendChild(footerElement);
   }
 
   // Setup mobile menu functionality

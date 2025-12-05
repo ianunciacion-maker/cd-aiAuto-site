@@ -987,27 +987,88 @@
             return;
           }
 
+          // Get current user data
+          const user = await authManager.getCurrentUser();
+
           // Prepare form data for n8n webhook
           const formData = {
-            topic,
+            topic: topic,
             platforms: Array.from(this.selectedPlatforms),
-            tone,
-            hashtags,
-            length,
-            image_url: this.uploadedImage
+            tone: tone,
+            hashtags: hashtags || '',
+            length: length,
+            image_url: this.uploadedImage || null
           };
 
+          // Prepare complete payload with user data and metadata (matching blog generator structure)
+          const webhookPayload = {
+            // Form data
+            topic: formData.topic,
+            platforms: formData.platforms,
+            tone: formData.tone,
+            hashtags: formData.hashtags,
+            length: formData.length,
+            image_url: formData.image_url,
+
+            // User data
+            userId: user.id,
+            userEmail: user.email,
+
+            // Metadata
+            timestamp: new Date().toISOString(),
+            toolType: this.toolType
+          };
+
+          // Log the complete payload being sent
+          console.log('📤 COMPLETE PAYLOAD BEING SENT TO WEBHOOK:');
+          console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+          console.log('Topic:', webhookPayload.topic);
+          console.log('Platforms:', webhookPayload.platforms);
+          console.log('Tone:', webhookPayload.tone);
+          console.log('Hashtags:', webhookPayload.hashtags);
+          console.log('Length:', webhookPayload.length);
+          console.log('Image URL:', webhookPayload.image_url ? 'Yes (included)' : 'No image');
+          console.log('User ID:', webhookPayload.userId);
+          console.log('User Email:', webhookPayload.userEmail);
+          console.log('Timestamp:', webhookPayload.timestamp);
+          console.log('Tool Type:', webhookPayload.toolType);
+          console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+          console.log('Full payload:', JSON.stringify(webhookPayload, null, 2));
+
           // Call n8n webhook for processing
-          const response = await this.callN8nWebhook(formData);
+          const response = await this.callN8nWebhook(webhookPayload);
 
           if (response.success) {
             // Process webhook response
             this.generatedCaptions = response.captions || {};
+
+            // Show feedback about the source
+            if (response.fallback) {
+              console.log('ℹ️ Using placeholder captions (webhook unavailable)');
+              // Show info message to user
+              const infoMsg = document.createElement('div');
+              infoMsg.style.cssText = `
+                background: var(--gold);
+                color: var(--ink);
+                padding: var(--space-sm);
+                border: var(--border-thin);
+                margin-bottom: var(--space-md);
+                font-weight: 600;
+                text-align: center;
+                border-radius: var(--radius-sm);
+              `;
+              infoMsg.textContent = '⚡ Quick Mode: Generated locally (webhook connection issue)';
+              document.querySelector('.output-section').insertBefore(infoMsg, document.querySelector('.output-section').firstChild);
+              setTimeout(() => infoMsg.remove(), 5000);
+            } else {
+              console.log('✅ Using AI-generated captions from webhook');
+            }
+
             this.displayMultiPlatformOutput();
-            
+
             // Save to history
-            await this.saveToHistory(formData, response.captions);
-            
+            await this.saveToHistory(webhookPayload, response.captions);
+
             // Reload usage after generation
             await this.loadUsage();
           } else {
@@ -1023,42 +1084,112 @@
       }
 
       // n8n Webhook Integration Methods
-      async callN8nWebhook(formData) {
+      async callN8nWebhook(webhookPayload) {
+        const webhookUrl = 'https://n8n.autonoiq.com/webhook/social-caption-generator';
+
         try {
-          const response = await fetch('https://n8n.autonoiq.com/webhook/social-caption-generator', {
+          console.log('🚀 Sending to webhook:', webhookPayload);
+
+          const response = await fetch(webhookUrl, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-              'Origin': window.location.origin, // Add Origin header for CORS
+              'Accept': 'application/json'
             },
-            body: JSON.stringify(formData)
+            body: JSON.stringify(webhookPayload)
           });
 
           if (!response.ok) {
-            console.error(`Webhook HTTP error! status: ${response.status}`);
-            console.error('Response text:', await response.text());
-            throw new Error(`HTTP error! status: ${response.status}`);
+            throw new Error(`Webhook returned ${response.status}: ${response.statusText}`);
           }
 
-          const result = await response.json();
-          console.log('n8n webhook response:', result);
-          return result;
+          let result = await response.json();
+          console.log('📡 Webhook response (raw):', result);
+
+          // Helper function to recursively parse until we get an object
+          const deepParse = (data) => {
+            if (typeof data === 'string') {
+              try {
+                return deepParse(JSON.parse(data));
+              } catch (e) {
+                return data;
+              }
+            }
+            if (Array.isArray(data) && data.length > 0) {
+              return deepParse(data[0]);
+            }
+            return data;
+          };
+
+          // Deep parse result to handle nested JSON strings
+          result = deepParse(result);
+          console.log('📡 Webhook response (parsed):', result);
+
+          // Helper function to extract captions from any structure
+          const extractCaptions = (obj) => {
+            // Direct captions property
+            if (obj.captions && typeof obj.captions === 'object') {
+              return obj.captions;
+            }
+
+            // Check if platforms are at root level
+            const platforms = ['instagram', 'facebook', 'twitter', 'linkedin', 'tiktok'];
+            const rootLevelCaptions = {};
+            let hasRootLevelCaptions = false;
+            
+            platforms.forEach(platform => {
+              if (obj[platform]) {
+                rootLevelCaptions[platform] = obj[platform];
+                hasRootLevelCaptions = true;
+              }
+            });
+
+            if (hasRootLevelCaptions) {
+              return rootLevelCaptions;
+            }
+
+            // Check in output field
+            if (obj.output) {
+              const outputData = deepParse(obj.output);
+              if (outputData.captions) {
+                return outputData.captions;
+              }
+            }
+
+            return null;
+          };
+
+          // Try to extract captions
+          const captions = extractCaptions(result);
+          if (captions) {
+            return {
+              success: true,
+              captions: captions
+            };
+          }
+
+          // If nothing worked, log warning and use fallback
+          console.warn('⚠️ Could not parse captions from webhook response, using fallback');
+          console.warn('Response was:', result);
+          throw new Error('Invalid response structure from webhook');
+
         } catch (error) {
-          console.error('n8n webhook error:', error);
+          console.error('❌ n8n webhook error:', error.message);
           
           // Fallback to placeholder generation if webhook fails
-          console.log('Falling back to placeholder generation');
+          console.log('🔄 Falling back to placeholder generation');
           const fallbackCaptions = {};
-          for (const platform of formData.platforms) {
+          
+          for (const platform of webhookPayload.platforms) {
             fallbackCaptions[platform] = this.generatePlaceholderCaptions(
-              formData.topic,
+              webhookPayload.topic,
               platform,
-              formData.tone,
-              formData.hashtags,
-              formData.length
+              webhookPayload.tone,
+              webhookPayload.hashtags,
+              webhookPayload.length
             );
           }
-          
+
           return {
             success: true,
             captions: fallbackCaptions,
@@ -1067,7 +1198,7 @@
         }
       }
 
-      async saveToHistory(formData, captions) {
+      async saveToHistory(webhookPayload, captions) {
         try {
           const currentUser = await authManager.getCurrentUser();
           if (!currentUser) {
@@ -1077,12 +1208,12 @@
 
           const historyData = {
             user_id: currentUser.id,
-            topic: formData.topic,
-            platforms: formData.platforms,
-            tone: formData.tone,
-            hashtags: formData.hashtags,
-            length: formData.length,
-            image_url: formData.image_url,
+            topic: webhookPayload.topic,
+            platforms: webhookPayload.platforms,
+            tone: webhookPayload.tone,
+            hashtags: webhookPayload.hashtags,
+            length: webhookPayload.length,
+            image_url: webhookPayload.image_url,
             generated_captions: captions
           };
 
@@ -1190,9 +1321,24 @@
 
       // Multi-Platform Output Methods
       displayMultiPlatformOutput() {
+        console.log('🎨 Displaying multi-platform output for:', Array.from(this.selectedPlatforms));
+        console.log('📝 Generated captions:', this.generatedCaptions);
+
+        // Hide default output
+        if (this.defaultOutput) {
+          this.defaultOutput.style.display = 'none';
+        }
+
         // Clear existing content
         this.outputTabs.innerHTML = '';
         this.platformOutputs.innerHTML = '';
+
+        // Validate we have captions to display
+        if (!this.generatedCaptions || Object.keys(this.generatedCaptions).length === 0) {
+          console.error('❌ No captions to display!');
+          this.showError('No captions were generated. Please try again.');
+          return;
+        }
 
         // Create tabs and content for each platform
         let firstTab = null;
@@ -1483,7 +1629,7 @@
           'tiktok': '🎵'
         };
 
-        const platformIcons = item.platforms.map(platform =>
+        const platformIcons = (item.platforms || []).map(platform =>
           platformEmojis[platform] || '📝'
         ).join(' ');
 
@@ -1504,7 +1650,7 @@
             ${item.hashtags ? `<div>Hashtags: ${this.escapeHtml(item.hashtags)}</div>` : ''}
             ${item.image_url ? '<div>📷 Image included</div>' : ''}
             <div style="margin-top: var(--space-xs); font-style: italic;">
-              ${item.platforms.length} platform${item.platforms.length > 1 ? 's' : ''} generated
+              ${(item.platforms || []).length} platform${(item.platforms || []).length > 1 ? 's' : ''} generated
             </div>
           </div>
         `;
@@ -1530,15 +1676,15 @@
             const item = result.data;
             
             // Load the item data back into the form
-            document.getElementById('topic').value = item.topic;
-            document.getElementById('tone').value = item.tone;
+            document.getElementById('topic').value = item.topic || '';
+            document.getElementById('tone').value = item.tone || 'casual';
             document.getElementById('hashtags').value = item.hashtags || '';
             document.getElementById('length').value = item.length || 'medium';
             
             // Clear and set platform selections
             this.selectedPlatforms.clear();
             this.platformCheckboxes.forEach(checkbox => {
-              const isChecked = item.platforms.includes(checkbox.value);
+              const isChecked = item.platforms && item.platforms.includes(checkbox.value);
               checkbox.checked = isChecked;
               const platformItem = checkbox.closest('.platform-item');
               if (isChecked) {

@@ -3,6 +3,11 @@
   background: var(--ink);
   color: var(--bg-paper);
   padding: var(--space-lg) 0;
+  width: 100%;
+  margin: 0;
+  position: relative;
+  left: 0;
+  right: 0;
 }
 
 .footer-inner {
