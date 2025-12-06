@@ -4,7 +4,7 @@
 
 -- Create social_captions_history table
 CREATE TABLE IF NOT EXISTS social_captions_history (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
   user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
   topic TEXT NOT NULL,
   platforms TEXT[] NOT NULL,
