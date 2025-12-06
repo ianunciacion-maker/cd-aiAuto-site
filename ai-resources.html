@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>AI Resources | Ai-Auto</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Explore curated AI news and practical articles for entrepreneurs. Stay current on the latest AI trends and learn how to apply them to your business.">
+  
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="AI Resources | Ai-Auto" />
+  <meta property="og:description" content="Explore curated AI news and practical articles for entrepreneurs. Stay current on the latest AI trends and learn how to apply them to your business." />
+  <meta property="og:url" content="https://ai-auto.com/ai-resources.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Playfair+Display:wght@500;600;700;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="./css/components/navigation.css">
+  <style>
+    :root {
+      /* Neobrutalist Palette */
+      --bg-paper: #f2f0e9;
+      --bg-white: #ffffff;
+      --ink: #121212;
+      --blue: #2357ff;
+      --gold: #ffcc00;
+      --coral: #ff6b58;
+      --lavender: #dcd6f7;
+      --green: #00d084;
+      --pink: #ff4d9e;
+
+      /* Structural Variables */
+      --border-thick: 3px solid var(--ink);
+      --border-thin: 2px solid var(--ink);
+      --shadow-hard: 6px 6px 0px 0px var(--ink);
+      --shadow-hover: 10px 10px 0px 0px var(--ink);
+      --shadow-brutal: 8px 8px 0px 0px var(--ink);
+      --radius-sm: 4px;
+      --max-width: 1200px;
+
+      /* Spacing */
+      --space-xs: 8px;
+      --space-sm: 16px;
+      --space-md: 32px;
+      --space-lg: 64px;
+      --space-xl: 128px;
+    }
+
+    [data-theme="dark"] {
+      --bg-paper: #0a0a0a;
+      --bg-white: #1a1a1a;
+      --ink: #f0f0f0;
+      --blue: #4d7aff;
+      --gold: #ffd633;
+      --coral: #ff8c7a;
+      --lavender: #2a2a40;
+      --green: #00ff9f;
+      --pink: #ff6bb5;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-paper);
+      color: var(--ink);
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-family: 'Playfair Display', serif;
+      margin: 0;
+      font-weight: 900;
+      line-height: 1.1;
+    }
+
+    p {
+      margin: 0 0 var(--space-sm);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    /* UTILITIES */
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 var(--space-md);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 28px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border: var(--border-thick);
+      background: var(--blue);
+      color: #fff;
+      box-shadow: var(--shadow-hard);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 14px;
+    }
+
+    .btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
+      filter: brightness(1.1);
+    }
+
+    .btn-gold {
+      background: var(--gold);
+      color: #000;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 12px;
+      border: var(--border-thin);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      background: var(--gold);
+      color: #000;
+    }
+
+    /* HERO SECTION */
+    .hero {
+      padding: var(--space-xl) 0;
+      border-bottom: var(--border-thick);
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 19px, var(--ink) 19px, var(--ink) 20px),
+        repeating-linear-gradient(90deg, transparent, transparent 19px, var(--ink) 19px, var(--ink) 20px);
+      background-size: 20px 20px;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--bg-paper);
+      opacity: 0.92;
+      z-index: 0;
+    }
+
+    .hero .container {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero h1 {
+      font-size: clamp(48px, 8vw, 80px);
+      margin-bottom: var(--space-md);
+      text-transform: uppercase;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: var(--ink);
+    }
+
+    .hero h1 .highlight {
+      display: inline-block;
+      background: var(--gold);
+      color: #000;
+      padding: 0 16px;
+      transform: rotate(-2deg);
+      border: var(--border-thick);
+      box-shadow: var(--shadow-brutal);
+    }
+
+    .hero-subtitle {
+      font-size: 20px;
+      max-width: 700px;
+      margin-bottom: var(--space-md);
+      font-weight: 600;
+      color: var(--ink);
+      background: var(--bg-white);
+      border: var(--border-thick);
+      padding: var(--space-md);
+      box-shadow: var(--shadow-hard);
+    }
+
+    .hero .tag {
+      margin-bottom: 24px;
+    }
+
+    /* FOOTER CTA */
+    .footer-cta {
+      background: var(--blue);
+      color: #fff;
+      padding: var(--space-xl) 0;
+      text-align: center;
+      border-bottom: var(--border-thick);
+    }
+
+    .footer-cta h2 {
+      font-size: 80px;
+      margin-bottom: var(--space-md);
+      text-shadow: 6px 6px 0 var(--ink);
+      text-transform: uppercase;
+    }
+
+    .footer-cta p {
+      font-size: 24px;
+      margin-bottom: var(--space-lg);
+      font-weight: 600;
+    }
+
+    /* SITE FOOTER */
+    .site-footer {
+      background: var(--ink);
+      color: var(--bg-paper);
+      padding: var(--space-lg) 0;
+    }
+
+    .footer-inner {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: var(--space-lg);
+    }
+
+    .footer-brand h3 {
+      font-size: 32px;
+      margin-bottom: var(--space-sm);
+    }
+
+    .footer-links h4 {
+      font-size: 16px;
+      margin-bottom: var(--space-sm);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .footer-links ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-links li {
+      margin-bottom: 8px;
+    }
+
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-bottom {
+      margin-top: var(--space-lg);
+      padding-top: var(--space-md);
+      border-top: 2px solid var(--bg-paper);
+      text-align: center;
+      font-weight: 700;
+    }
+
+    /* AI RESOURCES SPECIFIC STYLES */
+    .resources-container {
+      padding: var(--space-xl) 0;
+      background: var(--bg-paper);
+    }
+
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-lg);
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 var(--space-md);
+    }
+
+    .resource-card {
+      border: var(--border-thick);
+      background: var(--bg-white);
+      box-shadow: var(--shadow-hard);
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .resource-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: var(--blue);
+      z-index: 10;
+    }
+
+    .resource-card:nth-child(2)::before {
+      background: var(--coral);
+    }
+
+    .resource-card-header {
+      padding: var(--space-md);
+      border-bottom: var(--border-thick);
+      background: var(--bg-paper);
+    }
+
+    .resource-card-header h2 {
+      font-size: 28px;
+      margin: 0;
+    }
+
+    .resource-card-content {
+      padding: var(--space-md);
+    }
+
+    .article-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .article-item {
+      margin-bottom: var(--space-md);
+    }
+
+    .article-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .article-link {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-sm);
+      padding: var(--space-sm);
+      border: var(--border-thin);
+      background: var(--bg-paper);
+      border-radius: var(--radius-sm);
+      transition: all 0.2s ease;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .article-link:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 4px 4px 0 var(--ink);
+      background: var(--bg-white);
+    }
+
+    .article-link:focus {
+      outline: 3px solid var(--blue);
+      outline-offset: 2px;
+    }
+
+    .article-thumbnail {
+      flex-shrink: 0;
+      width: 110px;
+      height: 70px;
+      overflow: hidden;
+      border-radius: var(--radius-sm);
+      border: var(--border-thin);
+    }
+
+    .article-thumbnail img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .article-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .article-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      font-weight: 700;
+      margin: 0 0 4px 0;
+      line-height: 1.3;
+      color: var(--ink);
+    }
+
+    .article-meta {
+      font-size: 12px;
+      color: var(--ink);
+      opacity: 0.7;
+      margin-bottom: 4px;
+      font-weight: 600;
+    }
+
+    .article-excerpt {
+      font-size: 13px;
+      line-height: 1.5;
+      margin: 0;
+      opacity: 0.8;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .resources-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+      }
+
+      .footer-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-cta h2 {
+        font-size: 48px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .article-link {
+        flex-direction: column;
+      }
+
+      .article-thumbnail {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16 / 9;
+      }
+
+      .article-title {
+        font-size: 15px;
+      }
+
+      .article-excerpt {
+        -webkit-line-clamp: 3;
+      }
+
+      .resource-card-header h2 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV - Dynamically loaded -->
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="container">
+      <div class="tag" style="margin-bottom: 24px; background: var(--blue); color: #fff;">Curated Resources</div>
+      <h1>
+        AI <span class="highlight">Resources</span>
+      </h1>
+      <p class="hero-subtitle">
+        Stay up to date with the latest AI news and practical insights for entrepreneurs. Curated content to help you leverage AI for your business.
+      </p>
+    </div>
+  </section>
+
+  <!-- RESOURCES SECTION -->
+  <section class="resources-container">
+    <div class="resources-grid">
+      
+      <!-- AI NEWS CARD -->
+      <div class="resource-card">
+        <div class="resource-card-header">
+          <h2>AI News</h2>
+        </div>
+        <div class="resource-card-content">
+          <ul class="article-list" id="aiNewsList">
+            <!-- Articles will be rendered here -->
+          </ul>
+        </div>
+      </div>
+
+      <!-- AI FOR ENTREPRENEURS CARD -->
+      <div class="resource-card">
+        <div class="resource-card-header">
+          <h2>AI for Entrepreneurs</h2>
+        </div>
+        <div class="resource-card-content">
+          <ul class="article-list" id="aiEntrepreneursList">
+            <!-- Articles will be rendered here -->
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER - Dynamically loaded -->
+
+  <!-- Scripts -->
+  <script>
+    // AI News Data
+    const aiNews = [
+      {
+        title: 'OpenAI Launches GPT-5 with Breakthrough Reasoning Capabilities',
+        url: 'https://techcrunch.com',
+        source: 'TechCrunch',
+        date: '2025-01-15',
+        excerpt: 'The latest iteration of GPT brings unprecedented reasoning and multimodal capabilities to the table.',
+        imageUrl: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=200&h=130&fit=crop',
+        imageAlt: 'AI neural network visualization'
+      },
+      {
+        title: 'Google DeepMind Achieves Major Breakthrough in Protein Folding',
+        url: 'https://wired.com',
+        source: 'Wired',
+        date: '2025-01-12',
+        excerpt: 'AlphaFold 3 can now predict protein interactions with 95% accuracy, revolutionizing drug discovery.',
+        imageUrl: 'https://images.unsplash.com/photo-1507413245164-6160d8298b31?w=200&h=130&fit=crop',
+        imageAlt: 'Scientific research laboratory'
+      },
+      {
+        title: 'Anthropic Introduces New Safety Measures for Claude AI',
+        url: 'https://theverge.com',
+        source: 'The Verge',
+        date: '2025-01-10',
+        excerpt: 'New constitutional AI techniques aim to make large language models more helpful and harmless.',
+        imageUrl: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=200&h=130&fit=crop',
+        imageAlt: 'AI robot concept'
+      },
+      {
+        title: 'EU Passes Comprehensive AI Regulation Framework',
+        url: 'https://reuters.com',
+        source: 'Reuters',
+        date: '2025-01-08',
+        excerpt: 'New regulations require AI systems to meet strict transparency and safety requirements.',
+        imageUrl: 'https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=200&h=130&fit=crop',
+        imageAlt: 'European Parliament building'
+      },
+      {
+        title: 'Midjourney V7 Sets New Standard for AI Image Generation',
+        url: 'https://arstechnica.com',
+        source: 'Ars Technica',
+        date: '2025-01-05',
+        excerpt: 'Latest update brings photorealistic quality and improved understanding of complex prompts.',
+        imageUrl: 'https://images.unsplash.com/photo-1547954575-855750c57bd3?w=200&h=130&fit=crop',
+        imageAlt: 'Digital art creation'
+      }
+    ];
+
+    // AI for Entrepreneurs Data
+    const aiForEntrepreneurs = [
+      {
+        title: 'How to Use AI to Automate 80% of Your Customer Support',
+        url: 'https://entrepreneur.com',
+        source: 'Entrepreneur',
+        date: '2025-01-14',
+        excerpt: 'Step-by-step guide to implementing AI chatbots that actually work for small businesses.',
+        imageUrl: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=200&h=130&fit=crop',
+        imageAlt: 'Customer support team'
+      },
+      {
+        title: '10 AI Tools Every Solopreneur Should Be Using in 2025',
+        url: 'https://forbes.com',
+        source: 'Forbes',
+        date: '2025-01-11',
+        excerpt: 'From content creation to financial planning, these tools can run your business while you sleep.',
+        imageUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=200&h=130&fit=crop',
+        imageAlt: 'Business dashboard analytics'
+      },
+      {
+        title: 'Building Your First AI-Powered SaaS: A Founder\'s Guide',
+        url: 'https://indiehackers.com',
+        source: 'Indie Hackers',
+        date: '2025-01-09',
+        excerpt: 'Real founders share their experiences building and scaling AI products from zero to revenue.',
+        imageUrl: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=200&h=130&fit=crop',
+        imageAlt: 'Team working on startup'
+      },
+      {
+        title: 'The Real Cost of AI: What Entrepreneurs Need to Know',
+        url: 'https://hbr.org',
+        source: 'Harvard Business Review',
+        date: '2025-01-06',
+        excerpt: 'Understanding API costs, compute requirements, and hidden expenses before you build.',
+        imageUrl: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=200&h=130&fit=crop',
+        imageAlt: 'Financial calculations'
+      },
+      {
+        title: 'AI Marketing Strategies That Generated $1M in Revenue',
+        url: 'https://growthhackers.com',
+        source: 'Growth Hackers',
+        date: '2025-01-03',
+        excerpt: 'Case studies from founders who used AI to scale their marketing without hiring a team.',
+        imageUrl: 'https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=200&h=130&fit=crop',
+        imageAlt: 'Marketing growth chart'
+      }
+    ];
+
+    // Format date for display
+    function formatDate(dateString) {
+      const options = { year: 'numeric', month: 'short', day: 'numeric' };
+      return new Date(dateString).toLocaleDateString('en-US', options);
+    }
+
+    // Render article item HTML
+    function renderArticleItem(article) {
+      return `
+        <li class="article-item">
+          <a href="${article.url}" target="_blank" rel="noopener noreferrer" class="article-link">
+            <div class="article-thumbnail">
+              <img src="${article.imageUrl}" alt="${article.imageAlt}" loading="lazy" />
+            </div>
+            <div class="article-content">
+              <h3 class="article-title">${article.title}</h3>
+              <div class="article-meta">${article.source} • ${formatDate(article.date)}</div>
+              <p class="article-excerpt">${article.excerpt}</p>
+            </div>
+          </a>
+        </li>
+      `;
+    }
+
+    // Initialize the page
+    function initResourcesPage() {
+      const aiNewsList = document.getElementById('aiNewsList');
+      const aiEntrepreneursList = document.getElementById('aiEntrepreneursList');
+
+      // Render AI News articles
+      aiNewsList.innerHTML = aiNews.map(article => renderArticleItem(article)).join('');
+
+      // Render AI for Entrepreneurs articles
+      aiEntrepreneursList.innerHTML = aiForEntrepreneurs.map(article => renderArticleItem(article)).join('');
+    }
+
+    // Run when DOM is ready
+    document.addEventListener('DOMContentLoaded', initResourcesPage);
+  </script>
+
+  <!-- Navigation Component -->
+  <script src="./js/components/navigation.js"></script>
+
+</body>
+
+</html>

@@ -18,6 +18,7 @@ class SiteNavigation {
             <a href="${this.getBaseUrl()}about.html" class="nav-link" id="aboutLink">About</a>
             <a href="${this.getBaseUrl()}tools.html" class="nav-link" id="toolsLink">Tools</a>
             <a href="${this.getBaseUrl()}blog.html" class="nav-link" id="blogLink">Blog</a>
+            <a href="${this.getBaseUrl()}ai-resources.html" class="nav-link" id="aiResourcesLink">AI Resources</a>
           </div>
           <div class="nav-auth" style="display: flex; gap: 12px; align-items: center;">
             <a href="${this.getBaseUrl()}user/login.html" style="font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink);">Log In</a>
@@ -45,6 +46,7 @@ class SiteNavigation {
           <a href="${this.getBaseUrl()}about.html" class="mobile-menu-link">About</a>
           <a href="${this.getBaseUrl()}tools.html" class="mobile-menu-link">Tools</a>
           <a href="${this.getBaseUrl()}blog.html" class="mobile-menu-link">Blog</a>
+          <a href="${this.getBaseUrl()}ai-resources.html" class="mobile-menu-link">AI Resources</a>
           <a href="${this.getBaseUrl()}user/login.html" class="mobile-menu-link">Log In</a>
           <a href="${this.getBaseUrl()}user/signup.html" class="btn btn-gold" style="width: 100%; margin-top: 16px;">Get Started</a>
         </div>
@@ -222,6 +224,7 @@ class SiteNavigation {
     const aboutLink = document.getElementById('aboutLink');
     const toolsLink = document.getElementById('toolsLink');
     const blogLink = document.getElementById('blogLink');
+    const aiResourcesLink = document.getElementById('aiResourcesLink');
 
     const highlightStyle = 'text-decoration: underline; text-decoration-thickness: 3px; text-decoration-color: var(--gold);';
 
@@ -230,6 +233,8 @@ class SiteNavigation {
       aboutLink.setAttribute('style', highlightStyle);
     } else if (currentPath.includes('tools.html') || currentPath.includes('/tools/')) {
       toolsLink.setAttribute('style', highlightStyle);
+    } else if (currentPath.includes('ai-resources.html')) {
+      aiResourcesLink.setAttribute('style', highlightStyle);
     } else if (currentPath.includes('blog.html') || currentPath.includes('/blog/')) {
       blogLink.setAttribute('style', highlightStyle);
     } else if (currentPath === '/' || currentPath.includes('index.html')) {
