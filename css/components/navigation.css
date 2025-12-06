@@ -11,6 +11,7 @@
 
 .nav-inner {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   max-width: var(--max-width);
   margin: 0 auto;
@@ -37,17 +38,9 @@
   outline: none;
 }
 
-.nav-main {
+.nav-links {
   display: flex;
   gap: var(--space-md);
-  align-items: center;
-  flex: 1;
-  justify-content: center;
-}
-
-.nav-actions {
-  display: flex;
-  gap: var(--space-sm);
   align-items: center;
 }
 
@@ -198,11 +191,11 @@
 
 /* Responsive navigation */
 @media (max-width: 900px) {
-  .nav-main {
+  .nav-links {
     display: none;
   }
   
-  .nav-actions {
+  .nav-inner > .btn:not(.hamburger) {
     display: none;
   }
   

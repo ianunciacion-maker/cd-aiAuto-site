@@ -996,12 +996,10 @@
   <nav class="nav">
     <div class="container nav-inner">
       <a href="index.html" class="logo">Ai-Auto</a>
-      <div class="nav-main">
+      <div class="nav-links">
         <a href="tools.html" class="nav-link">Tools</a>
         <a href="about.html" class="nav-link">About</a>
         <a href="blog.html" class="nav-link">Blog</a>
-      </div>
-      <div class="nav-actions">
         <a href="user/login.html" class="btn btn-outline">Login</a>
         <a href="user/signup.html" class="btn">Get Started</a>
       </div>
@@ -1028,7 +1026,7 @@
       <a href="about.html" class="mobile-menu-link">About</a>
       <a href="blog.html" class="mobile-menu-link">Blog</a>
       <a href="user/login.html" class="mobile-menu-link">Login</a>
-      <a href="user/signup.html" class="mobile-menu-link">Get Started</a>
+      <a href="user/signup.html" class="mobile-menu-link">Sign Up</a>
     </div>
   </div>
 
@@ -1311,35 +1309,6 @@
   </footer>
 
 
-<script>
-  // Mobile menu functionality
-  document.addEventListener('DOMContentLoaded', function() {
-    const hamburger = document.getElementById('hamburger');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const closeMobile = document.getElementById('closeMobile');
-    
-    if (hamburger && mobileMenu && closeMobile) {
-      hamburger.addEventListener('click', function() {
-        mobileMenu.classList.add('active');
-        document.body.style.overflow = 'hidden';
-      });
-      
-      closeMobile.addEventListener('click', function() {
-        mobileMenu.classList.remove('active');
-        document.body.style.overflow = '';
-      });
-      
-      // Close menu when clicking on a link
-      const mobileLinks = mobileMenu.querySelectorAll('a');
-      mobileLinks.forEach(link => {
-        link.addEventListener('click', function() {
-          mobileMenu.classList.remove('active');
-          document.body.style.overflow = '';
-        });
-      });
-    }
-  });
-</script>
 </body>
 
 </html>
