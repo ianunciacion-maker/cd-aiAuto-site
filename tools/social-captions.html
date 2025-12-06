@@ -1341,11 +1341,63 @@
       }
 
       // Multi-Platform Output Methods
+      
+      // Centralized caption text extraction method
+      extractCaptionText(captionData) {
+        console.log('🔍 Extracting caption text from:', captionData);
+        
+        // If it's already a string, return as-is
+        if (typeof captionData === 'string') {
+          return captionData;
+        }
+        
+        // If it's null or undefined, return empty string
+        if (!captionData) {
+          return '';
+        }
+        
+        // If it's an object, try to extract text from various properties
+        if (typeof captionData === 'object') {
+          // Try common properties where caption text might be stored
+          if (captionData.fullCaption) {
+            return captionData.fullCaption;
+          } else if (captionData.caption) {
+            let text = captionData.caption;
+            // Add hashtags if they exist separately
+            if (captionData.hashtags) {
+              text += '\n\n' + captionData.hashtags;
+            }
+            return text;
+          } else if (captionData.text) {
+            return captionData.text;
+          } else if (captionData.content) {
+            return captionData.content;
+          } else if (captionData.output) {
+            return captionData.output;
+          } else {
+            // If object has no recognizable text properties, convert to string for debugging
+            console.warn('⚠️ Could not extract text from caption object:', captionData);
+            return JSON.stringify(captionData, null, 2);
+          }
+        }
+        
+        // Fallback: convert to string
+        return String(captionData);
+      }
+
       displayMultiPlatformOutput() {
-        console.log('🎨 Displaying multi-platform output for:', Array.from(this.selectedPlatforms));
+        console.log('🎨 Displaying multi-platform output');
+        console.log('🎨 Selected platforms:', Array.from(this.selectedPlatforms));
         console.log('📝 Generated captions:', this.generatedCaptions);
         console.log('📝 Generated captions type:', typeof this.generatedCaptions);
         console.log('📝 Generated captions keys:', Object.keys(this.generatedCaptions));
+        
+        // Validate we have captions to display
+        if (!this.generatedCaptions || Object.keys(this.generatedCaptions).length === 0) {
+          console.error('❌ No captions to display!');
+          this.showError('No captions were generated. Please try again.');
+          return;
+        }
 
         // Hide default output
         if (this.defaultOutput) {
@@ -1355,16 +1407,6 @@
         // Clear existing content
         this.outputTabs.innerHTML = '';
         this.platformOutputs.innerHTML = '';
-
-        // Validate we have captions to display
-        if (!this.generatedCaptions || Object.keys(this.generatedCaptions).length === 0) {
-          console.error('❌ No captions to display!');
-          this.showError('No captions were generated. Please try again.');
-          return;
-        }
-
-        console.log('🎯 About to process platforms for display:', Array.from(this.selectedPlatforms));
-        console.log('🎯 Available captions in this.generatedCaptions:', Object.keys(this.generatedCaptions));
 
         // Ensure we have captions for all selected platforms
         const missingPlatforms = [];
@@ -1417,42 +1459,15 @@
           tab.addEventListener('click', () => this.switchPlatformTab(platform));
           this.outputTabs.appendChild(tab);
 
-          // Extract actual caption text from object or string
-          let captionText = this.generatedCaptions[platform];
-          if (typeof captionText === 'object' && captionText !== null) {
-            // If it's an object, try to extract text content
-            console.log(`🔍 Processing caption object for ${platform}:`, captionText);
-
-            // Try common properties where caption text might be stored
-            // n8n returns: { caption: "text", hashtags: "#tags", fullCaption: "text + tags" }
-            if (captionText.fullCaption) {
-              captionText = captionText.fullCaption;
-            } else if (captionText.caption) {
-              // If caption and hashtags exist separately, combine them
-              captionText = captionText.caption;
-              if (captionText.hashtags) {
-                captionText += '\n\n' + captionText.hashtags;
-              }
-            } else if (captionText.text) {
-              captionText = captionText.text;
-            } else if (captionText.content) {
-              captionText = captionText.content;
-            } else if (captionText.output) {
-              captionText = captionText.output;
-            } else {
-              // If object has no recognizable text properties, stringify it for debugging
-              console.warn(`⚠️ Could not extract text from caption object for ${platform}:`, captionText);
-              captionText = JSON.stringify(captionText, null, 2);
-            }
-          }
-
-          // Ensure we have a string to display
-          if (typeof captionText !== 'string') {
-            console.warn(`⚠️ Caption for ${platform} is not a string after processing:`, captionText);
-            captionText = String(captionText);
-          }
-
+          // Extract actual caption text from object or string using new method
+          let captionText = this.extractCaptionText(this.generatedCaptions[platform]);
           console.log(`✅ Final caption text for ${platform}:`, captionText);
+
+          // Validate caption text
+          if (!captionText || captionText.trim() === '') {
+            console.warn(`⚠️ Empty caption for ${platform}`);
+            captionText = `No caption generated for ${platform}. Please try again.`;
+          }
 
           // Create content container
           const contentContainer = document.createElement('div');
@@ -1509,32 +1524,8 @@
       }
 
       copyPlatformCaption(platform) {
-        // Extract actual caption text from object or string (same logic as display)
-        let captionText = this.generatedCaptions[platform];
-        if (typeof captionText === 'object' && captionText !== null) {
-          // n8n returns: { caption: "text", hashtags: "#tags", fullCaption: "text + tags" }
-          if (captionText.fullCaption) {
-            captionText = captionText.fullCaption;
-          } else if (captionText.caption) {
-            captionText = captionText.caption;
-            if (captionText.hashtags) {
-              captionText += '\n\n' + captionText.hashtags;
-            }
-          } else if (captionText.text) {
-            captionText = captionText.text;
-          } else if (captionText.content) {
-            captionText = captionText.content;
-          } else if (captionText.output) {
-            captionText = captionText.output;
-          } else {
-            captionText = String(captionText);
-          }
-        }
-
-        // Ensure we have a string to copy
-        if (typeof captionText !== 'string') {
-          captionText = String(captionText);
-        }
+        // Extract actual caption text from object or string using new method
+        let captionText = this.extractCaptionText(this.generatedCaptions[platform]);
 
         navigator.clipboard.writeText(captionText).then(() => {
           const button = document.querySelector(`[data-platform="${platform}"].btn-copy-platform`);
@@ -1551,32 +1542,8 @@
         this.selectedPlatforms.forEach(platform => {
           const platformName = platform.charAt(0).toUpperCase() + platform.slice(1);
 
-          // Extract actual caption text from object or string (same logic as display)
-          let captionText = this.generatedCaptions[platform];
-          if (typeof captionText === 'object' && captionText !== null) {
-            // n8n returns: { caption: "text", hashtags: "#tags", fullCaption: "text + tags" }
-            if (captionText.fullCaption) {
-              captionText = captionText.fullCaption;
-            } else if (captionText.caption) {
-              captionText = captionText.caption;
-              if (captionText.hashtags) {
-                captionText += '\n\n' + captionText.hashtags;
-              }
-            } else if (captionText.text) {
-              captionText = captionText.text;
-            } else if (captionText.content) {
-              captionText = captionText.content;
-            } else if (captionText.output) {
-              captionText = captionText.output;
-            } else {
-              captionText = String(captionText);
-            }
-          }
-
-          // Ensure we have a string to copy
-          if (typeof captionText !== 'string') {
-            captionText = String(captionText);
-          }
+          // Extract actual caption text from object or string using new method
+          let captionText = this.extractCaptionText(this.generatedCaptions[platform]);
 
           allContent += `=== ${platformName} ===\n`;
           allContent += captionText + '\n\n';
@@ -1596,32 +1563,8 @@
         this.selectedPlatforms.forEach(platform => {
           const platformName = platform.charAt(0).toUpperCase() + platform.slice(1);
 
-          // Extract actual caption text from object or string (same logic as display)
-          let captionText = this.generatedCaptions[platform];
-          if (typeof captionText === 'object' && captionText !== null) {
-            // n8n returns: { caption: "text", hashtags: "#tags", fullCaption: "text + tags" }
-            if (captionText.fullCaption) {
-              captionText = captionText.fullCaption;
-            } else if (captionText.caption) {
-              captionText = captionText.caption;
-              if (captionText.hashtags) {
-                captionText += '\n\n' + captionText.hashtags;
-              }
-            } else if (captionText.text) {
-              captionText = captionText.text;
-            } else if (captionText.content) {
-              captionText = captionText.content;
-            } else if (captionText.output) {
-              captionText = captionText.output;
-            } else {
-              captionText = String(captionText);
-            }
-          }
-
-          // Ensure we have a string to download
-          if (typeof captionText !== 'string') {
-            captionText = String(captionText);
-          }
+          // Extract actual caption text from object or string using new method
+          let captionText = this.extractCaptionText(this.generatedCaptions[platform]);
 
           allContent += `=== ${platformName} ===\n`;
           allContent += captionText + '\n\n';
