@@ -96,6 +96,8 @@
   box-shadow: var(--shadow-hard);
   transition: all 0.2s ease;
   border-radius: var(--radius-sm);
+  position: relative;
+  z-index: 1001;
 }
 
 .hamburger:hover,
@@ -144,6 +146,12 @@
   transition: transform 0.3s ease;
   opacity: 0;
   visibility: hidden;
+}
+
+/* Ensure z-index variable is defined */
+:root {
+  --z-modal: 1000;
+  --z-sticky: 100;
 }
 
 .mobile-menu.active {
@@ -206,6 +214,10 @@
   
   .nav-inner > .btn:not(.hamburger) {
     display: none;
+  }
+  
+  .nav-auth {
+    display: none !important;
   }
   
   .hamburger {

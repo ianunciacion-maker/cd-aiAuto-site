@@ -19,7 +19,7 @@ class SiteNavigation {
             <a href="${this.getBaseUrl()}tools.html" class="nav-link" id="toolsLink">Tools</a>
             <a href="${this.getBaseUrl()}blog.html" class="nav-link" id="blogLink">Blog</a>
           </div>
-          <div style="display: flex; gap: 12px; align-items: center;">
+          <div class="nav-auth" style="display: flex; gap: 12px; align-items: center;">
             <a href="${this.getBaseUrl()}user/login.html" style="font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink);">Log In</a>
             <a href="${this.getBaseUrl()}user/signup.html" class="btn btn-gold">Get Started</a>
           </div>
@@ -145,25 +145,31 @@ class SiteNavigation {
 
   // Setup mobile menu functionality
   setupMobileMenu() {
-    // Add a small delay to ensure DOM is fully loaded
-    setTimeout(() => {
+    // Use a more reliable approach to ensure DOM is ready
+    const initializeMobileMenu = () => {
       const hamburger = document.getElementById('hamburger');
       const mobileMenu = document.getElementById('mobileMenu');
       const closeMenu = document.getElementById('closeMenu');
 
       if (!hamburger || !mobileMenu || !closeMenu) {
-        console.error('Mobile menu elements not found');
+        console.error('Mobile menu elements not found', { hamburger, mobileMenu, closeMenu });
         return;
       }
 
+      // Add click event listener to hamburger
       hamburger.addEventListener('click', (e) => {
         e.preventDefault();
+        e.stopPropagation();
+        console.log('Hamburger clicked'); // Debug log
         mobileMenu.classList.add('active');
         document.body.style.overflow = 'hidden';
       });
 
+      // Add click event listener to close button
       closeMenu.addEventListener('click', (e) => {
         e.preventDefault();
+        e.stopPropagation();
+        console.log('Close menu clicked'); // Debug log
         mobileMenu.classList.remove('active');
         document.body.style.overflow = '';
       });
@@ -171,9 +177,11 @@ class SiteNavigation {
       // Close menu when clicking on a link
       const mobileLinks = mobileMenu.querySelectorAll('a');
       mobileLinks.forEach(link => {
-        link.addEventListener('click', () => {
+        link.addEventListener('click', (e) => {
+          console.log('Mobile link clicked'); // Debug log
           mobileMenu.classList.remove('active');
           document.body.style.overflow = '';
+          // Allow default navigation to proceed
         });
       });
 
@@ -194,7 +202,16 @@ class SiteNavigation {
           document.body.style.overflow = '';
         }
       });
-    }, 100);
+
+      console.log('Mobile menu initialized successfully'); // Debug log
+    };
+
+    // Try to initialize immediately if DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initializeMobileMenu);
+    } else {
+      initializeMobileMenu();
+    }
   }
 
   // Highlight the current page in the nav
