@@ -145,30 +145,56 @@ class SiteNavigation {
 
   // Setup mobile menu functionality
   setupMobileMenu() {
-    const hamburger = document.getElementById('hamburger');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const closeMenu = document.getElementById('closeMenu');
+    // Add a small delay to ensure DOM is fully loaded
+    setTimeout(() => {
+      const hamburger = document.getElementById('hamburger');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const closeMenu = document.getElementById('closeMenu');
 
-    if (!hamburger || !mobileMenu || !closeMenu) return;
+      if (!hamburger || !mobileMenu || !closeMenu) {
+        console.error('Mobile menu elements not found');
+        return;
+      }
 
-    hamburger.addEventListener('click', () => {
-      mobileMenu.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    });
+      hamburger.addEventListener('click', (e) => {
+        e.preventDefault();
+        mobileMenu.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
 
-    closeMenu.addEventListener('click', () => {
-      mobileMenu.classList.remove('active');
-      document.body.style.overflow = '';
-    });
-
-    // Close menu when clicking on a link
-    const mobileLinks = mobileMenu.querySelectorAll('a');
-    mobileLinks.forEach(link => {
-      link.addEventListener('click', () => {
+      closeMenu.addEventListener('click', (e) => {
+        e.preventDefault();
         mobileMenu.classList.remove('active');
         document.body.style.overflow = '';
       });
-    });
+
+      // Close menu when clicking on a link
+      const mobileLinks = mobileMenu.querySelectorAll('a');
+      mobileLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.remove('active');
+          document.body.style.overflow = '';
+        });
+      });
+
+      // Close menu when clicking outside
+      document.addEventListener('click', (e) => {
+        if (mobileMenu.classList.contains('active') &&
+            !mobileMenu.contains(e.target) &&
+            !hamburger.contains(e.target)) {
+          mobileMenu.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      });
+
+      // Close menu with escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+          mobileMenu.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      });
+    }, 100);
   }
 
   // Highlight the current page in the nav
