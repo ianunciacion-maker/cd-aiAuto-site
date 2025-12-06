@@ -1584,6 +1584,9 @@
         `;
         this.imagePreview.style.display = 'block';
         
+        // Hide the upload area when image is displayed
+        this.uploadArea.style.display = 'none';
+        
         // Re-attach remove button event listener
         document.getElementById('removeImageBtn').addEventListener('click', () => this.removeImage());
       }
@@ -1593,6 +1596,9 @@
         this.uploadedImageFile = null;
         this.imagePreview.style.display = 'none';
         this.imageInput.value = '';
+        
+        // Show the upload area again when image is removed
+        this.uploadArea.style.display = 'flex';
       }
 
       // Platform Selection Methods
