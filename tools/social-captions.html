@@ -882,6 +882,7 @@
         
         // State management
         this.uploadedImage = null;
+        this.uploadedImageFile = null; // Store the actual File object for upload
         this.selectedPlatforms = new Set();
         this.generatedCaptions = {};
         this.historyVisible = false;
@@ -990,6 +991,22 @@
           // Get current user data
           const user = await authManager.getCurrentUser();
 
+          // Upload image to Supabase Storage if one was selected
+          let imageUrl = null;
+          if (this.uploadedImageFile) {
+            console.log('📤 Uploading image to Supabase Storage...');
+            const { url, error: uploadError } = await blogManager.uploadImage(this.uploadedImageFile);
+
+            if (uploadError) {
+              console.error('❌ Image upload failed:', uploadError);
+              this.showError('Failed to upload image. Continuing without image.');
+              setTimeout(() => this.clearError(), 3000);
+            } else {
+              imageUrl = url;
+              console.log('✅ Image uploaded successfully:', imageUrl);
+            }
+          }
+
           // Prepare form data for n8n webhook
           const formData = {
             topic: topic,
@@ -997,7 +1014,7 @@
             tone: tone,
             hashtags: hashtags || '',
             length: length,
-            image_url: this.uploadedImage || null
+            image_url: imageUrl // Send only the URL, not base64
           };
 
           // Prepare complete payload with user data and metadata (matching n8n workflow expectations)
@@ -1008,10 +1025,10 @@
             tone: formData.tone,
             hashtags: formData.hashtags,
             length: formData.length,
-            
-            // n8n workflow expects 'image' field - always include image for processing
+
+            // n8n workflow expects 'image' field with URL (not base64)
             image: formData.image_url || null,
-            
+
             // Also include image_url for compatibility
             image_url: formData.image_url || null,
 
@@ -1024,12 +1041,9 @@
             toolType: this.toolType
           };
 
-          // Log image information regardless of size
+          // Log image information
           if (formData.image_url) {
-            console.log('📷 Image included in payload:', formData.image_url.length, 'bytes');
-            if (formData.image_url.length >= 100000) {
-              console.warn('⚠️ Image is large (>100KB), but still including for n8n processing');
-            }
+            console.log('📷 Image URL included in payload:', formData.image_url);
           } else {
             console.log('📷 No image included in payload');
           }
@@ -1047,17 +1061,8 @@
           console.log('User Email:', webhookPayload.userEmail);
           console.log('Timestamp:', webhookPayload.timestamp);
           console.log('Tool Type:', webhookPayload.toolType);
-          
-          // Enhanced image logging
-          if (webhookPayload.image) {
-            console.log('📷 Image included in payload:', webhookPayload.image.substring(0, 50) + '...');
-            console.log('📷 Image type detection:', webhookPayload.image.substring(5, 15)); // data:image/jpeg
-          } else {
-            console.log('📷 No image included in payload');
-          }
-          
           console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-          console.log('Full payload:', JSON.stringify(webhookPayload, null, 2));
+          console.log('Payload size:', JSON.stringify(webhookPayload).length, 'characters (optimized)');
 
           // Show loading state in output section
           this.showOutputLoading();
@@ -1288,10 +1293,13 @@
           return;
         }
 
-        // Read and display image
+        // Store the File object for upload
+        this.uploadedImageFile = file;
+
+        // Read and display image preview
         const reader = new FileReader();
         reader.onload = (e) => {
-          this.uploadedImage = e.target.result;
+          this.uploadedImage = e.target.result; // Keep for preview only
           this.displayImagePreview(e.target.result);
         };
         reader.readAsDataURL(file);
@@ -1312,6 +1320,7 @@
 
       removeImage() {
         this.uploadedImage = null;
+        this.uploadedImageFile = null;
         this.imagePreview.style.display = 'none';
         this.imageInput.value = '';
       }
