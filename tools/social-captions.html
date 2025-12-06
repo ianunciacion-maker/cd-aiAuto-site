@@ -485,6 +485,111 @@
       margin-bottom: var(--space-lg);
     }
 
+    /* History Section - 2-over-1 layout */
+    .history-section {
+      grid-column: 1 / -1; /* Span full width */
+    }
+
+    .history-section .form-section {
+      grid-column: 1 / -1; /* Span full width */
+    }
+
+    .history-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: var(--space-md);
+    }
+
+    .history-item {
+      background: var(--bg-white);
+      border: var(--border-thick);
+      box-shadow: var(--shadow-hard);
+      border-radius: var(--radius-sm);
+      padding: var(--space-lg);
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .history-item:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .history-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--blue);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .history-item:hover::before {
+      opacity: 1;
+    }
+
+    .history-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: var(--space-md);
+    }
+
+    .history-header strong {
+      color: var(--ink);
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    .history-meta {
+      color: var(--text-secondary);
+      font-size: 14px;
+      margin-top: var(--space-xs);
+    }
+
+    .history-actions {
+      display: flex;
+      gap: var(--space-xs);
+      flex-shrink: 0;
+    }
+
+    .history-preview {
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .history-preview div {
+      margin-bottom: var(--space-xs);
+    }
+
+    .history-preview div:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Responsive adjustments for history */
+    @media (max-width: 900px) {
+      .history-list {
+        grid-template-columns: 1fr;
+        gap: var(--space-sm);
+      }
+      
+      .history-header {
+        flex-direction: column;
+        gap: var(--space-sm);
+        align-items: flex-start;
+      }
+      
+      .history-actions {
+        align-self: flex-end;
+      }
+    }
+
     /* Form Section - uses dashboard card styles */
     .form-section {
       background: var(--bg-white);
@@ -970,8 +1075,8 @@
         </div>
 
         <!-- History Section -->
-        <div class="history-section" id="historySection" style="display: none; margin-top: var(--space-lg);">
-          <div class="form-section">
+        <div class="history-section" id="historySection" style="display: block; margin-top: var(--space-lg);">
+          <div class="form-section" style="grid-column: 1 / -1;">
             <h2>📜 Generation History</h2>
             
             <div class="history-controls" style="margin-bottom: var(--space-md);">
@@ -1938,14 +2043,6 @@
       createHistoryElement(item) {
         const historyDiv = document.createElement('div');
         historyDiv.className = 'history-item';
-        historyDiv.style.cssText = `
-          background: var(--bg-white);
-          border: var(--border-thin);
-          border-radius: var(--radius-sm);
-          padding: var(--space-md);
-          margin-bottom: var(--space-md);
-          transition: all 0.2s ease;
-        `;
 
         const createdDate = new Date(item.created_at).toLocaleDateString();
         const platformEmojis = {
@@ -1961,19 +2058,19 @@
         ).join(' ');
 
         historyDiv.innerHTML = `
-          <div class="history-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-sm);">
+          <div class="history-header">
             <div>
-              <strong style="color: var(--ink);">${this.escapeHtml(item.topic)}</strong>
-              <div style="color: var(--text-secondary); font-size: 14px; margin-top: 4px;">
+              <strong>${this.escapeHtml(item.topic)}</strong>
+              <div class="history-meta">
                 ${platformIcons} • ${item.tone} • ${createdDate}
               </div>
             </div>
-            <div class="history-actions" style="display: flex; gap: var(--space-xs);">
+            <div class="history-actions">
               <button class="btn btn-outline btn-sm" onclick="socialCaptionsGenerator.loadHistoryItem('${item.id}')">📋 Load</button>
               <button class="btn btn-outline btn-sm" onclick="socialCaptionsGenerator.deleteHistoryItem('${item.id}')">🗑️</button>
             </div>
           </div>
-          <div class="history-preview" style="color: var(--text-secondary); font-size: 14px; line-height: 1.4;">
+          <div class="history-preview">
             ${item.hashtags ? `<div>Hashtags: ${this.escapeHtml(item.hashtags)}</div>` : ''}
             ${item.image_url ? '<div>📷 Image included</div>' : ''}
             <div style="margin-top: var(--space-xs); font-style: italic;">
@@ -1982,25 +2079,20 @@
           </div>
         `;
 
-        historyDiv.addEventListener('mouseenter', () => {
-          historyDiv.style.transform = 'translate(-2px, -2px)';
-          historyDiv.style.boxShadow = 'var(--shadow-hard)';
-        });
-
-        historyDiv.addEventListener('mouseleave', () => {
-          historyDiv.style.transform = 'translate(0, 0)';
-          historyDiv.style.boxShadow = 'none';
-        });
-
         return historyDiv;
       }
 
       async loadHistoryItem(itemId) {
         try {
+          console.log('🔄 Loading history item:', itemId);
           const result = await socialCaptionsHistoryManager.getEntryById(itemId);
           
-          if (result.success && result.data) {
+          console.log('📦 History item result:', result);
+          
+          // Check if result has data (not checking for result.success as it may not exist)
+          if (result && result.data) {
             const item = result.data;
+            console.log('📝 History item data:', item);
             
             // Load the item data back into the form
             document.getElementById('topic').value = item.topic || '';
@@ -2032,19 +2124,26 @@
             
             // Load generated captions
             this.generatedCaptions = item.generated_captions || {};
-            this.displayMultiPlatformOutput();
+            console.log('🎨 Loaded captions:', this.generatedCaptions);
+            
+            // Only display output if we have captions
+            if (Object.keys(this.generatedCaptions).length > 0) {
+              this.displayMultiPlatformOutput();
+            }
             
             // Scroll to form
             this.form.scrollIntoView({ behavior: 'smooth' });
             
             // Show success message
-            this.showError('History item loaded successfully!');
+            this.showError('History item loaded successfully!', 'success');
             setTimeout(() => this.clearError(), 3000);
           } else {
-            this.showError('Failed to load history item');
+            console.error('❌ No data found for history item:', result);
+            this.showError('Failed to load history item: No data found');
           }
         } catch (error) {
-          console.error('Error loading history item:', error);
+          console.error('❌ Error loading history item:', error);
+          console.error('❌ Error stack:', error.stack);
           this.showError('Failed to load history item. Please try again.');
         }
       }
@@ -2149,13 +2248,22 @@
         return text.replace(/[&<>"']/g, m => map[m]);
       }
 
-      showError(message) {
+      showError(message, type = 'error') {
         this.errorMessage.textContent = message;
-        this.errorMessage.classList.add('show');
+        this.errorMessage.classList.remove('show', 'error', 'success');
+        this.errorMessage.classList.add('show', type);
+        
+        // Set background color based on type
+        if (type === 'success') {
+          this.errorMessage.style.background = 'var(--green)';
+        } else {
+          this.errorMessage.style.background = 'var(--coral)';
+        }
       }
 
       clearError() {
-        this.errorMessage.classList.remove('show');
+        this.errorMessage.classList.remove('show', 'error', 'success');
+        this.errorMessage.style.background = 'var(--coral)';
       }
 
       setSubmitting(isSubmitting) {
