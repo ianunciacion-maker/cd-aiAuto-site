@@ -227,6 +227,67 @@
       background: var(--lavender);
     }
 
+    /* Enhanced Active platform toggle indicators */
+    .platform-item[data-platform].active {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      border-bottom: 3px solid var(--blue);
+      background: var(--lavender);
+      transform: translateY(-2px);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Platform-specific active states */
+    .platform-item[data-platform="instagram"].active {
+      border-bottom-color: #E4405F;
+      background: linear-gradient(135deg, rgba(228, 64, 95, 0.1) 0%, rgba(228, 64, 95, 0.05) 100%);
+    }
+
+    .platform-item[data-platform="facebook"].active {
+      border-bottom-color: #4267B2;
+      background: linear-gradient(135deg, rgba(66, 103, 178, 0.1) 0%, rgba(66, 103, 178, 0.05) 100%);
+    }
+
+    .platform-item[data-platform="twitter"].active {
+      border-bottom-color: #1DA1F2;
+      background: linear-gradient(135deg, rgba(29, 161, 242, 0.1) 0%, rgba(29, 161, 242, 0.05) 100%);
+    }
+
+    .platform-item[data-platform="linkedin"].active {
+      border-bottom-color: #0077B5;
+      background: linear-gradient(135deg, rgba(0, 119, 181, 0.1) 0%, rgba(0, 119, 181, 0.05) 100%);
+    }
+
+    .platform-item[data-platform="tiktok"].active {
+      border-bottom-color: #000000;
+      background: linear-gradient(135deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.05) 100%);
+    }
+
+    /* Enhanced hover states for platform items */
+    .platform-item:hover {
+      border-color: var(--blue);
+      background: var(--lavender);
+      transform: translate(-2px, -2px);
+      box-shadow: 0 2px 8px rgba(67, 97, 238, 0.15);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .platform-item:hover .platform-icon {
+      transform: scale(1.1);
+    }
+
+    /* Enhanced selected state */
+    .platform-item.selected {
+      border-color: var(--blue);
+      background: var(--lavender);
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(67, 97, 238, 0.1);
+    }
+
+    .platform-checkbox:checked + .platform-label {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
     /* Enhanced Output Section Styles */
     .output-tabs {
       display: flex;
@@ -596,20 +657,107 @@
       display: block;
     }
 
-    /* Loading Spinner - matches dashboard loading styles */
+    /* Enhanced Loading Spinner - matches dashboard loading styles */
     .loading-spinner {
       display: inline-block;
-      width: 20px;
-      height: 20px;
-      border: 3px solid rgba(255, 255, 255, 0.3);
+      width: 24px;
+      height: 24px;
+      border: 3px solid rgba(67, 97, 238, 0.2);
+      border-radius: 50%;
+      border-top-color: var(--blue);
+      animation: spin 1s linear infinite;
+      margin-right: var(--space-sm);
+      position: relative;
+    }
+
+    .loading-spinner::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 12px;
+      height: 12px;
+      border: 2px solid rgba(255, 255, 255, 0.8);
       border-radius: 50%;
       border-top-color: #fff;
-      animation: spin 1s linear infinite;
-      margin-right: var(--space-xs);
+      animation: spin 0.6s linear infinite reverse;
+      transform: translate(-50%, -50%);
     }
 
     @keyframes spin {
-      to { transform: rotate(360deg); }
+      0% { transform: rotate(0deg); }
+      50% { transform: rotate(180deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Enhanced Loading State */
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(2px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    .loading-content {
+      text-align: center;
+      padding: var(--space-xl);
+      background: var(--bg-white);
+      border: var(--border-thick);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-hover);
+      max-width: 300px;
+      animation: slideUp 0.4s ease-out;
+    }
+
+    .loading-icon {
+      font-size: 48px;
+      margin-bottom: var(--space-md);
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    .loading-text {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: var(--space-sm);
+      font-family: var(--font-heading);
+      text-transform: uppercase;
+      letter-spacing: -0.3px;
+    }
+
+    .loading-subtext {
+      font-size: 14px;
+      color: var(--text-secondary);
+      font-style: italic;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.1); opacity: 0.8; }
     }
 
     /* Responsive Design - matches dashboard breakpoints */
@@ -782,6 +930,22 @@
         <!-- Enhanced Output Section with Multi-Platform Support -->
         <div class="output-section">
           <h2>Generated Captions</h2>
+          
+          <!-- Loading State -->
+          <div id="loadingState" style="display: none; text-align: center; padding: var(--space-lg); background: var(--bg-paper); border: var(--border-thin); border-radius: var(--radius-sm); margin-bottom: var(--space-md);">
+            <div class="loading-spinner"></div>
+            <span style="color: var(--ink); font-weight: 600;">Generating captions...</span>
+          </div>
+          
+          <!-- Loading Overlay for enhanced experience -->
+          <div id="loadingOverlay" style="display: none;" class="loading-overlay">
+            <div class="loading-content">
+              <div class="loading-icon">🎨</div>
+              <div class="loading-text">Generating Captions</div>
+              <div class="loading-subtext">Creating amazing content for your social media...</div>
+              <div class="loading-spinner" style="margin: var(--space-md) auto 0;"></div>
+            </div>
+          </div>
           
           <!-- Platform Tabs -->
           <div class="output-tabs" id="outputTabs">
@@ -1399,6 +1563,9 @@
           return;
         }
 
+        // Set current platform to Instagram by default for initial display
+        this.currentPlatform = 'instagram';
+
         // Hide default output
         if (this.defaultOutput) {
           this.defaultOutput.style.display = 'none';
@@ -1433,9 +1600,16 @@
 
         console.log('🎯 Final captions to display after processing:', this.generatedCaptions);
 
+        // Sort platforms to ensure Instagram is always first if selected
+        const sortedPlatforms = Array.from(this.selectedPlatforms).sort((a, b) => {
+          if (a === 'instagram') return -1;
+          if (b === 'instagram') return 1;
+          return 0;
+        });
+
         // Create tabs and content for each platform
-        let firstTab = null;
-        this.selectedPlatforms.forEach((platform, index) => {
+        let instagramTab = null;
+        sortedPlatforms.forEach((platform, index) => {
           const platformName = platform.charAt(0).toUpperCase() + platform.slice(1);
           const platformEmoji = {
             'instagram': '📷',
@@ -1451,9 +1625,10 @@
           tab.textContent = `${platformEmoji[platform]} ${platformName}`;
           tab.dataset.platform = platform;
           
-          if (index === 0) {
+          // Always set Instagram tab as active by default, regardless of order
+          if (platform === 'instagram') {
             tab.classList.add('active');
-            firstTab = tab;
+            instagramTab = tab;
           }
 
           tab.addEventListener('click', () => this.switchPlatformTab(platform));
@@ -1488,7 +1663,8 @@
             </div>
           `;
 
-          if (index === 0) {
+          // Always set Instagram content as active by default
+          if (platform === 'instagram') {
             contentContainer.classList.add('active');
           }
 
@@ -1507,6 +1683,17 @@
 
         // Show action buttons
         this.outputActions.style.display = 'block';
+        
+        // Hide loading states
+        const loadingState = document.getElementById('loadingState');
+        if (loadingState) {
+          loadingState.style.display = 'none';
+        }
+        
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        if (loadingOverlay) {
+          loadingOverlay.style.display = 'none';
+        }
       }
 
       switchPlatformTab(platform) {
@@ -1514,13 +1701,31 @@
         document.querySelectorAll('.output-tab').forEach(tab => {
           tab.classList.remove('active');
         });
-        document.querySelector(`[data-platform="${platform}"]`).classList.add('active');
+        const activeTab = document.querySelector(`[data-platform="${platform}"]`);
+        if (activeTab) {
+          activeTab.classList.add('active');
+        }
 
         // Update content visibility
         document.querySelectorAll('.platform-output').forEach(content => {
           content.classList.remove('active');
         });
-        document.getElementById(`output-${platform}`).classList.add('active');
+        const activeContent = document.getElementById(`output-${platform}`);
+        if (activeContent) {
+          activeContent.classList.add('active');
+        }
+
+        // Update platform toggle indicators
+        document.querySelectorAll('.platform-item').forEach(item => {
+          if (item.dataset.platform === platform) {
+            item.classList.add('active');
+          } else {
+            item.classList.remove('active');
+          }
+        });
+
+        // Update current platform
+        this.currentPlatform = platform;
       }
 
       copyPlatformCaption(platform) {
@@ -1979,14 +2184,17 @@
           this.outputActions.style.display = 'none';
         }
         
-        // Show loading message in platform outputs
-        this.platformOutputs.innerHTML = `
-          <div style="text-align: center; padding: var(--space-lg); color: var(--text-secondary);">
-            <div class="loading-spinner" style="margin: 0 auto var(--space-sm); display: block;"></div>
-            <p>Generating captions for your selected platforms...</p>
-            <p style="font-size: 14px; opacity: 0.8;">This may take a few seconds.</p>
-          </div>
-        `;
+        // Show enhanced loading overlay
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        if (loadingOverlay) {
+          loadingOverlay.style.display = 'flex';
+        }
+        
+        // Also show basic loading state as fallback
+        const loadingState = document.getElementById('loadingState');
+        if (loadingState) {
+          loadingState.style.display = 'block';
+        }
       }
     }
 
