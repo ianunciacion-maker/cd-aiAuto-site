@@ -1157,6 +1157,7 @@
         this.historyVisible = false;
         this.currentPage = 1;
         this.itemsPerPage = 10;
+        this.isLoading = false; // Track loading state to prevent flickering
         
         this.init();
       }
@@ -1789,16 +1790,8 @@
         // Show action buttons
         this.outputActions.style.display = 'block';
         
-        // Hide loading states
-        const loadingState = document.getElementById('loadingState');
-        if (loadingState) {
-          loadingState.style.display = 'none';
-        }
-        
-        const loadingOverlay = document.getElementById('loadingOverlay');
-        if (loadingOverlay) {
-          loadingOverlay.style.display = 'none';
-        }
+        // Hide loading states using the new method
+        this.hideOutputLoading();
       }
 
       switchPlatformTab(platform) {
@@ -2278,6 +2271,14 @@
       }
 
       showOutputLoading() {
+        // Prevent multiple loading overlays
+        if (this.isLoading) {
+          console.log('🔄 Already loading, skipping duplicate overlay');
+          return;
+        }
+        
+        this.isLoading = true;
+        
         // Clear existing content and show loading state
         this.outputTabs.innerHTML = '';
         this.platformOutputs.innerHTML = '';
@@ -2292,17 +2293,19 @@
           this.outputActions.style.display = 'none';
         }
         
-        // Show enhanced loading overlay
-        const loadingOverlay = document.getElementById('loadingOverlay');
-        if (loadingOverlay) {
-          loadingOverlay.style.display = 'flex';
-        }
-        
-        // Also show basic loading state as fallback
-        const loadingState = document.getElementById('loadingState');
-        if (loadingState) {
-          loadingState.style.display = 'block';
-        }
+        // Show enhanced loading overlay with a slight delay to prevent flickering
+        setTimeout(() => {
+          const loadingOverlay = document.getElementById('loadingOverlay');
+          if (loadingOverlay) {
+            loadingOverlay.style.display = 'flex';
+          }
+          
+          // Also show basic loading state as fallback
+          const loadingState = document.getElementById('loadingState');
+          if (loadingState) {
+            loadingState.style.display = 'block';
+          }
+        }, 100); // Small delay to prevent flickering
       }
     }
 
