@@ -1,19 +1,30 @@
+/* FOOTER CTA */
+.footer-cta {
+  background: var(--blue);
+  color: #fff;
+  padding: var(--space-xl) 0;
+  text-align: center;
+  border-top: var(--border-thick);
+}
+
+.footer-cta h2 {
+  font-size: 64px;
+  margin-bottom: var(--space-md);
+  text-shadow: 4px 4px 0 var(--ink);
+}
+
 /* SITE FOOTER */
 .site-footer {
   background: var(--ink);
   color: var(--bg-paper);
-  padding: var(--space-lg) 0;
-  width: 100%;
-  margin: 0;
-  position: relative;
-  left: 0;
-  right: 0;
+  padding: var(--space-md) 0;
+  border-top: var(--border-thick);
 }
 
 .footer-inner {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  gap: var(--space-lg);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
 .footer-brand h3 {
@@ -26,6 +37,12 @@
   margin-bottom: var(--space-sm);
   text-transform: uppercase;
   letter-spacing: 0.05em;
+}
+
+/* Ensure proper alignment for footer sections */
+.footer-brand,
+.footer-links {
+  text-align: left;
 }
 
 .footer-links ul {
@@ -61,7 +78,7 @@
 /* Responsive Design */
 @media (max-width: 900px) {
   .footer-inner {
-    grid-template-columns: 1fr;
+    flex-direction: column;
     gap: var(--space-md);
   }
 
