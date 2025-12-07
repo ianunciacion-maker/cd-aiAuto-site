@@ -512,143 +512,198 @@
   <!-- FOOTER - Dynamically loaded -->
 
   <!-- Scripts -->
+  <!-- Supabase client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./supabase.js"></script>
   <script>
-    // AI News Data
-    const aiNews = [
-      {
-        title: 'OpenAI Launches GPT-5 with Breakthrough Reasoning Capabilities',
-        url: 'https://techcrunch.com',
-        source: 'TechCrunch',
-        date: '2025-01-15',
-        excerpt: 'The latest iteration of GPT brings unprecedented reasoning and multimodal capabilities to the table.',
-        imageUrl: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=200&h=130&fit=crop',
-        imageAlt: 'AI neural network visualization'
-      },
-      {
-        title: 'Google DeepMind Achieves Major Breakthrough in Protein Folding',
-        url: 'https://wired.com',
-        source: 'Wired',
-        date: '2025-01-12',
-        excerpt: 'AlphaFold 3 can now predict protein interactions with 95% accuracy, revolutionizing drug discovery.',
-        imageUrl: 'https://images.unsplash.com/photo-1507413245164-6160d8298b31?w=200&h=130&fit=crop',
-        imageAlt: 'Scientific research laboratory'
-      },
-      {
-        title: 'Anthropic Introduces New Safety Measures for Claude AI',
-        url: 'https://theverge.com',
-        source: 'The Verge',
-        date: '2025-01-10',
-        excerpt: 'New constitutional AI techniques aim to make large language models more helpful and harmless.',
-        imageUrl: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=200&h=130&fit=crop',
-        imageAlt: 'AI robot concept'
-      },
-      {
-        title: 'EU Passes Comprehensive AI Regulation Framework',
-        url: 'https://reuters.com',
-        source: 'Reuters',
-        date: '2025-01-08',
-        excerpt: 'New regulations require AI systems to meet strict transparency and safety requirements.',
-        imageUrl: 'https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=200&h=130&fit=crop',
-        imageAlt: 'European Parliament building'
-      },
-      {
-        title: 'Midjourney V7 Sets New Standard for AI Image Generation',
-        url: 'https://arstechnica.com',
-        source: 'Ars Technica',
-        date: '2025-01-05',
-        excerpt: 'Latest update brings photorealistic quality and improved understanding of complex prompts.',
-        imageUrl: 'https://images.unsplash.com/photo-1547954575-855750c57bd3?w=200&h=130&fit=crop',
-        imageAlt: 'Digital art creation'
+    // AI Resources Page - Fetches from Supabase
+    class AIResourcesPage {
+      constructor() {
+        this.aiNewsList = document.getElementById('aiNewsList');
+        this.aiEntrepreneursList = document.getElementById('aiEntrepreneursList');
+        this.init();
       }
-    ];
 
-    // AI for Entrepreneurs Data
-    const aiForEntrepreneurs = [
-      {
-        title: 'How to Use AI to Automate 80% of Your Customer Support',
-        url: 'https://entrepreneur.com',
-        source: 'Entrepreneur',
-        date: '2025-01-14',
-        excerpt: 'Step-by-step guide to implementing AI chatbots that actually work for small businesses.',
-        imageUrl: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=200&h=130&fit=crop',
-        imageAlt: 'Customer support team'
-      },
-      {
-        title: '10 AI Tools Every Solopreneur Should Be Using in 2025',
-        url: 'https://forbes.com',
-        source: 'Forbes',
-        date: '2025-01-11',
-        excerpt: 'From content creation to financial planning, these tools can run your business while you sleep.',
-        imageUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=200&h=130&fit=crop',
-        imageAlt: 'Business dashboard analytics'
-      },
-      {
-        title: 'Building Your First AI-Powered SaaS: A Founder\'s Guide',
-        url: 'https://indiehackers.com',
-        source: 'Indie Hackers',
-        date: '2025-01-09',
-        excerpt: 'Real founders share their experiences building and scaling AI products from zero to revenue.',
-        imageUrl: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=200&h=130&fit=crop',
-        imageAlt: 'Team working on startup'
-      },
-      {
-        title: 'The Real Cost of AI: What Entrepreneurs Need to Know',
-        url: 'https://hbr.org',
-        source: 'Harvard Business Review',
-        date: '2025-01-06',
-        excerpt: 'Understanding API costs, compute requirements, and hidden expenses before you build.',
-        imageUrl: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=200&h=130&fit=crop',
-        imageAlt: 'Financial calculations'
-      },
-      {
-        title: 'AI Marketing Strategies That Generated $1M in Revenue',
-        url: 'https://growthhackers.com',
-        source: 'Growth Hackers',
-        date: '2025-01-03',
-        excerpt: 'Case studies from founders who used AI to scale their marketing without hiring a team.',
-        imageUrl: 'https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=200&h=130&fit=crop',
-        imageAlt: 'Marketing growth chart'
+      async init() {
+        await this.loadResources();
       }
-    ];
 
-    // Format date for display
-    function formatDate(dateString) {
-      const options = { year: 'numeric', month: 'short', day: 'numeric' };
-      return new Date(dateString).toLocaleDateString('en-US', options);
+      async loadResources() {
+        try {
+          // Load AI News
+          const { data: newsData, error: newsError } = await aiResourcesManager.getPublishedByCategory('ai_news');
+          if (newsError) {
+            console.error('Error loading AI News:', newsError);
+            this.renderFallbackNews();
+          } else if (newsData && newsData.length > 0) {
+            this.renderArticles(this.aiNewsList, newsData);
+          } else {
+            this.renderFallbackNews();
+          }
+
+          // Load AI for Entrepreneurs
+          const { data: entrepreneursData, error: entrepreneursError } = await aiResourcesManager.getPublishedByCategory('ai_entrepreneurs');
+          if (entrepreneursError) {
+            console.error('Error loading AI for Entrepreneurs:', entrepreneursError);
+            this.renderFallbackEntrepreneurs();
+          } else if (entrepreneursData && entrepreneursData.length > 0) {
+            this.renderArticles(this.aiEntrepreneursList, entrepreneursData);
+          } else {
+            this.renderFallbackEntrepreneurs();
+          }
+        } catch (error) {
+          console.error('Error loading resources:', error);
+          // Fall back to static content
+          this.renderFallbackNews();
+          this.renderFallbackEntrepreneurs();
+        }
+      }
+
+      renderArticles(container, articles) {
+        container.innerHTML = articles.map(article => this.renderArticleItem(article)).join('');
+      }
+
+      renderArticleItem(article) {
+        const imageUrl = article.image_url || 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=200&h=130&fit=crop';
+        const imageAlt = article.image_alt || article.headline;
+        
+        return `
+          <li class="article-item">
+            <a href="${this.escapeHtml(article.source_url)}" target="_blank" rel="noopener noreferrer" class="article-link">
+              <div class="article-thumbnail">
+                <img src="${this.escapeHtml(imageUrl)}" alt="${this.escapeHtml(imageAlt)}" loading="lazy" />
+              </div>
+              <div class="article-content">
+                <h3 class="article-title">${this.escapeHtml(article.headline)}</h3>
+                <div class="article-meta">${this.escapeHtml(article.source_name)} • ${this.formatDate(article.published_date)}</div>
+                <p class="article-excerpt">${this.escapeHtml(article.preview)}</p>
+              </div>
+            </a>
+          </li>
+        `;
+      }
+
+      formatDate(dateString) {
+        if (!dateString) return '';
+        const options = { year: 'numeric', month: 'short', day: 'numeric' };
+        return new Date(dateString).toLocaleDateString('en-US', options);
+      }
+
+      escapeHtml(text) {
+        if (!text) return '';
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+      }
+
+      // Fallback content in case database is empty or unavailable
+      renderFallbackNews() {
+        const fallbackNews = [
+          {
+            headline: 'OpenAI Launches GPT-5 with Breakthrough Reasoning Capabilities',
+            source_url: 'https://techcrunch.com',
+            source_name: 'TechCrunch',
+            published_date: '2025-01-15',
+            preview: 'The latest iteration of GPT brings unprecedented reasoning and multimodal capabilities to the table.',
+            image_url: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=200&h=130&fit=crop',
+            image_alt: 'AI neural network visualization'
+          },
+          {
+            headline: 'Google DeepMind Achieves Major Breakthrough in Protein Folding',
+            source_url: 'https://wired.com',
+            source_name: 'Wired',
+            published_date: '2025-01-12',
+            preview: 'AlphaFold 3 can now predict protein interactions with 95% accuracy, revolutionizing drug discovery.',
+            image_url: 'https://images.unsplash.com/photo-1507413245164-6160d8298b31?w=200&h=130&fit=crop',
+            image_alt: 'Scientific research laboratory'
+          },
+          {
+            headline: 'Anthropic Introduces New Safety Measures for Claude AI',
+            source_url: 'https://theverge.com',
+            source_name: 'The Verge',
+            published_date: '2025-01-10',
+            preview: 'New constitutional AI techniques aim to make large language models more helpful and harmless.',
+            image_url: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=200&h=130&fit=crop',
+            image_alt: 'AI robot concept'
+          },
+          {
+            headline: 'EU Passes Comprehensive AI Regulation Framework',
+            source_url: 'https://reuters.com',
+            source_name: 'Reuters',
+            published_date: '2025-01-08',
+            preview: 'New regulations require AI systems to meet strict transparency and safety requirements.',
+            image_url: 'https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=200&h=130&fit=crop',
+            image_alt: 'European Parliament building'
+          },
+          {
+            headline: 'Midjourney V7 Sets New Standard for AI Image Generation',
+            source_url: 'https://arstechnica.com',
+            source_name: 'Ars Technica',
+            published_date: '2025-01-05',
+            preview: 'Latest update brings photorealistic quality and improved understanding of complex prompts.',
+            image_url: 'https://images.unsplash.com/photo-1547954575-855750c57bd3?w=200&h=130&fit=crop',
+            image_alt: 'Digital art creation'
+          }
+        ];
+        this.renderArticles(this.aiNewsList, fallbackNews);
+      }
+
+      renderFallbackEntrepreneurs() {
+        const fallbackEntrepreneurs = [
+          {
+            headline: 'How to Use AI to Automate 80% of Your Customer Support',
+            source_url: 'https://entrepreneur.com',
+            source_name: 'Entrepreneur',
+            published_date: '2025-01-14',
+            preview: 'Step-by-step guide to implementing AI chatbots that actually work for small businesses.',
+            image_url: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=200&h=130&fit=crop',
+            image_alt: 'Customer support team'
+          },
+          {
+            headline: '10 AI Tools Every Solopreneur Should Be Using in 2025',
+            source_url: 'https://forbes.com',
+            source_name: 'Forbes',
+            published_date: '2025-01-11',
+            preview: 'From content creation to financial planning, these tools can run your business while you sleep.',
+            image_url: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=200&h=130&fit=crop',
+            image_alt: 'Business dashboard analytics'
+          },
+          {
+            headline: "Building Your First AI-Powered SaaS: A Founder's Guide",
+            source_url: 'https://indiehackers.com',
+            source_name: 'Indie Hackers',
+            published_date: '2025-01-09',
+            preview: 'Real founders share their experiences building and scaling AI products from zero to revenue.',
+            image_url: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=200&h=130&fit=crop',
+            image_alt: 'Team working on startup'
+          },
+          {
+            headline: 'The Real Cost of AI: What Entrepreneurs Need to Know',
+            source_url: 'https://hbr.org',
+            source_name: 'Harvard Business Review',
+            published_date: '2025-01-06',
+            preview: 'Understanding API costs, compute requirements, and hidden expenses before you build.',
+            image_url: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=200&h=130&fit=crop',
+            image_alt: 'Financial calculations'
+          },
+          {
+            headline: 'AI Marketing Strategies That Generated $1M in Revenue',
+            source_url: 'https://growthhackers.com',
+            source_name: 'Growth Hackers',
+            published_date: '2025-01-03',
+            preview: 'Case studies from founders who used AI to scale their marketing without hiring a team.',
+            image_url: 'https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=200&h=130&fit=crop',
+            image_alt: 'Marketing growth chart'
+          }
+        ];
+        this.renderArticles(this.aiEntrepreneursList, fallbackEntrepreneurs);
+      }
     }
 
-    // Render article item HTML
-    function renderArticleItem(article) {
-      return `
-        <li class="article-item">
-          <a href="${article.url}" target="_blank" rel="noopener noreferrer" class="article-link">
-            <div class="article-thumbnail">
-              <img src="${article.imageUrl}" alt="${article.imageAlt}" loading="lazy" />
-            </div>
-            <div class="article-content">
-              <h3 class="article-title">${article.title}</h3>
-              <div class="article-meta">${article.source} • ${formatDate(article.date)}</div>
-              <p class="article-excerpt">${article.excerpt}</p>
-            </div>
-          </a>
-        </li>
-      `;
-    }
-
-    // Initialize the page
-    function initResourcesPage() {
-      const aiNewsList = document.getElementById('aiNewsList');
-      const aiEntrepreneursList = document.getElementById('aiEntrepreneursList');
-
-      // Render AI News articles
-      aiNewsList.innerHTML = aiNews.map(article => renderArticleItem(article)).join('');
-
-      // Render AI for Entrepreneurs articles
-      aiEntrepreneursList.innerHTML = aiForEntrepreneurs.map(article => renderArticleItem(article)).join('');
-    }
-
-    // Run when DOM is ready
-    document.addEventListener('DOMContentLoaded', initResourcesPage);
+    // Initialize when DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+      new AIResourcesPage();
+    });
   </script>
 
   <!-- Navigation Component -->

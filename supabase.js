@@ -1167,6 +1167,362 @@ class AdminUserManager {
 }
 
 // ============================================
+// AI RESOURCES MANAGER
+// ============================================
+
+class AIResourcesManager {
+  constructor() {
+    this.tableName = 'ai_resources';
+    this.storageBucket = 'ai-resources-images';
+  }
+
+  // Get all published resources by category (public)
+  async getPublishedByCategory(category) {
+    try {
+      const { data, error } = await supabase
+        .from(this.tableName)
+        .select('*')
+        .eq('category', category)
+        .eq('status', 'published')
+        .order('sort_order', { ascending: true });
+
+      if (error) {
+        console.error('Get published resources error:', error.message);
+        return { data: null, error };
+      }
+
+      return { data, error: null };
+    } catch (error) {
+      console.error('Get published resources exception:', error);
+      return { data: null, error };
+    }
+  }
+
+  // Get all resources by category (admin - includes drafts)
+  async getAllByCategory(category) {
+    try {
+      const { data, error } = await supabase
+        .from(this.tableName)
+        .select('*')
+        .eq('category', category)
+        .order('sort_order', { ascending: true });
+
+      if (error) {
+        console.error('Get all resources error:', error.message);
+        return { data: null, error };
+      }
+
+      return { data, error: null };
+    } catch (error) {
+      console.error('Get all resources exception:', error);
+      return { data: null, error };
+    }
+  }
+
+  // Get all resources (admin - includes all categories and drafts)
+  async getAllResources() {
+    try {
+      const { data, error } = await supabase
+        .from(this.tableName)
+        .select('*')
+        .order('category', { ascending: true })
+        .order('sort_order', { ascending: true });
+
+      if (error) {
+        console.error('Get all resources error:', error.message);
+        return { data: null, error };
+      }
+
+      return { data, error: null };
+    } catch (error) {
+      console.error('Get all resources exception:', error);
+      return { data: null, error };
+    }
+  }
+
+  // Get single resource by ID
+  async getById(id) {
+    try {
+      const { data, error } = await supabase
+        .from(this.tableName)
+        .select('*')
+        .eq('id', id)
+        .single();
+
+      if (error) {
+        console.error('Get resource by ID error:', error.message);
+        return { data: null, error };
+      }
+
+      return { data, error: null };
+    } catch (error) {
+      console.error('Get resource by ID exception:', error);
+      return { data: null, error };
+    }
+  }
+
+  // Create new resource
+  async create(resourceData) {
+    try {
+      // Get the max sort_order for this category
+      const { data: existingResources } = await supabase
+        .from(this.tableName)
+        .select('sort_order')
+        .eq('category', resourceData.category)
+        .order('sort_order', { ascending: false })
+        .limit(1);
+
+      const nextSortOrder = existingResources && existingResources.length > 0 
+        ? existingResources[0].sort_order + 1 
+        : 1;
+
+      const resource = {
+        category: resourceData.category,
+        headline: resourceData.headline,
+        preview: resourceData.preview,
+        content: resourceData.content || null,
+        image_url: resourceData.image_url || null,
+        image_alt: resourceData.image_alt || null,
+        source_name: resourceData.source_name,
+        source_url: resourceData.source_url,
+        published_date: resourceData.published_date || new Date().toISOString().split('T')[0],
+        sort_order: resourceData.sort_order || nextSortOrder,
+        status: resourceData.status || 'draft',
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      };
+
+      const { data, error } = await supabase
+        .from(this.tableName)
+        .insert([resource])
+        .select()
+        .single();
+
+      if (error) {
+        console.error('Create resource error:', error.message);
+        return { data: null, error };
+      }
+
+      console.log('Resource created successfully:', data.id);
+      return { data, error: null };
+    } catch (error) {
+      console.error('Create resource exception:', error);
+      return { data: null, error };
+    }
+  }
+
+  // Update existing resource
+  async update(id, resourceData) {
+    try {
+      const updates = {
+        ...resourceData,
+        updated_at: new Date().toISOString(),
+      };
+
+      const { data, error } = await supabase
+        .from(this.tableName)
+        .update(updates)
+        .eq('id', id)
+        .select()
+        .single();
+
+      if (error) {
+        console.error('Update resource error:', error.message);
+        return { data: null, error };
+      }
+
+      console.log('Resource updated successfully:', data.id);
+      return { data, error: null };
+    } catch (error) {
+      console.error('Update resource exception:', error);
+      return { data: null, error };
+    }
+  }
+
+  // Delete resource
+  async delete(id) {
+    try {
+      const { data, error } = await supabase
+        .from(this.tableName)
+        .delete()
+        .eq('id', id)
+        .select()
+        .single();
+
+      if (error) {
+        console.error('Delete resource error:', error.message);
+        return { data: null, error };
+      }
+
+      console.log('Resource deleted successfully:', id);
+      return { data, error: null };
+    } catch (error) {
+      console.error('Delete resource exception:', error);
+      return { data: null, error };
+    }
+  }
+
+  // Reorder resources within a category
+  async reorder(category, orderedIds) {
+    try {
+      // Update sort_order for each resource
+      const updates = orderedIds.map((id, index) => ({
+        id,
+        sort_order: index + 1
+      }));
+
+      for (const update of updates) {
+        const { error } = await supabase
+          .from(this.tableName)
+          .update({ sort_order: update.sort_order, updated_at: new Date().toISOString() })
+          .eq('id', update.id);
+
+        if (error) {
+          console.error('Reorder resource error:', error.message);
+          return { error };
+        }
+      }
+
+      console.log('Resources reordered successfully');
+      return { error: null };
+    } catch (error) {
+      console.error('Reorder resources exception:', error);
+      return { error };
+    }
+  }
+
+  // Move resource up in sort order within its category
+  async moveUp(id) {
+    try {
+      // Get the current resource
+      const { data: current, error: currentError } = await this.getById(id);
+      if (currentError || !current) {
+        return { error: currentError || { message: 'Resource not found' } };
+      }
+
+      // Find the resource above it (lower sort_order)
+      const { data: above, error: aboveError } = await supabase
+        .from(this.tableName)
+        .select('*')
+        .eq('category', current.category)
+        .lt('sort_order', current.sort_order)
+        .order('sort_order', { ascending: false })
+        .limit(1)
+        .single();
+
+      if (aboveError || !above) {
+        // Already at top
+        return { data: current, error: null };
+      }
+
+      // Swap sort orders
+      await this.update(current.id, { sort_order: above.sort_order });
+      await this.update(above.id, { sort_order: current.sort_order });
+
+      return { data: current, error: null };
+    } catch (error) {
+      console.error('Move up exception:', error);
+      return { error };
+    }
+  }
+
+  // Move resource down in sort order within its category
+  async moveDown(id) {
+    try {
+      // Get the current resource
+      const { data: current, error: currentError } = await this.getById(id);
+      if (currentError || !current) {
+        return { error: currentError || { message: 'Resource not found' } };
+      }
+
+      // Find the resource below it (higher sort_order)
+      const { data: below, error: belowError } = await supabase
+        .from(this.tableName)
+        .select('*')
+        .eq('category', current.category)
+        .gt('sort_order', current.sort_order)
+        .order('sort_order', { ascending: true })
+        .limit(1)
+        .single();
+
+      if (belowError || !below) {
+        // Already at bottom
+        return { data: current, error: null };
+      }
+
+      // Swap sort orders
+      await this.update(current.id, { sort_order: below.sort_order });
+      await this.update(below.id, { sort_order: current.sort_order });
+
+      return { data: current, error: null };
+    } catch (error) {
+      console.error('Move down exception:', error);
+      return { error };
+    }
+  }
+
+  // Upload image to Supabase Storage
+  async uploadImage(file) {
+    try {
+      const user = await authManager.getCurrentUser();
+      if (!user) {
+        return { url: null, error: { message: 'User not authenticated' } };
+      }
+
+      // Create unique filename
+      const timestamp = Date.now();
+      const randomStr = Math.random().toString(36).substring(2, 8);
+      const filename = `${timestamp}-${randomStr}-${file.name}`;
+      const filepath = `${filename}`;
+
+      // Upload file
+      const { data, error } = await supabase.storage
+        .from(this.storageBucket)
+        .upload(filepath, file, {
+          cacheControl: '3600',
+          upsert: false
+        });
+
+      if (error) {
+        console.error('Image upload error:', error.message);
+        return { url: null, error };
+      }
+
+      // Get public URL
+      const { data: publicData } = supabase.storage
+        .from(this.storageBucket)
+        .getPublicUrl(filepath);
+
+      console.log('Image uploaded successfully:', publicData.publicUrl);
+      return { url: publicData.publicUrl, error: null };
+    } catch (error) {
+      console.error('Image upload exception:', error);
+      return { url: null, error };
+    }
+  }
+
+  // Get count by category
+  async getCountByCategory(category) {
+    try {
+      const { count, error } = await supabase
+        .from(this.tableName)
+        .select('*', { count: 'exact', head: true })
+        .eq('category', category);
+
+      if (error) {
+        console.error('Get count error:', error.message);
+        return { count: null, error };
+      }
+
+      return { count, error: null };
+    } catch (error) {
+      console.error('Get count exception:', error);
+      return { count: null, error };
+    }
+  }
+}
+
+// ============================================
 // INITIALIZE MANAGERS
 // ============================================
 
@@ -1176,6 +1532,7 @@ const blogHistoryManager = new BlogHistoryManager();
 const userManager = new UserManager();
 const stripeManager = new StripeManager();
 const adminUserManager = new AdminUserManager();
+const aiResourcesManager = new AIResourcesManager();
 
 // Expose to global scope for access in HTML files
 if (typeof window !== 'undefined') {
@@ -1185,9 +1542,10 @@ if (typeof window !== 'undefined') {
   window.userManager = userManager;
   window.stripeManager = stripeManager;
   window.adminUserManager = adminUserManager;
+  window.aiResourcesManager = aiResourcesManager;
   window.supabase = supabase;
 }
 
 console.log('✅ Supabase client initialized');
 console.log('✅ Auth and Blog managers ready');
-console.log('✅ User, Stripe, and Admin managers ready');
+console.log('✅ User, Stripe, Admin, and AI Resources managers ready');

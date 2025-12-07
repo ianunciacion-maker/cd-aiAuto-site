@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Debug Hamburger Menu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="css/components/navigation.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    .debug-info {
+      background: #f0f0f0;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .status {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .element-check {
+      margin: 5px 0;
+      padding: 5px;
+      border-radius: 4px;
+    }
+    .found {
+      background: #d4edda;
+      color: #155724;
+    }
+    .not-found {
+      background: #f8d7da;
+      color: #721c24;
+    }
+    .mobile-preview {
+      width: 100%;
+      max-width: 400px;
+      height: 200px;
+      border: 2px solid #ccc;
+      margin-top: 20px;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <div class="debug-info">
+    <h2>Debug Hamburger Menu</h2>
+    <div class="status" id="status">Initializing...</div>
+    <div id="elementChecks"></div>
+    <p>Resize browser to mobile width (less than 900px) to see hamburger menu.</p>
+    <p>Click on hamburger menu to test functionality.</p>
+    <div class="mobile-preview" id="mobilePreview"></div>
+  </div>
+
+  <script>
+    // Debug script to verify hamburger menu functionality
+    document.addEventListener('DOMContentLoaded', () => {
+      const statusEl = document.getElementById('status');
+      const elementChecksEl = document.getElementById('elementChecks');
+      const mobilePreviewEl = document.getElementById('mobilePreview');
+      
+      // Function to check if elements exist
+      const checkElements = () => {
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const closeMenu = document.getElementById('closeMenu');
+        
+        let checksHTML = '';
+        
+        checksHTML += `<div class="element-check ${hamburger ? 'found' : 'not-found'}">Hamburger button: ${hamburger ? '✅ Found' : '❌ Not found'}</div>`;
+        checksHTML += `<div class="element-check ${mobileMenu ? 'found' : 'not-found'}">Mobile menu: ${mobileMenu ? '✅ Found' : '❌ Not found'}</div>`;
+        checksHTML += `<div class="element-check ${closeMenu ? 'found' : 'not-found'}">Close button: ${closeMenu ? '✅ Found' : '❌ Not found'}</div>`;
+        
+        elementChecksEl.innerHTML = checksHTML;
+        
+        // Show/hide mobile menu preview
+        if (mobileMenu) {
+          mobilePreviewEl.innerHTML = 'Mobile menu element found and ready';
+          mobilePreviewEl.style.background = '#e8f5e8';
+        } else {
+          mobilePreviewEl.innerHTML = 'Mobile menu element NOT found';
+          mobilePreviewEl.style.background = '#f8d7da';
+        }
+        
+        return { hamburger, mobileMenu, closeMenu };
+      };
+      
+      // Initial check
+      const elements = checkElements();
+      
+      if (elements.hamburger && elements.mobileMenu && elements.closeMenu) {
+        statusEl.textContent = '✅ All elements found, setting up event listeners...';
+        statusEl.style.color = '#28a745';
+        
+        // Manually add navigation HTML to test
+        const navHTML = `
+          <nav class="nav">
+            <div class="container nav-inner">
+              <a href="./index.html" class="logo">Ai-Auto</a>
+              <div class="nav-links">
+                <a href="./index.html" class="nav-link">Home</a>
+                <a href="./about.html" class="nav-link">About</a>
+                <a href="./tools.html" class="nav-link">Tools</a>
+                <a href="./blog.html" class="nav-link">Blog</a>
+              </div>
+              <div style="display: flex; gap: 12px; align-items: center;">
+                <a href="./user/login.html">Log In</a>
+                <a href="./user/signup.html" class="btn btn-gold">Get Started</a>
+              </div>
+              <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+              </button>
+            </div>
+          </nav>
+          <div class="mobile-menu" id="mobileMenu">
+            <div class="mobile-menu-header">
+              <button class="hamburger active" id="closeMenu" aria-label="Close menu" style="margin-left: auto;">
+                <span></span>
+                <span></span>
+                <span></span>
+              </button>
+            </div>
+            <div class="mobile-menu-links">
+              <a href="./index.html" class="mobile-menu-link">Home</a>
+              <a href="./about.html" class="mobile-menu-link">About</a>
+              <a href="./tools.html" class="mobile-menu-link">Tools</a>
+              <a href="./blog.html" class="mobile-menu-link">Blog</a>
+              <a href="./user/login.html" class="mobile-menu-link">Log In</a>
+              <a href="./user/signup.html" class="btn btn-gold" style="width: 100%; margin-top: 16px;">Get Started</a>
+            </div>
+          </div>
+        `;
+        
+        // Add navigation to body
+        const navContainer = document.createElement('div');
+        navContainer.innerHTML = navHTML;
+        document.body.insertBefore(navContainer.firstElementChild, document.body.firstChild);
+        
+        // Re-check elements after adding to DOM
+        setTimeout(() => {
+          const recheckElements = checkElements();
+          
+          if (recheckElements.hamburger) {
+            // Add click event listener with detailed logging
+            recheckElements.hamburger.addEventListener('click', (e) => {
+              console.log('🍔 Hamburger clicked!', e);
+              statusEl.textContent = '🍔 Hamburger clicked! Opening menu...';
+              statusEl.style.color = '#007bff';
+              
+              recheckElements.mobileMenu.classList.add('active');
+              document.body.style.overflow = 'hidden';
+              
+              setTimeout(() => {
+                if (recheckElements.mobileMenu.classList.contains('active')) {
+                  statusEl.textContent = '✅ Menu is OPEN';
+                  statusEl.style.color = '#28a745';
+                } else {
+                  statusEl.textContent = '❌ Menu failed to open';
+                  statusEl.style.color = '#dc3545';
+                }
+              }, 100);
+            });
+            
+            // Add close button listener
+            recheckElements.closeMenu.addEventListener('click', (e) => {
+              console.log('❌ Close button clicked!', e);
+              statusEl.textContent = '❌ Close button clicked! Closing menu...';
+              statusEl.style.color = '#ffc107';
+              
+              recheckElements.mobileMenu.classList.remove('active');
+              document.body.style.overflow = '';
+              
+              setTimeout(() => {
+                if (!recheckElements.mobileMenu.classList.contains('active')) {
+                  statusEl.textContent = '✅ Menu is CLOSED';
+                  statusEl.style.color = '#6c757d';
+                } else {
+                  statusEl.textContent = '❌ Menu failed to close';
+                  statusEl.style.color = '#dc3545';
+                }
+              }, 100);
+            });
+            
+            // Add link listeners
+            const mobileLinks = recheckElements.mobileMenu.querySelectorAll('a');
+            mobileLinks.forEach((link, index) => {
+              link.addEventListener('click', (e) => {
+                console.log(`🔗 Link ${index + 1} clicked!`, e);
+                statusEl.textContent = `🔗 Link clicked! Closing menu...`;
+                statusEl.style.color = '#17a2b8';
+                
+                recheckElements.mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
+              });
+            });
+            
+          } else {
+            statusEl.textContent = '❌ Failed to create hamburger button';
+            statusEl.style.color = '#dc3545';
+          }
+        }, 500);
+        
+      } else {
+        statusEl.textContent = '❌ Failed to find required elements';
+        statusEl.style.color = '#dc3545';
+      }
+    });
+  </script>
+</body>
+</html>

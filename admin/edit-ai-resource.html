@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Edit AI Resource – Admin – Ai-Auto</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Playfair+Display:wght@500;600;700;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css">
+  <style>
+    .admin-editor {
+      padding: var(--space-lg) 0;
+      background: var(--bg-paper);
+      min-height: 100vh;
+    }
+
+    .admin-header {
+      background: var(--bg-white);
+      border-bottom: var(--border-thick);
+      padding: var(--space-md) 0;
+      margin-bottom: var(--space-lg);
+    }
+
+    .admin-header-content {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 var(--space-md);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .admin-title {
+      font-size: 32px;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+    }
+
+    .editor-container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 var(--space-md);
+    }
+
+    .editor-card {
+      background: var(--bg-white);
+      border: var(--border-thick);
+      padding: var(--space-lg);
+      box-shadow: var(--shadow-hard);
+    }
+
+    .editor-title {
+      font-size: 24px;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-lg);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-md);
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: var(--space-md);
+    }
+
+    .form-group.full-width {
+      grid-column: 1 / -1;
+    }
+
+    .form-label {
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-xs);
+    }
+
+    .form-label.required::after {
+      content: ' *';
+      color: var(--coral);
+    }
+
+    .form-input,
+    .form-textarea,
+    .form-select {
+      padding: 12px 16px;
+      border: var(--border-thick);
+      background: var(--bg-paper);
+      font-size: 16px;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.2s;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus,
+    .form-select:focus {
+      outline: none;
+      border-color: var(--blue);
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hard);
+    }
+
+    .form-textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .form-hint {
+      font-size: 12px;
+      opacity: 0.7;
+      margin-top: 4px;
+    }
+
+    /* Image Preview */
+    .image-preview-container {
+      margin-top: var(--space-sm);
+    }
+
+    .image-preview {
+      width: 200px;
+      height: 120px;
+      border: var(--border-thin);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      background: var(--bg-paper);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .image-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .image-preview-placeholder {
+      font-size: 14px;
+      opacity: 0.5;
+      text-align: center;
+      padding: var(--space-sm);
+    }
+
+    .image-upload-btn {
+      margin-top: var(--space-sm);
+      padding: 8px 16px;
+      border: var(--border-thin);
+      background: var(--bg-paper);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .image-upload-btn:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 2px 2px 0 var(--ink);
+    }
+
+    /* Action Buttons */
+    .editor-actions {
+      display: flex;
+      gap: var(--space-sm);
+      justify-content: space-between;
+      align-items: center;
+      margin-top: var(--space-lg);
+      padding-top: var(--space-lg);
+      border-top: var(--border-thin);
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: var(--space-sm);
+    }
+
+    .save-btn {
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border: var(--border-thick);
+      background: var(--green);
+      color: #000;
+      box-shadow: var(--shadow-hard);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .save-btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
+      filter: brightness(1.1);
+    }
+
+    .save-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .save-btn:disabled:hover {
+      transform: none;
+      box-shadow: var(--shadow-hard);
+    }
+
+    .draft-btn {
+      background: var(--gold);
+    }
+
+    .cancel-btn {
+      background: transparent;
+      color: var(--ink);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: var(--border-thick);
+      padding: 12px 24px;
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .btn-outline:hover {
+      background: var(--bg-paper);
+      transform: translate(-1px, -1px);
+      box-shadow: 2px 2px 0 var(--ink);
+    }
+
+    /* Messages */
+    .message {
+      padding: var(--space-sm);
+      border: var(--border-thick);
+      margin-bottom: var(--space-md);
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .message.error {
+      background: var(--coral);
+      color: #fff;
+    }
+
+    .message.success {
+      background: var(--green);
+      color: #000;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .admin-header-content {
+        flex-direction: column;
+        gap: var(--space-md);
+        text-align: center;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .editor-actions {
+        flex-direction: column;
+        gap: var(--space-md);
+      }
+
+      .action-buttons {
+        width: 100%;
+        justify-content: stretch;
+      }
+
+      .save-btn,
+      .btn-outline {
+        flex: 1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ADMIN HEADER -->
+  <header class="admin-header">
+    <div class="admin-header-content">
+      <h1 class="admin-title" id="pageTitle">Create Article</h1>
+      <div class="admin-actions">
+        <a href="ai-resources.html" class="btn-outline">← Back to List</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- EDITOR -->
+  <main class="admin-editor">
+    <div class="editor-container">
+      <div class="editor-card">
+        <h2 class="editor-title" id="editorTitle">New AI Resource Article</h2>
+
+        <form id="articleForm">
+          <div id="messageContainer"></div>
+
+          <!-- Category -->
+          <div class="form-group">
+            <label for="category" class="form-label required">Category</label>
+            <select id="category" name="category" class="form-select" required>
+              <option value="">Select category...</option>
+              <option value="ai_news">AI News</option>
+              <option value="ai_entrepreneurs">AI for Entrepreneurs</option>
+            </select>
+          </div>
+
+          <!-- Headline -->
+          <div class="form-group">
+            <label for="headline" class="form-label required">Headline</label>
+            <input 
+              type="text" 
+              id="headline" 
+              name="headline" 
+              class="form-input" 
+              placeholder="Enter article headline"
+              required
+              maxlength="200"
+            >
+            <span class="form-hint">The main title shown on the article card</span>
+          </div>
+
+          <!-- Preview -->
+          <div class="form-group">
+            <label for="preview" class="form-label required">Preview Text</label>
+            <textarea
+              id="preview"
+              name="preview"
+              class="form-textarea"
+              placeholder="Brief description shown on the card..."
+              required
+              maxlength="300"
+            ></textarea>
+            <span class="form-hint">Short excerpt displayed below the headline (max 300 characters)</span>
+          </div>
+
+          <!-- Source Info -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="source_name" class="form-label required">Source Name</label>
+              <input 
+                type="text" 
+                id="source_name" 
+                name="source_name" 
+                class="form-input" 
+                placeholder="e.g., TechCrunch, Forbes"
+                required
+              >
+            </div>
+            <div class="form-group">
+              <label for="source_url" class="form-label required">Source URL</label>
+              <input 
+                type="url" 
+                id="source_url" 
+                name="source_url" 
+                class="form-input" 
+                placeholder="https://example.com/article"
+                required
+              >
+            </div>
+          </div>
+
+          <!-- Image -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="image_url" class="form-label">Image URL</label>
+              <input 
+                type="url" 
+                id="image_url" 
+                name="image_url" 
+                class="form-input" 
+                placeholder="https://example.com/image.jpg"
+              >
+              <span class="form-hint">External URL or upload an image below</span>
+              
+              <div class="image-preview-container">
+                <div class="image-preview" id="imagePreview">
+                  <div class="image-preview-placeholder">No image selected</div>
+                </div>
+                <input type="file" id="imageUpload" accept="image/*" style="display: none;">
+                <button type="button" class="image-upload-btn" id="uploadBtn">Upload Image</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="image_alt" class="form-label">Image Alt Text</label>
+              <input 
+                type="text" 
+                id="image_alt" 
+                name="image_alt" 
+                class="form-input" 
+                placeholder="Describe the image for accessibility"
+              >
+              <span class="form-hint">Important for SEO and accessibility</span>
+            </div>
+          </div>
+
+          <!-- Date and Status -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="published_date" class="form-label">Published Date</label>
+              <input 
+                type="date" 
+                id="published_date" 
+                name="published_date" 
+                class="form-input"
+              >
+              <span class="form-hint">Leave empty for today's date</span>
+            </div>
+            <div class="form-group">
+              <label for="status" class="form-label">Status</label>
+              <select id="status" name="status" class="form-select">
+                <option value="draft">Draft</option>
+                <option value="published">Published</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Optional Full Content -->
+          <div class="form-group">
+            <label for="content" class="form-label">Full Content (Optional)</label>
+            <textarea
+              id="content"
+              name="content"
+              class="form-textarea"
+              placeholder="Additional content or notes..."
+              style="min-height: 200px;"
+            ></textarea>
+            <span class="form-hint">Optional extended content if you want to store the full article</span>
+          </div>
+
+          <!-- Actions -->
+          <div class="editor-actions">
+            <a href="ai-resources.html" class="btn-outline">Cancel</a>
+            <div class="action-buttons">
+              <button type="button" class="save-btn draft-btn" id="saveDraftBtn">Save Draft</button>
+              <button type="submit" class="save-btn" id="publishBtn">Publish</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../supabase.js"></script>
+  <script>
+    // AI Resource Editor
+    class AIResourceEditor {
+      constructor() {
+        this.form = document.getElementById('articleForm');
+        this.pageTitle = document.getElementById('pageTitle');
+        this.editorTitle = document.getElementById('editorTitle');
+        this.messageContainer = document.getElementById('messageContainer');
+        
+        // Form fields
+        this.categorySelect = document.getElementById('category');
+        this.headlineInput = document.getElementById('headline');
+        this.previewInput = document.getElementById('preview');
+        this.sourceNameInput = document.getElementById('source_name');
+        this.sourceUrlInput = document.getElementById('source_url');
+        this.imageUrlInput = document.getElementById('image_url');
+        this.imageAltInput = document.getElementById('image_alt');
+        this.publishedDateInput = document.getElementById('published_date');
+        this.statusSelect = document.getElementById('status');
+        this.contentInput = document.getElementById('content');
+        
+        // Image preview
+        this.imagePreview = document.getElementById('imagePreview');
+        this.imageUpload = document.getElementById('imageUpload');
+        this.uploadBtn = document.getElementById('uploadBtn');
+        
+        // Buttons
+        this.saveDraftBtn = document.getElementById('saveDraftBtn');
+        this.publishBtn = document.getElementById('publishBtn');
+        
+        // State
+        this.isEditMode = false;
+        this.articleId = null;
+        
+        this.init();
+      }
+
+      async init() {
+        // Initialize auth manager and check session
+        await authManager.init();
+
+        // Protect admin route
+        if (!await authManager.protectAdminRoute()) {
+          return;
+        }
+
+        // Setup event listeners
+        this.setupEventListeners();
+
+        // Check for edit mode or pre-selected category
+        this.checkUrlParams();
+      }
+
+      setupEventListeners() {
+        // Form submission
+        this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+        
+        // Draft button
+        this.saveDraftBtn.addEventListener('click', () => this.handleSaveDraft());
+        
+        // Image URL preview
+        this.imageUrlInput.addEventListener('input', () => this.updateImagePreview());
+        this.imageUrlInput.addEventListener('blur', () => this.updateImagePreview());
+        
+        // Image upload
+        this.uploadBtn.addEventListener('click', () => this.imageUpload.click());
+        this.imageUpload.addEventListener('change', (e) => this.handleImageUpload(e));
+        
+        // Clear messages on input
+        [this.headlineInput, this.previewInput, this.sourceNameInput, this.sourceUrlInput].forEach(input => {
+          input.addEventListener('input', () => this.clearMessages());
+        });
+      }
+
+      checkUrlParams() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const articleId = urlParams.get('id');
+        const category = urlParams.get('category');
+
+        if (articleId) {
+          this.isEditMode = true;
+          this.articleId = articleId;
+          this.loadArticle(articleId);
+        } else if (category) {
+          this.categorySelect.value = category;
+        }
+
+        // Set default date to today
+        if (!this.publishedDateInput.value) {
+          this.publishedDateInput.value = new Date().toISOString().split('T')[0];
+        }
+      }
+
+      async loadArticle(id) {
+        try {
+          const { data, error } = await aiResourcesManager.getById(id);
+
+          if (error || !data) {
+            this.showError('Failed to load article for editing');
+            return;
+          }
+
+          // Populate form fields
+          this.categorySelect.value = data.category;
+          this.headlineInput.value = data.headline;
+          this.previewInput.value = data.preview;
+          this.sourceNameInput.value = data.source_name;
+          this.sourceUrlInput.value = data.source_url;
+          this.imageUrlInput.value = data.image_url || '';
+          this.imageAltInput.value = data.image_alt || '';
+          this.publishedDateInput.value = data.published_date || '';
+          this.statusSelect.value = data.status;
+          this.contentInput.value = data.content || '';
+
+          // Update image preview
+          this.updateImagePreview();
+
+          // Update page titles
+          this.pageTitle.textContent = 'Edit Article';
+          this.editorTitle.textContent = 'Edit AI Resource Article';
+          document.title = 'Edit Article – Admin – Ai-Auto';
+
+        } catch (error) {
+          console.error('Load article error:', error);
+          this.showError('Error loading article');
+        }
+      }
+
+      updateImagePreview() {
+        const url = this.imageUrlInput.value.trim();
+        
+        if (url) {
+          this.imagePreview.innerHTML = `<img src="${this.escapeHtml(url)}" alt="Preview" onerror="this.parentElement.innerHTML='<div class=\\'image-preview-placeholder\\'>Failed to load image</div>'" />`;
+        } else {
+          this.imagePreview.innerHTML = '<div class="image-preview-placeholder">No image selected</div>';
+        }
+      }
+
+      async handleImageUpload(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        // Show loading state
+        this.uploadBtn.textContent = 'Uploading...';
+        this.uploadBtn.disabled = true;
+
+        try {
+          const { url, error } = await aiResourcesManager.uploadImage(file);
+          
+          if (error) {
+            this.showError('Failed to upload image: ' + error.message);
+            return;
+          }
+
+          // Set the URL in the input
+          this.imageUrlInput.value = url;
+          this.updateImagePreview();
+          
+          // Auto-fill alt text if empty
+          if (!this.imageAltInput.value) {
+            this.imageAltInput.value = file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ');
+          }
+
+          this.showSuccess('Image uploaded successfully!');
+        } catch (error) {
+          console.error('Upload error:', error);
+          this.showError('Failed to upload image');
+        } finally {
+          this.uploadBtn.textContent = 'Upload Image';
+          this.uploadBtn.disabled = false;
+        }
+      }
+
+      async handleSubmit(e) {
+        e.preventDefault();
+
+        if (!this.validateForm()) {
+          return;
+        }
+
+        const formData = this.getFormData();
+        formData.status = 'published';
+
+        await this.saveArticle(formData);
+      }
+
+      async handleSaveDraft() {
+        if (!this.validateForm()) {
+          return;
+        }
+
+        const formData = this.getFormData();
+        formData.status = 'draft';
+
+        await this.saveArticle(formData);
+      }
+
+      async saveArticle(formData) {
+        this.setLoading(true);
+
+        try {
+          let result;
+          
+          if (this.isEditMode) {
+            result = await aiResourcesManager.update(this.articleId, formData);
+          } else {
+            result = await aiResourcesManager.create(formData);
+          }
+
+          if (result.error) {
+            console.error('Save error:', result.error);
+            
+            // Check for permission errors
+            if (result.error.code === '42501') {
+              this.showError('Permission Denied: You do not have admin privileges.');
+              setTimeout(() => {
+                window.location.href = '/user/dashboard.html';
+              }, 2000);
+              return;
+            }
+
+            this.showError('Failed to save article: ' + result.error.message);
+            return;
+          }
+
+          this.showSuccess(`Article ${this.isEditMode ? 'updated' : 'created'} successfully!`);
+
+          setTimeout(() => {
+            window.location.href = 'ai-resources.html';
+          }, 1500);
+        } catch (error) {
+          console.error('Save exception:', error);
+          this.showError('Failed to save article');
+        } finally {
+          this.setLoading(false);
+        }
+      }
+
+      getFormData() {
+        return {
+          category: this.categorySelect.value,
+          headline: this.headlineInput.value.trim(),
+          preview: this.previewInput.value.trim(),
+          source_name: this.sourceNameInput.value.trim(),
+          source_url: this.sourceUrlInput.value.trim(),
+          image_url: this.imageUrlInput.value.trim() || null,
+          image_alt: this.imageAltInput.value.trim() || null,
+          published_date: this.publishedDateInput.value || new Date().toISOString().split('T')[0],
+          content: this.contentInput.value.trim() || null,
+        };
+      }
+
+      validateForm() {
+        const category = this.categorySelect.value;
+        const headline = this.headlineInput.value.trim();
+        const preview = this.previewInput.value.trim();
+        const sourceName = this.sourceNameInput.value.trim();
+        const sourceUrl = this.sourceUrlInput.value.trim();
+
+        if (!category) {
+          this.showError('Please select a category');
+          this.categorySelect.focus();
+          return false;
+        }
+
+        if (!headline) {
+          this.showError('Headline is required');
+          this.headlineInput.focus();
+          return false;
+        }
+
+        if (!preview) {
+          this.showError('Preview text is required');
+          this.previewInput.focus();
+          return false;
+        }
+
+        if (!sourceName) {
+          this.showError('Source name is required');
+          this.sourceNameInput.focus();
+          return false;
+        }
+
+        if (!sourceUrl) {
+          this.showError('Source URL is required');
+          this.sourceUrlInput.focus();
+          return false;
+        }
+
+        // Validate URL format
+        try {
+          new URL(sourceUrl);
+        } catch {
+          this.showError('Please enter a valid source URL');
+          this.sourceUrlInput.focus();
+          return false;
+        }
+
+        return true;
+      }
+
+      setLoading(isLoading) {
+        this.saveDraftBtn.disabled = isLoading;
+        this.publishBtn.disabled = isLoading;
+        this.saveDraftBtn.textContent = isLoading ? 'Saving...' : 'Save Draft';
+        this.publishBtn.textContent = isLoading ? 'Publishing...' : 'Publish';
+      }
+
+      showError(message) {
+        this.messageContainer.innerHTML = `<div class="message error">${this.escapeHtml(message)}</div>`;
+        this.messageContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+
+      showSuccess(message) {
+        this.messageContainer.innerHTML = `<div class="message success">${this.escapeHtml(message)}</div>`;
+      }
+
+      clearMessages() {
+        this.messageContainer.innerHTML = '';
+      }
+
+      escapeHtml(text) {
+        if (!text) return '';
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+      }
+    }
+
+    // Initialize editor when DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+      new AIResourceEditor();
+    });
+  </script>
+
+</body>
+
+</html>
