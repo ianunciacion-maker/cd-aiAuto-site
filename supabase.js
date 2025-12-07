@@ -181,8 +181,27 @@ class AuthManager {
         return false;
       }
 
-      const isAdminUser = this.adminEmails.includes(user.email);
-      console.log('[isAdmin] User:', user.email, 'Is Admin:', isAdminUser);
+      // First check hardcoded list for backwards compatibility
+      if (this.adminEmails.includes(user.email)) {
+        console.log('[isAdmin] User:', user.email, 'Is Admin (hardcoded): true');
+        return true;
+      }
+
+      // Then check database for is_admin column
+      const { data: profile, error } = await supabase
+        .from('user_profiles')
+        .select('is_admin')
+        .eq('id', user.id)
+        .single();
+
+      if (error) {
+        console.error('[isAdmin] Database check error:', error.message);
+        // Fall back to hardcoded list on error
+        return this.adminEmails.includes(user.email);
+      }
+
+      const isAdminUser = profile?.is_admin === true;
+      console.log('[isAdmin] User:', user.email, 'Is Admin (database):', isAdminUser);
 
       return isAdminUser;
     } catch (error) {
