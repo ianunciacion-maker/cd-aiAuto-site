@@ -127,9 +127,22 @@ class SiteNavigation {
 
   // Render navigation (insert at the beginning of body)
   renderNav() {
-    const nav = document.createElement('div');
-    nav.innerHTML = this.generateNav();
-    document.body.insertBefore(nav.firstElementChild, document.body.firstChild);
+    const navWrapper = document.createElement('div');
+    navWrapper.innerHTML = this.generateNav();
+    
+    // Insert ALL generated elements (nav AND mobile menu) at the beginning of body
+    // We need to insert in reverse order since insertBefore keeps adding to the front
+    const elementsToInsert = Array.from(navWrapper.children);
+    
+    // Insert the first element at the beginning of body
+    if (elementsToInsert.length > 0) {
+      document.body.insertBefore(elementsToInsert[0], document.body.firstChild);
+    }
+    
+    // Insert subsequent elements after the previous one
+    for (let i = 1; i < elementsToInsert.length; i++) {
+      elementsToInsert[i - 1].after(elementsToInsert[i]);
+    }
 
     // Handle mobile menu toggle
     this.setupMobileMenu();

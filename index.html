@@ -740,8 +740,8 @@
       .hero-inner,
       .app-inner,
       .core-grid {
-        grid-template-columns: 1fr;
-        gap: var(--space-md);
+        grid-template-columns: 1fr !important;
+        gap: var(--space-md) !important;
       }
 
       .core-card {
@@ -753,7 +753,7 @@
       .who-grid,
       .tools-grid,
       .pricing-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr !important;
       }
 
       .hero-content h1 {
@@ -785,6 +785,60 @@
 
       .footer-inner {
         grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      /* Hero section mobile improvements */
+      .hero {
+        padding: var(--space-lg) 0;
+      }
+
+      .hero-subtitle {
+        font-size: 18px;
+      }
+
+      .hero-cta {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .hero-cta .btn {
+        width: 100%;
+        text-align: center;
+        min-height: 48px;
+      }
+
+      .hero-stats {
+        grid-template-columns: 1fr;
+        gap: var(--space-xs);
+      }
+
+      .stat-box {
+        padding: var(--space-sm);
+      }
+
+      /* App section mobile */
+      .app-content h2 {
+        font-size: 48px;
+      }
+
+      .app-mockup {
+        min-height: 250px;
+        font-size: 32px;
+      }
+
+      /* Pricing section mobile */
+      .pricing-amount {
+        font-size: 36px;
+      }
+
+      /* Footer CTA mobile */
+      .footer-cta h2 {
+        font-size: 40px;
+      }
+
+      .footer-cta p {
+        font-size: 18px;
       }
 
     }
