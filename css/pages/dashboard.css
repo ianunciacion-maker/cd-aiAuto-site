@@ -19,7 +19,7 @@ body {
 
 /* Section Styles */
 .section {
-  margin-bottom: calc(var(--space-lg) * 0.3); /* Reduce spacing by 70% */
+  margin-bottom: calc(var(--space-lg) * 0.4); /* Reduce spacing by 60% total */
 }
 
 .section-title {
@@ -303,7 +303,7 @@ body {
 
 /* Profile Section */
 .profile-section {
-  margin-bottom: calc(var(--space-lg) * 0.3); /* Reduce spacing by 70% */
+  margin-bottom: calc(var(--space-lg) * 0.4); /* Reduce spacing by 60% total */
 }
 
 .profile-header {
@@ -435,7 +435,7 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: var(--space-md);
-  margin-bottom: calc(var(--space-lg) * 0.3); /* Reduce spacing by 70% */
+  margin-bottom: calc(var(--space-lg) * 0.4); /* Reduce spacing by 60% total */
 }
 
 .tool-card {
@@ -520,7 +520,7 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: var(--space-md);
-  margin-bottom: calc(var(--space-lg) * 0.3); /* Reduce spacing by 70% */
+  margin-bottom: calc(var(--space-lg) * 0.4); /* Reduce spacing by 60% total */
 }
 
 .status-card {
