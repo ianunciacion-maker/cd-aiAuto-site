@@ -15,22 +15,22 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 // Dynamic URL detection for different environments
 function getSupabaseUrl() {
   const isLocalhost = window.location.hostname === 'localhost' ||
-                    window.location.hostname === '127.0.0.1' ||
-                    window.location.hostname.includes('192.168.') ||
-                    window.location.hostname.includes('10.0.0.');
-  
+    window.location.hostname === '127.0.0.1' ||
+    window.location.hostname.includes('192.168.') ||
+    window.location.hostname.includes('10.0.0.');
+
   if (isLocalhost) {
     return 'https://evzitnywfgbxzymddvyl.supabase.co';
   }
-  
+
   // Check if we're on Vercel
   const isVercel = window.location.hostname.includes('vercel.app');
-  
+
   if (isVercel) {
     // Use the production Vercel URL
     return 'https://evzitnywfgbxzymddvyl.supabase.co';
   }
-  
+
   // Default to the configured URL
   return SUPABASE_URL;
 }
@@ -45,9 +45,6 @@ const supabase = window.supabase.createClient(getSupabaseUrl(), SUPABASE_ANON_KE
 class AuthManager {
   constructor() {
     this.sessionKey = 'supabase.auth.token';
-    this.adminEmails = [
-      'setyourownsalary@gmail.com',
-    ];
     this.isInitialized = false;
     // Setup auth state listener immediately (non-async)
     supabase.auth.onAuthStateChange((event, session) => {
@@ -181,13 +178,7 @@ class AuthManager {
         return false;
       }
 
-      // First check hardcoded list for backwards compatibility
-      if (this.adminEmails.includes(user.email)) {
-        console.log('[isAdmin] User:', user.email, 'Is Admin (hardcoded): true');
-        return true;
-      }
-
-      // Then check database for is_admin column
+      // Check database for is_admin column
       const { data: profile, error } = await supabase
         .from('user_profiles')
         .select('is_admin')
@@ -196,8 +187,7 @@ class AuthManager {
 
       if (error) {
         console.error('[isAdmin] Database check error:', error.message);
-        // Fall back to hardcoded list on error
-        return this.adminEmails.includes(user.email);
+        return false;
       }
 
       const isAdminUser = profile?.is_admin === true;
@@ -1291,8 +1281,8 @@ class AIResourcesManager {
         .order('sort_order', { ascending: false })
         .limit(1);
 
-      const nextSortOrder = existingResources && existingResources.length > 0 
-        ? existingResources[0].sort_order + 1 
+      const nextSortOrder = existingResources && existingResources.length > 0
+        ? existingResources[0].sort_order + 1
         : 1;
 
       const resource = {

@@ -28,27 +28,39 @@ module.exports = async (req, res) => {
   );
 
   try {
-    // Parse the request body more carefully
+    // Verify authentication
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+      return res.status(401).json({ error: 'Missing authorization header' });
+    }
+
+    const token = authHeader.replace('Bearer ', '');
+    const { data: { user }, error: authError } = await supabase.auth.getUser(token);
+
+    if (authError || !user) {
+      console.error('Auth error:', authError);
+      return res.status(401).json({ error: 'Invalid or expired token' });
+    }
+
+    // Parse the request body
     let user_id;
     try {
       const requestBody = req.body;
-      console.log('Request body:', requestBody);
-      
+
       if (typeof requestBody === 'string') {
         user_id = requestBody;
       } else if (requestBody && typeof requestBody === 'object' && requestBody.user_id) {
         user_id = requestBody.user_id;
-      } else {
-        console.error('Invalid request body format:', requestBody);
-        return res.status(400).json({ error: 'Invalid request body format' });
       }
     } catch (parseError) {
       console.error('Error parsing request body:', parseError);
       return res.status(400).json({ error: 'Invalid request body format' });
     }
 
-    if (!user_id) {
-      return res.status(400).json({ error: 'Missing user_id' });
+    // Verify user is requesting their own data
+    if (!user_id || user.id !== user_id) {
+      console.warn(`Unauthorized access attempt: User ${user.id} requested data for ${user_id}`);
+      return res.status(403).json({ error: 'Unauthorized: You can only check your own subscription' });
     }
 
     console.log(`Checking subscription for user: ${user_id}`);
@@ -67,7 +79,7 @@ module.exports = async (req, res) => {
       // Check if subscription is still valid (not expired)
       const now = new Date();
       const endDate = new Date(subscription.current_period_end);
-      
+
       if (endDate > now) {
         console.log(`Found valid subscription in database for user: ${user_id}, status: ${subscription.status}`);
 
@@ -109,7 +121,7 @@ module.exports = async (req, res) => {
 
         if (activeSubscription) {
           console.log(`Found active subscription in Stripe for user: ${user_id}, status: ${activeSubscription.status}`);
-          
+
           // Update database with latest info
           const { error: updateError } = await supabase
             .from('subscriptions')

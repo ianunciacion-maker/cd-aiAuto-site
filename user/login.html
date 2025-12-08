@@ -65,7 +65,12 @@
       overflow-x: hidden;
     }
 
-    h1, h2, h3, h4, h5, h6 {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
       font-family: 'Playfair Display', serif;
       margin: 0;
       font-weight: 900;
@@ -243,7 +248,9 @@
     }
 
     @keyframes spin {
-      to { transform: rotate(360deg); }
+      to {
+        transform: rotate(360deg);
+      }
     }
 
     .auth-footer {
@@ -319,7 +326,8 @@
 
       <div class="auth-footer">
         <p>Don't have an account? <a href="./signup.html">Create one</a></p>
-        <p><a href="#" onclick="alert('Password reset coming soon'); return false;" style="font-weight: 400;">Forgot your password?</a></p>
+        <p><a href="#" onclick="alert('Password reset coming soon'); return false;" style="font-weight: 400;">Forgot
+            your password?</a></p>
       </div>
     </div>
   </div>
@@ -383,6 +391,7 @@
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${data.session.access_token}`
               },
               body: JSON.stringify({
                 user_id: data.user.id
