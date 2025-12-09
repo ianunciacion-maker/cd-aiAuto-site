@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="../css/main.css">
   <style>
     /* Tool-specific styles that extend dashboard design system */
-    
+
     /* Image Upload Component Styles */
     .image-upload-section {
       background: var(--bg-white);
@@ -283,7 +283,7 @@
       box-shadow: 0 2px 6px rgba(67, 97, 238, 0.1);
     }
 
-    .platform-checkbox:checked + .platform-label {
+    .platform-checkbox:checked+.platform-label {
       color: var(--ink);
       font-weight: 600;
     }
@@ -419,6 +419,7 @@
         gap: var(--space-xs);
       }
     }
+
     .tool-page {
       background: var(--bg-paper);
       min-height: 100vh;
@@ -487,11 +488,13 @@
 
     /* History Section - 2-over-1 layout */
     .history-section {
-      grid-column: 1 / -1; /* Span full width */
+      grid-column: 1 / -1;
+      /* Span full width */
     }
 
     .history-section .form-section {
-      grid-column: 1 / -1; /* Span full width */
+      grid-column: 1 / -1;
+      /* Span full width */
     }
 
     .history-list {
@@ -578,13 +581,13 @@
         grid-template-columns: 1fr;
         gap: var(--space-sm);
       }
-      
+
       .history-header {
         flex-direction: column;
         gap: var(--space-sm);
         align-items: flex-start;
       }
-      
+
       .history-actions {
         align-self: flex-end;
       }
@@ -790,9 +793,17 @@
     }
 
     @keyframes spin {
-      0% { transform: rotate(0deg); }
-      50% { transform: rotate(180deg); }
-      100% { transform: rotate(360deg); }
+      0% {
+        transform: rotate(0deg);
+      }
+
+      50% {
+        transform: rotate(180deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
     }
 
     /* Enhanced Loading State */
@@ -845,8 +856,13 @@
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
     }
 
     @keyframes slideUp {
@@ -854,6 +870,7 @@
         opacity: 0;
         transform: translateY(20px);
       }
+
       to {
         opacity: 1;
         transform: translateY(0);
@@ -861,8 +878,17 @@
     }
 
     @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.1); opacity: 0.8; }
+
+      0%,
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+
+      50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+      }
     }
 
     /* Responsive Design - matches dashboard breakpoints */
@@ -919,10 +945,10 @@
         <!-- Input Form Section -->
         <div class="form-section">
           <h2>Generate Social Media Captions</h2>
-          
+
           <!-- Error Message -->
           <div class="error-message" id="errorMessage"></div>
-          
+
           <!-- Usage Information -->
           <div class="usage-info">
             <p><strong id="usageText">0/100</strong> generations used this month</p>
@@ -935,7 +961,8 @@
           <form id="generatorForm">
             <div class="form-group">
               <label for="topic">Topic/Content</label>
-              <input type="text" id="topic" name="topic" placeholder="e.g., New product launch, team celebration" required>
+              <input type="text" id="topic" name="topic" placeholder="e.g., New product launch, team celebration"
+                required>
             </div>
 
             <!-- Image Upload Section -->
@@ -1035,13 +1062,14 @@
         <!-- Enhanced Output Section with Multi-Platform Support -->
         <div class="output-section">
           <h2>Generated Captions</h2>
-          
+
           <!-- Loading State -->
-          <div id="loadingState" style="display: none; text-align: center; padding: var(--space-lg); background: var(--bg-paper); border: var(--border-thin); border-radius: var(--radius-sm); margin-bottom: var(--space-md);">
+          <div id="loadingState"
+            style="display: none; text-align: center; padding: var(--space-lg); background: var(--bg-paper); border: var(--border-thin); border-radius: var(--radius-sm); margin-bottom: var(--space-md);">
             <div class="loading-spinner"></div>
             <span style="color: var(--ink); font-weight: 600;">Generating captions...</span>
           </div>
-          
+
           <!-- Loading Overlay for enhanced experience -->
           <div id="loadingOverlay" style="display: none;" class="loading-overlay">
             <div class="loading-content">
@@ -1051,22 +1079,22 @@
               <div class="loading-spinner" style="margin: var(--space-md) auto 0;"></div>
             </div>
           </div>
-          
+
           <!-- Platform Tabs -->
           <div class="output-tabs" id="outputTabs">
             <!-- Tab buttons will be dynamically generated based on selected platforms -->
           </div>
-          
+
           <!-- Platform Output Containers -->
           <div id="platformOutputs">
             <!-- Individual platform outputs will be dynamically generated -->
           </div>
-          
+
           <!-- Default Output for backward compatibility -->
           <div class="output-content empty" id="defaultOutput" style="display: none;">
             Fill in the form and click "Generate" to create social media captions
           </div>
-          
+
           <!-- Action Buttons -->
           <div style="display: none; margin-top: var(--space-md);" id="outputActions">
             <button class="btn btn-outline" id="copyAllBtn">📋 Copy All</button>
@@ -1078,27 +1106,30 @@
         <div class="history-section" id="historySection" style="display: block; margin-top: var(--space-lg);">
           <div class="form-section" style="grid-column: 1 / -1;">
             <h2>📜 Generation History</h2>
-            
+
             <div class="history-controls" style="margin-bottom: var(--space-md);">
               <button class="btn btn-outline" id="toggleHistoryBtn">Show History</button>
               <button class="btn btn-outline" id="refreshHistoryBtn" style="display: none;">🔄 Refresh</button>
             </div>
-            
+
             <div id="historyContent" style="display: none;">
-              <div class="history-loading" id="historyLoading" style="text-align: center; padding: var(--space-lg); display: none;">
+              <div class="history-loading" id="historyLoading"
+                style="text-align: center; padding: var(--space-lg); display: none;">
                 <div class="loading-spinner"></div>
                 Loading history...
               </div>
-              
+
               <div class="history-list" id="historyList">
                 <!-- History items will be dynamically generated -->
               </div>
-              
-              <div class="history-pagination" id="historyPagination" style="margin-top: var(--space-md); text-align: center;">
+
+              <div class="history-pagination" id="historyPagination"
+                style="margin-top: var(--space-md); text-align: center;">
                 <!-- Pagination controls will be dynamically generated -->
               </div>
-              
-              <div class="history-empty" id="historyEmpty" style="text-align: center; padding: var(--space-lg); color: var(--text-secondary); display: none;">
+
+              <div class="history-empty" id="historyEmpty"
+                style="text-align: center; padding: var(--space-lg); color: var(--text-secondary); display: none;">
                 <p>No generation history yet. Start creating some amazing social media captions!</p>
               </div>
             </div>
@@ -1121,16 +1152,16 @@
         this.usageBar = document.getElementById('usageBar');
         this.usageText = document.getElementById('usageText');
         this.toolType = 'social_captions';
-        
+
         // Default output element for backward compatibility
         this.defaultOutput = document.getElementById('defaultOutput');
-        
+
         // New image upload elements
         this.imageInput = document.getElementById('imageInput');
         this.uploadArea = document.getElementById('uploadArea');
         this.imagePreview = document.getElementById('imagePreview');
         this.removeImageBtn = document.getElementById('removeImageBtn');
-        
+
         // New multi-platform elements
         this.platformCheckboxes = document.querySelectorAll('.platform-checkbox');
         this.outputTabs = document.getElementById('outputTabs');
@@ -1138,7 +1169,7 @@
         this.outputActions = document.getElementById('outputActions');
         this.copyAllBtn = document.getElementById('copyAllBtn');
         this.downloadAllBtn = document.getElementById('downloadAllBtn');
-        
+
         // History elements
         this.historySection = document.getElementById('historySection');
         this.toggleHistoryBtn = document.getElementById('toggleHistoryBtn');
@@ -1148,7 +1179,7 @@
         this.historyList = document.getElementById('historyList');
         this.historyPagination = document.getElementById('historyPagination');
         this.historyEmpty = document.getElementById('historyEmpty');
-        
+
         // State management
         this.uploadedImage = null;
         this.uploadedImageFile = null; // Store the actual File object for upload
@@ -1158,7 +1189,8 @@
         this.currentPage = 1;
         this.itemsPerPage = 10;
         this.isLoading = false; // Track loading state to prevent flickering
-        
+        this.loadingTimeout = null; // Track timeout for loading overlay
+
         this.init();
       }
 
@@ -1173,36 +1205,36 @@
 
           // Check access and load usage
           await this.loadUsage();
-          
+
           // Set up event listeners
           this.form.addEventListener('submit', (e) => this.handleSubmit(e));
-          
+
           // Image upload event listeners
           this.uploadArea.addEventListener('click', () => this.imageInput.click());
           this.imageInput.addEventListener('change', (e) => this.handleImageUpload(e));
           this.removeImageBtn.addEventListener('click', () => this.removeImage());
-          
+
           // Drag and drop events
           this.uploadArea.addEventListener('dragover', (e) => this.handleDragOver(e));
           this.uploadArea.addEventListener('dragleave', (e) => this.handleDragLeave(e));
           this.uploadArea.addEventListener('drop', (e) => this.handleImageDrop(e));
-          
+
           // Platform selection event listeners
           this.platformCheckboxes.forEach(checkbox => {
             checkbox.addEventListener('change', (e) => this.handlePlatformSelection(e));
           });
-          
+
           // Action buttons event listeners
           this.copyAllBtn.addEventListener('click', () => this.copyAllCaptions());
           this.downloadAllBtn.addEventListener('click', () => this.downloadAllCaptions());
-          
+
           // History event listeners
           this.toggleHistoryBtn.addEventListener('click', () => this.toggleHistory());
           this.refreshHistoryBtn.addEventListener('click', () => this.loadHistory());
-          
+
           // Show history section
           this.historySection.style.display = 'block';
-          
+
           // Show default output initially
           if (this.defaultOutput) {
             this.defaultOutput.style.display = 'block';
@@ -1339,10 +1371,10 @@
 
           try {
             console.log('🚀 About to call n8n webhook...');
-            
+
             // Call n8n webhook for processing
             const response = await this.callN8nWebhook(webhookPayload);
-            
+
             console.log('📡 Webhook response received:', response);
 
             if (response.success) {
@@ -1451,11 +1483,11 @@
 
         } catch (error) {
           console.error('❌ n8n webhook error:', error.message);
-          
+
           // Fallback to placeholder generation if webhook fails
           console.log('🔄 Falling back to placeholder generation');
           const fallbackCaptions = {};
-          
+
           for (const platform of webhookPayload.platforms) {
             fallbackCaptions[platform] = this.generatePlaceholderCaptions(
               webhookPayload.topic,
@@ -1495,9 +1527,9 @@
 
           console.log('📝 Saving to history with data:', historyData);
           const result = await socialCaptionsHistoryManager.saveGeneration(historyData);
-          
+
           console.log('📝 History save result:', result);
-          
+
           if (result.success !== false && !result.error) {
             console.log('✅ Social captions generation saved to history:', result.data);
             // Refresh history display if visible
@@ -1541,7 +1573,7 @@
       handleImageDrop(event) {
         event.preventDefault();
         this.uploadArea.classList.remove('dragover');
-        
+
         const files = event.dataTransfer.files;
         if (files.length > 0) {
           this.processImageFile(files[0]);
@@ -1583,10 +1615,10 @@
           </div>
         `;
         this.imagePreview.style.display = 'block';
-        
+
         // Hide the upload area when image is displayed
         this.uploadArea.style.display = 'none';
-        
+
         // Re-attach remove button event listener
         document.getElementById('removeImageBtn').addEventListener('click', () => this.removeImage());
       }
@@ -1596,7 +1628,7 @@
         this.uploadedImageFile = null;
         this.imagePreview.style.display = 'none';
         this.imageInput.value = '';
-        
+
         // Show the upload area again when image is removed
         this.uploadArea.style.display = 'flex';
       }
@@ -1617,21 +1649,21 @@
       }
 
       // Multi-Platform Output Methods
-      
+
       // Centralized caption text extraction method
       extractCaptionText(captionData) {
         console.log('🔍 Extracting caption text from:', captionData);
-        
+
         // If it's already a string, return as-is
         if (typeof captionData === 'string') {
           return captionData;
         }
-        
+
         // If it's null or undefined, return empty string
         if (!captionData) {
           return '';
         }
-        
+
         // If it's an object, try to extract text from various properties
         if (typeof captionData === 'object') {
           // Try common properties where caption text might be stored
@@ -1656,7 +1688,7 @@
             return JSON.stringify(captionData, null, 2);
           }
         }
-        
+
         // Fallback: convert to string
         return String(captionData);
       }
@@ -1667,7 +1699,7 @@
         console.log('📝 Generated captions:', this.generatedCaptions);
         console.log('📝 Generated captions type:', typeof this.generatedCaptions);
         console.log('📝 Generated captions keys:', Object.keys(this.generatedCaptions));
-        
+
         // Validate we have captions to display
         if (!this.generatedCaptions || Object.keys(this.generatedCaptions).length === 0) {
           console.error('❌ No captions to display!');
@@ -1736,7 +1768,7 @@
           tab.className = 'output-tab';
           tab.textContent = `${platformEmoji[platform]} ${platformName}`;
           tab.dataset.platform = platform;
-          
+
           // Always set Instagram tab as active by default, regardless of order
           if (platform === 'instagram') {
             tab.classList.add('active');
@@ -1795,7 +1827,7 @@
 
         // Show action buttons
         this.outputActions.style.display = 'block';
-        
+
         // Hide loading states using the new method
         this.hideOutputLoading();
       }
@@ -1931,16 +1963,16 @@
         };
 
         const config = platformSpecific[platform] || platformSpecific['instagram'];
-        
+
         let content = `# ${topic} - ${platform.charAt(0).toUpperCase() + platform.slice(1)} Captions\n\n`;
-        
+
         for (let i = 1; i <= captionCount; i++) {
           const emoji = platformEmoji[platform] || '📝';
           content += `${emoji} Caption ${i}:\n`;
-          
+
           // Generate placeholder caption based on tone and platform
           let caption = '';
-          
+
           if (tone === 'professional') {
             if (platform === 'linkedin') {
               caption = `Excited to share our latest ${topic.toLowerCase()} with our professional network. This represents a significant milestone for our team and stakeholders. #Innovation #Growth`;
@@ -1985,7 +2017,7 @@
       // History Management Methods
       async toggleHistory() {
         this.historyVisible = !this.historyVisible;
-        
+
         if (this.historyVisible) {
           this.historyContent.style.display = 'block';
           this.toggleHistoryBtn.textContent = 'Hide History';
@@ -2007,7 +2039,7 @@
 
           const offset = (page - 1) * this.itemsPerPage;
           console.log(`📚 Loading history page ${page}, offset: ${offset}, limit: ${this.itemsPerPage}`);
-          
+
           const result = await socialCaptionsHistoryManager.getHistory(
             this.itemsPerPage,
             offset
@@ -2085,20 +2117,20 @@
         try {
           console.log('🔄 Loading history item:', itemId);
           const result = await socialCaptionsHistoryManager.getEntryById(itemId);
-          
+
           console.log('📦 History item result:', result);
-          
+
           // Check if result has data (not checking for result.success as it may not exist)
           if (result && result.data) {
             const item = result.data;
             console.log('📝 History item data:', item);
-            
+
             // Load the item data back into the form
             document.getElementById('topic').value = item.topic || '';
             document.getElementById('tone').value = item.tone || 'casual';
             document.getElementById('hashtags').value = item.hashtags || '';
             document.getElementById('length').value = item.length || 'medium';
-            
+
             // Clear and set platform selections
             this.selectedPlatforms.clear();
             this.platformCheckboxes.forEach(checkbox => {
@@ -2112,7 +2144,7 @@
                 platformItem.classList.remove('selected');
               }
             });
-            
+
             // Load image if available
             if (item.image_url) {
               this.uploadedImage = item.image_url;
@@ -2120,19 +2152,19 @@
             } else {
               this.removeImage();
             }
-            
+
             // Load generated captions
             this.generatedCaptions = item.generated_captions || {};
             console.log('🎨 Loaded captions:', this.generatedCaptions);
-            
+
             // Only display output if we have captions
             if (Object.keys(this.generatedCaptions).length > 0) {
               this.displayMultiPlatformOutput();
             }
-            
+
             // Scroll to form
             this.form.scrollIntoView({ behavior: 'smooth' });
-            
+
             // Show success message
             this.showError('History item loaded successfully!', 'success');
             setTimeout(() => this.clearError(), 3000);
@@ -2154,11 +2186,11 @@
 
         try {
           const result = await socialCaptionsHistoryManager.deleteEntry(itemId);
-          
+
           if (result.success) {
             // Reload current history page
             await this.loadHistory(this.currentPage);
-            
+
             // Show success message
             this.showError('History item deleted successfully!');
             setTimeout(() => this.clearError(), 3000);
@@ -2179,7 +2211,7 @@
 
       displayPagination(totalItems, currentPage) {
         const totalPages = Math.ceil(totalItems / this.itemsPerPage);
-        
+
         if (totalPages <= 1) {
           this.historyPagination.style.display = 'none';
           return;
@@ -2236,7 +2268,7 @@
           console.warn('escapeHtml: non-string value received:', text, typeof text);
           return '';
         }
-        
+
         const map = {
           '&': '&',
           '<': '<',
@@ -2251,7 +2283,7 @@
         this.errorMessage.textContent = message;
         this.errorMessage.classList.remove('show', 'error', 'success');
         this.errorMessage.classList.add('show', type);
-        
+
         // Set background color based on type
         if (type === 'success') {
           this.errorMessage.style.background = 'var(--green)';
@@ -2282,36 +2314,77 @@
           console.log('🔄 Already loading, skipping duplicate overlay');
           return;
         }
-        
+
         this.isLoading = true;
-        
+
+        // Clear any existing timeout
+        if (this.loadingTimeout) {
+          clearTimeout(this.loadingTimeout);
+          this.loadingTimeout = null;
+        }
+
         // Clear existing content and show loading state
         this.outputTabs.innerHTML = '';
         this.platformOutputs.innerHTML = '';
-        
+
         // Hide default output
         if (this.defaultOutput) {
           this.defaultOutput.style.display = 'none';
         }
-        
+
         // Hide action buttons
         if (this.outputActions) {
           this.outputActions.style.display = 'none';
         }
-        
+
         // Show enhanced loading overlay with a slight delay to prevent flickering
-        setTimeout(() => {
+        this.loadingTimeout = setTimeout(() => {
           const loadingOverlay = document.getElementById('loadingOverlay');
           if (loadingOverlay) {
             loadingOverlay.style.display = 'flex';
           }
-          
+
           // Also show basic loading state as fallback
           const loadingState = document.getElementById('loadingState');
           if (loadingState) {
             loadingState.style.display = 'block';
           }
         }, 100); // Small delay to prevent flickering
+      }
+
+      hideOutputLoading() {
+        console.log('✨ Hiding output loading state');
+        this.isLoading = false;
+
+        // Clear timeout if it hasn't fired yet
+        if (this.loadingTimeout) {
+          clearTimeout(this.loadingTimeout);
+          this.loadingTimeout = null;
+        }
+
+        // Hide loading overlay
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        if (loadingOverlay) {
+          loadingOverlay.style.display = 'none';
+        }
+
+        // Hide basic loading state
+        const loadingState = document.getElementById('loadingState');
+        if (loadingState) {
+          loadingState.style.display = 'none';
+        }
+
+        // Show tabs and content container
+        this.outputTabs.style.display = 'flex';
+        this.platformOutputs.style.display = 'block';
+
+        // Show action buttons if configured
+        if (this.outputActions) {
+          // Only show if we have captions
+          if (Object.keys(this.generatedCaptions).length > 0) {
+            this.outputActions.style.display = 'block';
+          }
+        }
       }
     }
 
