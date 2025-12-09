@@ -1018,3 +1018,41 @@ body {
     align-items: flex-start;
   }
 }
+
+/* Desktop: Reduce vertical spacing between sections */
+@media (min-width: 769px) {
+  .dashboard-header {
+    margin-bottom: var(--space-sm);
+  }
+
+  .section {
+    margin-bottom: var(--space-sm);
+  }
+
+  .section-title {
+    margin-bottom: var(--space-sm);
+  }
+
+  .profile-header {
+    margin-bottom: var(--space-xs);
+    padding: var(--space-sm);
+  }
+
+  .profile-section {
+    margin-bottom: var(--space-xs);
+  }
+
+  .profile-fields {
+    gap: var(--space-xs);
+  }
+
+  .tools-grid {
+    gap: var(--space-sm);
+    margin-bottom: var(--space-sm);
+  }
+
+  .subscription-status {
+    gap: var(--space-sm);
+    margin-bottom: var(--space-sm);
+  }
+}
