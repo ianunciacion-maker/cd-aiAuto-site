@@ -105,6 +105,79 @@
       border-bottom: var(--border-thick);
     }
 
+    /* Sequence Tabs */
+    .sequence-tabs {
+      display: flex;
+      gap: var(--space-xs);
+      margin-bottom: var(--space-md);
+      overflow-x: auto;
+      padding-bottom: 4px;
+      border-bottom: var(--border-thick);
+    }
+
+    .sequence-tab {
+      background: var(--bg-paper);
+      border: var(--border-thin);
+      padding: 8px 16px;
+      border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+
+    .sequence-tab.active {
+      background: var(--bg-white);
+      color: var(--blue);
+      border-bottom: 3px solid var(--bg-white);
+      margin-bottom: -3px;
+      border-color: var(--border-thick);
+      border-bottom-color: transparent;
+    }
+
+    .strategy-box {
+      background: var(--lavender);
+      padding: var(--space-md);
+      border-radius: var(--radius-sm);
+      margin-bottom: var(--space-lg);
+      border-left: 4px solid var(--blue);
+    }
+
+    .strategy-title {
+      font-weight: 900;
+      text-transform: uppercase;
+      font-size: 12px;
+      color: var(--blue);
+      margin-bottom: var(--space-xs);
+    }
+
+    .strategy-text {
+      font-size: 14px;
+      color: var(--ink);
+      line-height: 1.5;
+    }
+
+    .email-container {
+      display: none;
+    }
+
+    .email-container.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(5px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     .usage-info {
       background: var(--lavender);
       border: var(--border-thick);
@@ -640,45 +713,82 @@
         }
       }
 
-      displayEmail(email) {
-        this.emailOutput.innerHTML = `
-          <div class="email-section">
-            <div class="email-section-title">Subject Line</div>
-            <div class="email-subject">${this.esc(email.subjectLine)}</div>
-            <div class="email-preheader">${this.esc(email.preheader)}</div>
-          </div>
-          <div class="email-section">
-            <div class="email-section-title">Email Content</div>
-            <div class="email-body">${this.esc(email.greeting)}\n\n${this.esc(email.body)}${email.bulletPoints?.length ? '\n\n' + email.bulletPoints.map(p => '• ' + p).join('\n') : ''}\n\n${this.esc(email.callToAction)}\n\n${this.esc(email.closing)}</div>
-          </div>
-          ${email.alternateSubjects?.length ? `<div class="email-section"><div class="email-section-title">Alternative Subjects</div><div class="alt-subjects">${email.alternateSubjects.map(s => `<span class="alt-subject">${this.esc(s)}</span>`).join('')}</div></div>` : ''}
-        `;
+      displayEmail(data) {
+        // data can be { campaign: [...], strategy: "..." }
+        const campaign = data.campaign || (data.email ? [data.email] : []); // Fallback for old format
+        const strategy = data.strategy || '';
+
+        this.currentCampaign = campaign;
+        this.currentEmailIndex = 0;
+
+        let html = '';
+
+        // Strategy Section
+        if (strategy) {
+          html += `<div class="strategy-box"><div class="strategy-title">💡 Campaign Strategy</div><div class="strategy-text">${this.esc(strategy)}</div></div>`;
+        }
+
+        // Tabs
+        if (campaign.length > 1) {
+          html += `<div class="sequence-tabs">`;
+          campaign.forEach((_, i) => {
+            html += `<button class="sequence-tab ${i === 0 ? 'active' : ''}" onclick="emailGen.switchTab(${i})">Email ${i + 1}</button>`;
+          });
+          html += `</div>`;
+        }
+
+        // Email Content Containers
+        campaign.forEach((email, i) => {
+          html += `
+            <div class="email-container ${i === 0 ? 'active' : ''}" id="email-content-${i}">
+              <div class="email-section">
+                <div class="email-section-title">Subject Line</div>
+                <div class="email-subject">${this.esc(email.subjectLine)}</div>
+                ${email.preheader ? `<div class="email-preheader">${this.esc(email.preheader)}</div>` : ''}
+              </div>
+              <div class="email-section">
+                <div class="email-section-title">Body</div>
+                <div class="email-body" style="font-family: monospace; white-space: pre-wrap;">${this.esc(email.body)}\n\n${email.callToAction ? `[CTA: ${this.esc(email.callToAction)}]` : ''}</div>
+              </div>
+            </div>
+          `;
+        });
+
+        this.emailOutput.innerHTML = html;
         this.emailOutput.style.display = 'block';
         this.outputActions.style.display = 'flex';
       }
 
-      async saveToHistory(payload, email) {
-        await emailCampaignsHistoryManager.saveGeneration({
-          subject: payload.subject, purpose: payload.purpose, audience: payload.audience,
-          tone: payload.tone, key_points: payload.keyPoints, cta: payload.cta,
-          image_url: payload.imageUrl, generated_email: email
+      switchTab(index) {
+        this.currentEmailIndex = index;
+        document.querySelectorAll('.sequence-tab').forEach((tab, i) => {
+          tab.classList.toggle('active', i === index);
         });
-        if (this.historyVisible) this.loadHistory();
+        document.querySelectorAll('.email-container').forEach((container, i) => {
+          container.classList.toggle('active', i === index);
+        });
       }
 
       copyEmail() {
-        if (!this.currentEmail) return;
-        const text = `Subject: ${this.currentEmail.subjectLine}\n\n${this.currentEmail.greeting}\n\n${this.currentEmail.body}\n\n${this.currentEmail.bulletPoints?.join('\n') || ''}\n\n${this.currentEmail.callToAction}\n\n${this.currentEmail.closing}`;
+        if (!this.currentCampaign || !this.currentCampaign[this.currentEmailIndex]) return;
+        const email = this.currentCampaign[this.currentEmailIndex];
+        const text = `Subject: ${email.subjectLine}\n\n${email.body}\n\nCTA: ${email.callToAction}`;
         navigator.clipboard.writeText(text);
-        document.getElementById('copyBtn').textContent = '✓ Copied!';
-        setTimeout(() => document.getElementById('copyBtn').textContent = '📋 Copy Email', 2000);
+        this.showCopyFeedback('copyBtn');
       }
 
       copySubject() {
-        if (!this.currentEmail) return;
-        navigator.clipboard.writeText(this.currentEmail.subjectLine);
-        document.getElementById('copySubjectBtn').textContent = '✓ Copied!';
-        setTimeout(() => document.getElementById('copySubjectBtn').textContent = '📝 Copy Subject', 2000);
+        if (!this.currentCampaign || !this.currentCampaign[this.currentEmailIndex]) return;
+        const email = this.currentCampaign[this.currentEmailIndex];
+        navigator.clipboard.writeText(email.subjectLine);
+        this.showCopyFeedback('copySubjectBtn');
+      }
+
+      showCopyFeedback(btnId) {
+        const btn = document.getElementById(btnId);
+        const original = btn.textContent;
+        btn.textContent = '✓ Copied!';
+        setTimeout(() => btn.textContent = original, 2000);
       }
 
       async toggleHistory() {
@@ -691,15 +801,21 @@
       async loadHistory() {
         const { data } = await emailCampaignsHistoryManager.getHistory(10, 0);
         if (data?.length) {
-          this.historyList.innerHTML = data.map(item => `
+          this.historyList.innerHTML = data.map(item => {
+            // Handle both old single-email format and new campaign format
+            const subject = item.generated_email?.campaign?.[0]?.subjectLine
+              || item.generated_email?.subjectLine
+              || item.subject;
+
+            return `
             <div class="history-item">
               <div class="history-header">
-                <div><strong>${this.esc(item.generated_email?.subjectLine || item.subject)}</strong>
+                <div><strong>${this.esc(subject)}</strong>
                 <div class="history-meta">${item.purpose} • ${new Date(item.created_at).toLocaleDateString()}</div></div>
                 <button class="btn btn-outline btn-sm" onclick="emailGen.loadHistoryItem('${item.id}')">Load</button>
               </div>
             </div>
-          `).join('');
+          `}).join('');
           document.getElementById('historyEmpty').style.display = 'none';
         } else {
           this.historyList.innerHTML = '';
@@ -716,7 +832,11 @@
           document.getElementById('tone').value = data.tone || 'friendly';
           document.getElementById('keyPoints').value = data.key_points || '';
           document.getElementById('cta').value = data.cta || '';
-          if (data.generated_email) { this.currentEmail = data.generated_email; this.displayEmail(data.generated_email); }
+
+          if (data.generated_email) {
+            // displayEmail handles both formats internally
+            this.displayEmail(data.generated_email);
+          }
           this.form.scrollIntoView({ behavior: 'smooth' });
         }
       }

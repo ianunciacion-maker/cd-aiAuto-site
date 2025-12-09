@@ -31,31 +31,42 @@ module.exports = async (req, res) => {
             return res.status(500).json({ error: 'API configuration error', success: false });
         }
 
-        const lengthGuide = { short: '100-150 words', medium: '200-300 words', long: '400-500 words' };
+        const lengthGuide = { short: '100-150 words', medium: '150-250 words', long: '250-400 words' };
 
-        const systemPrompt = `You are an expert email marketing copywriter. Generate compelling email campaigns.
+        const systemPrompt = `You are Alex Hormozi. write a 3-5 email campaign sequence.
 
-RESPOND WITH ONLY VALID JSON (no markdown):
+STYLE GUIDE (STRICT):
+- Write like you talk. 5th-grade reading level.
+- Short, punchy sentences.
+- High contrast. High value. Zero fluff.
+- "Hook-Retain-Reward" structure in every email.
+- Use "I" and "You". be direct.
+- No corporate jargon. No "We hope this email finds you well."
+- Format for readability: One sentence per line often.
+
+OUTPUT SCHEMA (JSON ONLY):
 {
-  "subjectLine": "Primary subject line",
-  "preheader": "Preview text (50-90 chars)",
-  "greeting": "Personalized greeting",
-  "body": "Main email body (${lengthGuide[length] || '200-300 words'})",
-  "bulletPoints": ["Key point 1", "Key point 2", "Key point 3"],
-  "callToAction": "CTA button text",
-  "closing": "Sign-off text",
-  "alternateSubjects": ["Alt subject 1", "Alt subject 2"]
+  "campaign": [
+    {
+      "day": 1,
+      "subjectLine": "Punchy Subject",
+      "preheader": "Hook text",
+      "body": "Body content...",
+      "callToAction": "Direct CTA"
+    },
+    ... (3-5 emails total)
+  ],
+  "strategy": "Brief explanation of the campaign strategy"
 }
+`;
 
-Tone: ${tone || 'friendly'}. Make it engaging and conversion-focused.`;
-
-        const userPrompt = `Generate email campaign:
-Subject: ${subject}
+        const userPrompt = `Generate a ${lengthGuide[length] || 'short'} email sequence (3-5 emails) for:
+Subject/Topic: ${subject}
 Purpose: ${purpose || 'promotional'}
-Audience: ${audience || 'General'}
-Key Points: ${keyPoints || 'Not specified'}
-CTA: ${cta || 'Learn More'}
-${imageUrl ? 'Product image provided - incorporate visual elements you observe.' : ''}`;
+Target Audience: ${audience || 'General'}
+Key Value Points: ${keyPoints || 'Not specified'}
+Main CTA: ${cta || 'Action'}
+${imageUrl ? 'Product image provided - use visual details as proof/evidence.' : ''}`;
 
         const messages = [{ role: 'system', content: systemPrompt }];
 
@@ -106,16 +117,26 @@ ${imageUrl ? 'Product image provided - incorporate visual elements you observe.'
             }
             email = JSON.parse(cleaned);
         } catch {
-            email = {
-                subjectLine: subject,
-                preheader: 'Check out our latest update',
-                greeting: 'Hello!',
-                body: content,
-                bulletPoints: [],
-                callToAction: cta || 'Learn More',
-                closing: 'Best regards',
-                alternateSubjects: []
-            };
+            try {
+                let cleaned = content.trim();
+                if (cleaned.startsWith('```')) {
+                    cleaned = cleaned.replace(/^```json?\s*/, '').replace(/\s*```$/, '');
+                }
+                email = JSON.parse(cleaned);
+            } catch {
+                email = {
+                    campaign: [
+                        {
+                            day: 1,
+                            subjectLine: subject,
+                            preheader: 'Quick update',
+                            body: content, // Fallback if parsing fails
+                            callToAction: cta || 'Click here'
+                        }
+                    ],
+                    strategy: "Manual fallback generation"
+                };
+            }
         }
 
         console.log('✅ Email campaign generated');
