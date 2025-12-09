@@ -447,7 +447,9 @@
     }
 
     @keyframes spin {
-      to { transform: rotate(360deg); }
+      to {
+        transform: rotate(360deg);
+      }
     }
 
     /* Loading Spinner - matches dashboard loading styles */
@@ -463,7 +465,9 @@
     }
 
     @keyframes spin {
-      to { transform: rotate(360deg); }
+      to {
+        transform: rotate(360deg);
+      }
     }
 
     /* ============================================
@@ -574,7 +578,8 @@
 
     .history-item-info {
       flex: 1;
-      min-width: 0; /* Enable text truncation */
+      min-width: 0;
+      /* Enable text truncation */
     }
 
     .history-item-topic {
@@ -777,10 +782,10 @@
         <!-- Input Form Section -->
         <div class="form-section">
           <h2>Generate Blog Post</h2>
-          
+
           <!-- Error Message -->
           <div class="error-message" id="errorMessage"></div>
-          
+
           <!-- Usage Information -->
           <div class="usage-info">
             <p><strong id="usageText">0/100</strong> generations used this month</p>
@@ -830,7 +835,8 @@
           <div class="output-content empty" id="outputContent">
             Fill in the form and click "Generate" to create your blog post
           </div>
-          <button class="btn btn-outline" id="copyBtn" style="display: none; margin-top: var(--space-md);">📋 Copy to Clipboard</button>
+          <button class="btn btn-outline" id="copyBtn" style="display: none; margin-top: var(--space-md);">📋 Copy to
+            Clipboard</button>
         </div>
       </div>
 
@@ -957,12 +963,13 @@
       }
 
       async callN8nWebhook(formData, userData) {
-        const webhookUrl = 'https://n8n.autonoiq.com/webhook/blog-generator';
+        // Use API proxy instead of calling n8n directly (security best practice)
+        const apiUrl = '/api/tools/generate-blog';
 
         try {
-          console.log('Sending to webhook:', { formData, userData });
+          console.log('Sending to API proxy:', { formData, userData });
 
-          const response = await fetch(webhookUrl, {
+          const response = await fetch(apiUrl, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -985,82 +992,25 @@
           });
 
           if (!response.ok) {
-            throw new Error(`Webhook returned ${response.status}: ${response.statusText}`);
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(errorData.error || `API returned ${response.status}`);
           }
 
-          let result = await response.json();
-          console.log('Webhook response (raw):', result);
+          const result = await response.json();
+          console.log('API response:', result);
 
-          // Helper function to recursively parse until we get an object
-          const deepParse = (data) => {
-            if (typeof data === 'string') {
-              try {
-                return deepParse(JSON.parse(data));
-              } catch (e) {
-                return data;
-              }
-            }
-            if (Array.isArray(data) && data.length > 0) {
-              return deepParse(data[0]);
-            }
-            return data;
-          };
-
-          // Deep parse the result to handle nested JSON strings
-          result = deepParse(result);
-          console.log('Webhook response (parsed):', result);
-
-          // Helper function to extract blog data from any structure
-          const extractBlogData = (obj) => {
-            // Direct properties
-            if (obj.blogTitle && obj.blogContent) {
-              return {
-                title: obj.blogTitle,
-                content: obj.blogContent,
-                isHtml: true
-              };
-            }
-
-            // Check in output field
-            if (obj.output) {
-              const outputData = deepParse(obj.output);
-              if (outputData.blogTitle && outputData.blogContent) {
-                return {
-                  title: outputData.blogTitle,
-                  content: outputData.blogContent,
-                  isHtml: true
-                };
-              }
-            }
-
-            // Check in content field
-            if (obj.content) {
-              const contentData = deepParse(obj.content);
-              if (contentData.blogTitle && contentData.blogContent) {
-                return {
-                  title: contentData.blogTitle,
-                  content: contentData.blogContent,
-                  isHtml: true
-                };
-              }
-              return { content: obj.content, isHtml: false };
-            }
-
-            return null;
-          };
-
-          // Try to extract blog data
-          const blogData = extractBlogData(result);
-          if (blogData) {
-            return blogData;
+          if (result.success) {
+            return {
+              title: result.title,
+              content: result.content,
+              isHtml: result.isHtml !== false
+            };
           }
 
-          // If nothing worked, stringify for debugging
-          console.warn('Could not parse blog data from response:', result);
-          return { content: JSON.stringify(result, null, 2), isHtml: false };
+          throw new Error(result.error || 'Failed to generate content');
 
         } catch (error) {
-          console.error('n8n webhook error:', error);
+          console.error('Blog generation error:', error);
           throw new Error('Failed to generate content. Please try again.');
         }
       }

@@ -42,8 +42,15 @@ module.exports = async (req, res) => {
     console.log('📤 Proxying request to n8n webhook...');
     console.log('Payload size:', JSON.stringify(webhookPayload).length, 'characters');
 
-    // Call n8n webhook
-    const webhookUrl = 'https://n8n.autonoiq.com/webhook/social-caption-generator';
+    // Get n8n webhook URL from environment variable
+    const webhookUrl = process.env.N8N_SOCIAL_CAPTIONS_WEBHOOK;
+    if (!webhookUrl) {
+      console.error('❌ N8N_SOCIAL_CAPTIONS_WEBHOOK not configured');
+      return res.status(500).json({
+        error: 'Webhook configuration error',
+        success: false
+      });
+    }
 
     const webhookResponse = await fetch(webhookUrl, {
       method: 'POST',
