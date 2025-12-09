@@ -65,45 +65,50 @@ module.exports = async (req, res) => {
             detailed: '300-400 words'
         };
 
-        const systemPrompt = `You are an expert product copywriter. Generate compelling product descriptions that convert browsers into buyers.
+        const systemPrompt = `You are Alex Hormozi writing product descriptions.
 
-CRITICAL: You MUST respond with ONLY valid JSON matching this exact schema. No markdown, no code blocks, just raw JSON:
+STYLE GUIDE (STRICT):
+- Write at a 5th-grade reading level.
+- Short sentences. Punchy.
+- High contrast: "Old way" vs "New way".
+- Focus on the "Dream Outcome" and "Perceived Likelihood of Achievement".
+- No fluff. No jargon. Be direct.
+- Use bullet points to stack value.
+- "Hook-Retain-Reward" structure.
+
+CRITICAL: You MUST respond with ONLY valid JSON matching this exact schema:
 
 {
-  "headline": "A compelling product headline (max 100 characters)",
-  "tagline": "A catchy tagline (max 50 characters)",
-  "shortDescription": "1-2 sentence summary of the product",
-  "fullDescription": "Main product description (${lengthGuide[length] || '100-200 words'})",
+  "headline": "Punchy, benefit-driven headline (max 100 chars)",
+  "tagline": "High-contrast tagline (max 50 chars)",
+  "shortDescription": "Hook the reader instantly. 1-2 sentences. 5th grade level.",
+  "fullDescription": "Stack the value here. Explain why this product gets them to their goal faster/easier/cheaper. (${lengthGuide[length] || '100-200 words'})",
   "keyFeatures": [
-    { "title": "Feature Name", "description": "Brief explanation of this feature" }
+    { "title": "Feature Name", "description": "What it does for them (benefit)" }
   ],
-  "benefits": ["Benefit statement 1", "Benefit statement 2", "Benefit statement 3"],
-  "targetAudience": "Description of who this product is perfect for",
-  "callToAction": "A compelling call-to-action phrase",
+  "benefits": ["Benefit 1 (Time)", "Benefit 2 (Money)", "Benefit 3 (Effort)"],
+  "targetAudience": "Who this is SPECIFICALLY for",
+  "callToAction": "Direct command (Buy Now / Get It)",
   "seoKeywords": ["keyword1", "keyword2", "keyword3", "keyword4", "keyword5"]
 }
 
 Rules:
-- Write in a ${tone || 'friendly'} tone
-- Focus on benefits, not just features
-- Use power words that evoke emotion
-- Include exactly 3-5 key features
-- Include exactly 3-5 benefits
-- Include exactly 5 SEO keywords
-- Make the CTA action-oriented and urgent`;
+- Tone: ${tone || 'Direct and High Value'}
+- Sell the OUTCOME, not the tool.
+- Make the "Cost of Inaction" clear.`;
 
-        const userPrompt = `Generate a product description for:
+        const userPrompt = `Generate a Hormozi-style product description for:
 
 Product Name: ${productName}
 Category: ${category || 'General'}
 Key Features: ${features || 'Not specified'}
 Target Audience: ${targetAudience || 'General consumers'}
-Tone: ${tone || 'friendly'}
+Tone: ${tone || 'Direct'}
 Length: ${length || 'medium'} (${lengthGuide[length] || '100-200 words'})
 
-${imageUrl ? 'An image of the product has been provided. Analyze it to enhance your description with visual details, colors, materials, and design elements you observe.' : ''}
+${imageUrl ? 'Product image provided. Use visual proof to back up your claims.' : ''}
 
-Return ONLY the JSON object, no other text.`;
+Return ONLY the JSON object.`;
 
         // Build messages array
         const messages = [
@@ -137,7 +142,7 @@ Return ONLY the JSON object, no other text.`;
             });
         }
 
-        console.log('🚀 Calling OpenRouter API with google/gemini-2.5-flash...');
+        console.log('🚀 Calling OpenRouter API with x-ai/grok-4.1-fast...');
 
         // Call OpenRouter API
         const openRouterResponse = await fetch('https://openrouter.ai/api/v1/chat/completions', {
@@ -149,7 +154,7 @@ Return ONLY the JSON object, no other text.`;
                 'X-Title': 'Ai-Auto Product Descriptions'
             },
             body: JSON.stringify({
-                model: 'google/gemini-2.5-flash',
+                model: 'x-ai/grok-4.1-fast',
                 messages: messages,
                 temperature: 0.7,
                 max_tokens: 2000,

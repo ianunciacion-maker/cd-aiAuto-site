@@ -15,91 +15,21 @@
     /* Tool-specific styles that extend dashboard design system */
 
     /* Image Upload Component Styles */
-    .image-upload-section {
-      background: var(--bg-white);
-      border: var(--border-thick);
-      box-shadow: var(--shadow-hard);
-      padding: var(--space-lg);
-      border-radius: var(--radius-sm);
-      margin-bottom: var(--space-md);
-      transition: all 0.2s ease;
-    }
-
-    .image-upload-section:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: var(--shadow-hover);
-    }
-
-    .image-upload-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: var(--space-md);
-      padding-bottom: var(--space-sm);
-      border-bottom: var(--border-thick);
-    }
-
-    .image-upload-header h3 {
-      font-size: 18px;
-      font-weight: 700;
-      font-family: var(--font-heading);
-      color: var(--ink);
-      margin: 0;
-      text-transform: uppercase;
-      letter-spacing: -0.3px;
-    }
-
-    .image-upload-container {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-lg);
-      margin-bottom: var(--space-md);
-    }
-
+    /* Image Upload Component Styles */
     .upload-area {
       border: 2px dashed var(--border-color);
       border-radius: var(--radius-sm);
-      padding: var(--space-lg);
+      padding: var(--space-md);
       text-align: center;
       background: var(--bg-paper);
-      transition: all 0.2s ease;
       cursor: pointer;
-      min-height: 200px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      transition: all 0.2s ease;
     }
 
-    .upload-area:hover {
-      border-color: var(--blue);
-      background: var(--lavender);
-    }
-
+    .upload-area:hover,
     .upload-area.dragover {
       border-color: var(--blue);
       background: var(--lavender);
-      transform: scale(1.02);
-    }
-
-    .upload-icon {
-      font-size: 48px;
-      color: var(--ink);
-      opacity: 0.6;
-      margin-bottom: var(--space-sm);
-    }
-
-    .upload-text {
-      font-size: 16px;
-      color: var(--ink);
-      opacity: 0.8;
-      margin-bottom: var(--space-sm);
-    }
-
-    .upload-hint {
-      font-size: 14px;
-      color: var(--text-secondary);
-      font-style: italic;
     }
 
     .image-preview {
@@ -108,48 +38,27 @@
       border: var(--border-thin);
       border-radius: var(--radius-sm);
       overflow: hidden;
-      min-height: 200px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
 
     .image-preview img {
       max-width: 100%;
-      max-height: 300px;
+      max-height: 150px;
       object-fit: contain;
-      border-radius: var(--radius-sm);
-    }
-
-    .image-preview-placeholder {
-      color: var(--text-secondary);
-      font-style: italic;
-      text-align: center;
-      padding: var(--space-md);
-    }
-
-    .image-actions {
-      position: absolute;
-      top: var(--space-sm);
-      right: var(--space-sm);
-      display: flex;
-      gap: var(--space-xs);
+      display: block;
+      margin: 0 auto;
     }
 
     .btn-remove-image {
+      position: absolute;
+      top: 4px;
+      right: 4px;
       background: var(--coral);
       color: #fff;
       border: none;
-      padding: 8px 12px;
+      padding: 4px 8px;
       border-radius: var(--radius-sm);
-      font-size: 12px;
+      font-size: 11px;
       cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .btn-remove-image:hover {
-      background: var(--ink);
-      transform: scale(1.05);
     }
 
     /* Multi-Platform Selection Styles */
@@ -965,27 +874,14 @@
                 required>
             </div>
 
-            <!-- Image Upload Section -->
-            <div class="image-upload-section">
-              <div class="image-upload-header">
-                <h3>📷 Add Image (Optional)</h3>
+            <!-- Image Upload -->
+            <div class="form-group">
+              <label>📷 Image (Optional)</label>
+              <div class="upload-area" id="uploadArea">
+                <div>Click or drag image for AI to reference</div>
+                <input type="file" id="imageInput" accept="image/*" style="display: none;">
               </div>
-              <div class="image-upload-container">
-                <div class="upload-area" id="uploadArea">
-                  <div class="upload-icon">📁</div>
-                  <div class="upload-text">Click to upload or drag and drop</div>
-                  <div class="upload-hint">Supports: JPG, PNG, WebP (max 5MB)</div>
-                  <input type="file" id="imageInput" accept="image/*" style="display: none;">
-                </div>
-                <div class="image-preview" id="imagePreview" style="display: none;">
-                  <div class="image-preview-placeholder">
-                    No image selected
-                  </div>
-                  <div class="image-actions" id="imageActions" style="display: none;">
-                    <button type="button" class="btn-remove-image" id="removeImageBtn">✕ Remove</button>
-                  </div>
-                </div>
-              </div>
+              <div class="image-preview" id="imagePreview" style="display: none;"></div>
             </div>
 
             <!-- Multi-Platform Selection Section -->
@@ -1608,18 +1504,9 @@
       }
 
       displayImagePreview(imageSrc) {
-        this.imagePreview.innerHTML = `
-          <img src="${imageSrc}" alt="Uploaded image" />
-          <div class="image-actions" id="imageActions">
-            <button type="button" class="btn-remove-image" id="removeImageBtn">✕ Remove</button>
-          </div>
-        `;
+        this.imagePreview.innerHTML = `<img src="${imageSrc}"><button type="button" class="btn-remove-image" id="removeImageBtn">✕</button>`;
         this.imagePreview.style.display = 'block';
-
-        // Hide the upload area when image is displayed
         this.uploadArea.style.display = 'none';
-
-        // Re-attach remove button event listener
         document.getElementById('removeImageBtn').addEventListener('click', () => this.removeImage());
       }
 
@@ -1628,9 +1515,7 @@
         this.uploadedImageFile = null;
         this.imagePreview.style.display = 'none';
         this.imageInput.value = '';
-
-        // Show the upload area again when image is removed
-        this.uploadArea.style.display = 'flex';
+        this.uploadArea.style.display = 'block';
       }
 
       // Platform Selection Methods

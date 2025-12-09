@@ -80,84 +80,21 @@
     }
 
     /* Image Upload Component Styles */
-    .image-upload-section {
-      background: var(--bg-white);
-      border: var(--border-thick);
-      box-shadow: var(--shadow-hard);
-      padding: var(--space-lg);
-      border-radius: var(--radius-sm);
-      margin-bottom: var(--space-md);
-      transition: all 0.2s ease;
-    }
-
-    .image-upload-section:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: var(--shadow-hover);
-    }
-
-    .image-upload-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: var(--space-md);
-      padding-bottom: var(--space-sm);
-      border-bottom: var(--border-thick);
-    }
-
-    .image-upload-header h3 {
-      font-size: 18px;
-      font-weight: 700;
-      font-family: var(--font-heading);
-      color: var(--ink);
-      margin: 0;
-      text-transform: uppercase;
-      letter-spacing: -0.3px;
-    }
-
+    /* Image Upload Component Styles */
     .upload-area {
       border: 2px dashed var(--border-color);
       border-radius: var(--radius-sm);
-      padding: var(--space-lg);
+      padding: var(--space-md);
       text-align: center;
       background: var(--bg-paper);
-      transition: all 0.2s ease;
       cursor: pointer;
-      min-height: 150px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      transition: all 0.2s ease;
     }
 
-    .upload-area:hover {
-      border-color: var(--blue);
-      background: var(--lavender);
-    }
-
+    .upload-area:hover,
     .upload-area.dragover {
       border-color: var(--blue);
       background: var(--lavender);
-      transform: scale(1.02);
-    }
-
-    .upload-icon {
-      font-size: 48px;
-      color: var(--ink);
-      opacity: 0.6;
-      margin-bottom: var(--space-sm);
-    }
-
-    .upload-text {
-      font-size: 16px;
-      color: var(--ink);
-      opacity: 0.8;
-      margin-bottom: var(--space-sm);
-    }
-
-    .upload-hint {
-      font-size: 14px;
-      color: var(--text-secondary);
-      font-style: italic;
     }
 
     .image-preview {
@@ -166,41 +103,27 @@
       border: var(--border-thin);
       border-radius: var(--radius-sm);
       overflow: hidden;
-      min-height: 150px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
 
     .image-preview img {
       max-width: 100%;
-      max-height: 250px;
+      max-height: 150px;
       object-fit: contain;
-      border-radius: var(--radius-sm);
-    }
-
-    .image-actions {
-      position: absolute;
-      top: var(--space-sm);
-      right: var(--space-sm);
-      display: flex;
-      gap: var(--space-xs);
+      display: block;
+      margin: 0 auto;
     }
 
     .btn-remove-image {
+      position: absolute;
+      top: 4px;
+      right: 4px;
       background: var(--coral);
       color: #fff;
       border: none;
-      padding: 8px 12px;
+      padding: 4px 8px;
       border-radius: var(--radius-sm);
-      font-size: 12px;
+      font-size: 11px;
       cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .btn-remove-image:hover {
-      background: var(--ink);
-      transform: scale(1.05);
     }
 
     /* Form Section - uses dashboard card styles */
@@ -751,21 +674,14 @@
           </div>
 
           <!-- Image Upload Section -->
-          <div class="image-upload-section">
-            <div class="image-upload-header">
-              <h3>📷 Product Image (Optional)</h3>
-            </div>
+          <!-- Image Upload -->
+          <div class="form-group">
+            <label>📷 Product Image (Optional)</label>
             <div class="upload-area" id="uploadArea">
-              <div class="upload-icon">📁</div>
-              <div class="upload-text">Click to upload or drag and drop</div>
-              <div class="upload-hint">AI will analyze your product image for better descriptions</div>
+              <div>Click or drag image for AI to reference</div>
               <input type="file" id="imageInput" accept="image/*" style="display: none;">
             </div>
-            <div class="image-preview" id="imagePreview" style="display: none;">
-              <div class="image-actions" id="imageActions" style="display: none;">
-                <button type="button" class="btn-remove-image" id="removeImageBtn">✕ Remove</button>
-              </div>
-            </div>
+            <div class="image-preview" id="imagePreview" style="display: none;"></div>
           </div>
 
           <!-- Generation Form -->
@@ -1065,16 +981,9 @@
       }
 
       displayImagePreview(imageSrc) {
-        this.imagePreview.innerHTML = `
-          <img src="${imageSrc}" alt="Product image" />
-          <div class="image-actions" id="imageActions">
-            <button type="button" class="btn-remove-image" id="removeImageBtn">✕ Remove</button>
-          </div>
-        `;
+        this.imagePreview.innerHTML = `<img src="${imageSrc}"><button type="button" class="btn-remove-image" id="removeImageBtn">✕</button>`;
         this.imagePreview.style.display = 'block';
         this.uploadArea.style.display = 'none';
-
-        // Re-attach remove button event listener
         document.getElementById('removeImageBtn').addEventListener('click', () => this.removeImage());
       }
 
@@ -1083,7 +992,7 @@
         this.uploadedImageUrl = null;
         this.imagePreview.style.display = 'none';
         this.imageInput.value = '';
-        this.uploadArea.style.display = 'flex';
+        this.uploadArea.style.display = 'block'; // Changed from 'flex' to 'block' to match style
       }
 
       async handleSubmit(e) {
@@ -1161,7 +1070,7 @@
 
           if (!response.ok) {
             const errorData = await response.json().catch(() => ({}));
-            throw new Error(errorData.error || `API error: ${response.status}`);
+            throw new Error(errorData.error || `API error: ${response.status} `);
           }
 
           const result = await response.json();
@@ -1222,9 +1131,9 @@
             const featureCard = document.createElement('div');
             featureCard.className = 'feature-card';
             featureCard.innerHTML = `
-              <div class="feature-title">${this.escapeHtml(feature.title || '')}</div>
-              <div class="feature-description">${this.escapeHtml(feature.description || '')}</div>
-            `;
+          < div class="feature-title" > ${this.escapeHtml(feature.title || '')}</div >
+            <div class="feature-description">${this.escapeHtml(feature.description || '')}</div>
+        `;
             featuresContainer.appendChild(featureCard);
           });
         }
@@ -1299,7 +1208,7 @@ ${this.currentDescription.fullDescription}
 Key Features:
 ${this.currentDescription.keyFeatures?.map(f => `• ${f.title}: ${f.description}`).join('\n') || ''}
 
-Benefits:
+        Benefits:
 ${this.currentDescription.benefits?.map(b => `✓ ${b}`).join('\n') || ''}
 
 Perfect For: ${this.currentDescription.targetAudience}
@@ -1307,7 +1216,7 @@ Perfect For: ${this.currentDescription.targetAudience}
 ${this.currentDescription.callToAction}
 
 SEO Keywords: ${this.currentDescription.seoKeywords?.join(', ') || ''}
-`;
+        `;
 
         navigator.clipboard.writeText(text).then(() => {
           const originalText = this.copyBtn.textContent;
@@ -1387,7 +1296,7 @@ SEO Keywords: ${this.currentDescription.seoKeywords?.join(', ') || ''}
         const headline = item.generated_description?.headline || item.product_name;
 
         historyDiv.innerHTML = `
-          <div class="history-header">
+          < div class="history-header" >
             <div>
               <strong>${this.escapeHtml(headline)}</strong>
               <div class="history-meta">
@@ -1398,7 +1307,7 @@ SEO Keywords: ${this.currentDescription.seoKeywords?.join(', ') || ''}
               <button class="btn btn-outline btn-sm" onclick="productDescriptionGenerator.loadHistoryItem('${item.id}')">📋 Load</button>
               <button class="btn btn-outline btn-sm" onclick="productDescriptionGenerator.deleteHistoryItem('${item.id}')">🗑️</button>
             </div>
-          </div>
+          </div >
           <div class="history-preview">
             ${item.image_url ? '📷 Image included • ' : ''}${item.generated_description?.tagline || 'No tagline'}
           </div>
@@ -1499,9 +1408,9 @@ SEO Keywords: ${this.currentDescription.seoKeywords?.join(', ') || ''}
           if (i === currentPage) {
             pageBtn.classList.add('active');
             pageBtn.style.cssText += `
-              background: var(--blue);
-              color: white;
-              border-color: var(--blue);
+        background: var(--blue);
+        color: white;
+        border - color: var(--blue);
             `;
           }
           this.historyPagination.appendChild(pageBtn);
