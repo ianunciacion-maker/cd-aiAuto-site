@@ -105,6 +105,7 @@ module.exports = async (req, res) => {
 
     // Create checkout session
     // Build the base URL - Vercel provides VERCEL_URL without https://
+    // Build the base URL - Vercel provides VERCEL_URL without https://
     let baseUrl = process.env.VERCEL_URL || 'http://localhost:3000';
     if (!baseUrl.startsWith('http://') && !baseUrl.startsWith('https://')) {
       baseUrl = `https://${baseUrl}`;
