@@ -1118,7 +1118,7 @@
         document.getElementById('outputHeadline').textContent = description.headline || '';
         document.getElementById('outputTagline').textContent = description.tagline || '';
         document.getElementById('outputShort').textContent = description.shortDescription || '';
-        document.getElementById('outputFull').textContent = description.fullDescription || '';
+        document.getElementById('outputFull').innerHTML = this.parseMarkdown(description.fullDescription || '');
         document.getElementById('outputAudience').textContent = description.targetAudience || '';
         document.getElementById('outputCta').textContent = description.callToAction || '';
 
@@ -1130,7 +1130,7 @@
             const featureCard = document.createElement('div');
             featureCard.className = 'feature-card';
             featureCard.innerHTML = `
-          < div class="feature-title" > ${this.escapeHtml(feature.title || '')}</div >
+            <div class="feature-title">${this.escapeHtml(feature.title || '')}</div>
             <div class="feature-description">${this.escapeHtml(feature.description || '')}</div>
         `;
             featuresContainer.appendChild(featureCard);
@@ -1454,6 +1454,13 @@ SEO Keywords: ${this.currentDescription.seoKeywords?.join(', ') || ''}
         } else {
           this.errorMessage.style.background = 'var(--coral)';
         }
+      }
+
+      parseMarkdown(text) {
+        if (!text) return '';
+        return text
+          .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+          .replace(/\n/g, '<br>');
       }
 
       clearError() {
