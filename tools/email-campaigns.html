@@ -769,6 +769,15 @@
         });
       }
 
+      async saveToHistory(payload, email) {
+        await emailCampaignsHistoryManager.saveGeneration({
+          subject: payload.subject, purpose: payload.purpose, audience: payload.audience,
+          tone: payload.tone, key_points: payload.keyPoints, cta: payload.cta,
+          image_url: payload.imageUrl, generated_email: email
+        });
+        if (this.historyVisible) this.loadHistory();
+      }
+
       copyEmail() {
         if (!this.currentCampaign || !this.currentCampaign[this.currentEmailIndex]) return;
         const email = this.currentCampaign[this.currentEmailIndex];
