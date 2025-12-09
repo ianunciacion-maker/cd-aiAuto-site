@@ -850,7 +850,7 @@
         this.imageInput = document.getElementById('imageInput');
         this.uploadArea = document.getElementById('uploadArea');
         this.imagePreview = document.getElementById('imagePreview');
-        this.removeImageBtn = document.getElementById('removeImageBtn');
+        // this.removeImageBtn = document.getElementById('removeImageBtn');
 
         // Output elements
         this.loadingOverlay = document.getElementById('loadingOverlay');
@@ -900,7 +900,6 @@
           // Image upload event listeners
           this.uploadArea.addEventListener('click', () => this.imageInput.click());
           this.imageInput.addEventListener('change', (e) => this.handleImageUpload(e));
-          this.removeImageBtn.addEventListener('click', () => this.removeImage());
 
           // Drag and drop events
           this.uploadArea.addEventListener('dragover', (e) => this.handleDragOver(e));

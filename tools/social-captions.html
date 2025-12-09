@@ -1056,7 +1056,7 @@
         this.imageInput = document.getElementById('imageInput');
         this.uploadArea = document.getElementById('uploadArea');
         this.imagePreview = document.getElementById('imagePreview');
-        this.removeImageBtn = document.getElementById('removeImageBtn');
+        // this.removeImageBtn = document.getElementById('removeImageBtn');
 
         // New multi-platform elements
         this.platformCheckboxes = document.querySelectorAll('.platform-checkbox');
@@ -1108,7 +1108,6 @@
           // Image upload event listeners
           this.uploadArea.addEventListener('click', () => this.imageInput.click());
           this.imageInput.addEventListener('change', (e) => this.handleImageUpload(e));
-          this.removeImageBtn.addEventListener('click', () => this.removeImage());
 
           // Drag and drop events
           this.uploadArea.addEventListener('dragover', (e) => this.handleDragOver(e));
