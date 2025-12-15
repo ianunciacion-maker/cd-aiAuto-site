@@ -4,7 +4,7 @@
   background: var(--bg-white);
   position: sticky;
   top: 0;
-  z-index: 1005;
+  z-index: var(--z-sticky);
   padding: var(--space-sm) 0;
   min-height: 80px;
   transition: all 0.3s ease;
@@ -96,27 +96,10 @@
   box-shadow: var(--shadow-hard);
   transition: all 0.2s ease;
   border-radius: var(--radius-sm);
+  position: fixed;
+  top: 17px;
+  right: var(--space-md);
   z-index: var(--z-hamburger);
-}
-
-/* On mobile, make hamburger fixed to ensure it's above menu */
-@media (max-width: 900px) {
-  .hamburger {
-    position: fixed;
-    top: 17px;
-    right: var(--space-md);
-    pointer-events: auto;
-  }
-
-  /* Allow clicks through nav-inner to reach fixed hamburger */
-  .nav-inner {
-    pointer-events: none;
-  }
-
-  /* Re-enable pointer events for other nav elements */
-  .nav-inner > *:not(.hamburger) {
-    pointer-events: auto;
-  }
 }
 
 .hamburger:hover,
@@ -244,20 +227,6 @@
 
   .hamburger {
     display: flex;
-  }
-
-  /* Allow clicks through nav and nav-inner to reach fixed hamburger */
-  .nav,
-  .nav-inner {
-    pointer-events: none;
-  }
-
-  /* Re-enable pointer events only for interactive elements */
-  .nav .logo,
-  .nav .hamburger,
-  .nav a,
-  .nav button {
-    pointer-events: auto;
   }
 }
 

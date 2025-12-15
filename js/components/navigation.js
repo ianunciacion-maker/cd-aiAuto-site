@@ -24,13 +24,15 @@ class SiteNavigation {
             <a href="${this.getBaseUrl()}user/login.html" style="font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink);">Log In</a>
             <a href="${this.getBaseUrl()}user/signup.html" class="btn btn-gold">Get Started</a>
           </div>
-          <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
         </div>
       </nav>
+
+      <!-- HAMBURGER BUTTON (outside nav for proper z-index stacking) -->
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
 
       <!-- MOBILE MENU -->
       <div class="mobile-menu" id="mobileMenu">
