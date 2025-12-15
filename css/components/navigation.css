@@ -96,8 +96,16 @@
   box-shadow: var(--shadow-hard);
   transition: all 0.2s ease;
   border-radius: var(--radius-sm);
-  position: relative;
   z-index: var(--z-hamburger);
+}
+
+/* On mobile, make hamburger fixed to ensure it's above menu */
+@media (max-width: 900px) {
+  .hamburger {
+    position: fixed;
+    top: 17px;
+    right: var(--space-md);
+  }
 }
 
 .hamburger:hover,
