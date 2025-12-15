@@ -105,6 +105,17 @@
     position: fixed;
     top: 17px;
     right: var(--space-md);
+    pointer-events: auto;
+  }
+
+  /* Allow clicks through nav-inner to reach fixed hamburger */
+  .nav-inner {
+    pointer-events: none;
+  }
+
+  /* Re-enable pointer events for other nav elements */
+  .nav-inner > *:not(.hamburger) {
+    pointer-events: auto;
   }
 }
 
