@@ -233,17 +233,27 @@
   .nav-links {
     display: none;
   }
-  
+
   .nav-inner > .btn:not(.hamburger) {
     display: none;
   }
-  
+
   .nav-auth {
     display: none !important;
   }
-  
+
   .hamburger {
     display: flex;
+  }
+
+  /* Allow clicks through nav to reach fixed hamburger */
+  .nav {
+    pointer-events: none;
+  }
+
+  /* Re-enable pointer events for nav children */
+  .nav * {
+    pointer-events: auto;
   }
 }
 
