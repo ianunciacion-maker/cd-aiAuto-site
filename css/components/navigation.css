@@ -97,7 +97,7 @@
   transition: all 0.2s ease;
   border-radius: var(--radius-sm);
   position: relative;
-  z-index: 1001;
+  z-index: var(--z-hamburger);
 }
 
 .hamburger:hover,
@@ -152,6 +152,7 @@
 :root {
   --z-modal: 1000;
   --z-sticky: 100;
+  --z-hamburger: 1010;
 }
 
 .mobile-menu.active {
@@ -176,6 +177,8 @@
   align-items: center;
   padding-bottom: var(--space-md);
   border-bottom: var(--border-thick);
+  position: relative;
+  z-index: 1;
 }
 
 .mobile-menu-links {
