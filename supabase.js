@@ -36,13 +36,19 @@ function getSupabaseUrl() {
 }
 
 // Initialize Supabase client with dynamic URL
-const supabase = window.supabase.createClient(getSupabaseUrl(), SUPABASE_ANON_KEY);
+var supabase;
+if (window.supabaseClient) {
+  supabase = window.supabaseClient;
+} else {
+  supabase = window.supabase.createClient(getSupabaseUrl(), SUPABASE_ANON_KEY);
+  window.supabaseClient = supabase;
+}
 
 // ============================================
 // AUTHENTICATION MANAGER
 // ============================================
 
-class AuthManager {
+var AuthManager = class AuthManager {
   constructor() {
     this.sessionKey = 'supabase.auth.token';
     this.isInitialized = false;
@@ -223,6 +229,62 @@ class AuthManager {
     return true;
   }
 
+  async resetPasswordForEmail(email) {
+    try {
+      const { data, error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+        redirectTo: 'https://cd-ai-auto-site.vercel.app/user/reset-password.html'
+      });
+
+      if (error) {
+        console.error('Password reset error:', error.message);
+        return { data: null, error };
+      }
+
+      console.log('Password reset email sent to:', email);
+      return { data, error: null };
+    } catch (error) {
+      console.error('Password reset exception:', error);
+      return { data: null, error };
+    }
+  }
+
+  async updateUser(updates) {
+    try {
+      const { data, error } = await supabase.auth.updateUser(updates);
+
+      if (error) {
+        console.error('Update user error:', error.message);
+        return { data: null, error };
+      }
+
+      console.log('User updated successfully');
+      return { data, error: null };
+    } catch (error) {
+      console.error('Update user exception:', error);
+      return { data: null, error };
+    }
+  }
+
+  async verifyResetToken(tokenHash) {
+    try {
+      const { data, error } = await supabase.auth.verifyOtp({
+        token_hash: tokenHash,
+        type: 'recovery'
+      });
+
+      if (error) {
+        console.error('Token verification error:', error.message);
+        return { data: null, error };
+      }
+
+      console.log('Token verified successfully');
+      return { data, error: null };
+    } catch (error) {
+      console.error('Token verification exception:', error);
+      return { data: null, error };
+    }
+  }
+
   clearSession() {
     console.log('Session cleared');
   }
@@ -232,7 +294,7 @@ class AuthManager {
 // BLOG MANAGER
 // ============================================
 
-class BlogManager {
+var BlogManager = class BlogManager {
   constructor() {
     this.tableName = 'blog_posts';
     this.storageBucket = 'blog-images';
@@ -515,7 +577,7 @@ class BlogManager {
 // BLOG HISTORY MANAGER
 // ============================================
 
-class BlogHistoryManager {
+var BlogHistoryManager = class BlogHistoryManager {
   constructor() {
     this.tableName = 'blog_generation_history';
   }
@@ -691,7 +753,7 @@ class BlogHistoryManager {
 // USER MANAGER
 // ============================================
 
-class UserManager {
+var UserManager = class UserManager {
   constructor() {
     this.tableName = 'user_profiles';
   }
@@ -895,7 +957,7 @@ class UserManager {
 // STRIPE MANAGER
 // ============================================
 
-class StripeManager {
+var StripeManager = class StripeManager {
   constructor() {
     this.apiBase = window.location.origin;
   }
@@ -1032,7 +1094,7 @@ class StripeManager {
 // ADMIN USER MANAGER
 // ============================================
 
-class AdminUserManager {
+var AdminUserManager = class AdminUserManager {
   constructor() {
     this.userProfileTable = 'user_profiles';
     this.subscriptionTable = 'subscriptions';
@@ -1179,7 +1241,7 @@ class AdminUserManager {
 // AI RESOURCES MANAGER
 // ============================================
 
-class AIResourcesManager {
+var AIResourcesManager = class AIResourcesManager {
   constructor() {
     this.tableName = 'ai_resources';
     this.storageBucket = 'ai-resources-images';
@@ -1535,13 +1597,13 @@ class AIResourcesManager {
 // INITIALIZE MANAGERS
 // ============================================
 
-const authManager = new AuthManager();
-const blogManager = new BlogManager();
-const blogHistoryManager = new BlogHistoryManager();
-const userManager = new UserManager();
-const stripeManager = new StripeManager();
-const adminUserManager = new AdminUserManager();
-const aiResourcesManager = new AIResourcesManager();
+var authManager = window.authManager || new AuthManager();
+var blogManager = window.blogManager || new BlogManager();
+var blogHistoryManager = window.blogHistoryManager || new BlogHistoryManager();
+var userManager = window.userManager || new UserManager();
+var stripeManager = window.stripeManager || new StripeManager();
+var adminUserManager = window.adminUserManager || new AdminUserManager();
+var aiResourcesManager = window.aiResourcesManager || new AIResourcesManager();
 
 // Expose to global scope for access in HTML files
 if (typeof window !== 'undefined') {
