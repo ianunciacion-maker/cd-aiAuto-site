@@ -11,7 +11,7 @@
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Playfair+Display:wght@500;600;700;900&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="css/components/navigation.css">
-  
+
   <style>
     :root {
       /* Neobrutalist Palette */
@@ -239,16 +239,28 @@
     .hero-stats {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: var(--space-sm);
+      gap: var(--space-md);
       margin-top: var(--space-lg);
+      width: 100%;
     }
 
     .stat-box {
       border: var(--border-thick);
       background: var(--bg-white);
-      padding: var(--space-sm);
+      padding: var(--space-md) var(--space-sm);
       text-align: center;
       box-shadow: var(--shadow-hard);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 140px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .stat-box:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 10px 10px 0px 0px var(--ink);
     }
 
     .stat-box:nth-child(1) {
@@ -267,13 +279,15 @@
     }
 
     .stat-val {
-      font-size: 36px;
+      font-size: 42px;
       font-weight: 900;
       font-family: 'Playfair Display', serif;
+      line-height: 1;
+      margin-bottom: 8px;
     }
 
     .stat-label {
-      font-size: 12px;
+      font-size: 14px;
       text-transform: uppercase;
       font-weight: 700;
       letter-spacing: 0.05em;
@@ -845,6 +859,7 @@
 
     /* Mobile specific optimizations */
     @media (max-width: 767px) {
+
       /* Core tools cards mobile optimization */
       .core-card {
         padding: var(--space-sm);
@@ -979,6 +994,7 @@
       0% {
         transform: translateX(0);
       }
+
       100% {
         transform: translateX(-100%);
       }
@@ -992,12 +1008,11 @@
         width: 150px;
         height: 30px;
       }
-      
+
       .banner-content {
         font-size: 10px;
       }
     }
-
   </style>
 </head>
 
@@ -1015,7 +1030,8 @@
           With AI
         </h1>
         <div class="hero-subtitle">
-          Stop trading time for money. The ultimate all-in-one platform for productivity automation—build systems that work while you grow.
+          Stop trading time for money. The ultimate all-in-one platform for productivity automation—build systems that
+          work while you grow.
         </div>
         <div class="hero-cta">
           <a href="tools.html" class="btn">Explore Tools</a>
@@ -1031,48 +1047,52 @@
             <div class="stat-label">Productivity</div>
           </div>
           <div class="stat-box">
-            <div class="stat-val">∞</div>
-            <div class="stat-label">Potential</div>
+            <div class="stat-val" style="font-size: 32px;">UNLIMITED</div>
+            <div class="stat-label">Generation</div>
           </div>
         </div>
       </div>
 
-    <style>
-    @keyframes float {
-      0% {
-        transform: translateY(0px);
-      }
-      50% {
-        transform: translateY(-10px);
-      }
-      100% {
-        transform: translateY(0px);
-      }
-    }
-    .hero-floating-card {
-      animation: float 6s ease-in-out infinite;
-    }
-    </style>
-        <div class="hero-visual">
-          <div class="hero-card-stack">
-            <div class="hero-floating-card" style="top: 0; left: 20px; animation-delay: 0s;">
-              <h4>Blog Post Generation</h4>
-              <p style="font-size: 13px; margin: 0;">AI-powered content for your blog.</p>
-            </div>
-            <div class="hero-floating-card" style="top: 80px; right: 0; animation-delay: 1.5s;">
-              <h4>Social Media Captions</h4>
-              <p style="font-size: 13px; margin: 0;">Engaging captions for social media.</p>
-            </div>
-            <div class="hero-floating-card" style="bottom: 140px; left: 0; animation-delay: 3s;">
-              <h4>Email Campaigns</h4>
-              <p style="font-size: 13px; margin: 0;">Draft effective marketing emails.</p>
-            </div>
-            <div class="hero-floating-card" style="bottom: 20px; right: 0; animation-delay: 4.5s;">
-              <h4>Product Descriptions</h4>
-              <p style="font-size: 13px; margin: 0;">Compelling copy for your products.</p>
-            </div>
+      <style>
+        @keyframes float {
+          0% {
+            transform: translateY(0px);
+          }
+
+          50% {
+            transform: translateY(-10px);
+          }
+
+          100% {
+            transform: translateY(0px);
+          }
+        }
+
+        .hero-floating-card {
+          animation: float 6s ease-in-out infinite;
+        }
+      </style>
+      <div class="hero-visual">
+        <div class="hero-card-stack">
+          <div class="hero-floating-card" style="top: 0; left: 20px; animation-delay: 0s;">
+            <h4>Blog Post Generation</h4>
+            <p style="font-size: 13px; margin: 0;">AI-powered content for your blog.</p>
           </div>
-        </div>    </div>
+          <div class="hero-floating-card" style="top: 80px; right: 0; animation-delay: 1.5s;">
+            <h4>Social Media Captions</h4>
+            <p style="font-size: 13px; margin: 0;">Engaging captions for social media.</p>
+          </div>
+          <div class="hero-floating-card" style="bottom: 140px; left: 0; animation-delay: 3s;">
+            <h4>Email Campaigns</h4>
+            <p style="font-size: 13px; margin: 0;">Draft effective marketing emails.</p>
+          </div>
+          <div class="hero-floating-card" style="bottom: 20px; right: 0; animation-delay: 4.5s;">
+            <h4>Product Descriptions</h4>
+            <p style="font-size: 13px; margin: 0;">Compelling copy for your products.</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- WHO IT'S FOR -->
@@ -1086,22 +1106,26 @@
         <div class="who-card">
           <div class="who-icon">S</div>
           <h3>Solopreneurs</h3>
-          <p>Build and scale your business solo. Automate operations and systems so you can focus on growth without hiring a team.</p>
+          <p>Build and scale your business solo. Automate operations and systems so you can focus on growth without
+            hiring a team.</p>
         </div>
         <div class="who-card">
           <div class="who-icon">F</div>
           <h3>Freelancers</h3>
-          <p>Multiply your output without multiplying your hours. Automate client work and deliver more value while maintaining work-life balance.</p>
+          <p>Multiply your output without multiplying your hours. Automate client work and deliver more value while
+            maintaining work-life balance.</p>
         </div>
         <div class="who-card">
           <div class="who-icon">E</div>
           <h3>Entrepreneurs</h3>
-          <p>Build businesses that run themselves. Focus on strategy and vision while AI handles execution and daily operations.</p>
+          <p>Build businesses that run themselves. Focus on strategy and vision while AI handles execution and daily
+            operations.</p>
         </div>
         <div class="who-card">
           <div class="who-icon">C</div>
           <h3>Creators</h3>
-          <p>Produce more content in less time. Let AI handle the repetitive work while you focus on creativity and connection.</p>
+          <p>Produce more content in less time. Let AI handle the repetitive work while you focus on creativity and
+            connection.</p>
         </div>
       </div>
     </div>
@@ -1132,7 +1156,8 @@
             <li>Email campaign creation - AI drafts marketing emails and newsletters</li>
             <li>Product description writing - Generates copy for product listings and catalogs</li>
           </ul>
-          <a href="user/signup.html" class="btn" style="width: 100%; display: inline-block; text-align: center; margin-top: auto;">Get Started Now</a>
+          <a href="user/signup.html" class="btn"
+            style="width: 100%; display: inline-block; text-align: center; margin-top: auto;">Get Started Now</a>
         </div>
         <div class="core-card" style="position: relative; overflow: hidden;">
           <!-- Coming Soon Banner -->
@@ -1141,14 +1166,14 @@
               🚀 COMING SOON
             </div>
           </div>
-          
+
           <div class="core-header">
             <div>
               <div class="core-badge">Advanced</div>
               <h3>The "Unstoppable" Marketing Engine</h3>
             </div>
           </div>
-          
+
           <p style="font-size: 16px; margin-bottom: 20px;">
             Complete 4-step automated system for scaling your content creation and distribution.
           </p>
@@ -1158,10 +1183,13 @@
             <li>⚡️ Multiplication (The Cloner) - Create unlimited variations and adaptations for every platform</li>
             <li>🚀 Distribution (The Cannon) - N8N/Zapier automation across 50+ platforms</li>
           </ul>
-          
-          <div style="margin-top: 24px; padding: 20px; background: var(--bg-paper); border: var(--border-thick); text-align: center;">
-            <div style="font-weight: 900; font-size: 20px; margin-bottom: 8px; color: var(--ink);">🎯 One System → Unlimited Content</div>
-            <p style="margin: 0; font-weight: 600;">From research to distribution, create endless content that drives traffic, engagement, and sales.</p>
+
+          <div
+            style="margin-top: 24px; padding: 20px; background: var(--bg-paper); border: var(--border-thick); text-align: center;">
+            <div style="font-weight: 900; font-size: 20px; margin-bottom: 8px; color: var(--ink);">🎯 One System →
+              Unlimited Content</div>
+            <p style="margin: 0; font-weight: 600;">From research to distribution, create endless content that drives
+              traffic, engagement, and sales.</p>
           </div>
         </div>
       </div>
@@ -1204,7 +1232,8 @@
           Access your entire automation suite from a single, powerful interface. Monitor performance, adjust settings,
           and scale your operations effortlessly.
         </p>
-        <a href="user/dashboard.html" class="btn" style="background: var(--gold); color: #000; display: inline-block;">See Demo</a>
+        <a href="user/dashboard.html" class="btn"
+          style="background: var(--gold); color: #000; display: inline-block;">See Demo</a>
       </div>
       <div class="app-mockup">
         📝 Content Suite
@@ -1227,7 +1256,8 @@
             <div style="font-size: 14px; opacity: 0.8;">one-time payment</div>
           </div>
           <div class="pricing-body">
-            <p style="text-align: center; font-weight: 600; margin-bottom: 24px;">Everything you need to automate your content creation.</p>
+            <p style="text-align: center; font-weight: 600; margin-bottom: 24px;">Everything you need to automate your
+              content creation.</p>
             <ul class="pricing-features">
               <li>Blog Post Generation</li>
               <li>Social Media Captions</li>
@@ -1235,7 +1265,8 @@
               <li>Product Descriptions</li>
               <li>Full Access to All Tools</li>
             </ul>
-            <a href="user/signup.html" class="btn" style="width: 100%; display: inline-block; text-align: center;">Get Instant Access</a>
+            <a href="user/signup.html" class="btn" style="width: 100%; display: inline-block; text-align: center;">Get
+              Instant Access</a>
           </div>
         </div>
       </div>
