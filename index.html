@@ -1169,60 +1169,65 @@
         <h2>Core Tools</h2>
         <p>Premium automation for serious builders</p>
       </div>
-      <div class="core-grid" style="grid-template-columns: 1fr 1fr; gap: var(--space-lg); align-items: stretch;">
-        <div class="core-card">
+      <div class="core-grid"
+        style="grid-template-columns: 1fr; gap: var(--space-xl); max-width: 900px; margin: 0 auto;">
+
+        <!-- Live Tool (Emphasized) -->
+        <div class="core-card" style="border: 4px solid var(--ink); box-shadow: 12px 12px 0 var(--ink);">
           <div class="core-header">
             <div>
-              <div class="core-badge">Premium</div>
+              <div class="core-badge">Available Now</div>
               <h3>AI Content Creation Suite</h3>
             </div>
             <div class="core-price">$49.99</div>
           </div>
-          <p style="font-size: 16px; margin-bottom: 20px;">
+          <p style="font-size: 18px; margin-bottom: 24px; font-weight: 500;">
             Get all of our powerful AI content generation tools for a single price.
           </p>
           <ul>
-            <li>Blog post generation - AI creates written content for company blogs</li>
-            <li>Social media caption writing - Automated creation of posts for social platforms</li>
-            <li>Email campaign creation - AI drafts marketing emails and newsletters</li>
-            <li>Product description writing - Generates copy for product listings and catalogs</li>
+            <li style="font-size: 16px; padding: 12px 0;">Blog post generation - AI creates written content for company
+              blogs</li>
+            <li style="font-size: 16px; padding: 12px 0;">Social media caption writing - Automated creation of posts for
+              social platforms</li>
+            <li style="font-size: 16px; padding: 12px 0;">Email campaign creation - AI drafts marketing emails and
+              newsletters</li>
+            <li style="font-size: 16px; padding: 12px 0;">Product description writing - Generates copy for product
+              listings and catalogs</li>
           </ul>
           <a href="user/signup.html" class="btn"
-            style="width: 100%; display: inline-block; text-align: center; margin-top: auto;">Get Started Now</a>
+            style="width: 100%; display: inline-block; text-align: center; margin-top: auto; padding: 20px; font-size: 18px;">Get
+            Started Now</a>
         </div>
-        <div class="core-card" style="position: relative; overflow: hidden;">
-          <!-- Coming Soon Banner -->
-          <div class="coming-soon-banner">
-            <div class="banner-content">
-              🚀 COMING SOON
-            </div>
-          </div>
 
-          <div class="core-header">
-            <div>
-              <div class="core-badge">Advanced</div>
-              <h3>The "Unstoppable" Marketing Engine</h3>
-            </div>
-          </div>
-
-          <p style="font-size: 16px; margin-bottom: 20px;">
-            Complete 4-step automated system for scaling your content creation and distribution.
-          </p>
-          <ul>
-            <li>🕵️ Ideation (The Spy) - ChatGPT Deep Research to uncover profitable niches</li>
-            <li>🏭️ Creation (The Factory) - Claude generates comprehensive content for target audiences</li>
-            <li>⚡️ Multiplication (The Cloner) - Create unlimited variations and adaptations for every platform</li>
-            <li>🚀 Distribution (The Cannon) - N8N/Zapier automation across 50+ platforms</li>
-          </ul>
+        <!-- Teaser Tool (Marketing Engine) -->
+        <div class="core-card"
+          style="border: 2px dashed var(--ink); background: var(--bg-paper); box-shadow: none; align-items: center; text-align: center; padding: var(--space-lg) var(--space-md);">
 
           <div
-            style="margin-top: 24px; padding: 20px; background: var(--bg-paper); border: var(--border-thick); text-align: center;">
-            <div style="font-weight: 900; font-size: 20px; margin-bottom: 8px; color: var(--ink);">🎯 One System →
-              Unlimited Content</div>
-            <p style="margin: 0; font-weight: 600;">From research to distribution, create endless content that drives
-              traffic, engagement, and sales.</p>
+            style="background: linear-gradient(135deg, var(--coral) 0%, var(--pink) 100%); color: #fff; padding: 6px 16px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em; font-size: 12px; margin-bottom: 16px; border: var(--border-thin);">
+            🚀 Coming Soon
           </div>
+
+          <h3 style="font-size: 32px; margin-bottom: 16px;">The "Unstoppable" Marketing Engine</h3>
+
+          <p style="font-size: 16px; max-width: 600px; margin-bottom: 24px; opacity: 0.8;">
+            The complete 4-step automated system for scaling your content creation and distribution. Ideation, Creation,
+            Multiplication, and Distribution.
+          </p>
+
+          <!-- Waitlist Form (Home) -->
+          <div style="width: 100%; max-width: 500px;">
+            <form id="waitlistFormHome" style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;">
+              <input type="email" id="waitlistEmailHome" placeholder="Enter your email" required
+                style="flex: 1; min-width: 250px; padding: 12px 16px; border: var(--border-thick); font-size: 16px;">
+              <button type="submit" class="btn" style="padding: 12px 24px;">Notify Me</button>
+            </form>
+            <p id="waitlistSuccessHome" style="display: none; margin-top: 16px; color: var(--green); font-weight: 700;">
+              Thanks! You've been added to the list.</p>
+          </div>
+
         </div>
+
       </div>
     </div>
   </section>
@@ -1348,6 +1353,8 @@
   <!-- Navigation Component -->
   <script src="js/components/navigation.js"></script>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./supabase.js"></script>
   <script>
     // Initialize navigation when DOM is ready
     document.addEventListener('DOMContentLoaded', () => {
@@ -1357,6 +1364,33 @@
       if (existingFooter && existingFooterCTA) {
         existingFooter.remove();
         existingFooterCTA.remove();
+      }
+
+      // Waitlist logic for Home
+      const waitlistFormHome = document.getElementById('waitlistFormHome');
+      const waitlistSuccessHome = document.getElementById('waitlistSuccessHome');
+
+      if (waitlistFormHome) {
+        waitlistFormHome.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const email = document.getElementById('waitlistEmailHome').value;
+          const btn = waitlistFormHome.querySelector('button');
+
+          btn.textContent = 'Joining...';
+          btn.disabled = true;
+
+          try {
+            if (window.supabase) {
+              const { error } = await window.supabase.from('waitlist').insert([{ email }]);
+              if (error) throw error;
+            }
+          } catch (err) {
+            console.log('Waitlist error (expected if table missing):', err);
+          }
+
+          waitlistFormHome.style.display = 'none';
+          waitlistSuccessHome.style.display = 'block';
+        });
       }
     });
   </script>
