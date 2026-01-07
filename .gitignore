@@ -25,6 +25,9 @@ config/credentials.yml
 *secret*
 *token*
 *password*
+# Exception: Allow password reset UI files (not secrets)
+!user/*password*.html
+!plans/*password*.md
 
 # ============================================
 # OPERATING SYSTEM FILES

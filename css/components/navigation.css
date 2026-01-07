@@ -154,7 +154,7 @@
 :root {
   --z-modal: 1000;
   --z-sticky: 100;
-  --z-hamburger: 1010;
+  --z-hamburger: 9999;
 }
 
 .mobile-menu.active {
