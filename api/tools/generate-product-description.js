@@ -142,7 +142,7 @@ Return ONLY the JSON object.`;
             });
         }
 
-        console.log('🚀 Calling OpenRouter API with openai/gpt-4o-mini...');
+        console.log('🚀 Calling OpenRouter API with x-ai/grok-4.1-fast...');
 
         // Call OpenRouter API
         const openRouterResponse = await fetch('https://openrouter.ai/api/v1/chat/completions', {
@@ -154,7 +154,7 @@ Return ONLY the JSON object.`;
                 'X-Title': 'Ai-Auto Product Descriptions'
             },
             body: JSON.stringify({
-                model: 'openai/gpt-4o-mini',
+                model: 'x-ai/grok-4.1-fast',
                 messages: messages,
                 temperature: 0.7,
                 max_tokens: 2000,

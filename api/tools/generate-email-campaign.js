@@ -82,7 +82,7 @@ ${imageUrl ? 'Product image provided - use visual details as proof/evidence.' : 
             messages.push({ role: 'user', content: userPrompt });
         }
 
-        // Use openai/gpt-4o-mini for reliable JSON output and image support
+        // Use x-ai/grok-4.1-fast for generation
         const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
             method: 'POST',
             headers: {
@@ -92,7 +92,7 @@ ${imageUrl ? 'Product image provided - use visual details as proof/evidence.' : 
                 'X-Title': 'Ai-Auto Email Campaigns'
             },
             body: JSON.stringify({
-                model: 'openai/gpt-4o-mini',
+                model: 'x-ai/grok-4.1-fast',
                 messages,
                 temperature: 0.7,
                 max_tokens: 2000,
