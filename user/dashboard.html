@@ -745,9 +745,15 @@
         // Billing button handlers (both header and dropdown)
         const handleBilling = async () => {
           try {
-            await stripeManager.openBillingPortal();
+            console.log('Opening billing portal...');
+            const result = await stripeManager.openBillingPortal();
+            if (result && result.error) {
+              console.error('Billing portal error:', result.error);
+              this.showError(result.error.message || result.error.error || 'Failed to open billing portal');
+            }
           } catch (error) {
-            this.showError('Failed to open billing portal');
+            console.error('Billing portal exception:', error);
+            this.showError('Failed to open billing portal: ' + error.message);
           }
         };
 
