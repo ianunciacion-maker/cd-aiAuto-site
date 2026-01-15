@@ -81,6 +81,13 @@ module.exports = async (req, res) => {
     console.error('Billing portal error:', error);
 
     if (error.type === 'StripeInvalidRequestError') {
+      // Check if customer doesn't exist (likely test mode ID in live mode)
+      if (error.message && error.message.includes('No such customer')) {
+        return res.status(400).json({
+          error: 'Your subscription was created in test mode. Please contact support or re-subscribe to access billing management.',
+          code: 'CUSTOMER_NOT_FOUND'
+        });
+      }
       return res.status(400).json({
         error: error.message
       });
