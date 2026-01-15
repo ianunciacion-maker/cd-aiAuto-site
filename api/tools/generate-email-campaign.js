@@ -87,7 +87,7 @@ ${imageUrl ? 'Product image provided - use visual details as proof/evidence.' : 
             headers: {
                 'Authorization': `Bearer ${openRouterApiKey}`,
                 'Content-Type': 'application/json',
-                'HTTP-Referer': 'https://cd-ai-auto-site.vercel.app',
+                'HTTP-Referer': 'https://ai-auto.ai',
                 'X-Title': 'Ai-Auto Email Campaigns'
             },
             body: JSON.stringify({

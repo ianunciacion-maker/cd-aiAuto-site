@@ -467,7 +467,7 @@
           // Sign up with Supabase Auth
           const { data, error } = await authManager.signup(email, password, {
             full_name: fullName,
-            emailRedirectTo: 'https://cd-ai-auto-site.vercel.app/user/login.html'
+            emailRedirectTo: 'https://ai-auto.ai/user/login.html'
           });
 
           if (error) {
@@ -592,7 +592,7 @@
 
       async handleVerificationComplete() {
         // Redirect to login page where they'll enter credentials
-        window.location.href = 'https://cd-ai-auto-site.vercel.app/user/login.html';
+        window.location.href = 'https://ai-auto.ai/user/login.html';
       }
 
       async resendVerificationEmail(email) {

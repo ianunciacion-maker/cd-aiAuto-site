@@ -232,7 +232,7 @@ var AuthManager = class AuthManager {
   async resetPasswordForEmail(email) {
     try {
       const { data, error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
-        redirectTo: 'https://cd-ai-auto-site.vercel.app/user/reset-password.html'
+        redirectTo: 'https://ai-auto.ai/user/reset-password.html'
       });
 
       if (error) {

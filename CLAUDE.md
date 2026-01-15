@@ -12,6 +12,7 @@ Ai-Auto is a modern web platform offering AI-powered productivity tools for cont
 - Database: Supabase (PostgreSQL)
 - Payment: Stripe
 - Hosting: Vercel
+- Node.js: 20.x required
 
 ## Common Commands
 
@@ -112,10 +113,17 @@ aiAuto/
 ├── api/                        # Serverless API endpoints (Vercel functions)
 │   ├── checkout.js             # Create Stripe checkout session
 │   ├── billing-portal.js       # Stripe billing portal
+│   ├── check-subscription.js   # Verify subscription status (DB + Stripe sync)
+│   ├── update-profile.js       # Update user profile
+│   ├── track-avatar-selection.js # Track avatar selection analytics
 │   ├── webhooks/
 │   │   └── stripe.js           # Stripe webhook handler
 │   └── tools/
-│       └── use-tool.js         # Track tool usage
+│       ├── use-tool.js         # Track tool usage
+│       ├── generate-blog.js    # AI blog post generation
+│       ├── generate-captions.js # AI social media captions
+│       ├── generate-email-campaign.js # AI email campaign content
+│       └── generate-product-description.js # AI product descriptions
 │
 ├── css/                        # Stylesheets (organized by category)
 │   ├── main.css                # Global styles & imports
@@ -202,12 +210,22 @@ All managers are instantiated and exposed globally via `window` object for use i
 
 All API endpoints are in `/api/` and deployed as Vercel serverless functions:
 
+**Stripe & Billing:**
 - **POST /api/checkout**: Creates Stripe checkout session
 - **POST /api/billing-portal**: Generates Stripe billing portal URL
 - **POST /api/webhooks/stripe**: Handles Stripe events (subscription updates)
-- **POST /api/tools/use-tool**: Increments tool usage counter
 - **POST /api/check-subscription**: Checks subscription status from both database and Stripe, syncs data
+
+**User Management:**
 - **POST /api/update-profile**: Updates user profile information
+- **POST /api/track-avatar-selection**: Tracks avatar selection for analytics
+
+**AI Tool Generation:**
+- **POST /api/tools/use-tool**: Increments tool usage counter
+- **POST /api/tools/generate-blog**: Generates AI blog post content
+- **POST /api/tools/generate-captions**: Generates AI social media captions
+- **POST /api/tools/generate-email-campaign**: Generates AI email campaign content
+- **POST /api/tools/generate-product-description**: Generates AI product descriptions
 
 **Environment Variables Required:**
 ```bash

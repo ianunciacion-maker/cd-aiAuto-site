@@ -150,7 +150,7 @@ Return ONLY the JSON object.`;
             headers: {
                 'Authorization': `Bearer ${openRouterApiKey}`,
                 'Content-Type': 'application/json',
-                'HTTP-Referer': 'https://cd-ai-auto-site.vercel.app',
+                'HTTP-Referer': 'https://ai-auto.ai',
                 'X-Title': 'Ai-Auto Product Descriptions'
             },
             body: JSON.stringify({
