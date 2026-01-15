@@ -754,8 +754,13 @@
     }
 
     @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
     }
 
     @media (max-width: 768px) {
@@ -845,6 +850,22 @@
           <div class="loading">Loading videos...</div>
         </div>
       </section>
+
+      <!-- Waitlist Section -->
+      <section class="section" id="waitlist-section">
+        <div class="section-header">
+          <h2 class="section-title">Waitlist</h2>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <span id="waitlist-count"
+              style="padding: 4px 12px; background: var(--blue); color: #fff; font-weight: 700; font-size: 14px; border: var(--border-thin);">0</span>
+            <button class="create-btn" id="exportWaitlistBtn" style="background: var(--green); color: #000;">Export
+              CSV</button>
+          </div>
+        </div>
+        <div class="section-content" id="waitlistContainer">
+          <div class="loading">Loading waitlist...</div>
+        </div>
+      </section>
     </div>
   </main>
 
@@ -870,35 +891,23 @@
           <div class="form-group">
             <label class="form-label" for="videoUrl">Video URL</label>
             <div class="url-input-group">
-              <input
-                type="url"
-                class="form-input url-input"
-                id="videoUrl"
-                placeholder="https://youtube.com/watch?v=... or https://vimeo.com/..."
-                required
-              >
+              <input type="url" class="form-input url-input" id="videoUrl"
+                placeholder="https://youtube.com/watch?v=... or https://vimeo.com/..." required>
             </div>
             <div class="form-help">Enter a YouTube or Vimeo URL, or upload a video file</div>
           </div>
 
           <div class="form-group">
             <label class="form-label" for="videoTitle">Title</label>
-            <input
-              type="text"
-              class="form-input"
-              id="videoTitle"
-              placeholder="Video title (auto-filled from URL if empty)"
-            >
+            <input type="text" class="form-input" id="videoTitle"
+              placeholder="Video title (auto-filled from URL if empty)">
             <div class="form-help">Leave empty to auto-fill from video source</div>
           </div>
 
           <div class="form-group">
             <label class="form-label" for="videoDescription">Description</label>
-            <textarea
-              class="form-textarea"
-              id="videoDescription"
-              placeholder="Video description (auto-filled from URL if empty)"
-            ></textarea>
+            <textarea class="form-textarea" id="videoDescription"
+              placeholder="Video description (auto-filled from URL if empty)"></textarea>
             <div class="form-help">Leave empty to auto-fill from video source</div>
           </div>
 
@@ -911,12 +920,7 @@
 
           <div class="form-group">
             <label class="form-label" for="videoTags">Tags</label>
-            <input
-              type="text"
-              class="form-input"
-              id="videoTags"
-              placeholder="tag1, tag2, tag3"
-            >
+            <input type="text" class="form-input" id="videoTags" placeholder="tag1, tag2, tag3">
             <div class="form-help">Comma-separated tags</div>
           </div>
 
@@ -968,8 +972,14 @@
         this.usersContainer = document.getElementById('usersContainer');
         this.postsList = document.getElementById('postsList');
         this.videosList = document.getElementById('videosList');
+        this.waitlistContainer = document.getElementById('waitlistContainer');
+        this.waitlistCount = document.getElementById('waitlist-count');
+        this.exportWaitlistBtn = document.getElementById('exportWaitlistBtn');
         this.logoutBtn = document.getElementById('logoutBtn');
-        
+
+        // Waitlist state
+        this.waitlistEntries = [];
+
         // Video modal elements
         this.videoModal = document.getElementById('videoModal');
         this.videoForm = document.getElementById('videoForm');
@@ -980,7 +990,7 @@
         this.videoModalTitle = document.getElementById('videoModalTitle');
         this.saveButtonText = document.getElementById('saveButtonText');
         this.saveSpinner = document.getElementById('saveSpinner');
-        
+
         // Form elements
         this.videoSource = document.getElementById('videoSource');
         this.videoUrl = document.getElementById('videoUrl');
@@ -989,7 +999,7 @@
         this.videoCategory = document.getElementById('videoCategory');
         this.videoTags = document.getElementById('videoTags');
         this.videoStatus = document.getElementById('videoStatus');
-        
+
         // Preview elements
         this.videoPreview = document.getElementById('videoPreview');
         this.videoPreviewContent = document.getElementById('videoPreviewContent');
@@ -998,12 +1008,12 @@
         this.previewDuration = document.getElementById('previewDuration');
         this.previewViews = document.getElementById('previewViews');
         this.previewSource = document.getElementById('previewSource');
-        
+
         // State
         this.currentEditingVideo = null;
         this.videos = [];
         this.categories = [];
-        
+
         this.init();
       }
 
@@ -1069,9 +1079,98 @@
           this.renderStats(posts, users);
           this.renderUsers(users, subscriptions);
           this.renderPosts(posts);
+
+          // Load waitlist entries
+          await this.loadWaitlist();
         } catch (error) {
           console.error('Dashboard load exception:', error);
           this.showError('Failed to load dashboard. Please refresh the page or contact support.');
+        }
+      }
+
+      async loadWaitlist() {
+        try {
+          const { data: entries, error } = await waitlistManager.getAllEntries();
+
+          if (error) {
+            console.error('Error loading waitlist:', error);
+            this.waitlistContainer.innerHTML = '<div class="empty">Unable to load waitlist</div>';
+            return;
+          }
+
+          this.waitlistEntries = entries || [];
+          this.renderWaitlist(this.waitlistEntries);
+
+          // Setup export button
+          this.exportWaitlistBtn.addEventListener('click', () => {
+            if (this.waitlistEntries.length === 0) {
+              alert('No waitlist entries to export');
+              return;
+            }
+            waitlistManager.downloadCSV(this.waitlistEntries, `waitlist-${new Date().toISOString().split('T')[0]}.csv`);
+          });
+        } catch (error) {
+          console.error('Waitlist load exception:', error);
+          this.waitlistContainer.innerHTML = '<div class="empty">Unable to load waitlist</div>';
+        }
+      }
+
+      renderWaitlist(entries) {
+        // Update count badge
+        this.waitlistCount.textContent = entries.length;
+
+        if (entries.length === 0) {
+          this.waitlistContainer.innerHTML = '<div class="empty">No waitlist entries yet</div>';
+          return;
+        }
+
+        const entriesHTML = entries.map(entry => this.renderWaitlistEntry(entry)).join('');
+        this.waitlistContainer.innerHTML = entriesHTML;
+      }
+
+      renderWaitlistEntry(entry) {
+        const date = new Date(entry.created_at).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+        const source = entry.source || 'unknown';
+        const sourceColor = source === 'homepage' ? 'var(--blue)' : source === 'tools_page' ? 'var(--coral)' : 'var(--gold)';
+
+        return `
+          <div class="user-row" style="grid-template-columns: 2fr 1fr 1.5fr auto;">
+            <div class="user-email">${this.escapeHtml(entry.email)}</div>
+            <div>
+              <span class="user-status" style="background: ${sourceColor}; color: #fff;">${source.replace('_', ' ')}</span>
+            </div>
+            <div style="font-size: 12px; opacity: 0.7;">${date}</div>
+            <div class="user-actions">
+              <button class="action-btn delete" onclick="dashboard.deleteWaitlistEntry('${entry.id}')">Delete</button>
+            </div>
+          </div>
+        `;
+      }
+
+      async deleteWaitlistEntry(entryId) {
+        if (!confirm('Remove this email from the waitlist?')) {
+          return;
+        }
+
+        try {
+          const { error } = await waitlistManager.deleteEntry(entryId);
+
+          if (error) {
+            alert('Failed to delete entry. Please try again.');
+            return;
+          }
+
+          // Reload waitlist
+          await this.loadWaitlist();
+        } catch (error) {
+          console.error('Delete waitlist entry error:', error);
+          alert('Error deleting entry. Please try again.');
         }
       }
 
@@ -1200,7 +1299,7 @@
 
         try {
           const { error } = await blogManager.deletePost(postId);
-          
+
           if (error) {
             alert('Failed to delete post. Please try again.');
             return;
@@ -1229,7 +1328,7 @@
     let dashboard;
     document.addEventListener('DOMContentLoaded', () => {
       dashboard = new AdminDashboard();
-      
+
       // Video manager functionality disabled - missing dependencies
     });
   </script>

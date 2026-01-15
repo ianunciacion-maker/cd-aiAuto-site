@@ -1599,6 +1599,109 @@ var AIResourcesManager = class AIResourcesManager {
 }
 
 // ============================================
+// WAITLIST MANAGER
+// ============================================
+
+var WaitlistManager = class WaitlistManager {
+  constructor() {
+    this.tableName = 'waitlist';
+  }
+
+  // Get all waitlist entries (admin only)
+  async getAllEntries() {
+    try {
+      const { data, error } = await supabase
+        .from(this.tableName)
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Get waitlist entries error:', error.message);
+        return { data: null, error };
+      }
+
+      return { data, error: null };
+    } catch (error) {
+      console.error('Get waitlist entries exception:', error);
+      return { data: null, error };
+    }
+  }
+
+  // Get count of waitlist entries
+  async getCount() {
+    try {
+      const { count, error } = await supabase
+        .from(this.tableName)
+        .select('*', { count: 'exact', head: true });
+
+      if (error) {
+        console.error('Get waitlist count error:', error.message);
+        return { count: null, error };
+      }
+
+      return { count, error: null };
+    } catch (error) {
+      console.error('Get waitlist count exception:', error);
+      return { count: null, error };
+    }
+  }
+
+  // Delete a waitlist entry by ID
+  async deleteEntry(id) {
+    try {
+      const { data, error } = await supabase
+        .from(this.tableName)
+        .delete()
+        .eq('id', id)
+        .select()
+        .single();
+
+      if (error) {
+        console.error('Delete waitlist entry error:', error.message);
+        return { data: null, error };
+      }
+
+      console.log('Waitlist entry deleted:', id);
+      return { data, error: null };
+    } catch (error) {
+      console.error('Delete waitlist entry exception:', error);
+      return { data: null, error };
+    }
+  }
+
+  // Export waitlist to CSV string
+  exportToCSV(entries) {
+    if (!entries || entries.length === 0) {
+      return '';
+    }
+
+    const headers = ['Email', 'Source', 'Signup Date'];
+    const rows = entries.map(entry => [
+      entry.email,
+      entry.source || 'unknown',
+      new Date(entry.created_at).toLocaleDateString()
+    ]);
+
+    const csvContent = [headers, ...rows]
+      .map(row => row.map(cell => `"${cell}"`).join(','))
+      .join('\n');
+
+    return csvContent;
+  }
+
+  // Download CSV file
+  downloadCSV(entries, filename = 'waitlist.csv') {
+    const csvContent = this.exportToCSV(entries);
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = filename;
+    link.click();
+    URL.revokeObjectURL(link.href);
+  }
+}
+
+// ============================================
 // INITIALIZE MANAGERS
 // ============================================
 
@@ -1609,6 +1712,7 @@ var userManager = window.userManager || new UserManager();
 var stripeManager = window.stripeManager || new StripeManager();
 var adminUserManager = window.adminUserManager || new AdminUserManager();
 var aiResourcesManager = window.aiResourcesManager || new AIResourcesManager();
+var waitlistManager = window.waitlistManager || new WaitlistManager();
 
 // Expose to global scope for access in HTML files
 if (typeof window !== 'undefined') {
@@ -1619,9 +1723,10 @@ if (typeof window !== 'undefined') {
   window.stripeManager = stripeManager;
   window.adminUserManager = adminUserManager;
   window.aiResourcesManager = aiResourcesManager;
+  window.waitlistManager = waitlistManager;
   window.supabase = supabase;
 }
 
 console.log('✅ Supabase client initialized');
 console.log('✅ Auth and Blog managers ready');
-console.log('✅ User, Stripe, Admin, and AI Resources managers ready');
+console.log('✅ User, Stripe, Admin, AI Resources, and Waitlist managers ready');

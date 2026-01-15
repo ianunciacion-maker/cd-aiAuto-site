@@ -1381,11 +1381,14 @@
 
           try {
             if (window.supabase) {
-              const { error } = await window.supabase.from('waitlist').insert([{ email }]);
+              const { error } = await window.supabase.from('waitlist').insert([{
+                email,
+                source: 'homepage'
+              }]);
               if (error) throw error;
             }
           } catch (err) {
-            console.log('Waitlist error (expected if table missing):', err);
+            console.log('Waitlist error:', err);
           }
 
           waitlistFormHome.style.display = 'none';

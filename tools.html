@@ -996,11 +996,14 @@
           try {
             // Attempt to save to database if table exists via global window.supabase (idempotent)
             if (window.supabase) {
-              const { error } = await window.supabase.from('waitlist').insert([{ email }]);
+              const { error } = await window.supabase.from('waitlist').insert([{
+                email,
+                source: 'tools_page'
+              }]);
               if (error) throw error;
             }
           } catch (err) {
-            console.log('Waitlist error (expected if table missing):', err);
+            console.log('Waitlist error:', err);
           }
 
           // Always show success to user for positive UX
