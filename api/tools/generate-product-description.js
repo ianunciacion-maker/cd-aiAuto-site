@@ -142,7 +142,7 @@ Return ONLY the JSON object.`;
             });
         }
 
-        console.log('🚀 Calling OpenRouter API with google/gemini-2.0-flash-001...');
+        console.log('🚀 Calling OpenRouter API with openai/gpt-4o-mini...');
 
         // Call OpenRouter API
         const openRouterResponse = await fetch('https://openrouter.ai/api/v1/chat/completions', {
@@ -154,7 +154,7 @@ Return ONLY the JSON object.`;
                 'X-Title': 'Ai-Auto Product Descriptions'
             },
             body: JSON.stringify({
-                model: 'google/gemini-2.0-flash-001',
+                model: 'openai/gpt-4o-mini',
                 messages: messages,
                 temperature: 0.7,
                 max_tokens: 2000,

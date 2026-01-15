@@ -82,7 +82,7 @@ ${imageUrl ? 'Product image provided - use visual details as proof/evidence.' : 
             messages.push({ role: 'user', content: userPrompt });
         }
 
-        // Use google/gemini-2.0-flash for reliable JSON output and image support
+        // Use openai/gpt-4o-mini for reliable JSON output and image support
         const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
             method: 'POST',
             headers: {
@@ -92,7 +92,7 @@ ${imageUrl ? 'Product image provided - use visual details as proof/evidence.' : 
                 'X-Title': 'Ai-Auto Email Campaigns'
             },
             body: JSON.stringify({
-                model: 'google/gemini-2.0-flash-001',
+                model: 'openai/gpt-4o-mini',
                 messages,
                 temperature: 0.7,
                 max_tokens: 2000,
@@ -102,7 +102,8 @@ ${imageUrl ? 'Product image provided - use visual details as proof/evidence.' : 
 
         if (!response.ok) {
             const errorData = await response.json().catch(() => ({}));
-            throw new Error(errorData.error?.message || `API error: ${response.status}`);
+            console.error('❌ OpenRouter API error:', response.status, JSON.stringify(errorData));
+            throw new Error(errorData.error?.message || errorData.message || `API error: ${response.status}`);
         }
 
         const data = await response.json();
@@ -145,6 +146,10 @@ ${imageUrl ? 'Product image provided - use visual details as proof/evidence.' : 
 
     } catch (error) {
         console.error('❌ Email generation error:', error.message);
-        return res.status(500).json({ error: 'Failed to generate email campaign', success: false });
+        console.error('❌ Full error:', error);
+        return res.status(500).json({
+            error: error.message || 'Failed to generate email campaign',
+            success: false
+        });
     }
 };
