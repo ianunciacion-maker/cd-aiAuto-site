@@ -257,20 +257,31 @@ async function handleSubscriptionCanceled(event) {
 }
 
 /**
- * Handle successful payment
+ * Handle successful payment - resets tool usage for new billing cycle
  */
 async function handlePaymentSucceeded(event) {
   try {
     const invoice = event.data.object;
     const subscriptionId = invoice.subscription;
 
-    // Get subscription to update if needed
+    // Get subscription to get user ID
     const subscription = await stripeInstance.subscriptions.retrieve(subscriptionId);
     const userId = subscription.metadata?.supabase_user_id;
 
     if (!userId) {
       console.warn('Invoice missing user metadata');
       return false;
+    }
+
+    // Reset tool usage for the new billing period
+    const { error: resetError } = await supabase.rpc('reset_all_tool_usage', {
+      p_user_id: userId
+    });
+
+    if (resetError) {
+      console.error('Error resetting tool usage:', resetError);
+    } else {
+      console.log(`Tool usage reset for user: ${userId}`);
     }
 
     console.log(`Payment succeeded for user: ${userId}`);
