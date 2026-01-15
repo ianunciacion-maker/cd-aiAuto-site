@@ -750,6 +750,9 @@
             if (result && result.error) {
               console.error('Billing portal error:', result.error);
               this.showError(result.error.message || result.error.error || 'Failed to open billing portal');
+            } else if (result && result.data && result.data.isFreeAccess) {
+              // Show friendly message for free access users
+              this.showSuccess(result.data.message || 'You have complimentary access!');
             }
           } catch (error) {
             console.error('Billing portal exception:', error);
@@ -822,6 +825,17 @@
         const banner = document.getElementById('errorBanner');
         banner.textContent = message;
         banner.classList.add('show');
+        banner.classList.remove('success');
+      }
+
+      showSuccess(message) {
+        const banner = document.getElementById('errorBanner');
+        banner.textContent = message;
+        banner.classList.add('show', 'success');
+        // Auto-hide after 5 seconds
+        setTimeout(() => {
+          banner.classList.remove('show', 'success');
+        }, 5000);
       }
     }
 

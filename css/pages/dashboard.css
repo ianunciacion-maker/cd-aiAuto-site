@@ -52,8 +52,12 @@ body {
   box-shadow: var(--shadow-hard);
 }
 
-.error-banner:not(:empty) {
+.error-banner.show {
   display: block;
+}
+
+.error-banner.success {
+  background: var(--green);
 }
 
 /* Loading State */

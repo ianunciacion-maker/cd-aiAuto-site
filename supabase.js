@@ -1044,12 +1044,17 @@ var StripeManager = class StripeManager {
         return { error };
       }
 
-      const { url } = await response.json();
+      const data = await response.json();
+
+      // Check if user has free/complimentary access
+      if (data.isFreeAccess) {
+        return { data: { isFreeAccess: true, message: data.message }, error: null };
+      }
 
       // Redirect to Stripe Billing Portal
-      window.location.href = url;
+      window.location.href = data.url;
 
-      return { data: { url }, error: null };
+      return { data: { url: data.url }, error: null };
     } catch (error) {
       console.error('Billing portal exception:', error);
       return { error };

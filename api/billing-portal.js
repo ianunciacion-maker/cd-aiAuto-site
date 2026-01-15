@@ -61,6 +61,14 @@ module.exports = async (req, res) => {
       });
     }
 
+    // Check if this is a free/complimentary subscription
+    if (subscription.stripe_customer_id.startsWith('free_')) {
+      return res.status(200).json({
+        message: 'You have complimentary access. No billing to manage.',
+        isFreeAccess: true
+      });
+    }
+
     // Create portal session
     // Build the base URL - Vercel provides VERCEL_URL without https://
     let baseUrl = process.env.VERCEL_URL || 'http://localhost:3000';
