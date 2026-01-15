@@ -82,6 +82,7 @@ ${imageUrl ? 'Product image provided - use visual details as proof/evidence.' : 
             messages.push({ role: 'user', content: userPrompt });
         }
 
+        // Use google/gemini-2.0-flash for reliable JSON output and image support
         const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
             method: 'POST',
             headers: {
@@ -91,10 +92,10 @@ ${imageUrl ? 'Product image provided - use visual details as proof/evidence.' : 
                 'X-Title': 'Ai-Auto Email Campaigns'
             },
             body: JSON.stringify({
-                model: 'x-ai/grok-4.1-fast',
+                model: 'google/gemini-2.0-flash-001',
                 messages,
                 temperature: 0.7,
-                max_tokens: 1500,
+                max_tokens: 2000,
                 response_format: { type: 'json_object' }
             })
         });
