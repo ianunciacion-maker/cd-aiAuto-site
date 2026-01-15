@@ -40,8 +40,8 @@
           <span>▼</span>
         </button>
         <div class="user-menu-dropdown">
-          <div class="user-menu-item" id="billingBtn">💳 Manage Subscription</div>
-          <div class="user-menu-item" id="logoutBtn">🚪 Sign Out</div>
+          <div class="user-menu-item" id="billingBtnDropdown">💳 Manage Subscription</div>
+          <div class="user-menu-item" id="logoutBtnDropdown">🚪 Sign Out</div>
         </div>
       </div>
     </div>
@@ -742,17 +742,27 @@
           this.toggleTheme();
         });
 
-        document.getElementById('billingBtn').addEventListener('click', async () => {
+        // Billing button handlers (both header and dropdown)
+        const handleBilling = async () => {
           try {
             await stripeManager.openBillingPortal();
           } catch (error) {
             this.showError('Failed to open billing portal');
           }
-        });
+        };
 
-        document.getElementById('logoutBtn').addEventListener('click', async () => {
+        // Logout button handlers (both header and dropdown)
+        const handleLogout = async () => {
           await authManager.logout();
-        });
+        };
+
+        // Header buttons
+        document.getElementById('billingBtn')?.addEventListener('click', handleBilling);
+        document.getElementById('logoutBtn')?.addEventListener('click', handleLogout);
+
+        // Dropdown menu buttons
+        document.getElementById('billingBtnDropdown')?.addEventListener('click', handleBilling);
+        document.getElementById('logoutBtnDropdown')?.addEventListener('click', handleLogout);
 
         // User menu dropdown toggle
         const userMenuTrigger = document.getElementById('userMenuTrigger');
