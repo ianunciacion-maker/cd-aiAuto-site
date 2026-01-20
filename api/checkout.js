@@ -3,7 +3,8 @@
  * Creates a Stripe Checkout session for subscription purchase
  *
  * POST /api/checkout
- * Body: { user_id: string, email: string, priceId: string }
+ * Body: { user_id: string, email: string, priceId?: string }
+ * Note: priceId is optional - defaults to STRIPE_PRICE_ID environment variable
  */
 
 const stripe = require('stripe');
@@ -36,10 +37,18 @@ module.exports = async (req, res) => {
   try {
     const { user_id, email, priceId } = req.body;
 
-    // Validate required fields
-    if (!user_id || !email || !priceId) {
+    // Validate required fields (priceId is optional - falls back to env var)
+    if (!user_id || !email) {
       return res.status(400).json({
-        error: 'Missing required fields: user_id, email, priceId'
+        error: 'Missing required fields: user_id, email'
+      });
+    }
+
+    // Use provided priceId or fall back to environment variable
+    const effectivePriceId = priceId || process.env.STRIPE_PRICE_ID;
+    if (!effectivePriceId) {
+      return res.status(500).json({
+        error: 'Server configuration error: Missing STRIPE_PRICE_ID'
       });
     }
 
@@ -120,7 +129,7 @@ module.exports = async (req, res) => {
       mode: 'subscription',
       line_items: [
         {
-          price: priceId || process.env.STRIPE_PRICE_ID,
+          price: effectivePriceId,
           quantity: 1,
         },
       ],
