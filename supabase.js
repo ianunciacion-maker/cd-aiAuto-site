@@ -963,7 +963,8 @@ var StripeManager = class StripeManager {
   }
 
   // Create checkout session and redirect to Stripe
-  async checkout(priceId) {
+  // If priceId is not provided, the server uses STRIPE_PRICE_ID environment variable
+  async checkout(priceId = null) {
     try {
       const user = await authManager.getCurrentUser();
       if (!user) {
@@ -978,7 +979,7 @@ var StripeManager = class StripeManager {
         body: JSON.stringify({
           user_id: user.id,
           email: user.email,
-          priceId: priceId
+          ...(priceId && { priceId })
         })
       });
 
@@ -1206,7 +1207,7 @@ var AdminUserManager = class AdminUserManager {
       const stats = {
         totalUsers: users?.length || 0,
         activeSubscriptions: activeSubscriptions?.length || 0,
-        monthlyRecurringRevenue: subscriptions?.length ? (subscriptions.length * 49) : 0, // $49 per subscription
+        monthlyRecurringRevenue: subscriptions?.length ? (subscriptions.length * 39.95) : 0, // $39.95 per subscription
         churnRate: 0 // Calculate if needed
       };
 

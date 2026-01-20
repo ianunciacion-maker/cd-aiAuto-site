@@ -28,7 +28,7 @@ This guide walks you through setting up Stripe for recurring billing on the AI-A
 
    **Billing Period:** Monthly
 
-   **Amount:** $49.00 USD
+   **Amount:** $39.95 USD
 
    **Recurring:** Enabled (Monthly)
 

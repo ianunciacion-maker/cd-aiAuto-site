@@ -69,7 +69,7 @@ curl -X POST http://localhost:3000/api/checkout \
 - [ ] Remember me functionality saves email
 
 #### Payment Flow
-- [ ] Checkout page displays $49/month pricing
+- [ ] Checkout page displays $39.95/month pricing
 - [ ] Stripe Checkout opens in new window
 - [ ] Test card 4242424242424242 completes payment
 - [ ] Failed card 4000000000000002 shows error
@@ -165,7 +165,7 @@ async generateContent(topic, length, tone, keywords) {
 
 #### Environment Setup
 - [ ] Stripe live account created
-- [ ] Stripe live product created ($49/month)
+- [ ] Stripe live product created ($39.95/month)
 - [ ] Stripe live API keys obtained
 - [ ] Stripe live webhook configured
 - [ ] Vercel account created

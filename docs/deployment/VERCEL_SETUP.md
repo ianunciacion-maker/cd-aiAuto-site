@@ -207,7 +207,7 @@ You can test if the variables are correctly configured:
 | Variable | Purpose |
 |----------|---------|
 | `STRIPE_SECRET_KEY` | Authenticates your backend to Stripe API |
-| `STRIPE_PRICE_ID` | The $49/month product ID (tells Stripe what to charge) |
+| `STRIPE_PRICE_ID` | The $39.95/month product ID (tells Stripe what to charge) |
 | `STRIPE_WEBHOOK_SECRET` | For receiving payment confirmation webhooks |
 | `SUPABASE_URL` | Your database location |
 | `SUPABASE_SERVICE_KEY` | Authenticates backend to your database |

@@ -30,7 +30,7 @@ Created RLS (Row Level Security) policies for user and admin access
 
 Setup instructions for:
 - Creating product: "AI Content Creation Suite"
-- Creating recurring price: $49 USD/month
+- Creating recurring price: $39.95 USD/month
 - Getting API keys (test & production)
 - Configuring webhook endpoint
 - Verifying in test mode with test cards
@@ -94,7 +94,7 @@ Also updated **AuthManager** with:
    - Redirects to dashboard on success
 
 3. **checkout.html** - Stripe subscription page
-   - $49/month pricing display
+   - $39.95/month pricing display
    - Feature list
    - Secure Stripe Checkout button
    - Renewal date calculator

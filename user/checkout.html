@@ -341,7 +341,7 @@
 
           <div class="plan-row">
             <label>Monthly subscription</label>
-            <span>$49.00</span>
+            <span>$39.95</span>
           </div>
 
           <div class="plan-row">
@@ -356,7 +356,7 @@
 
           <div class="plan-row total">
             <label>Total (due today)</label>
-            <span>$49.00</span>
+            <span>$39.95</span>
           </div>
         </div>
 
@@ -404,11 +404,9 @@
         this.checkoutContent = document.getElementById('checkoutContent');
         this.loadingState = document.getElementById('loadingState');
 
-        // ⚠️ IMPORTANT: Update this with your actual Stripe Price ID
-        // Get it from: Stripe Dashboard → Products → Your Product → Click on the price
-        // It should match the STRIPE_PRICE_ID environment variable in Vercel
-        // Format: price_XXXXXXXXXXXXX
-        this.priceId = 'price_1SZvhoDjJTEhRwFOACiaGpDl';
+        // Price ID is now configured via STRIPE_PRICE_ID environment variable in Vercel
+        // The API will use process.env.STRIPE_PRICE_ID when no priceId is provided
+        // To change the price, update the environment variable in Vercel and redeploy
 
         this.init();
       }
@@ -447,8 +445,8 @@
             return;
           }
 
-          // Redirect to Stripe Checkout
-          const result = await stripeManager.checkout(this.priceId);
+          // Redirect to Stripe Checkout (uses STRIPE_PRICE_ID from server env)
+          const result = await stripeManager.checkout();
 
           // Check if there was an error
           if (result && result.error) {

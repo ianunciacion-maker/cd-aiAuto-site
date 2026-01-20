@@ -31,7 +31,7 @@ Each tool includes:
 
 ### User Management
 - **Sign up** with email/password
-- **Payment** via Stripe ($49/month)
+- **Payment** via Stripe ($39.95/month)
 - **Dashboard** showing subscription status and tools
 - **Usage tracking** per tool (100 generations/month)
 - **Billing portal** for subscription management
@@ -146,7 +146,7 @@ vercel --prod
 
 ### ✅ Billing
 - Stripe subscription management
-- $49/month recurring billing
+- $39.95/month recurring billing
 - Test mode for development
 - Live mode for production
 - Automatic webhook sync
@@ -432,7 +432,7 @@ See **PHASE_9_10_COMPLETION_GUIDE.md** for step-by-step guide.
 ## Success Criteria Met
 
 ✅ Complete authentication flow (signup → login → logout)
-✅ Stripe subscription billing ($49/month)
+✅ Stripe subscription billing ($39.95/month)
 ✅ 4 AI tools with placeholder UI
 ✅ Monthly usage limits (100/month per tool)
 ✅ User dashboard with subscription status
