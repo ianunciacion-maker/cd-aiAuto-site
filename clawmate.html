@@ -22,6 +22,7 @@
       --lavender: #dcd6f7;
       --green: #2ecc71;
       --pink: #ff9ff3;
+      --lobster: #C41E3A;
 
       --border-thick: 3px solid var(--ink);
       --border-thin: 2px solid var(--ink);
@@ -47,6 +48,7 @@
       --lavender: #2a2a40;
       --green: #3ddb85;
       --pink: #ffb8f3;
+      --lobster: #E8475D;
     }
 
     * { box-sizing: border-box; }
@@ -107,6 +109,40 @@
     .btn-gold {
       background: var(--gold);
       color: #000;
+    }
+
+    .btn-lobster {
+      background: var(--lobster);
+      color: #fff;
+    }
+
+    @keyframes claw-pulse {
+      0%, 100% {
+        transform: translateY(0);
+        box-shadow: var(--shadow-hard);
+      }
+      50% {
+        transform: translateY(-4px);
+        box-shadow: 10px 10px 0px 0px var(--lobster), 14px 14px 0px 0px var(--ink);
+      }
+    }
+
+    .btn-lobster-cta {
+      background: var(--lobster);
+      color: #fff;
+      font-size: 18px;
+      padding: 18px 40px;
+      animation: claw-pulse 2s ease-in-out infinite;
+      text-decoration: none;
+    }
+
+    .btn-lobster-cta:hover {
+      animation: none;
+    }
+
+    .video-cta {
+      text-align: center;
+      margin-top: var(--space-md);
     }
 
     .tag {
@@ -678,6 +714,8 @@
       border: var(--border-thick);
       padding: var(--space-md);
       background: var(--bg-paper);
+      display: flex;
+      flex-direction: column;
     }
 
     .path-card.featured {
@@ -731,6 +769,8 @@
       margin-right: 8px;
       font-weight: 900;
     }
+
+    .path-card .btn { margin-top: auto; padding-top: var(--space-sm); width: 100%; }
 
     /* ========== SECTION: SAFETY ========== */
     .sec-safety {
@@ -838,6 +878,8 @@
       padding: var(--space-md);
       background: var(--bg-white);
       box-shadow: var(--shadow-hard);
+      display: flex;
+      flex-direction: column;
     }
 
     .start-card.featured {
@@ -905,6 +947,8 @@
       font-weight: 900;
     }
 
+    .start-card .btn { margin-top: auto; padding-top: var(--space-sm); width: 100%; }
+
     .community-strip {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -967,6 +1011,33 @@
       margin-top: var(--space-md);
     }
 
+    .quote-with-photo {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-md);
+      margin: var(--space-md) 0;
+      max-width: 800px;
+    }
+
+    .quote-photo {
+      width: 120px;
+      height: 120px;
+      flex-shrink: 0;
+      border: var(--border-thick);
+      border-color: var(--gold);
+      box-shadow: 6px 6px 0px 0px var(--gold);
+      object-fit: cover;
+    }
+
+    .quote-with-photo blockquote {
+      border-left: 4px solid var(--gold);
+      padding: var(--space-sm) var(--space-md);
+      margin: 0;
+      font-size: 18px;
+      font-style: italic;
+      font-weight: 500;
+    }
+
     /* ========== FOOTER ========== */
     .footer-cta {
       background: var(--blue);
@@ -1023,6 +1094,18 @@
 
       .toc-bar {
         top: 60px;
+      }
+
+      .quote-with-photo {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .quote-with-photo blockquote {
+        border-left: none;
+        border-top: 4px solid var(--gold);
+        padding: var(--space-sm) 0;
       }
     }
 
@@ -1133,6 +1216,10 @@
             Your browser does not support the video tag.
           </video>
         </div>
+      </div>
+
+      <div class="video-cta">
+        <a class="btn btn-lobster-cta" href="#" onclick="location.reload(); return false;">Get ClawMate Now</a>
       </div>
     </div>
   </section>
@@ -1455,6 +1542,7 @@
             <li>Background Execution & Persistent Memory</li>
             <li>Perfect for testing the waters</li>
           </ul>
+          <a class="btn btn-lobster" href="#" onclick="location.reload(); return false;">Get ClawMate</a>
         </div>
         <div class="path-card featured">
           <h4>Full Bundle</h4>
@@ -1467,6 +1555,7 @@
             <li>PageMate landing page builder</li>
             <li>100K DFY Prompts + Affiliate Empire</li>
           </ul>
+          <a class="btn btn-lobster" href="#" onclick="location.reload(); return false;">Get the Bundle</a>
         </div>
       </div>
     </div>
@@ -1521,6 +1610,7 @@
             <li>Background Execution</li>
             <li>Persistent Memory</li>
           </ul>
+          <a class="btn btn-lobster" href="#" onclick="location.reload(); return false;">Start Now</a>
         </div>
 
         <!-- Full Bundle Start -->
@@ -1538,6 +1628,7 @@
             <li>100K+ DFY Prompts & Templates</li>
             <li>Affiliate Empire Automation</li>
           </ul>
+          <a class="btn btn-lobster" href="#" onclick="location.reload(); return false;">Get Full Bundle</a>
         </div>
       </div>
 
@@ -1566,10 +1657,13 @@
       <h2>The Bigger Picture</h2>
       <p class="highlight-text">The CEO of Anthropic (the company behind Claude AI) predicts that AI could displace 50% of entry-level white-collar jobs within one to five years, potentially driving unemployment to 10&ndash;20%.</p>
 
-      <blockquote>
-        "AI is not just automating specific tasks &mdash; it is becoming a general labor substitute for humans."
-        <br><span style="font-style: normal; font-size: 14px; font-weight: 700;">&mdash; Dario Amodei, CEO of Anthropic</span>
-      </blockquote>
+      <div class="quote-with-photo">
+        <img class="quote-photo" src="images/dario-amodei.jpg" alt="Dario Amodei, CEO of Anthropic" />
+        <blockquote>
+          "AI is not just automating specific tasks &mdash; it is becoming a general labor substitute for humans."
+          <br><span style="font-style: normal; font-size: 14px; font-weight: 700;">&mdash; Dario Amodei, CEO of Anthropic</span>
+        </blockquote>
+      </div>
 
       <p class="highlight-text">This isn't about replacing you. It's about making sure you're not replaced. Business owners who adopt AI tools early gain a significant competitive advantage &mdash; lower costs, faster response times, and the ability to operate at a scale that was previously impossible without hiring.</p>
 
