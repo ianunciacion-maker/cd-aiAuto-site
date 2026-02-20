@@ -1,0 +1,1663 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>ClawMate 101 – Ai-Auto</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="The plain-English guide to ClawMate, the cloud-based autonomous AI agent that builds and manages online businesses. Powered by the open-source OpenClaw engine." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Playfair+Display:wght@500;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/components/navigation.css">
+
+  <style>
+    :root {
+      --bg-paper: #f2f0e9;
+      --bg-white: #ffffff;
+      --ink: #121212;
+      --blue: #2357ff;
+      --gold: #ffcc00;
+      --coral: #ff6b58;
+      --lavender: #dcd6f7;
+      --green: #2ecc71;
+      --pink: #ff9ff3;
+
+      --border-thick: 3px solid var(--ink);
+      --border-thin: 2px solid var(--ink);
+      --shadow-hard: 6px 6px 0px 0px var(--ink);
+      --shadow-hover: 10px 10px 0px 0px var(--ink);
+      --radius-sm: 4px;
+      --max-width: 1200px;
+
+      --space-xs: 8px;
+      --space-sm: 16px;
+      --space-md: 32px;
+      --space-lg: 64px;
+      --space-xl: 128px;
+    }
+
+    [data-theme="dark"] {
+      --bg-paper: #0a0a0a;
+      --bg-white: #1a1a1a;
+      --ink: #f0f0f0;
+      --blue: #4d7aff;
+      --gold: #ffd633;
+      --coral: #ff8c7a;
+      --lavender: #2a2a40;
+      --green: #3ddb85;
+      --pink: #ffb8f3;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-paper);
+      color: var(--ink);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Playfair Display', serif;
+      margin: 0;
+      font-weight: 900;
+      line-height: 1.1;
+    }
+
+    p { margin: 0 0 var(--space-sm); }
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 var(--space-md);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 28px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border: var(--border-thick);
+      background: var(--blue);
+      color: #fff;
+      box-shadow: var(--shadow-hard);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 14px;
+    }
+
+    .btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
+      filter: brightness(1.1);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--ink);
+    }
+
+    .btn-gold {
+      background: var(--gold);
+      color: #000;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 12px;
+      border: var(--border-thin);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      background: var(--gold);
+      color: #000;
+    }
+
+    .border-box {
+      border: var(--border-thick);
+      background: var(--bg-white);
+      box-shadow: var(--shadow-hard);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .border-box:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .section-title {
+      font-size: clamp(36px, 5vw, 56px);
+      margin-bottom: var(--space-md);
+    }
+
+    .section-subtitle {
+      font-size: 18px;
+      max-width: 700px;
+      margin-bottom: var(--space-md);
+      font-weight: 500;
+      opacity: 0.85;
+    }
+
+    /* ========== HERO ========== */
+    .hero {
+      padding: var(--space-lg) 0;
+      border-bottom: var(--border-thick);
+      background-color: var(--bg-paper);
+      background-image: radial-gradient(var(--ink) 1px, transparent 1px);
+      background-size: 20px 20px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(56px, 10vw, 120px);
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-sm);
+    }
+
+    .hero h1 .highlight {
+      display: inline-block;
+      background: var(--gold);
+      color: #000;
+      padding: 0 16px;
+      transform: rotate(-2deg);
+      border: var(--border-thin);
+    }
+
+    .hero-tag {
+      display: inline-block;
+      padding: 6px 20px;
+      background: var(--coral);
+      color: #fff;
+      font-weight: 900;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border: var(--border-thin);
+      margin-bottom: var(--space-sm);
+    }
+
+    .hero-subtitle {
+      font-size: clamp(18px, 2.5vw, 24px);
+      max-width: 700px;
+      margin: 0 auto var(--space-sm);
+      font-weight: 500;
+    }
+
+    .hero-meta {
+      font-size: 14px;
+      opacity: 0.7;
+      margin-bottom: var(--space-md);
+      font-weight: 500;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: var(--space-sm);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* ========== STICKY TOC ========== */
+    .toc-bar {
+      position: sticky;
+      top: 70px;
+      z-index: 90;
+      background: var(--bg-white);
+      border-bottom: var(--border-thick);
+      padding: 12px 0;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .toc-bar::-webkit-scrollbar {
+      height: 0;
+    }
+
+    .toc-inner {
+      display: flex;
+      gap: 8px;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 var(--space-md);
+      white-space: nowrap;
+    }
+
+    .toc-pill {
+      padding: 8px 18px;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      border: var(--border-thin);
+      background: var(--bg-paper);
+      color: var(--ink);
+      cursor: pointer;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    .toc-pill:hover {
+      background: var(--gold);
+      color: #000;
+    }
+
+    .toc-pill.active {
+      background: var(--gold);
+      color: #000;
+      box-shadow: 3px 3px 0 var(--ink);
+    }
+
+    /* ========== SECTION: WHAT IS CLAWMATE ========== */
+    .sec-what-is {
+      padding: var(--space-lg) 0;
+      border-bottom: var(--border-thick);
+      background: var(--bg-white);
+    }
+
+    .analogy-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-md);
+      margin-bottom: var(--space-lg);
+    }
+
+    .analogy-card {
+      border: var(--border-thick);
+      padding: var(--space-md);
+      background: var(--bg-paper);
+    }
+
+    .analogy-card.featured {
+      background: var(--gold);
+      color: #000;
+      transform: rotate(1deg);
+      box-shadow: var(--shadow-hard);
+    }
+
+    .analogy-card h3 {
+      font-size: 24px;
+      margin-bottom: var(--space-xs);
+    }
+
+    .analogy-card .analogy-type {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      opacity: 0.7;
+      margin-bottom: var(--space-sm);
+    }
+
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
+      margin-bottom: var(--space-md);
+    }
+
+    .pillar-card {
+      border: var(--border-thick);
+      padding: var(--space-md);
+      background: var(--bg-white);
+      box-shadow: var(--shadow-hard);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pillar-card .accent-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+    }
+
+    .pillar-card h4 {
+      font-size: 22px;
+      margin-bottom: var(--space-xs);
+      text-transform: uppercase;
+    }
+
+    .origin-box {
+      border: var(--border-thin);
+      background: var(--lavender);
+      padding: var(--space-sm) var(--space-md);
+      font-size: 14px;
+    }
+
+    .origin-box strong {
+      font-weight: 700;
+    }
+
+    .video-block {
+      margin-top: var(--space-lg);
+      border: var(--border-thick);
+      background: var(--bg-paper);
+      box-shadow: var(--shadow-hard);
+      overflow: hidden;
+    }
+
+    .video-block-header {
+      padding: var(--space-sm) var(--space-md);
+      background: var(--ink);
+      color: var(--bg-paper);
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 18px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      border-bottom: var(--border-thick);
+    }
+
+    .video-block video {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+    }
+
+    .video-wrapper {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .video-play-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.45);
+      border: 4px solid rgba(255, 255, 255, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, transform 0.2s, opacity 0.3s;
+      z-index: 2;
+    }
+
+    .video-play-btn::after {
+      content: '';
+      display: block;
+      width: 0;
+      height: 0;
+      border-top: 24px solid transparent;
+      border-bottom: 24px solid transparent;
+      border-left: 40px solid rgba(255, 255, 255, 0.9);
+      margin-left: 6px;
+    }
+
+    .video-wrapper:hover .video-play-btn:not(.hidden) {
+      background: rgba(0, 0, 0, 0.6);
+      transform: translate(-50%, -50%) scale(1.08);
+    }
+
+    .video-play-btn.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* ========== SECTION: CAPABILITIES ========== */
+    .sec-capabilities {
+      padding: var(--space-lg) 0;
+      border-bottom: var(--border-thick);
+      background: var(--bg-paper);
+    }
+
+    .capabilities-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
+    }
+
+    .capability-card {
+      border: var(--border-thick);
+      background: var(--bg-white);
+      box-shadow: var(--shadow-hard);
+      transition: transform 0.2s, box-shadow 0.2s;
+      overflow: hidden;
+    }
+
+    .capability-card:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .capability-header {
+      padding: var(--space-sm) var(--space-md);
+      border-bottom: var(--border-thick);
+      font-weight: 900;
+      font-size: 18px;
+      text-transform: uppercase;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .capability-body {
+      padding: var(--space-md);
+    }
+
+    .capability-body ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .capability-body li {
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .capability-body li:last-child {
+      border-bottom: none;
+    }
+
+    [data-theme="dark"] .capability-body li {
+      border-bottom-color: rgba(255,255,255,0.08);
+    }
+
+    /* ========== SECTION: HOW IT WORKS ========== */
+    .sec-how {
+      padding: var(--space-lg) 0;
+      border-bottom: var(--border-thick);
+      background: var(--bg-white);
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
+      margin-bottom: var(--space-lg);
+    }
+
+    .step-card {
+      border: var(--border-thick);
+      padding: var(--space-md);
+      background: var(--bg-paper);
+      position: relative;
+      transition: transform 0.2s;
+    }
+
+    .step-card:hover {
+      transform: translateY(-8px);
+      background: var(--gold);
+      color: #000;
+    }
+
+    .step-number {
+      font-size: 64px;
+      font-weight: 900;
+      opacity: 0.1;
+      position: absolute;
+      top: 0;
+      right: 10px;
+      line-height: 1;
+    }
+
+    .step-card h3 {
+      font-size: 24px;
+      margin-bottom: var(--space-xs);
+      border-bottom: var(--border-thin);
+      padding-bottom: 8px;
+    }
+
+    .integrations-bar {
+      background: var(--ink);
+      color: var(--bg-paper);
+      border: var(--border-thick);
+      padding: var(--space-md);
+      text-align: center;
+    }
+
+    .integrations-bar h4 {
+      font-size: 16px;
+      margin-bottom: var(--space-sm);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .platform-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+    }
+
+    .platform-pill {
+      padding: 6px 16px;
+      border: 2px solid var(--bg-paper);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .integrations-bar .stat-line {
+      margin-top: var(--space-sm);
+      font-size: 14px;
+      opacity: 0.8;
+      font-weight: 600;
+    }
+
+    /* ========== SECTION: REAL WORLD ========== */
+    .sec-real-world {
+      padding: var(--space-lg) 0;
+      border-bottom: var(--border-thick);
+      background: var(--bg-paper);
+    }
+
+    .use-cases-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
+      margin-bottom: var(--space-md);
+    }
+
+    .use-case-card {
+      border: var(--border-thick);
+      background: var(--bg-white);
+      box-shadow: var(--shadow-hard);
+      overflow: hidden;
+    }
+
+    .use-case-header {
+      padding: var(--space-sm) var(--space-md);
+      border-bottom: var(--border-thick);
+      font-weight: 900;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .use-case-body {
+      padding: var(--space-md);
+    }
+
+    .use-case-body h4 {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-xs);
+      font-family: 'Inter', sans-serif;
+    }
+
+    .use-case-body p {
+      font-size: 14px;
+    }
+
+    .use-case-body .savings {
+      display: inline-block;
+      background: var(--gold);
+      color: #000;
+      padding: 4px 12px;
+      font-weight: 900;
+      font-size: 14px;
+      border: var(--border-thin);
+      margin-top: var(--space-xs);
+    }
+
+    .savings-callout {
+      background: var(--gold);
+      color: #000;
+      border: var(--border-thick);
+      padding: var(--space-md);
+      text-align: center;
+      box-shadow: var(--shadow-hard);
+    }
+
+    .savings-callout h3 {
+      font-size: clamp(24px, 3vw, 36px);
+    }
+
+    .savings-callout p {
+      font-size: 16px;
+      margin: var(--space-xs) 0 0;
+      font-weight: 500;
+    }
+
+    /* ========== SECTION: COST ========== */
+    .sec-cost {
+      padding: var(--space-lg) 0;
+      border-bottom: var(--border-thick);
+      background: var(--bg-white);
+    }
+
+    .pricing-table {
+      width: 100%;
+      border-collapse: collapse;
+      border: var(--border-thick);
+      margin-bottom: var(--space-lg);
+      box-shadow: var(--shadow-hard);
+    }
+
+    .pricing-table th,
+    .pricing-table td {
+      padding: var(--space-sm) var(--space-md);
+      text-align: left;
+      border-bottom: var(--border-thin);
+      font-size: 15px;
+    }
+
+    .pricing-table th {
+      background: var(--ink);
+      color: var(--bg-paper);
+      font-weight: 900;
+      text-transform: uppercase;
+      font-size: 13px;
+      letter-spacing: 0.05em;
+    }
+
+    .pricing-table tr:nth-child(even) td {
+      background: var(--bg-paper);
+    }
+
+    .pricing-table .price-free {
+      font-weight: 900;
+      color: var(--green);
+      font-size: 18px;
+    }
+
+    [data-theme="dark"] .pricing-table th {
+      background: var(--blue);
+      color: #fff;
+    }
+
+    .paths-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-md);
+    }
+
+    .path-card {
+      border: var(--border-thick);
+      padding: var(--space-md);
+      background: var(--bg-paper);
+    }
+
+    .path-card.featured {
+      background: var(--gold);
+      color: #000;
+      box-shadow: var(--shadow-hard);
+      position: relative;
+    }
+
+    .path-card.featured::before {
+      content: 'RECOMMENDED';
+      position: absolute;
+      top: -14px;
+      right: 16px;
+      background: var(--coral);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 900;
+      padding: 4px 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border: var(--border-thin);
+    }
+
+    .path-card h4 {
+      font-size: 24px;
+      margin-bottom: var(--space-xs);
+    }
+
+    .path-card .price-range {
+      font-size: 28px;
+      font-weight: 900;
+      margin-bottom: var(--space-sm);
+      font-family: 'Inter', sans-serif;
+    }
+
+    .path-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .path-card li {
+      padding: 4px 0;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .path-card li::before {
+      content: '\2713';
+      margin-right: 8px;
+      font-weight: 900;
+    }
+
+    /* ========== SECTION: SAFETY ========== */
+    .sec-safety {
+      border-bottom: var(--border-thick);
+    }
+
+    .safety-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .safety-left {
+      background: var(--ink);
+      color: var(--bg-paper);
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-bottom: var(--border-thick);
+    }
+
+    .safety-left h2 {
+      font-size: clamp(36px, 5vw, 56px);
+      margin-bottom: var(--space-md);
+    }
+
+    .safety-left p {
+      font-size: 18px;
+      max-width: 450px;
+      line-height: 1.7;
+    }
+
+    .safety-right {
+      background: var(--bg-white);
+      padding: var(--space-lg);
+      border-left: var(--border-thick);
+      border-bottom: var(--border-thick);
+    }
+
+    .safety-right h3 {
+      font-size: 28px;
+      margin-bottom: var(--space-md);
+    }
+
+    .safety-checklist {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .safety-checklist li {
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      font-size: 15px;
+      font-weight: 500;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    [data-theme="dark"] .safety-checklist li {
+      border-bottom-color: rgba(255,255,255,0.08);
+    }
+
+    .safety-checklist li::before {
+      content: '\1F6E1';
+      flex-shrink: 0;
+    }
+
+    .security-note {
+      background: var(--lavender);
+      border: var(--border-thick);
+      padding: var(--space-md);
+      margin: 0 auto;
+      max-width: var(--max-width);
+    }
+
+    .security-note h4 {
+      font-size: 18px;
+      margin-bottom: var(--space-xs);
+      text-transform: uppercase;
+    }
+
+    .security-note p {
+      font-size: 14px;
+      margin: 0;
+    }
+
+    /* ========== SECTION: GETTING STARTED ========== */
+    .sec-getting-started {
+      padding: var(--space-lg) 0;
+      border-bottom: var(--border-thick);
+      background: var(--bg-paper);
+    }
+
+    .start-paths-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-md);
+      margin-bottom: var(--space-lg);
+    }
+
+    .start-card {
+      border: var(--border-thick);
+      padding: var(--space-md);
+      background: var(--bg-white);
+      box-shadow: var(--shadow-hard);
+    }
+
+    .start-card.featured {
+      background: var(--gold);
+      color: #000;
+      position: relative;
+    }
+
+    .start-card.featured::before {
+      content: 'BEST VALUE';
+      position: absolute;
+      top: -14px;
+      right: 16px;
+      background: var(--coral);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 900;
+      padding: 4px 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border: var(--border-thin);
+    }
+
+    .start-card h3 {
+      font-size: 28px;
+      margin-bottom: var(--space-sm);
+    }
+
+    .start-card .time-estimate {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      opacity: 0.7;
+      margin-bottom: var(--space-sm);
+    }
+
+    .code-block {
+      background: var(--ink);
+      color: var(--bg-paper);
+      padding: 14px 18px;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      font-weight: 600;
+      border: var(--border-thin);
+      margin: var(--space-sm) 0;
+      overflow-x: auto;
+      word-break: break-all;
+    }
+
+    .start-card ul {
+      list-style: none;
+      padding: 0;
+      margin: var(--space-sm) 0 0;
+    }
+
+    .start-card li {
+      padding: 4px 0;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .start-card li::before {
+      content: '\2713';
+      margin-right: 8px;
+      font-weight: 900;
+    }
+
+    .community-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
+    }
+
+    .community-stat {
+      border: var(--border-thick);
+      background: var(--bg-white);
+      padding: var(--space-md);
+      text-align: center;
+      box-shadow: var(--shadow-hard);
+    }
+
+    .community-stat .stat-val {
+      font-size: 36px;
+      font-weight: 900;
+      color: var(--blue);
+      font-family: 'Inter', sans-serif;
+    }
+
+    .community-stat .stat-label {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    /* ========== SECTION: BIGGER PICTURE ========== */
+    .sec-bigger-picture {
+      padding: var(--space-lg) 0;
+      background: var(--ink);
+      color: var(--bg-paper);
+      border-bottom: var(--border-thick);
+    }
+
+    .sec-bigger-picture h2 {
+      font-size: clamp(36px, 5vw, 56px);
+      margin-bottom: var(--space-md);
+    }
+
+    .sec-bigger-picture .highlight-text {
+      font-size: 20px;
+      max-width: 800px;
+      line-height: 1.7;
+      margin-bottom: var(--space-md);
+    }
+
+    .sec-bigger-picture blockquote {
+      border-left: 4px solid var(--gold);
+      padding: var(--space-sm) var(--space-md);
+      margin: var(--space-md) 0;
+      font-size: 18px;
+      font-style: italic;
+      font-weight: 500;
+      max-width: 700px;
+    }
+
+    .sec-bigger-picture .cta-row {
+      margin-top: var(--space-md);
+    }
+
+    /* ========== FOOTER ========== */
+    .footer-cta {
+      background: var(--blue);
+      color: #fff;
+      padding: var(--space-xl) 0;
+      text-align: center;
+      border-top: var(--border-thick);
+    }
+
+    .footer-cta h2 {
+      font-size: 64px;
+      margin-bottom: var(--space-md);
+      text-shadow: 4px 4px 0 var(--ink);
+    }
+
+    .site-footer {
+      background: var(--ink);
+      color: var(--bg-paper);
+      padding: var(--space-md) 0;
+      border-top: var(--border-thick);
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 900px) {
+      .analogy-grid,
+      .pillars-grid,
+      .capabilities-grid,
+      .steps-grid,
+      .use-cases-grid,
+      .paths-grid,
+      .safety-split,
+      .start-paths-grid,
+      .community-strip {
+        grid-template-columns: 1fr;
+      }
+
+      .safety-right {
+        border-left: none;
+      }
+
+      .analogy-card.featured {
+        transform: none;
+      }
+
+      .hero h1 {
+        font-size: 56px;
+      }
+
+      .toc-bar {
+        top: 60px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: 42px;
+      }
+
+      .section-title {
+        font-size: 32px;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .hero-buttons .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV (injected by navigation.js) -->
+
+  <!-- ========== HERO ========== -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-tag">Free Crashcourse</div>
+      <h1>ClawMate <span class="highlight">101</span></h1>
+      <p class="hero-subtitle">The plain-English guide to the AI business builder powered by OpenClaw</p>
+      <p class="hero-meta">Reading time: ~15 min &nbsp;|&nbsp; No tech jargon &nbsp;|&nbsp; Updated Feb 2026</p>
+      <div class="hero-buttons">
+        <a href="#what-is-clawmate" class="btn toc-link">Start Reading</a>
+        <a href="#what-is-clawmate" class="btn btn-outline toc-link">What Is ClawMate?</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== STICKY TOC ========== -->
+  <div class="toc-bar" id="tocBar">
+    <div class="toc-inner">
+      <a href="#what-is-clawmate" class="toc-pill toc-link active" data-section="what-is-clawmate">What Is It?</a>
+      <a href="#capabilities" class="toc-pill toc-link" data-section="capabilities">What It Can Do</a>
+      <a href="#how-it-works" class="toc-pill toc-link" data-section="how-it-works">How It Works</a>
+      <a href="#real-world" class="toc-pill toc-link" data-section="real-world">Real Examples</a>
+      <a href="#cost" class="toc-pill toc-link" data-section="cost">What It Costs</a>
+      <a href="#safety" class="toc-pill toc-link" data-section="safety">Safety</a>
+      <a href="#getting-started" class="toc-pill toc-link" data-section="getting-started">Get Started</a>
+    </div>
+  </div>
+
+  <!-- ========== WHAT IS CLAWMATE ========== -->
+  <section class="sec-what-is" id="what-is-clawmate">
+    <div class="container">
+      <div class="tag" style="margin-bottom: var(--space-sm);">The Basics</div>
+      <h2 class="section-title">What Is ClawMate?</h2>
+      <p class="section-subtitle">Built on the open-source OpenClaw engine, ClawMate is the commercial wrapper that turns powerful AI automation into a one-click cloud product. It plans, builds, and manages entire online businesses AND automates your daily operations &mdash; all from a single chat thread.</p>
+
+      <!-- Analogy -->
+      <div class="analogy-grid">
+        <div class="analogy-card">
+          <div class="analogy-type">Standard AI Chatbot</div>
+          <h3>The Librarian</h3>
+          <p>You ask a question, it gives you information. You still have to do all the work yourself. It forgets you the moment you close the tab.</p>
+        </div>
+        <div class="analogy-card featured">
+          <div class="analogy-type">ClawMate</div>
+          <h3>The Business Builder on Autopilot</h3>
+          <p>Powered by OpenClaw's AI engine, ClawMate scans trending niches, creates digital products from scratch, writes conversion-focused sales pages, syndicates content across platforms, manages your calendar, drafts emails in your voice, monitors your sales pipeline, and remembers everything about your business.</p>
+        </div>
+      </div>
+
+      <!-- Three Pillars -->
+      <div class="pillars-grid">
+        <div class="pillar-card">
+          <div class="accent-bar" style="background: var(--blue);"></div>
+          <h4>Powered by OpenClaw</h4>
+          <p>Built on the same open-source AI agent engine with 85,000+ GitHub stars and 100,000+ Discord members. ClawMate packages this battle-tested technology into a zero-prompt commercial product &mdash; no coding, no terminal, no configuration required.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="accent-bar" style="background: var(--gold);"></div>
+          <h4>Cloud-Based</h4>
+          <p>Unlike raw OpenClaw (which is self-hosted and technical), ClawMate runs entirely in the cloud, accessible from any device. Your "Messaging Office" &mdash; manage your entire business via a single WhatsApp, Slack, or Telegram chat thread.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="accent-bar" style="background: var(--coral);"></div>
+          <h4>Always Working</h4>
+          <p>Background Execution means ClawMate keeps building, monitoring, and optimizing even after you log out. Plus Persistent Memory &mdash; it stores your business preferences, writing style, and project history, getting smarter about your operations over time. Self-adjusts strategy if something underperforms.</p>
+        </div>
+      </div>
+
+      <!-- Origin -->
+      <div class="origin-box">
+        <strong>The backstory:</strong> The OpenClaw engine (originally called Clawdbot/Moltbot) went viral with small businesses in early 2026, created by Peter Steinberger. With <strong>85,000+ GitHub stars</strong> and <strong>100,000+ Discord members</strong>, it's one of the most powerful open-source AI agents available. ClawMate, created by Venkatesh Kumar, wraps this engine in a commercial cloud product &mdash; adding a visual dashboard, pre-built templates, PageMate page builder, NanoAI Pro design studio, and business automation tools. Available through JVZoo, ClawMate makes OpenClaw's power accessible to non-technical entrepreneurs.
+      </div>
+
+      <!-- Video Explainer -->
+      <div class="video-block">
+        <div class="video-block-header">Watch: ClawMate Explained in 3 Minutes</div>
+        <div class="video-wrapper" id="videoWrapper">
+          <div class="video-play-btn" id="videoPlayBtn"></div>
+          <video id="clawmateVideo" controls preload="none" playsinline poster="videos/clawmate-poster.jpg">
+            <source src="videos/ClawMateInfo.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CAPABILITIES ========== -->
+  <section class="sec-capabilities" id="capabilities">
+    <div class="container">
+      <div class="tag" style="margin-bottom: var(--space-sm);">Use Cases</div>
+      <h2 class="section-title">What It Can Do For Your Business</h2>
+      <p class="section-subtitle">Powered by OpenClaw's AI engine, ClawMate doesn't just help with one task &mdash; it handles everything from building a new online business to running your daily operations. Here's what it covers.</p>
+
+      <div class="capabilities-grid">
+        <!-- Business Builder -->
+        <div class="capability-card">
+          <div class="capability-header" style="background: var(--blue); color: #fff;">Business Builder</div>
+          <div class="capability-body">
+            <ul>
+              <li>Digital product creation (ebooks, courses, templates, lead magnets)</li>
+              <li>Autonomous niche selection via Trend-Sensing Engine</li>
+              <li>Complete sales funnel creation from product to checkout</li>
+              <li>Self-adjusting strategy optimization</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Sales & Pages -->
+        <div class="capability-card">
+          <div class="capability-header" style="background: var(--gold); color: #000;">Sales & Pages</div>
+          <div class="capability-body">
+            <ul>
+              <li>PageMate landing page builder with drag-and-drop</li>
+              <li>AI-written conversion-focused copywriting</li>
+              <li>Complete checkout integration</li>
+              <li>Affiliate marketing bonus pages & promotional assets</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Marketing Engine -->
+        <div class="capability-card">
+          <div class="capability-header" style="background: var(--coral); color: #fff;">Marketing Engine</div>
+          <div class="capability-body">
+            <ul>
+              <li>One-Click Content Syndication (WordPress, Facebook, Instagram, Twitter/X, LinkedIn)</li>
+              <li>Social media ghostwriting in your brand voice</li>
+              <li>Automated SEO/competitor research & Affiliate Empire workflows</li>
+              <li>Multi-language support (50+ languages)</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Operations & Admin -->
+        <div class="capability-card">
+          <div class="capability-header" style="background: var(--green); color: #fff;">Operations & Admin</div>
+          <div class="capability-body">
+            <ul>
+              <li>Morning executive briefs via WhatsApp/Telegram</li>
+              <li>Proactive calendar management & meeting transcription</li>
+              <li>Auto-task creation in Notion/Trello from meetings</li>
+              <li>Client onboarding automation (CRM, Drive, welcome email, kickoff)</li>
+              <li>Persistent memory (stores preferences, writing style, project history)</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Finance & Customer Comms -->
+        <div class="capability-card">
+          <div class="capability-header" style="background: var(--lavender); color: var(--ink);">Finance & Customer Comms</div>
+          <div class="capability-body">
+            <ul>
+              <li>Receipt-to-spreadsheet (photo to QuickBooks/Google Sheets)</li>
+              <li>Sales pipeline monitoring with 48-hour follow-up alerts</li>
+              <li>Weekly KPI snapshots to Slack</li>
+              <li>WhatsApp/Telegram customer bot with 24/7 FAQ & auto-booking</li>
+              <li>Email inbox summaries, auto-sort & draft responses in your style</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Design & Execution -->
+        <div class="capability-card">
+          <div class="capability-header" style="background: var(--pink); color: #000;">Design & Execution</div>
+          <div class="capability-body">
+            <ul>
+              <li>NanoAI Pro design studio (HD upscaling, style transformation, video polishing, background removal)</li>
+              <li>DFY 100K+ prompts & templates library</li>
+              <li>Background execution (works while you sleep)</li>
+              <li>Zero-prompt intelligence (no prompt engineering needed)</li>
+              <li>Built-in SEO optimization for all content</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== HOW IT WORKS ========== -->
+  <section class="sec-how" id="how-it-works">
+    <div class="container">
+      <div class="tag" style="margin-bottom: var(--space-sm);">3 Simple Steps</div>
+      <h2 class="section-title">How It Works</h2>
+      <p class="section-subtitle">You don't need to be technical. ClawMate's zero-prompt intelligence handles everything &mdash; here's the three-step process.</p>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <span class="step-number">01</span>
+          <h3>Activate It</h3>
+          <p>Log into your cloud dashboard and click the "Activate" button. This single action triggers the autonomous AI brain. No terminal, no configuration, no prompt engineering. The onboarding wizard connects your accounts (email, calendar, messaging apps, business tools).</p>
+        </div>
+        <div class="step-card">
+          <span class="step-number">02</span>
+          <h3>Build or Delegate</h3>
+          <p>For new businesses: the Trend-Sensing Engine scans for profitable niches, then auto-generates digital products, sales pages, and marketing assets. For existing businesses: set up your "Messaging Office" &mdash; text ClawMate via WhatsApp/Slack/Telegram to delegate tasks like "summarize my emails", "draft an invoice", or "schedule a meeting".</p>
+        </div>
+        <div class="step-card" style="background: var(--ink); color: var(--bg-paper);">
+          <span class="step-number" style="color: var(--bg-paper);">03</span>
+          <h3 style="border-color: var(--bg-paper);">Launch & Optimize</h3>
+          <p>One click syndicates content across WordPress, social media, and marketplaces. ClawMate then enters Background Execution mode &mdash; monitoring performance, self-adjusting strategy, sending you alerts, and optimizing even after you log out.</p>
+        </div>
+      </div>
+
+      <!-- Integrations bar -->
+      <div class="integrations-bar">
+        <h4>Works With Your Favorite Tools</h4>
+        <div class="platform-pills">
+          <span class="platform-pill">WhatsApp</span>
+          <span class="platform-pill">Slack</span>
+          <span class="platform-pill">Telegram</span>
+          <span class="platform-pill">Discord</span>
+          <span class="platform-pill">Gmail</span>
+          <span class="platform-pill">Google Calendar</span>
+          <span class="platform-pill">Notion</span>
+          <span class="platform-pill">Trello</span>
+          <span class="platform-pill">QuickBooks</span>
+          <span class="platform-pill">Salesforce</span>
+          <span class="platform-pill">WordPress</span>
+          <span class="platform-pill">Shopify</span>
+          <span class="platform-pill">Facebook</span>
+          <span class="platform-pill">Instagram</span>
+          <span class="platform-pill">YouTube</span>
+          <span class="platform-pill">TikTok</span>
+          <span class="platform-pill">Twitter/X</span>
+          <span class="platform-pill">LinkedIn</span>
+          <span class="platform-pill">JVZoo</span>
+          <span class="platform-pill">WarriorPlus</span>
+        </div>
+        <p class="stat-line">Seamless integration with your messaging apps, business tools, marketplaces, and social platforms</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== REAL WORLD ========== -->
+  <section class="sec-real-world" id="real-world">
+    <div class="container">
+      <div class="tag" style="margin-bottom: var(--space-sm);">Case Studies</div>
+      <h2 class="section-title">Your Business, But Smarter</h2>
+      <p class="section-subtitle">Here's what ClawMate looks like in action for entrepreneurs just like you.</p>
+
+      <div class="use-cases-grid">
+        <!-- Alex's Side Hustle -->
+        <div class="use-case-card">
+          <div class="use-case-header" style="background: var(--blue); color: #fff;">Alex's Side Hustle</div>
+          <div class="use-case-body">
+            <h4>Before ClawMate</h4>
+            <p>Alex spent weeks researching niches, outlining an ebook, learning design tools, and trying to figure out how to build a sales page. Nothing ever launched.</p>
+            <h4 style="margin-top: var(--space-sm);">After ClawMate</h4>
+            <p>ClawMate's Trend-Sensing Engine identified a profitable niche, auto-generated an ebook, built a conversion-focused sales page with PageMate, and had the entire funnel live in under a day.</p>
+            <div class="savings">From idea to live in &lt;24 hrs</div>
+          </div>
+        </div>
+
+        <!-- Priya's Coaching Business -->
+        <div class="use-case-card">
+          <div class="use-case-header" style="background: var(--gold); color: #000;">Priya's Coaching Business</div>
+          <div class="use-case-body">
+            <h4>Before ClawMate</h4>
+            <p>Priya spent $2,000+ on freelancers for a course outline, sales page, and email sequences. The process took three months and still needed revisions.</p>
+            <h4 style="margin-top: var(--space-sm);">After ClawMate</h4>
+            <p>ClawMate created her entire product suite &mdash; course content, lead magnets, sales funnel, and email marketing sequences &mdash; in a single afternoon. Zero freelancer costs.</p>
+            <div class="savings">Saved $2K+ in freelancer fees</div>
+          </div>
+        </div>
+
+        <!-- Marcus's Content Empire -->
+        <div class="use-case-card">
+          <div class="use-case-header" style="background: var(--coral); color: #fff;">Marcus's Content Empire</div>
+          <div class="use-case-body">
+            <h4>Before ClawMate</h4>
+            <p>Marcus manually posted to 5 platforms every day, spending hours reformatting content for each one. Engagement was declining because he couldn't keep up the pace.</p>
+            <h4 style="margin-top: var(--space-sm);">After ClawMate</h4>
+            <p>One-Click Content Syndication distributes content across WordPress, Facebook, Instagram, Twitter/X, and LinkedIn simultaneously. Social ghostwriting maintains his brand voice. Engagement tripled.</p>
+            <div class="savings">3x engagement, 5x less effort</div>
+          </div>
+        </div>
+
+        <!-- Chen's Digital Agency -->
+        <div class="use-case-card">
+          <div class="use-case-header" style="background: var(--green); color: #fff;">Chen's Digital Agency</div>
+          <div class="use-case-body">
+            <h4>Before ClawMate</h4>
+            <p>Chen spent two weeks onboarding each new client &mdash; setting up folders, sending welcome emails, scheduling kickoff calls, and configuring tools. Scaling past 10 clients felt impossible.</p>
+            <h4 style="margin-top: var(--space-sm);">After ClawMate</h4>
+            <p>Agency Rights with sub-account management launches new clients in hours. ClawMate auto-creates Google Drive folders, sends welcome sequences, books kickoff calls, and sets up client dashboards automatically.</p>
+            <div class="savings">2 weeks to hours per client</div>
+          </div>
+        </div>
+
+        <!-- Fatima's Passive Income -->
+        <div class="use-case-card">
+          <div class="use-case-header" style="background: var(--lavender); color: var(--ink);">Fatima's Passive Income</div>
+          <div class="use-case-body">
+            <h4>Before ClawMate</h4>
+            <p>Fatima read dozens of courses about building passive income streams online. She learned a lot but never actually launched a single product. Analysis paralysis kept her stuck for over a year.</p>
+            <h4 style="margin-top: var(--space-sm);">After ClawMate</h4>
+            <p>ClawMate's zero-prompt intelligence removed the guesswork entirely. Three digital products were live within a week &mdash; ebook, template pack, and mini-course &mdash; each with its own sales page and funnel.</p>
+            <div class="savings">3 products live in 1 week</div>
+          </div>
+        </div>
+
+        <!-- Jordan's Reseller Business -->
+        <div class="use-case-card">
+          <div class="use-case-header" style="background: var(--pink); color: #000;">Jordan's Reseller Business</div>
+          <div class="use-case-body">
+            <h4>Before ClawMate</h4>
+            <p>Jordan had zero technical skills and no product of their own. Every "make money online" tool required coding, complex setup, or expensive monthly subscriptions that ate into margins.</p>
+            <h4 style="margin-top: var(--space-sm);">After ClawMate</h4>
+            <p>Reseller Rights let Jordan white-label ClawMate and sell it under their own brand, keeping 100% of profits. No infrastructure to manage, no technical knowledge needed, no ongoing costs.</p>
+            <div class="savings">100% profit, zero tech skills</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Savings callout -->
+      <div class="savings-callout">
+        <h3>Solo entrepreneurs report going from zero to a live online business in under 48 hours</h3>
+        <p>That's product creation, sales pages, payment integration, and content syndication &mdash; all handled by ClawMate.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== COST ========== -->
+  <section class="sec-cost" id="cost">
+    <div class="container">
+      <div class="tag" style="margin-bottom: var(--space-sm);">Pricing</div>
+      <h2 class="section-title">What It Costs</h2>
+      <p class="section-subtitle">ClawMate is a one-time purchase &mdash; no monthly subscriptions. Here's how the pricing is structured.</p>
+
+      <table class="pricing-table">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Cost</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>ClawMate AI (Front-End)</strong></td>
+            <td style="font-weight: 900; font-size: 18px;">$17.95</td>
+            <td>Core autonomous agent with all base features &mdash; one-time</td>
+          </tr>
+          <tr>
+            <td><strong>Unlimited Edition</strong> (optional)</td>
+            <td>~$47&ndash;147</td>
+            <td>Removes all usage caps on content and data generation</td>
+          </tr>
+          <tr>
+            <td><strong>DFY 100K Prompts</strong> (optional)</td>
+            <td>~$37</td>
+            <td>Pre-built prompt and template library</td>
+          </tr>
+          <tr>
+            <td><strong>Agency Edition</strong> (optional)</td>
+            <td>~$67&ndash;167</td>
+            <td>Sub-account management, sell services to clients</td>
+          </tr>
+          <tr>
+            <td><strong>PageMate</strong> (optional)</td>
+            <td>~$27</td>
+            <td>Advanced landing page builder with drag-and-drop</td>
+          </tr>
+          <tr>
+            <td><strong>DFY Templates</strong> (optional)</td>
+            <td>~$37</td>
+            <td>Ready-to-deploy business templates and campaigns</td>
+          </tr>
+          <tr>
+            <td><strong>NanoAI Pro</strong> (optional)</td>
+            <td>~$47</td>
+            <td>HD upscaling, style transformation, video polishing, background removal</td>
+          </tr>
+          <tr>
+            <td><strong>Affiliate Empire</strong> (optional)</td>
+            <td>~$39</td>
+            <td>Automated affiliate marketing workflows</td>
+          </tr>
+          <tr>
+            <td><strong>Reseller Edition</strong> (optional)</td>
+            <td>~$97&ndash;197</td>
+            <td>White-label rights to sell ClawMate under your own brand</td>
+          </tr>
+          <tr>
+            <td><strong>Full Bundle</strong></td>
+            <td style="font-weight: 900; font-size: 18px;">~$247</td>
+            <td>Everything above in one package (use coupon CLAWBUN30)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p style="font-size: 14px; font-weight: 600; margin-bottom: var(--space-md); opacity: 0.8;">All purchases include a 30-day money-back guarantee.</p>
+
+      <div class="paths-grid">
+        <div class="path-card">
+          <h4>Starter Path</h4>
+          <div class="price-range">$17.95 one-time</div>
+          <p style="font-size: 14px; margin-bottom: var(--space-sm);">Full ClawMate AI access with core autonomous features</p>
+          <ul>
+            <li>Digital product creation & sales page building</li>
+            <li>One-Click Content Syndication</li>
+            <li>Background Execution & Persistent Memory</li>
+            <li>Perfect for testing the waters</li>
+          </ul>
+        </div>
+        <div class="path-card featured">
+          <h4>Full Bundle</h4>
+          <div class="price-range">~$247 one-time</div>
+          <p style="font-size: 14px; margin-bottom: var(--space-sm);">All OTO upgrades unlocked &mdash; best value for serious entrepreneurs</p>
+          <ul>
+            <li>Unlimited Edition (no usage caps)</li>
+            <li>Agency + Reseller Rights</li>
+            <li>NanoAI Pro design studio</li>
+            <li>PageMate landing page builder</li>
+            <li>100K DFY Prompts + Affiliate Empire</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SAFETY ========== -->
+  <section class="sec-safety" id="safety">
+    <div class="safety-split">
+      <div class="safety-left">
+        <h2>Power Tools Need Safety Gear</h2>
+        <p>You wouldn't let an untrained person operate a forklift without a cage and a hard hat. The same logic applies here.</p>
+        <p style="margin-top: var(--space-sm);">ClawMate is an incredibly powerful tool that can build businesses and manage operations autonomously. But because it can publish content, send messages, and execute on your behalf, you should understand its safeguards.</p>
+        <p style="margin-top: var(--space-sm);">The good news: ClawMate benefits from both OpenClaw's open-source security track record and its own cloud-hosted protections. You approve before anything goes live.</p>
+      </div>
+      <div class="safety-right">
+        <h3>Your Safety Checklist</h3>
+        <ul class="safety-checklist">
+          <li>Review before publishing &mdash; ClawMate drafts content and pages for your approval before anything goes live</li>
+          <li>Cloud-hosted security &mdash; ClawMate's managed infrastructure handles updates, encryption, and authenticated access</li>
+          <li>OpenClaw community patches &mdash; CVEs fixed within 48 hours, 85,000+ developers watching the code</li>
+          <li>No stored payment info &mdash; financial transactions are handled by secure third-party processors</li>
+          <li>Content compliance filters &mdash; built-in safeguards prevent inappropriate or harmful content generation</li>
+          <li>Revoke access anytime &mdash; disconnect accounts or deactivate ClawMate at any time from the dashboard</li>
+          <li>Start with one project &mdash; begin with a single product or workflow and expand once you're comfortable</li>
+        </ul>
+      </div>
+    </div>
+    <div class="security-note">
+      <div class="container" style="padding: var(--space-sm) var(--space-md);">
+        <h4>Security Track Record</h4>
+        <p>ClawMate benefits from both worlds: the open-source OpenClaw community's rapid security patching (CVEs fixed within 48 hours, 85,000+ developers watching the code) AND ClawMate's managed cloud infrastructure with automatic updates, encrypted data, and authenticated dashboard access.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== GETTING STARTED ========== -->
+  <section class="sec-getting-started" id="getting-started">
+    <div class="container">
+      <div class="tag" style="margin-bottom: var(--space-sm);">Your Next Step</div>
+      <h2 class="section-title">Getting Started</h2>
+      <p class="section-subtitle">Two paths. Same powerful result. Pick the one that fits you.</p>
+
+      <div class="start-paths-grid">
+        <!-- Quick Start -->
+        <div class="start-card">
+          <h3>Quick Start</h3>
+          <div class="time-estimate">Setup time: Under 5 minutes</div>
+          <p>Create your account on the ClawMate dashboard, connect your accounts (email, calendar, messaging apps), let the Trend-Sensing Engine suggest a niche or choose your own, and click "Activate" &mdash; ClawMate builds your first business.</p>
+          <ul>
+            <li>Core autonomous features</li>
+            <li>One-Click Content Syndication</li>
+            <li>Background Execution</li>
+            <li>Persistent Memory</li>
+          </ul>
+        </div>
+
+        <!-- Full Bundle Start -->
+        <div class="start-card featured">
+          <h3>Full Bundle Start</h3>
+          <div class="time-estimate">Setup time: Under 5 minutes</div>
+          <p>Same onboarding, but with all OTO features unlocked from day one. Popular with agencies and serious entrepreneurs.</p>
+          <ul>
+            <li>Everything in Quick Start</li>
+            <li>Unlimited Edition (no usage caps)</li>
+            <li>Agency Rights (sub-accounts, sell services)</li>
+            <li>Reseller Rights (white-label, keep 100% profits)</li>
+            <li>NanoAI Pro design studio</li>
+            <li>PageMate landing page builder</li>
+            <li>100K+ DFY Prompts & Templates</li>
+            <li>Affiliate Empire Automation</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Community stats -->
+      <div class="community-strip">
+        <div class="community-stat">
+          <div class="stat-val">85K+</div>
+          <div class="stat-label">GitHub Stars (OpenClaw Engine)</div>
+        </div>
+        <div class="community-stat">
+          <div class="stat-val">100K+</div>
+          <div class="stat-label">Discord Members (OpenClaw Community)</div>
+        </div>
+        <div class="community-stat">
+          <div class="stat-val">30-Day</div>
+          <div class="stat-label">Money-Back Guarantee (ClawMate)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== BIGGER PICTURE ========== -->
+  <section class="sec-bigger-picture">
+    <div class="container">
+      <div class="tag" style="background: var(--coral); margin-bottom: var(--space-sm);">Why This Matters</div>
+      <h2>The Bigger Picture</h2>
+      <p class="highlight-text">The CEO of Anthropic (the company behind Claude AI) predicts that AI could displace 50% of entry-level white-collar jobs within one to five years, potentially driving unemployment to 10&ndash;20%.</p>
+
+      <blockquote>
+        "AI is not just automating specific tasks &mdash; it is becoming a general labor substitute for humans."
+        <br><span style="font-style: normal; font-size: 14px; font-weight: 700;">&mdash; Dario Amodei, CEO of Anthropic</span>
+      </blockquote>
+
+      <p class="highlight-text">This isn't about replacing you. It's about making sure you're not replaced. Business owners who adopt AI tools early gain a significant competitive advantage &mdash; lower costs, faster response times, and the ability to operate at a scale that was previously impossible without hiring.</p>
+
+      <p class="highlight-text" style="opacity: 0.8;">ClawMate &mdash; powered by the open-source OpenClaw engine &mdash; is one of the most accessible AI business tools available today, with a low one-time cost and no ongoing subscriptions. The question isn't whether to start &mdash; it's how soon.</p>
+
+      <div class="cta-row">
+        <a href="ai-resources.html" class="btn btn-gold">Explore More AI Resources</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER (injected by navigation.js) -->
+
+  <script src="js/components/navigation.js"></script>
+
+  <script>
+    // ===== SMOOTH SCROLL WITH OFFSET =====
+    document.querySelectorAll('.toc-link').forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        var href = this.getAttribute('href');
+        if (href && href.startsWith('#')) {
+          e.preventDefault();
+          var target = document.querySelector(href);
+          if (target) {
+            var offset = 140;
+            var top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+            window.scrollTo({ top: top, behavior: 'smooth' });
+          }
+        }
+      });
+    });
+
+    // ===== INTERSECTION OBSERVER FOR TOC =====
+    (function() {
+      var sections = document.querySelectorAll('section[id]');
+      var pills = document.querySelectorAll('.toc-pill');
+
+      if (!sections.length || !pills.length) return;
+
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            pills.forEach(function(pill) { pill.classList.remove('active'); });
+            var activePill = document.querySelector('.toc-pill[data-section="' + entry.target.id + '"]');
+            if (activePill) {
+              activePill.classList.add('active');
+              // Scroll pill into view on mobile
+              activePill.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
+          }
+        });
+      }, {
+        rootMargin: '-150px 0px -60% 0px',
+        threshold: 0
+      });
+
+      sections.forEach(function(section) {
+        observer.observe(section);
+      });
+    })();
+
+    // ===== VIDEO PLAY BUTTON =====
+    (function() {
+      var video = document.getElementById('clawmateVideo');
+      var playBtn = document.getElementById('videoPlayBtn');
+      if (!video || !playBtn) return;
+
+      playBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        video.play();
+      });
+
+      video.addEventListener('play', function() {
+        playBtn.classList.add('hidden');
+      });
+
+      video.addEventListener('pause', function() {
+        if (!video.ended) {
+          playBtn.classList.remove('hidden');
+        }
+      });
+
+      video.addEventListener('ended', function() {
+        playBtn.classList.remove('hidden');
+      });
+    })();
+  </script>
+
+</body>
+
+</html>

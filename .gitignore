@@ -1,6 +1,9 @@
 # Ai-Auto Project - Git Ignore File
 # Security best practices for version control
 
+# Remotion video subproject (separate dev environment)
+aiauto-remotion/
+
 # ============================================
 # SECURITY & CREDENTIALS
 # ============================================
