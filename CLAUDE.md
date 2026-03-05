@@ -46,13 +46,15 @@ The heart of the application — exports 5 manager classes, all exposed globally
 ### Key Directories
 
 - `api/` — Vercel serverless functions. All endpoints are POST. Stripe webhook at `api/webhooks/stripe.js` (1024MB memory, 10s timeout configured in `vercel.json`).
-- `api/tools/` — AI generation endpoints (blog, captions, email, product descriptions) + usage tracking
+- `api/tools/` — AI generation endpoints. Blog + captions proxy to **n8n webhooks**; email campaign + product descriptions call **OpenRouter** directly. All require `use-tool.js` to track usage.
 - `css/` — Organized: `base/` (variables, reset), `components/`, `layout/`, `pages/`, `themes/` (dark mode), `utilities/`. Entry point: `main.css`.
 - `js/` — ES6 modules. Entry point: `main.js`. Components (navigation, forms), modules (theme, animations, tool history).
 - `admin/` — Dashboard, blog editor (Quill.js WYSIWYG). Protected by `authManager.protectAdminRoute()`.
 - `user/` — Login, signup, dashboard, checkout. Signup → checkout → Stripe subscription flow.
 - `tools/` — Individual AI tool pages. Require active subscription.
 - `aiauto-remotion/` — **Separate subproject** (not tracked in git). Remotion-based promotional video generation. Has its own `package.json`, uses React + TypeScript. Run `remotion studio` from that directory.
+- `docs/sql/` — SQL migration scripts for Supabase schema changes. Run these in the Supabase SQL editor when setting up or modifying DB schema.
+- `openclaw.html`, `clawmate.html` — Standalone explainer/marketing pages for companion products. Self-contained (inline styles, no build step), use the same neobrutalist design tokens.
 
 ### Authentication Flow
 
@@ -95,6 +97,8 @@ Logout accepts optional `redirectUrl` param — defaults to `/user/login.html`. 
 STRIPE_SECRET_KEY, STRIPE_PUBLISHABLE_KEY, STRIPE_PRICE_ID, STRIPE_WEBHOOK_SECRET
 SUPABASE_URL, SUPABASE_SERVICE_KEY (service role, server-side only)
 VERCEL_URL (auto-set by Vercel)
+N8N_BLOG_GENERATOR_WEBHOOK, N8N_SOCIAL_CAPTIONS_WEBHOOK (n8n proxy for blog/captions tools)
+OPENROUTER_API_KEY (direct AI calls for email campaign + product description tools)
 ```
 
 Local dev: `/api/.env.local` (gitignored). Production: Vercel dashboard. Template: `/api/.env.example`.

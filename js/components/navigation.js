@@ -19,7 +19,7 @@ class SiteNavigation {
             <a href="${this.getBaseUrl()}tools.html" class="nav-link" id="toolsLink">Tools</a>
             <a href="${this.getBaseUrl()}blog.html" class="nav-link" id="blogLink">Blog</a>
             <a href="${this.getBaseUrl()}ai-resources.html" class="nav-link" id="aiResourcesLink">AI Resources</a>
-            <a href="${this.getBaseUrl()}clawmate.html" class="nav-link" id="clawmateLink">ClawMate</a>
+            <a href="${this.getBaseUrl()}openclaw.html" class="nav-link" id="openclawLink">OpenClaw</a>
           </div>
           <div class="nav-auth" style="display: flex; gap: 12px; align-items: center;">
             <a href="${this.getBaseUrl()}user/login.html" style="font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink);">Log In</a>
@@ -50,7 +50,7 @@ class SiteNavigation {
           <a href="${this.getBaseUrl()}tools.html" class="mobile-menu-link">Tools</a>
           <a href="${this.getBaseUrl()}blog.html" class="mobile-menu-link">Blog</a>
           <a href="${this.getBaseUrl()}ai-resources.html" class="mobile-menu-link">AI Resources</a>
-          <a href="${this.getBaseUrl()}clawmate.html" class="mobile-menu-link">ClawMate</a>
+          <a href="${this.getBaseUrl()}openclaw.html" class="mobile-menu-link">OpenClaw</a>
           <a href="${this.getBaseUrl()}user/login.html" class="mobile-menu-link">Log In</a>
           <a href="${this.getBaseUrl()}user/signup.html" class="btn btn-gold" style="width: 100%; margin-top: 16px;">Get Started</a>
         </div>
@@ -242,13 +242,13 @@ class SiteNavigation {
     const toolsLink = document.getElementById('toolsLink');
     const blogLink = document.getElementById('blogLink');
     const aiResourcesLink = document.getElementById('aiResourcesLink');
-    const clawmateLink = document.getElementById('clawmateLink');
+    const openclawLink = document.getElementById('openclawLink');
 
     const highlightStyle = 'text-decoration: underline; text-decoration-thickness: 3px; text-decoration-color: var(--gold);';
 
     // Determine which link to highlight
-    if (currentPath.includes('clawmate')) {
-      clawmateLink.setAttribute('style', highlightStyle);
+    if (currentPath.includes('openclaw')) {
+      openclawLink.setAttribute('style', highlightStyle);
     } else if (currentPath.includes('about.html')) {
       aboutLink.setAttribute('style', highlightStyle);
     } else if (currentPath.includes('tools.html') || currentPath.includes('/tools/')) {
