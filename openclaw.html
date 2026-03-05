@@ -1103,7 +1103,7 @@
       </div>
 
       <div class="video-cta">
-        <a class="btn btn-lobster-cta" href="#" onclick="location.reload(); return false;">Get OpenClaw Now</a>
+        <button class="btn btn-lobster-cta" onclick="openWaitlistModal()">Join the Waitlist</button>
       </div>
     </div>
   </section>
@@ -1392,7 +1392,7 @@
             <li>Background Execution</li>
             <li>Persistent Memory</li>
           </ul>
-          <a class="btn btn-lobster" href="#" onclick="location.reload(); return false;">Get Started</a>
+          <button class="btn btn-lobster" onclick="openWaitlistModal()">Join the Waitlist</button>
         </div>
       </div>
 
@@ -1441,7 +1441,69 @@
 
   <!-- FOOTER (injected by navigation.js) -->
 
+  <!-- WAITLIST MODAL -->
+  <div id="waitlistModal" style="
+    display: none; position: fixed; inset: 0; z-index: 9999;
+    background: rgba(0,0,0,0.6); align-items: center; justify-content: center;
+  ">
+    <div style="
+      background: var(--bg-white, #fff); border: 3px solid #121212;
+      box-shadow: 8px 8px 0 #121212; max-width: 460px; width: 90%; padding: 40px;
+      position: relative;
+    ">
+      <button onclick="closeWaitlistModal()" style="
+        position: absolute; top: 16px; right: 16px; background: none;
+        border: 2px solid #121212; width: 32px; height: 32px; font-size: 18px;
+        cursor: pointer; font-weight: 700; line-height: 1;
+      ">×</button>
+
+      <!-- Default state -->
+      <div id="waitlistForm">
+        <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; opacity: 0.6;">Early Access</div>
+        <h2 style="font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; margin: 0 0 8px;">Join the OpenClaw Waitlist</h2>
+        <p style="font-size: 15px; margin: 0 0 28px; opacity: 0.75;">We're onboarding users in waves. Drop your info and we'll reach out when your spot is ready.</p>
+
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px;">Name</label>
+          <input id="waitlistName" type="text" placeholder="Your name" style="
+            width: 100%; padding: 12px 14px; border: 3px solid #121212;
+            font-size: 15px; font-family: inherit; background: #f2f0e9; box-sizing: border-box;
+          ">
+        </div>
+
+        <div style="margin-bottom: 24px;">
+          <label style="display: block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px;">Email</label>
+          <input id="waitlistEmail" type="email" placeholder="you@example.com" style="
+            width: 100%; padding: 12px 14px; border: 3px solid #121212;
+            font-size: 15px; font-family: inherit; background: #f2f0e9; box-sizing: border-box;
+          ">
+        </div>
+
+        <div id="waitlistError" style="display:none; color: #ff6b58; font-size: 13px; font-weight: 600; margin-bottom: 12px;"></div>
+
+        <button id="waitlistSubmitBtn" onclick="submitWaitlist()" style="
+          width: 100%; padding: 14px; background: #C41E3A; color: #fff;
+          border: 3px solid #121212; font-size: 15px; font-weight: 700;
+          text-transform: uppercase; letter-spacing: 0.05em; cursor: pointer;
+          box-shadow: 4px 4px 0 #121212; transition: transform 0.15s, box-shadow 0.15s;
+        " onmouseover="this.style.transform='translate(-2px,-2px)';this.style.boxShadow='6px 6px 0 #121212'"
+           onmouseout="this.style.transform='';this.style.boxShadow='4px 4px 0 #121212'">
+          Reserve My Spot
+        </button>
+      </div>
+
+      <!-- Success state -->
+      <div id="waitlistSuccess" style="display: none; text-align: center; padding: 20px 0;">
+        <div style="font-size: 48px; margin-bottom: 16px;">🎉</div>
+        <h2 style="font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; margin: 0 0 12px;">You're on the list!</h2>
+        <p style="font-size: 15px; opacity: 0.75; margin: 0;">We'll reach out when your spot is ready. Keep an eye on your inbox.</p>
+      </div>
+    </div>
+  </div>
+
   <script src="js/components/navigation.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase.js"></script>
 
   <script>
     // ===== SMOOTH SCROLL WITH OFFSET =====
@@ -1514,6 +1576,74 @@
         playBtn.classList.remove('hidden');
       });
     })();
+
+    // ===== WAITLIST MODAL =====
+    var waitlistModal = document.getElementById('waitlistModal');
+
+    function openWaitlistModal() {
+      waitlistModal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      document.getElementById('waitlistName').focus();
+    }
+
+    function closeWaitlistModal() {
+      waitlistModal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+
+    waitlistModal.addEventListener('click', function(e) {
+      if (e.target === waitlistModal) closeWaitlistModal();
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeWaitlistModal();
+    });
+
+    async function submitWaitlist() {
+      var name = document.getElementById('waitlistName').value.trim();
+      var email = document.getElementById('waitlistEmail').value.trim();
+      var errorEl = document.getElementById('waitlistError');
+      var submitBtn = document.getElementById('waitlistSubmitBtn');
+
+      errorEl.style.display = 'none';
+
+      if (!name) {
+        errorEl.textContent = 'Please enter your name.';
+        errorEl.style.display = 'block';
+        return;
+      }
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        errorEl.textContent = 'Please enter a valid email address.';
+        errorEl.style.display = 'block';
+        return;
+      }
+
+      submitBtn.textContent = 'Saving...';
+      submitBtn.disabled = true;
+
+      try {
+        var result = await waitlistManager.addEntry(name, email, 'openclaw');
+
+        if (result.error) {
+          var msg = result.error.code === '23505'
+            ? 'That email is already on the waitlist!'
+            : 'Something went wrong. Please try again.';
+          errorEl.textContent = msg;
+          errorEl.style.display = 'block';
+          submitBtn.textContent = 'Reserve My Spot';
+          submitBtn.disabled = false;
+          return;
+        }
+
+        document.getElementById('waitlistForm').style.display = 'none';
+        document.getElementById('waitlistSuccess').style.display = 'block';
+      } catch (err) {
+        errorEl.textContent = 'Something went wrong. Please try again.';
+        errorEl.style.display = 'block';
+        submitBtn.textContent = 'Reserve My Spot';
+        submitBtn.disabled = false;
+      }
+    }
   </script>
 
 </body>

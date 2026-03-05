@@ -1608,6 +1608,27 @@ var WaitlistManager = class WaitlistManager {
     this.tableName = 'waitlist';
   }
 
+  // Add a new waitlist entry (public)
+  async addEntry(name, email, source = 'openclaw') {
+    try {
+      const { data, error } = await supabase
+        .from(this.tableName)
+        .insert([{ name, email, source }])
+        .select()
+        .single();
+
+      if (error) {
+        console.error('Add waitlist entry error:', error.message);
+        return { data: null, error };
+      }
+
+      return { data, error: null };
+    } catch (error) {
+      console.error('Add waitlist entry exception:', error);
+      return { data: null, error };
+    }
+  }
+
   // Get all waitlist entries (admin only)
   async getAllEntries() {
     try {
@@ -1676,8 +1697,9 @@ var WaitlistManager = class WaitlistManager {
       return '';
     }
 
-    const headers = ['Email', 'Source', 'Signup Date'];
+    const headers = ['Name', 'Email', 'Source', 'Signup Date'];
     const rows = entries.map(entry => [
+      entry.name || '',
       entry.email,
       entry.source || 'unknown',
       new Date(entry.created_at).toLocaleDateString()

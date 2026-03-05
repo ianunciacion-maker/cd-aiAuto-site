@@ -854,7 +854,7 @@
       <!-- Waitlist Section -->
       <section class="section" id="waitlist-section">
         <div class="section-header">
-          <h2 class="section-title">Waitlist</h2>
+          <h2 class="section-title">OpenClaw Waitlist</h2>
           <div style="display: flex; gap: 8px; align-items: center;">
             <span id="waitlist-count"
               style="padding: 4px 12px; background: var(--blue); color: #fff; font-weight: 700; font-size: 14px; border: var(--border-thin);">0</span>
@@ -1140,7 +1140,8 @@
         const sourceColor = source === 'homepage' ? 'var(--blue)' : source === 'tools_page' ? 'var(--coral)' : 'var(--gold)';
 
         return `
-          <div class="user-row" style="grid-template-columns: 2fr 1fr 1.5fr auto;">
+          <div class="user-row" style="grid-template-columns: 1.5fr 2fr 1fr 1.5fr auto;">
+            <div style="font-weight: 600;">${this.escapeHtml(entry.name || '—')}</div>
             <div class="user-email">${this.escapeHtml(entry.email)}</div>
             <div>
               <span class="user-status" style="background: ${sourceColor}; color: #fff;">${source.replace('_', ' ')}</span>
