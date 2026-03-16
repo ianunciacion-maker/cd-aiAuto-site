@@ -55,6 +55,7 @@ The heart of the application — exports 5 manager classes, all exposed globally
 - `aiauto-remotion/` — **Separate subproject** (not tracked in git). Remotion-based promotional video generation. Has its own `package.json`, uses React + TypeScript. Run `remotion studio` from that directory.
 - `docs/sql/` — SQL migration scripts for Supabase schema changes. Run these in the Supabase SQL editor when setting up or modifying DB schema.
 - `openclaw.html`, `clawmate.html` — Standalone explainer/marketing pages for companion products. Self-contained (inline styles, no build step), use the same neobrutalist design tokens.
+- `ai-resources.html`, `admin/ai-resources.html` — Public-facing and admin pages for curated AI resource listings. Admin page protected by `authManager.protectAdminRoute()`.
 
 ### Authentication Flow
 

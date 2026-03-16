@@ -241,6 +241,35 @@
       flex-wrap: wrap;
     }
 
+    .hero-badges {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: var(--space-sm);
+    }
+
+    .hero-tag-launch {
+      display: inline-block;
+      padding: 6px 20px;
+      background: var(--lobster);
+      color: #fff;
+      font-weight: 900;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border: var(--border-thin);
+    }
+
+    .hero-stats {
+      font-size: 13px;
+      font-weight: 700;
+      opacity: 0.75;
+      margin-bottom: var(--space-md);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
     /* ========== STICKY TOC ========== */
     .toc-bar {
       position: sticky;
@@ -309,6 +338,13 @@
       border: var(--border-thick);
       padding: var(--space-md);
       background: var(--bg-paper);
+      box-shadow: var(--shadow-hard);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .analogy-card:not(.featured):hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
     }
 
     .analogy-card.featured {
@@ -345,6 +381,12 @@
       box-shadow: var(--shadow-hard);
       position: relative;
       overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .pillar-card:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
     }
 
     .pillar-card .accent-bar {
@@ -520,11 +562,13 @@
       padding: var(--space-md);
       background: var(--bg-paper);
       position: relative;
-      transition: transform 0.2s;
+      box-shadow: var(--shadow-hard);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .step-card:hover {
-      transform: translateY(-8px);
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
       background: var(--gold);
       color: #000;
     }
@@ -834,6 +878,41 @@
 
     .start-card .btn { margin-top: auto; padding-top: var(--space-sm); width: 100%; }
 
+    .start-card-inner {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: var(--space-lg);
+      align-items: center;
+    }
+
+    .start-cta-box {
+      background: var(--ink);
+      color: var(--bg-paper);
+      border: var(--border-thick);
+      padding: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      text-align: center;
+    }
+
+    .start-cta-kicker {
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      margin: 0;
+    }
+
+    .start-guarantee {
+      font-size: 13px;
+      font-weight: 600;
+      margin: 0;
+      opacity: 0.75;
+    }
+
     .community-strip {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -1012,6 +1091,640 @@
         width: 100%;
       }
     }
+
+    /* ========== SECTION: FULL STACK ========== */
+    .sec-full-stack {
+      padding: var(--space-lg) 0;
+      border-bottom: var(--border-thick);
+      background: var(--bg-white);
+    }
+
+    .stack-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
+      margin-top: var(--space-md);
+    }
+
+    .stack-item {
+      border: var(--border-thick);
+      background: var(--bg-paper);
+      box-shadow: var(--shadow-hard);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .stack-item:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .stack-item-img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      object-position: top;
+      border-bottom: var(--border-thick);
+      display: block;
+    }
+
+    .stack-item-body {
+      padding: var(--space-sm);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stack-item-value {
+      display: inline-block;
+      background: var(--coral);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 3px 10px;
+      border: 2px solid var(--ink);
+      margin-bottom: 8px;
+      align-self: flex-start;
+    }
+
+    .stack-item-body h3 {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .stack-item-body p {
+      font-size: 14px;
+      margin: 0;
+      opacity: 0.8;
+      flex: 1;
+    }
+
+    .stack-item-featured {
+      grid-column: 1 / -1;
+      flex-direction: row;
+      align-items: stretch;
+    }
+
+    .stack-item-featured .stack-item-img {
+      width: 380px;
+      flex-shrink: 0;
+      aspect-ratio: auto;
+      border-bottom: none;
+      border-right: var(--border-thick);
+      object-position: center;
+    }
+
+    /* ========== SECTION: BONUSES ========== */
+    .sec-bonuses {
+      padding: var(--space-lg) 0;
+      border-bottom: var(--border-thick);
+      background: var(--lavender);
+    }
+
+    .bonuses-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-sm);
+      margin-top: var(--space-md);
+    }
+
+    .bonus-card {
+      border: var(--border-thick);
+      background: var(--bg-white);
+      box-shadow: var(--shadow-hard);
+      padding: var(--space-sm) var(--space-md);
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-sm);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .bonus-card:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .bonus-icon {
+      font-size: 32px;
+      flex-shrink: 0;
+      line-height: 1;
+      margin-top: 4px;
+    }
+
+    .bonus-card-body h4 {
+      font-size: 18px;
+      margin-bottom: 4px;
+    }
+
+    .bonus-card-body p {
+      font-size: 14px;
+      margin: 0 0 4px;
+      opacity: 0.8;
+    }
+
+    .bonus-value-tag {
+      font-size: 11px;
+      font-weight: 900;
+      color: var(--lobster);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* ========== SECTION: SOCIAL PROOF ========== */
+    .sec-social-proof {
+      padding: var(--space-lg) 0;
+      border-bottom: var(--border-thick);
+      background: var(--bg-paper);
+      background-image: radial-gradient(var(--ink) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-md);
+      margin-top: var(--space-md);
+    }
+
+    .testimonial-img-card {
+      border: var(--border-thick);
+      box-shadow: var(--shadow-hard);
+      overflow: hidden;
+      background: var(--bg-white);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .testimonial-img-card:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .testimonial-img-card img {
+      width: 100%;
+      display: block;
+    }
+
+    /* ========== SECTION: OFFER CTA ========== */
+    .sec-offer-cta {
+      padding: var(--space-lg) 0;
+      border-bottom: var(--border-thick);
+      background: var(--gold);
+    }
+
+    .offer-boxes {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: var(--space-md);
+      align-items: start;
+    }
+
+    .offer-box {
+      border: var(--border-thick);
+      box-shadow: var(--shadow-hard);
+      padding: var(--space-md);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .offer-box-main {
+      background: #000;
+      color: #fff;
+    }
+
+    .offer-box-guarantee {
+      background: var(--bg-white);
+      color: var(--ink);
+    }
+
+    .offer-box-header {
+      margin-bottom: var(--space-md);
+      padding-bottom: var(--space-sm);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .offer-box-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+
+    .offer-box-price {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+
+    .offer-price-was {
+      font-size: 20px;
+      font-weight: 700;
+      text-decoration: line-through;
+      opacity: 0.5;
+    }
+
+    .offer-price-now {
+      font-size: 52px;
+      font-weight: 900;
+      font-family: 'Playfair Display', serif;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .offer-price-note {
+      font-size: 13px;
+      font-weight: 600;
+      opacity: 0.7;
+      margin: 0;
+    }
+
+    .offer-includes {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 var(--space-md);
+      flex: 1;
+    }
+
+    .offer-includes li {
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .offer-includes li:last-child {
+      border-bottom: none;
+    }
+
+    .offer-includes li::before {
+      content: '\2713  ';
+      font-weight: 900;
+      color: var(--green);
+    }
+
+    .offer-includes li span {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--gold);
+      display: block;
+      margin-top: 2px;
+    }
+
+    @media (max-width: 900px) {
+      .stack-grid { grid-template-columns: 1fr 1fr; }
+      .stack-item-featured { flex-direction: column; }
+      .stack-item-featured .stack-item-img {
+        width: 100%;
+        border-right: none;
+        border-bottom: var(--border-thick);
+        aspect-ratio: 16 / 9;
+      }
+      .bonuses-grid,
+      .testimonial-grid,
+      .offer-boxes,
+      .start-card-inner { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      .stack-grid { grid-template-columns: 1fr; }
+    }
+
+    .section-cta {
+      margin-top: var(--space-lg);
+      padding-top: var(--space-md);
+      border-top: var(--border-thin);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-cta p {
+      font-size: 15px;
+      font-weight: 600;
+      opacity: 0.7;
+      margin: 0;
+    }
+
+    .section-cta-alt {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--blue);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      opacity: 0.8;
+      transition: opacity 0.2s;
+    }
+    .section-cta-alt:hover { opacity: 1; }
+
+    /* ========== MARQUEE TICKER ========== */
+    .marquee-strip {
+      overflow: hidden;
+      background: var(--ink);
+      color: var(--bg-paper);
+      border-bottom: var(--border-thick);
+      padding: 11px 0;
+    }
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marquee 28s linear infinite;
+      white-space: nowrap;
+      gap: 0;
+    }
+    .marquee-track:hover { animation-play-state: paused; }
+    .marquee-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 20px;
+      padding: 0 20px;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .marquee-dot { color: var(--gold); font-size: 16px; }
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ========== HERO ENTRANCE ANIMATIONS ========== */
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes heroPop {
+      0% { opacity: 0; transform: scale(0.8) rotate(-5deg); }
+      65% { transform: scale(1.08) rotate(-1deg); }
+      100% { opacity: 1; transform: scale(1) rotate(-2deg); }
+    }
+    @keyframes heroGlitch {
+      0%, 100% { clip-path: none; transform: none; }
+      10% { clip-path: polygon(0 20%, 100% 20%, 100% 40%, 0 40%); transform: translate(-3px, 0); }
+      15% { clip-path: none; transform: none; }
+      20% { clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%); transform: translate(3px, 0); }
+      25% { clip-path: none; transform: none; }
+    }
+    .hero-badges { animation: heroFadeUp 0.55s 0.05s cubic-bezier(0.34, 1.4, 0.64, 1) both; }
+    .hero h1 { animation: heroFadeUp 0.6s 0.15s cubic-bezier(0.34, 1.4, 0.64, 1) both; }
+    .hero h1 .highlight { animation: heroPop 0.65s 0.38s cubic-bezier(0.34, 1.5, 0.64, 1) both; }
+    .hero-subtitle { animation: heroFadeUp 0.5s 0.35s cubic-bezier(0.34, 1.4, 0.64, 1) both; }
+    .hero-stats { animation: heroFadeUp 0.5s 0.48s cubic-bezier(0.34, 1.4, 0.64, 1) both; }
+    .hero-buttons { animation: heroFadeUp 0.5s 0.58s cubic-bezier(0.34, 1.4, 0.64, 1) both; }
+
+    /* ========== SCROLL REVEAL ========== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.55s cubic-bezier(0.34, 1.2, 0.64, 1),
+                  transform 0.55s cubic-bezier(0.34, 1.2, 0.64, 1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-36px);
+      transition: opacity 0.55s cubic-bezier(0.34, 1.2, 0.64, 1),
+                  transform 0.55s cubic-bezier(0.34, 1.2, 0.64, 1);
+    }
+    .reveal-left.visible { opacity: 1; transform: translateX(0); }
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(36px);
+      transition: opacity 0.55s cubic-bezier(0.34, 1.2, 0.64, 1),
+                  transform 0.55s cubic-bezier(0.34, 1.2, 0.64, 1);
+    }
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+    .reveal-scale {
+      opacity: 0;
+      transform: scale(0.88);
+      transition: opacity 0.5s cubic-bezier(0.34, 1.4, 0.64, 1),
+                  transform 0.5s cubic-bezier(0.34, 1.4, 0.64, 1);
+    }
+    .reveal-scale.visible { opacity: 1; transform: scale(1); }
+
+    /* ========== FLOATING ANIMATION ========== */
+    @keyframes floatY {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-8px) rotate(0.5deg); }
+    }
+    @keyframes floatShadow {
+      0%, 100% { box-shadow: var(--shadow-hard); }
+      50% { box-shadow: 10px 14px 0px 0px var(--ink); }
+    }
+
+    /* ========== PRICING SECTION ========== */
+    .sec-pricing {
+      padding: var(--space-lg) 0;
+      border-bottom: var(--border-thick);
+      background: var(--gold);
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr 1fr;
+      gap: var(--space-md);
+      align-items: start;
+      margin: var(--space-md) 0;
+    }
+
+    .pricing-card {
+      border: var(--border-thick);
+      box-shadow: var(--shadow-hard);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      background: var(--bg-white);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .pricing-card:not(.pricing-pro):hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .pricing-starter { color: var(--ink); }
+    .pricing-enterprise { color: var(--ink); }
+
+    .pricing-pro {
+      background: #000;
+      color: #fff;
+      border-color: #000;
+      animation: floatY 4s ease-in-out infinite, floatShadow 4s ease-in-out infinite;
+    }
+    .pricing-pro:hover {
+      animation-play-state: paused;
+      transform: translate(-2px, -2px);
+    }
+
+    .pricing-featured-badge {
+      position: absolute;
+      top: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--lobster);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 900;
+      padding: 5px 18px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border: var(--border-thin);
+      white-space: nowrap;
+    }
+
+    .pricing-card-header {
+      padding: var(--space-md);
+      border-bottom: var(--border-thick);
+    }
+    .pricing-pro .pricing-card-header { border-color: rgba(255,255,255,0.15); }
+
+    .pricing-tier-label {
+      display: block;
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      opacity: 0.65;
+      margin-bottom: 8px;
+    }
+    .pricing-pro .pricing-tier-label { color: var(--gold); opacity: 1; }
+
+    .pricing-amount {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+    .pricing-price {
+      font-size: 52px;
+      font-weight: 900;
+      font-family: 'Playfair Display', serif;
+      line-height: 1;
+    }
+    .pricing-price-gold { color: var(--gold); }
+    .pricing-was {
+      font-size: 18px;
+      font-weight: 700;
+      text-decoration: line-through;
+      opacity: 0.45;
+    }
+    .pricing-tagline {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      opacity: 0.6;
+      margin: 0;
+    }
+    .pricing-pro .pricing-tagline { color: var(--green); opacity: 0.9; }
+
+    .pricing-includes {
+      list-style: none;
+      padding: var(--space-md);
+      margin: 0;
+      flex: 1;
+    }
+    .pricing-includes li {
+      padding: 9px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+    .pricing-includes li:last-child { border-bottom: none; }
+    .pricing-includes li::before { content: '\2713  '; font-weight: 900; color: var(--green); }
+    .pricing-includes-white li { border-bottom-color: rgba(255,255,255,0.1); }
+    .pricing-includes-white li::before { color: var(--green); }
+
+    .pricing-cta {
+      padding: var(--space-md);
+      padding-top: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .pricing-info-link {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--blue);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+    .pricing-info-link:hover { opacity: 1; }
+
+    .pricing-guarantee {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      background: rgba(0,0,0,0.07);
+      border: var(--border-thin);
+      padding: var(--space-md);
+      margin-top: var(--space-md);
+    }
+    .pricing-guarantee strong { display: block; font-size: 16px; margin-bottom: 4px; }
+    .pricing-guarantee p { font-size: 14px; margin: 0; opacity: 0.8; }
+
+    @media (max-width: 900px) {
+      .pricing-grid { grid-template-columns: 1fr; }
+      .pricing-pro { animation: none; }
+    }
+
+    /* ========== ENTERPRISE STRIP ========== */
+    .sec-enterprise-strip {
+      background: var(--blue);
+      color: #fff;
+      border-bottom: var(--border-thick);
+      padding: var(--space-md) 0;
+    }
+    .enterprise-strip-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+      flex-wrap: wrap;
+    }
+    .enterprise-strip-inner h3 {
+      font-size: 24px;
+      margin: var(--space-xs) 0;
+    }
+    .enterprise-strip-inner p {
+      font-size: 15px;
+      opacity: 0.85;
+      margin: 0;
+      max-width: 600px;
+    }
+    .enterprise-strip-inner .btn {
+      background: var(--gold);
+      color: #000;
+      border-color: #000;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* ========== PULSE RING on primary CTAs ========== */
+    @keyframes pulseRing {
+      0% { box-shadow: 0 0 0 0 rgba(196, 30, 58, 0.4), var(--shadow-hard); }
+      70% { box-shadow: 0 0 0 12px rgba(196, 30, 58, 0), var(--shadow-hard); }
+      100% { box-shadow: 0 0 0 0 rgba(196, 30, 58, 0), var(--shadow-hard); }
+    }
+    .start-cta-box .btn-lobster-cta {
+      animation: claw-pulse 2s ease-in-out infinite, pulseRing 2.5s ease-out infinite;
+    }
+    .start-cta-box .btn-lobster-cta:hover {
+      animation: none;
+    }
   </style>
 </head>
 
@@ -1022,13 +1735,16 @@
   <!-- ========== HERO ========== -->
   <section class="hero">
     <div class="container">
-      <div class="hero-tag">Free Crashcourse</div>
+      <div class="hero-badges">
+        <span class="hero-tag">Official Guide</span>
+        <span class="hero-tag-launch">&#128293; Launch Pricing Active</span>
+      </div>
       <h1>OpenClaw <span class="highlight">101</span></h1>
-      <p class="hero-subtitle">The plain-English guide to the autonomous AI agent that builds and manages online businesses</p>
-      <p class="hero-meta">Reading time: ~15 min &nbsp;|&nbsp; No tech jargon &nbsp;|&nbsp; Updated Feb 2026</p>
+      <p class="hero-subtitle">The autonomous AI agent that builds, manages, and scales entire online businesses &mdash; without technical skills.</p>
+      <p class="hero-stats">85K+ GitHub Stars &nbsp;&middot;&nbsp; 100K+ Community &nbsp;&middot;&nbsp; $5,373 in Value</p>
       <div class="hero-buttons">
-        <a href="#what-is-openclaw" class="btn toc-link">Start Reading</a>
-        <a href="#what-is-openclaw" class="btn btn-outline toc-link">What Is OpenClaw?</a>
+        <a href="https://pl.setyourownsalary.com/997" class="btn btn-lobster-cta" target="_blank" rel="noopener noreferrer">Get Instant Access &rarr;</a>
+        <a href="#what-is-openclaw" class="btn btn-outline toc-link">Explore the Guide &darr;</a>
       </div>
     </div>
   </section>
@@ -1042,6 +1758,29 @@
       <a href="#real-world" class="toc-pill toc-link" data-section="real-world">Real Examples</a>
       <a href="#safety" class="toc-pill toc-link" data-section="safety">Safety</a>
       <a href="#getting-started" class="toc-pill toc-link" data-section="getting-started">Get Started</a>
+    </div>
+  </div>
+
+  <!-- ========== MARQUEE TICKER ========== -->
+  <div class="marquee-strip" aria-hidden="true">
+    <div class="marquee-track">
+      <span class="marquee-item">85K+ GitHub Stars <span class="marquee-dot">★</span></span>
+      <span class="marquee-item">100K+ Community Members <span class="marquee-dot">★</span></span>
+      <span class="marquee-item">$5,373 in Value <span class="marquee-dot">★</span></span>
+      <span class="marquee-item">14-Day Money-Back Guarantee <span class="marquee-dot">★</span></span>
+      <span class="marquee-item">No Technical Skills Required <span class="marquee-dot">★</span></span>
+      <span class="marquee-item">Setup in Under 5 Minutes <span class="marquee-dot">★</span></span>
+      <span class="marquee-item">Zero Prompt Engineering <span class="marquee-dot">★</span></span>
+      <span class="marquee-item">Full Business Automation <span class="marquee-dot">★</span></span>
+      <!-- duplicate for seamless loop -->
+      <span class="marquee-item">85K+ GitHub Stars <span class="marquee-dot">★</span></span>
+      <span class="marquee-item">100K+ Community Members <span class="marquee-dot">★</span></span>
+      <span class="marquee-item">$5,373 in Value <span class="marquee-dot">★</span></span>
+      <span class="marquee-item">14-Day Money-Back Guarantee <span class="marquee-dot">★</span></span>
+      <span class="marquee-item">No Technical Skills Required <span class="marquee-dot">★</span></span>
+      <span class="marquee-item">Setup in Under 5 Minutes <span class="marquee-dot">★</span></span>
+      <span class="marquee-item">Zero Prompt Engineering <span class="marquee-dot">★</span></span>
+      <span class="marquee-item">Full Business Automation <span class="marquee-dot">★</span></span>
     </div>
   </div>
 
@@ -1103,7 +1842,7 @@
       </div>
 
       <div class="video-cta">
-        <button class="btn btn-lobster-cta" onclick="openWaitlistModal()">Join the Waitlist</button>
+        <a href="https://pl.setyourownsalary.com/email997" class="btn btn-lobster-cta" target="_blank" rel="noopener noreferrer">Get Instant Access &rarr;</a>
       </div>
     </div>
   </section>
@@ -1197,6 +1936,11 @@
           </div>
         </div>
       </div>
+      <div class="section-cta">
+        <p>All of this runs autonomously — so you can focus on what matters.</p>
+        <a href="https://pl.setyourownsalary.com/email997" class="btn btn-lobster" target="_blank" rel="noopener noreferrer">Put It to Work for You &rarr;</a>
+        <a href="https://pl.setyourownsalary.com/email27" class="section-cta-alt" target="_blank" rel="noopener noreferrer">Or start with the $27 Starter Guide &rarr;</a>
+      </div>
     </div>
   </section>
 
@@ -1251,6 +1995,11 @@
           <span class="platform-pill">WarriorPlus</span>
         </div>
         <p class="stat-line">Seamless integration with your messaging apps, business tools, marketplaces, and social platforms</p>
+      </div>
+      <div class="section-cta">
+        <p>Three steps. Under 5 minutes. Your AI is live and working.</p>
+        <a href="https://pl.setyourownsalary.com/email997" class="btn btn-lobster" target="_blank" rel="noopener noreferrer">Get Started Today &rarr;</a>
+        <a href="https://pl.setyourownsalary.com/email27" class="section-cta-alt" target="_blank" rel="noopener noreferrer">Or start with the $27 Starter Guide &rarr;</a>
       </div>
     </div>
   </section>
@@ -1341,6 +2090,11 @@
         <h3>Solo entrepreneurs report going from zero to a live online business in under 48 hours</h3>
         <p>That's product creation, sales pages, payment integration, and content syndication &mdash; all handled by OpenClaw.</p>
       </div>
+      <div class="section-cta">
+        <p>Real entrepreneurs. Real results. Ready to write your own?</p>
+        <a href="https://pl.setyourownsalary.com/email997" class="btn btn-lobster" target="_blank" rel="noopener noreferrer">Start Your Story &rarr;</a>
+        <a href="https://pl.setyourownsalary.com/email27" class="section-cta-alt" target="_blank" rel="noopener noreferrer">Or start with the $27 Starter Guide &rarr;</a>
+      </div>
     </div>
   </section>
 
@@ -1372,6 +2126,13 @@
         <p>OpenClaw benefits from both worlds: the open-source community's rapid security patching (CVEs fixed within 48 hours, 85,000+ developers watching the code) AND managed cloud infrastructure with automatic updates, encrypted data, and authenticated dashboard access.</p>
       </div>
     </div>
+    <div class="container" style="padding-top: var(--space-md); padding-bottom: var(--space-md);">
+      <div class="section-cta" style="margin-top: 0;">
+        <p>Enterprise-grade security. No technical setup. You own everything.</p>
+        <a href="https://pl.setyourownsalary.com/email997" class="btn btn-lobster" target="_blank" rel="noopener noreferrer">Get OpenClaw Securely &rarr;</a>
+        <a href="https://pl.setyourownsalary.com/email27" class="section-cta-alt" target="_blank" rel="noopener noreferrer">Or start with the $27 Starter Guide &rarr;</a>
+      </div>
+    </div>
   </section>
 
   <!-- ========== GETTING STARTED ========== -->
@@ -1381,18 +2142,26 @@
       <h2 class="section-title">Getting Started</h2>
       <p class="section-subtitle">Setup takes under 5 minutes. No technical skills required.</p>
 
-      <div style="margin-bottom: var(--space-lg);">
-        <div class="start-card" style="max-width: 600px;">
-          <h3>Get Started with OpenClaw</h3>
-          <div class="time-estimate">Setup time: Under 5 minutes</div>
-          <p>Create your account, connect your accounts (email, calendar, messaging apps), let the Trend-Sensing Engine suggest a niche or choose your own, and click "Activate" &mdash; OpenClaw builds your first business.</p>
-          <ul>
-            <li>Core autonomous features</li>
-            <li>One-Click Content Syndication</li>
-            <li>Background Execution</li>
-            <li>Persistent Memory</li>
-          </ul>
-          <button class="btn btn-lobster" onclick="openWaitlistModal()">Join the Waitlist</button>
+      <div class="start-card" style="margin-bottom: var(--space-lg);">
+        <div class="start-card-inner">
+          <div>
+            <h3>Get Started with OpenClaw</h3>
+            <div class="time-estimate">Setup time: Under 5 minutes</div>
+            <p>Create your account, connect your accounts (email, calendar, messaging apps), let the Trend-Sensing Engine suggest a niche or choose your own, and click "Activate" &mdash; OpenClaw builds your first business.</p>
+            <ul>
+              <li>Core autonomous features</li>
+              <li>One-Click Content Syndication</li>
+              <li>Background Execution</li>
+              <li>Persistent Memory</li>
+            </ul>
+          </div>
+          <div class="start-cta-box">
+            <p class="start-cta-kicker">Limited Launch Pricing</p>
+            <a href="https://pl.setyourownsalary.com/997" class="btn btn-lobster-cta" target="_blank" rel="noopener noreferrer" style="width: 100%; text-align: center;">Get Instant Access &rarr;</a>
+            <p class="start-guarantee">&#10003; 14-day money-back guarantee</p>
+            <p class="start-guarantee">&#10003; No technical skills required</p>
+            <p class="start-guarantee">&#10003; Setup in under 5 minutes</p>
+          </div>
         </div>
       </div>
 
@@ -1409,6 +2178,258 @@
         <div class="community-stat">
           <div class="stat-val">30-Day</div>
           <div class="stat-label">Money-Back Guarantee</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FULL STACK ========== -->
+  <section class="sec-full-stack" id="full-stack">
+    <div class="container">
+      <div class="tag" style="margin-bottom: var(--space-sm);">What You Unlock</div>
+      <h2 class="section-title">The Complete OpenClaw Stack</h2>
+      <p class="section-subtitle">From live coaching to a fully installed command center — here's everything included in the full OpenClaw experience.</p>
+
+      <div class="stack-grid">
+        <div class="stack-item">
+          <img class="stack-item-img" src="https://img.flexifunnels.com/images/7455/9f8caac23ab74b8b913598041a201489_7yjng_1536.png" alt="OpenClaw Shadow Intensive" loading="lazy" />
+          <div class="stack-item-body">
+            <span class="stack-item-value">$997 Value</span>
+            <h3>Shadow Intensive (14 Days Live)</h3>
+            <p>Watch Chad and his team set up and train OpenClaw in real time. Live support to get you past any technical blocker — over your shoulder.</p>
+          </div>
+        </div>
+
+        <div class="stack-item">
+          <img class="stack-item-img" src="https://img.flexifunnels.com/images/7455/27bf546f96b14562936b4ed6f5913564_z7gm9_1536.png" alt="OpenClaw VPS Install" loading="lazy" />
+          <div class="stack-item-body">
+            <span class="stack-item-value">$497 Value</span>
+            <h3>Private VPS Install</h3>
+            <p>OpenClaw installed inside your own VPS. Full ownership, full control, full security — running on your infrastructure, not theirs.</p>
+          </div>
+        </div>
+
+        <div class="stack-item">
+          <img class="stack-item-img" src="https://img.flexifunnels.com/images/7455/0b4a5cf4717d410d9e28b374b6a2de11_vidzx_1536.png" alt="OpenClaw Control Board" loading="lazy" />
+          <div class="stack-item-body">
+            <span class="stack-item-value">$997 Value</span>
+            <h3>Control Board</h3>
+            <p>Your complete command center — every board, engine, and automation unified in one custom-built dashboard, ready to run your operation.</p>
+          </div>
+        </div>
+
+        <div class="stack-item">
+          <img class="stack-item-img" src="https://img.flexifunnels.com/images/7455/1d291744cd164cf38c62c3fc36c0e0d3_spefd_1536.png" alt="OpenClaw Skills Vault" loading="lazy" />
+          <div class="stack-item-body">
+            <span class="stack-item-value">$997 Value</span>
+            <h3>Skills Vault</h3>
+            <p>The complete library of proven OpenClaw skills, commands, and workflows. Plug battle-tested automations directly into your system.</p>
+          </div>
+        </div>
+
+        <div class="stack-item">
+          <img class="stack-item-img" src="https://img.flexifunnels.com/images/7455/9459cc2c50a346c394a9e2c168312d11_e2o39_1536.png" alt="OpenClaw Micro-SaaS Accelerator" loading="lazy" />
+          <div class="stack-item-body">
+            <span class="stack-item-value">$997 Value</span>
+            <h3>Micro-SaaS Accelerator</h3>
+            <p>A 3-day intensive to build, deploy, and monetize AI-powered apps controlled by OpenClaw — with users, branding, and payments built in.</p>
+          </div>
+        </div>
+
+        <div class="stack-item">
+          <img class="stack-item-img" src="https://img.flexifunnels.com/images/7455/7ac2ac8d5a9046829e695fa34e17eba5_jd4iu_1536.png" alt="OpenClaw Members Area" loading="lazy" />
+          <div class="stack-item-body">
+            <span class="stack-item-value">$497 Value</span>
+            <h3>Free Members Area</h3>
+            <p>Your central hub for training, updates, and implementation walkthroughs. Every new release, all in one place.</p>
+          </div>
+        </div>
+
+        <div class="stack-item stack-item-featured">
+          <img class="stack-item-img" src="https://img.flexifunnels.com/images/7455/b6ed97fc72c543b89a2aec4b2c1ce38c_ryffr_1536.png" alt="OpenClaw Titanium Suite" loading="lazy" />
+          <div class="stack-item-body">
+            <span class="stack-item-value">$997 Value</span>
+            <h3>Titanium Software Suite</h3>
+            <p>The complete integrated stack powering your OpenClaw ecosystem: Mintbird, Page Sprout, Course Sprout, Letterman, Quizforma, and Global Control — all wired together, all working as one unified operational engine.</p>
+          </div>
+        </div>
+      </div>
+      <div class="section-cta">
+        <p>Everything installed, configured, and ready — $5,373 in value, one bundle.</p>
+        <a href="https://pl.setyourownsalary.com/997" class="btn btn-lobster" target="_blank" rel="noopener noreferrer">Unlock the Full Arsenal &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== BONUSES ========== -->
+  <section class="sec-bonuses">
+    <div class="container">
+      <div class="tag" style="margin-bottom: var(--space-sm);">Also Included</div>
+      <h2 class="section-title">Plus These Special Bonuses</h2>
+      <p class="section-subtitle">Five extra modules that give OpenClaw the personality, permissions, and intelligence to run your operation exactly the way you want it.</p>
+
+      <div class="bonuses-grid">
+        <div class="bonus-card">
+          <div class="bonus-icon">📡</div>
+          <div class="bonus-card-body">
+            <h4>ClawPusher</h4>
+            <p>Automatic content syndication across your social networks — without giving OpenClaw direct access to your accounts.</p>
+            <span class="bonus-value-tag">$497 Value</span>
+          </div>
+        </div>
+
+        <div class="bonus-card">
+          <div class="bonus-icon">🔌</div>
+          <div class="bonus-card-body">
+            <h4>API Skills Builder</h4>
+            <p>The structured framework that trains OpenClaw to control any software with a public API — turning integrations into real, working skills.</p>
+            <span class="bonus-value-tag">$497 Value</span>
+          </div>
+        </div>
+
+        <div class="bonus-card">
+          <div class="bonus-icon">🧠</div>
+          <div class="bonus-card-body">
+            <h4>Custom Soul Builder</h4>
+            <p>Align OpenClaw with your mission, objectives, and voice — giving it a tailored personality and strategic direction you won't get out of the box.</p>
+            <span class="bonus-value-tag">$297 Value</span>
+          </div>
+        </div>
+
+        <div class="bonus-card">
+          <div class="bonus-icon">🛡️</div>
+          <div class="bonus-card-body">
+            <h4>Cost Permission Directive</h4>
+            <p>A built-in budget safeguard — OpenClaw pauses and requests your approval before spending beyond your defined limit.</p>
+            <span class="bonus-value-tag">$297 Value</span>
+          </div>
+        </div>
+
+        <div class="bonus-card" style="grid-column: 1 / -1;">
+          <div class="bonus-icon">👔</div>
+          <div class="bonus-card-body">
+            <h4>CEO Directive</h4>
+            <p>Upgrades OpenClaw from passive responder to active executive — identifying risks, correcting breakdowns, and preventing issues before they ever reach you.</p>
+            <span class="bonus-value-tag">$297 Value</span>
+          </div>
+        </div>
+      </div>
+      <div class="section-cta">
+        <p>All five bonuses included at no extra cost during launch.</p>
+        <a href="https://pl.setyourownsalary.com/997" class="btn btn-lobster" target="_blank" rel="noopener noreferrer">Claim the Bonuses &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SOCIAL PROOF ========== -->
+  <section class="sec-social-proof">
+    <div class="container">
+      <div class="tag" style="margin-bottom: var(--space-sm); background: var(--green); color: #000;">Real Results</div>
+      <h2 class="section-title">What People Are Saying</h2>
+      <p class="section-subtitle">Here's what early OpenClaw users are reporting from the field.</p>
+
+      <div class="testimonial-grid">
+        <div class="testimonial-img-card">
+          <img src="https://img.flexifunnels.com/images/7455/964676777c744108b9e7973c48cca350_at9nr_744.png" alt="OpenClaw user testimonial" loading="lazy" />
+        </div>
+        <div class="testimonial-img-card">
+          <img src="https://img.flexifunnels.com/images/7455/e9a3ac4c65584a03a58489b6c3e86610_8iec3_744.png" alt="OpenClaw user testimonial" loading="lazy" />
+        </div>
+      </div>
+      <div class="section-cta">
+        <p>Join the entrepreneurs already using OpenClaw to run their operations.</p>
+        <a href="https://pl.setyourownsalary.com/997" class="btn btn-lobster" target="_blank" rel="noopener noreferrer">Get Instant Access &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PRICING ========== -->
+  <section class="sec-pricing">
+    <div class="container">
+      <div class="tag" style="background: var(--lobster); color: #fff; border-color: #000; margin-bottom: var(--space-sm);">Choose Your Path &mdash; Limited Launch Pricing</div>
+      <h2 class="section-title" style="color: #000;">Which OpenClaw Is Right for You?</h2>
+      <p class="section-subtitle" style="color: #000; opacity: 0.85;">Same powerful AI engine. Three ways to get started. Lock in launch pricing before it goes up.</p>
+
+      <img src="https://img.flexifunnels.com/images/7455/1f56421aca974d3fb3ea5ad4d556b284_y91aw_1038.png" alt="OpenClaw Mega Bundle options" loading="lazy" style="width: 100%; display: block; border: var(--border-thick); box-shadow: var(--shadow-hard); margin-bottom: var(--space-lg);" />
+
+      <div class="pricing-grid">
+
+        <!-- Starter $27 -->
+        <div class="pricing-card pricing-starter">
+          <div class="pricing-card-header">
+            <span class="pricing-tier-label">Starter</span>
+            <div class="pricing-amount">
+              <span class="pricing-price">$27</span>
+            </div>
+            <p class="pricing-tagline">Do It Yourself</p>
+          </div>
+          <ul class="pricing-includes">
+            <li>OpenClaw Implementation Guide</li>
+            <li>Step-by-step setup walkthrough</li>
+            <li>Core training modules</li>
+            <li>Community access</li>
+            <li>Self-managed setup</li>
+          </ul>
+          <div class="pricing-cta">
+            <a href="https://pl.setyourownsalary.com/27" class="btn btn-outline" target="_blank" rel="noopener noreferrer" style="width: 100%; text-align: center;">Get Starter Access &rarr;</a>
+            <a href="https://pl.setyourownsalary.com/email27" class="pricing-info-link" target="_blank" rel="noopener noreferrer">Learn more first &rarr;</a>
+          </div>
+        </div>
+
+        <!-- Pro Bundle $997 (featured) -->
+        <div class="pricing-card pricing-pro">
+          <div class="pricing-featured-badge">&#128293; Most Popular</div>
+          <div class="pricing-card-header">
+            <span class="pricing-tier-label">Pro Mega Bundle</span>
+            <div class="pricing-amount">
+              <span class="pricing-was">$3,985</span>
+              <span class="pricing-price pricing-price-gold">$997</span>
+            </div>
+            <p class="pricing-tagline" style="color: var(--green); opacity: 0.9;">Done With You</p>
+          </div>
+          <ul class="pricing-includes pricing-includes-white">
+            <li><strong>Shadow Intensive (14 Days Live)</strong> — Chad &amp; team deploy + optimize in real time</li>
+            <li><strong>Private VPS Install</strong> — Fully configured on your own infrastructure</li>
+            <li><strong>OpenClaw Control Board</strong> — Custom execution dashboard</li>
+            <li><strong>Skills Vault</strong> — Full training portal + ongoing updates</li>
+            <li><strong>Titanium Suite</strong> — Complete integrated software stack</li>
+          </ul>
+          <div class="pricing-cta">
+            <a href="https://pl.setyourownsalary.com/997" class="btn btn-lobster-cta" target="_blank" rel="noopener noreferrer" style="width: 100%; text-align: center;">Get Instant Access &rarr;</a>
+            <p style="font-size: 12px; color: rgba(255,255,255,0.55); margin: 0; text-align: center;">&#10003; 14-day money-back guarantee &nbsp;&middot;&nbsp; Price goes to $1,497 after launch</p>
+          </div>
+        </div>
+
+        <!-- Enterprise -->
+        <div class="pricing-card pricing-enterprise">
+          <div class="pricing-card-header">
+            <span class="pricing-tier-label">Enterprise</span>
+            <div class="pricing-amount">
+              <span class="pricing-price" style="font-size: 38px;">Custom</span>
+            </div>
+            <p class="pricing-tagline">Done For Your Team</p>
+          </div>
+          <ul class="pricing-includes">
+            <li>10+ VPS installs &amp; deployments</li>
+            <li>Dedicated onboarding support</li>
+            <li>Bulk licensing &amp; team access</li>
+            <li>Ongoing account management</li>
+            <li>Custom configuration per team member</li>
+          </ul>
+          <div class="pricing-cta">
+            <a href="openclaw-enterprise.html" class="btn" target="_blank" rel="noopener noreferrer" style="width: 100%; text-align: center; background: var(--ink); color: var(--bg-paper);">Talk to Us &rarr;</a>
+            <p style="font-size: 12px; opacity: 0.55; margin: 0; text-align: center;">Response within 24 hours</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Guarantee bar -->
+      <div class="pricing-guarantee">
+        <img src="https://img.flexifunnels.com/images/7455/guarantee1_2eywk_1920.png" alt="14-day money-back guarantee" loading="lazy" style="width: 80px; flex-shrink: 0;" />
+        <div>
+          <strong>No-Questions-Asked Guarantee</strong>
+          <p>If OpenClaw isn&rsquo;t the right fit for your business &mdash; for any reason &mdash; contact us within 14 days. No interrogations, no hoops. We refund.</p>
         </div>
       </div>
     </div>
@@ -1434,7 +2455,22 @@
       <p class="highlight-text" style="opacity: 0.8;">OpenClaw is one of the most accessible AI business tools available today. The question isn't whether to start &mdash; it's how soon.</p>
 
       <div class="cta-row">
-        <a href="ai-resources.html" class="btn btn-gold">Explore More AI Resources</a>
+        <a href="https://pl.setyourownsalary.com/997" class="btn btn-lobster" target="_blank" rel="noopener noreferrer">Get OpenClaw Now &rarr;</a>
+        <a href="ai-resources.html" class="btn btn-outline">Explore More AI Resources</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== ENTERPRISE STRIP ========== -->
+  <section class="sec-enterprise-strip">
+    <div class="container">
+      <div class="enterprise-strip-inner">
+        <div>
+          <span class="tag" style="background: rgba(255,255,255,0.2); color: #fff; border-color: rgba(255,255,255,0.4); margin-bottom: var(--space-xs);">For Teams &amp; Agencies</span>
+          <h3>Deploying OpenClaw Across Your Business?</h3>
+          <p>We handle end-to-end setup for teams of 10 or more &mdash; VPS installs, custom onboarding, bulk licensing, and dedicated support included.</p>
+        </div>
+        <a href="openclaw-enterprise.html" class="btn" style="background: var(--gold); color: #000; border-color: #000;">Talk to Us &rarr;</a>
       </div>
     </div>
   </section>
@@ -1644,6 +2680,110 @@
         submitBtn.disabled = false;
       }
     }
+
+    // ===== SCROLL REVEAL =====
+    (function() {
+      var revealSelectors = [
+        '.section-title', '.section-subtitle',
+        '.analogy-card', '.pillar-card',
+        '.capability-card', '.step-card',
+        '.use-case-card', '.savings-callout',
+        '.stack-item', '.bonus-card',
+        '.testimonial-img-card', '.community-stat',
+        '.section-cta', '.origin-box',
+        '.security-note', '.start-cta-box',
+        '.pricing-card', '.pricing-guarantee',
+        '.enterprise-strip-inner',
+        '.quote-with-photo', '.integrations-bar'
+      ];
+
+      // Collect all elements
+      var allReveal = [];
+      revealSelectors.forEach(function(sel) {
+        document.querySelectorAll(sel).forEach(function(el, i) {
+          el.classList.add('reveal');
+          // Stagger sibling cards
+          if (i > 0 && i < 8) {
+            el.style.transitionDelay = (i * 0.09) + 's';
+          }
+          allReveal.push(el);
+        });
+      });
+
+      // Safety section sides: slide in from left/right
+      var safetyLeft = document.querySelector('.safety-left');
+      var safetyRight = document.querySelector('.safety-right');
+      if (safetyLeft) { safetyLeft.classList.remove('reveal'); safetyLeft.classList.add('reveal-left'); }
+      if (safetyRight) { safetyRight.classList.remove('reveal'); safetyRight.classList.add('reveal-right'); }
+
+      // Video block scale in
+      var videoBlock = document.querySelector('.video-block');
+      if (videoBlock) { videoBlock.classList.add('reveal-scale'); }
+
+      // Pricing featured card scale
+      var pricingPro = document.querySelector('.pricing-pro');
+      if (pricingPro) { pricingPro.classList.remove('reveal'); pricingPro.classList.add('reveal-scale'); }
+
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+      document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(function(el) {
+        observer.observe(el);
+      });
+    })();
+
+    // ===== NUMBER COUNTER ANIMATION =====
+    (function() {
+      function parseVal(str) {
+        var raw = str.replace(/[^0-9.KM+]/gi, '');
+        var num = parseFloat(raw);
+        if (str.indexOf('K') > -1) num *= 1000;
+        if (str.indexOf('M') > -1) num *= 1000000;
+        return num;
+      }
+      function formatVal(original, current) {
+        if (original.indexOf('K') > -1) return Math.round(current / 1000) + 'K+';
+        if (original.indexOf('%') > -1) return Math.round(current) + '%';
+        if (original.indexOf('-Day') > -1) return original; // skip "30-Day"
+        if (original.indexOf('+') > -1) return Math.round(current).toLocaleString() + '+';
+        return Math.round(current).toLocaleString();
+      }
+
+      var statsObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (!entry.isIntersecting) return;
+          var el = entry.target;
+          var original = el.getAttribute('data-target');
+          if (!original) return;
+          var end = parseVal(original);
+          if (!end || original.indexOf('-Day') > -1) return;
+          statsObserver.unobserve(el);
+          var start = 0;
+          var duration = 1200;
+          var startTime = null;
+          function step(ts) {
+            if (!startTime) startTime = ts;
+            var progress = Math.min((ts - startTime) / duration, 1);
+            var eased = 1 - Math.pow(1 - progress, 3);
+            el.textContent = formatVal(original, start + (end - start) * eased);
+            if (progress < 1) requestAnimationFrame(step);
+            else el.textContent = original;
+          }
+          requestAnimationFrame(step);
+        });
+      }, { threshold: 0.5 });
+
+      document.querySelectorAll('.community-stat .stat-val').forEach(function(el) {
+        el.setAttribute('data-target', el.textContent.trim());
+        statsObserver.observe(el);
+      });
+    })();
   </script>
 
 </body>
