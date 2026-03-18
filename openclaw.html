@@ -1725,6 +1725,439 @@
     .start-cta-box .btn-lobster-cta:hover {
       animation: none;
     }
+
+    /* ========== SECTION: SOCIAL PROOF (TESTIMONIALS) ========== */
+    .sec-social-proof-new {
+      padding: var(--space-lg) 0;
+      border-bottom: var(--border-thick);
+      background: var(--bg-paper);
+      background-image: radial-gradient(var(--ink) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-md);
+      margin-top: var(--space-md);
+    }
+
+    .testimonial-card {
+      border: var(--border-thick);
+      background: var(--bg-white);
+      box-shadow: var(--shadow-hard);
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .testimonial-card:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .testimonial-card-header {
+      padding: var(--space-sm) var(--space-md);
+      border-bottom: var(--border-thick);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .testimonial-quote {
+      font-weight: 700;
+      font-size: 15px;
+      font-style: italic;
+    }
+
+    .testimonial-verified {
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--green);
+    }
+
+    .testimonial-card img {
+      width: 100%;
+      display: block;
+    }
+
+    .testimonial-footer {
+      padding: 10px var(--space-md);
+      border-top: var(--border-thick);
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      gap: var(--space-sm);
+    }
+
+    /* ========== SECTION: BUNDLE CONTENTS ========== */
+    .sec-bundle-contents {
+      padding: var(--space-lg) 0;
+      border-bottom: var(--border-thick);
+      background: var(--bg-white);
+    }
+
+    .bundle-hero-img {
+      width: 100%;
+      max-width: 500px;
+      display: block;
+      margin: 0 auto var(--space-lg);
+      border: var(--border-thick);
+      box-shadow: var(--shadow-hard);
+    }
+
+    .bundle-components-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-md);
+    }
+
+    .bundle-component {
+      border: var(--border-thick);
+      background: var(--bg-paper);
+      box-shadow: var(--shadow-hard);
+      padding: var(--space-md);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .bundle-component:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .bundle-component-number {
+      font-size: 64px;
+      font-weight: 900;
+      opacity: 0.08;
+      position: absolute;
+      top: -4px;
+      right: 10px;
+      line-height: 1;
+    }
+
+    .bundle-component-value {
+      display: inline-block;
+      background: var(--coral);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 3px 10px;
+      border: 2px solid var(--ink);
+      margin-bottom: 8px;
+    }
+
+    .bundle-component h3 {
+      font-size: 22px;
+      margin-bottom: var(--space-xs);
+    }
+
+    .bundle-component p {
+      font-size: 14px;
+      opacity: 0.85;
+    }
+
+    .bundle-component ul {
+      list-style: none;
+      padding: 0;
+      margin: var(--space-xs) 0 0;
+    }
+
+    .bundle-component li {
+      padding: 4px 0;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .bundle-component li::before {
+      content: '\2713';
+      margin-right: 8px;
+      font-weight: 900;
+      color: var(--green);
+    }
+
+    .bundle-total-value {
+      background: var(--gold);
+      color: #000;
+      border: var(--border-thick);
+      padding: var(--space-md);
+      text-align: center;
+      box-shadow: var(--shadow-hard);
+      margin-top: var(--space-md);
+    }
+
+    .bundle-total-value h3 {
+      font-size: clamp(24px, 3vw, 36px);
+    }
+
+    .guarantee-callout {
+      background: var(--ink);
+      color: var(--bg-paper);
+      border: var(--border-thick);
+      padding: var(--space-md);
+      text-align: center;
+      margin-top: var(--space-md);
+      box-shadow: var(--shadow-hard);
+    }
+
+    .guarantee-callout h3 {
+      font-size: 24px;
+      margin-bottom: var(--space-xs);
+    }
+
+    .guarantee-callout p {
+      font-size: 15px;
+      opacity: 0.85;
+      margin: 0;
+    }
+
+    /* ========== SECTION: BUNDLE UPGRADES ========== */
+    .sec-bundle-upgrades {
+      padding: var(--space-lg) 0;
+      border-bottom: var(--border-thick);
+      background: var(--bg-paper);
+    }
+
+    .upgrade-item {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: var(--space-md);
+      border: var(--border-thick);
+      background: var(--bg-white);
+      box-shadow: var(--shadow-hard);
+      margin-bottom: var(--space-md);
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .upgrade-item:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .upgrade-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border-right: var(--border-thick);
+    }
+
+    .upgrade-item-body {
+      padding: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .upgrade-item-body h3 {
+      font-size: 24px;
+      margin-bottom: var(--space-xs);
+    }
+
+    .upgrade-item-body p {
+      font-size: 14px;
+      opacity: 0.85;
+    }
+
+    .upgrade-features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: var(--space-sm);
+    }
+
+    .upgrade-feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .upgrade-feature-icon {
+      font-size: 18px;
+      flex-shrink: 0;
+      line-height: 1.4;
+    }
+
+    /* ========== SECTION: 3-TIER PRICING ========== */
+    .pricing-grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr 1fr;
+      gap: var(--space-md);
+      align-items: start;
+      margin: var(--space-md) 0;
+    }
+
+    .pricing-card-3 {
+      border: var(--border-thick);
+      box-shadow: var(--shadow-hard);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      background: var(--bg-white);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .pricing-card-3:not(.pricing-featured):hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .pricing-featured {
+      background: #000;
+      color: #fff;
+      border-color: #000;
+      animation: floatY 4s ease-in-out infinite, floatShadow 4s ease-in-out infinite;
+    }
+
+    .pricing-featured:hover {
+      animation-play-state: paused;
+      transform: translate(-2px, -2px);
+    }
+
+    .pricing-card-3 .pricing-card-header {
+      padding: var(--space-md);
+      border-bottom: var(--border-thick);
+      text-align: center;
+    }
+
+    .pricing-featured .pricing-card-header {
+      border-color: rgba(255,255,255,0.15);
+    }
+
+    .pricing-card-3 .pricing-tier-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 900;
+      margin-bottom: 4px;
+    }
+
+    .pricing-card-3 .pricing-amount {
+      justify-content: center;
+    }
+
+    .pricing-card-3 .pricing-price {
+      font-size: 48px;
+    }
+
+    .pricing-featured .pricing-tier-name {
+      color: var(--gold);
+    }
+
+    .pricing-feature-table {
+      padding: var(--space-sm) var(--space-md);
+      flex: 1;
+    }
+
+    .pricing-feature-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .pricing-featured .pricing-feature-row {
+      border-bottom-color: rgba(255,255,255,0.1);
+    }
+
+    .pricing-feature-row:last-child {
+      border-bottom: none;
+    }
+
+    .pricing-check { color: var(--green); font-weight: 900; }
+    .pricing-cross { opacity: 0.3; }
+
+    .pricing-card-3 .pricing-cta {
+      padding: var(--space-md);
+      padding-top: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .pricing-card-img {
+      width: 100%;
+      display: block;
+      border-bottom: var(--border-thick);
+    }
+
+    /* ========== SECTION: GUARANTEE ========== */
+    .sec-guarantee {
+      padding: var(--space-lg) 0;
+      border-bottom: var(--border-thick);
+      background: var(--bg-white);
+    }
+
+    .guarantee-box {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: var(--space-md);
+      align-items: center;
+      border: var(--border-thick);
+      background: var(--bg-paper);
+      box-shadow: var(--shadow-hard);
+      padding: var(--space-lg);
+    }
+
+    .guarantee-badge {
+      width: 120px;
+      height: 120px;
+      background: var(--gold);
+      border: var(--border-thick);
+      box-shadow: var(--shadow-hard);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .guarantee-badge-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .guarantee-badge-label {
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .guarantee-text h3 {
+      font-size: clamp(28px, 3vw, 40px);
+      margin-bottom: var(--space-sm);
+    }
+
+    .guarantee-text p {
+      font-size: 16px;
+      line-height: 1.7;
+      max-width: 600px;
+    }
+
+    @media (max-width: 900px) {
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .bundle-components-grid { grid-template-columns: 1fr; }
+      .upgrade-item { grid-template-columns: 1fr; }
+      .upgrade-item img { border-right: none; border-bottom: var(--border-thick); height: 200px; }
+      .upgrade-features { grid-template-columns: 1fr; }
+      .pricing-grid-3 { grid-template-columns: 1fr; }
+      .pricing-featured { animation: none; }
+      .guarantee-box { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+    }
   </style>
 </head>
 
@@ -1753,11 +2186,11 @@
   <div class="toc-bar" id="tocBar">
     <div class="toc-inner">
       <a href="#what-is-openclaw" class="toc-pill toc-link active" data-section="what-is-openclaw">What Is It?</a>
-      <a href="#capabilities" class="toc-pill toc-link" data-section="capabilities">What It Can Do</a>
-      <a href="#how-it-works" class="toc-pill toc-link" data-section="how-it-works">How It Works</a>
-      <a href="#real-world" class="toc-pill toc-link" data-section="real-world">Real Examples</a>
-      <a href="#safety" class="toc-pill toc-link" data-section="safety">Safety</a>
-      <a href="#getting-started" class="toc-pill toc-link" data-section="getting-started">Get Started</a>
+      <a href="#social-proof" class="toc-pill toc-link" data-section="social-proof">Results</a>
+      <a href="#bundle-contents" class="toc-pill toc-link" data-section="bundle-contents">What You Get</a>
+      <a href="#bundle-upgrades" class="toc-pill toc-link" data-section="bundle-upgrades">Full Suite</a>
+      <a href="#bundle-pricing" class="toc-pill toc-link" data-section="bundle-pricing">Pricing</a>
+      <a href="#guarantee" class="toc-pill toc-link" data-section="guarantee">Guarantee</a>
     </div>
   </div>
 
@@ -1847,564 +2280,439 @@
     </div>
   </section>
 
-  <!-- ========== CAPABILITIES ========== -->
-  <section class="sec-capabilities" id="capabilities">
+  <!-- ========== SOCIAL PROOF: TESTIMONIALS ========== -->
+  <section class="sec-social-proof-new" id="social-proof">
     <div class="container">
-      <div class="tag" style="margin-bottom: var(--space-sm);">Use Cases</div>
-      <h2 class="section-title">What It Can Do For Your Business</h2>
-      <p class="section-subtitle">OpenClaw doesn't just help with one task &mdash; it handles everything from building a new online business to running your daily operations. Here's what it covers.</p>
+      <div class="tag" style="background: var(--green); color: #000; margin-bottom: var(--space-sm);">Real Results</div>
+      <h2 class="section-title">They're Already Crushing It</h2>
+      <p class="section-subtitle">No hype. No filters. Just screenshots straight from the community.</p>
 
-      <div class="capabilities-grid">
-        <!-- Business Builder -->
-        <div class="capability-card">
-          <div class="capability-header" style="background: var(--blue); color: #fff;">Business Builder</div>
-          <div class="capability-body">
-            <ul>
-              <li>Digital product creation (ebooks, courses, templates, lead magnets)</li>
-              <li>Autonomous niche selection via Trend-Sensing Engine</li>
-              <li>Complete sales funnel creation from product to checkout</li>
-              <li>Self-adjusting strategy optimization</li>
-            </ul>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="testimonial-card-header" style="background: var(--lavender);">
+            <span class="testimonial-quote">&ldquo;Total newbie &mdash; and he had a live bot in MINUTES!&rdquo;</span>
+            <span class="testimonial-verified">&#10003; Verified</span>
           </div>
+          <img src="images/openclaw/test21.png" alt="Priscilla's result" loading="lazy" />
         </div>
 
-        <!-- Sales & Pages -->
-        <div class="capability-card">
-          <div class="capability-header" style="background: var(--gold); color: #000;">Sales & Pages</div>
-          <div class="capability-body">
-            <ul>
-              <li>PageMate landing page builder with drag-and-drop</li>
-              <li>AI-written conversion-focused copywriting</li>
-              <li>Complete checkout integration</li>
-              <li>Affiliate marketing bonus pages & promotional assets</li>
-            </ul>
+        <div class="testimonial-card">
+          <div class="testimonial-card-header" style="background: var(--gold);">
+            <span class="testimonial-quote">&ldquo;Bilingual AI bot. Built &amp; live. Under 10 minutes!&rdquo;</span>
+            <span class="testimonial-verified">&#10003; Verified</span>
           </div>
+          <img src="images/openclaw/test22.png" alt="Craig's result" loading="lazy" />
         </div>
 
-        <!-- Marketing Engine -->
-        <div class="capability-card">
-          <div class="capability-header" style="background: var(--coral); color: #fff;">Marketing Engine</div>
-          <div class="capability-body">
-            <ul>
-              <li>One-Click Content Syndication (WordPress, Facebook, Instagram, Twitter/X, LinkedIn)</li>
-              <li>Social media ghostwriting in your brand voice</li>
-              <li>Automated SEO/competitor research & Affiliate Empire workflows</li>
-              <li>Multi-language support (50+ languages)</li>
-            </ul>
+        <div class="testimonial-card">
+          <div class="testimonial-card-header" style="background: var(--pink);">
+            <span class="testimonial-quote">&ldquo;10 minutes to build. She called it a GAME CHANGER.&rdquo;</span>
+            <span class="testimonial-verified">&#10003; Verified</span>
           </div>
+          <img src="images/openclaw/test23.png" alt="Myrlene's result" loading="lazy" />
         </div>
 
-        <!-- Operations & Admin -->
-        <div class="capability-card">
-          <div class="capability-header" style="background: var(--green); color: #fff;">Operations & Admin</div>
-          <div class="capability-body">
-            <ul>
-              <li>Morning executive briefs via WhatsApp/Telegram</li>
-              <li>Proactive calendar management & meeting transcription</li>
-              <li>Auto-task creation in Notion/Trello from meetings</li>
-              <li>Client onboarding automation (CRM, Drive, welcome email, kickoff)</li>
-              <li>Persistent memory (stores preferences, writing style, project history)</li>
-            </ul>
+        <div class="testimonial-card">
+          <div class="testimonial-card-header" style="background: var(--coral); color: #fff;">
+            <span class="testimonial-quote">&ldquo;Full setup &mdash; data, logos, API keys &mdash; done in 15 mins!&rdquo;</span>
+            <span class="testimonial-verified" style="color: #fff;">&#10003; Verified</span>
           </div>
-        </div>
-
-        <!-- Finance & Customer Comms -->
-        <div class="capability-card">
-          <div class="capability-header" style="background: var(--lavender); color: var(--ink);">Finance & Customer Comms</div>
-          <div class="capability-body">
-            <ul>
-              <li>Receipt-to-spreadsheet (photo to QuickBooks/Google Sheets)</li>
-              <li>Sales pipeline monitoring with 48-hour follow-up alerts</li>
-              <li>Weekly KPI snapshots to Slack</li>
-              <li>WhatsApp/Telegram customer bot with 24/7 FAQ & auto-booking</li>
-              <li>Email inbox summaries, auto-sort & draft responses in your style</li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- Design & Execution -->
-        <div class="capability-card">
-          <div class="capability-header" style="background: var(--pink); color: #000;">Design & Execution</div>
-          <div class="capability-body">
-            <ul>
-              <li>NanoAI Pro design studio (HD upscaling, style transformation, video polishing, background removal)</li>
-              <li>DFY 100K+ prompts & templates library</li>
-              <li>Background execution (works while you sleep)</li>
-              <li>Zero-prompt intelligence (no prompt engineering needed)</li>
-              <li>Built-in SEO optimization for all content</li>
-            </ul>
-          </div>
+          <img src="images/openclaw/test24.png" alt="Curtiss's result" loading="lazy" />
         </div>
       </div>
+
       <div class="section-cta">
-        <p>All of this runs autonomously — so you can focus on what matters.</p>
-        <a href="https://pl.setyourownsalary.com/email997" class="btn btn-lobster" target="_blank" rel="noopener noreferrer">Put It to Work for You &rarr;</a>
+        <p>5,000+ entrepreneurs already deployed their AI business</p>
+        <a href="#bundle-pricing" class="btn btn-lobster toc-link">Get The Complete Bundle &rarr;</a>
       </div>
     </div>
   </section>
 
-  <!-- ========== HOW IT WORKS ========== -->
-  <section class="sec-how" id="how-it-works">
+  <!-- ========== BUNDLE CONTENTS ========== -->
+  <section class="sec-bundle-contents" id="bundle-contents">
     <div class="container">
-      <div class="tag" style="margin-bottom: var(--space-sm);">3 Simple Steps</div>
-      <h2 class="section-title">How It Works</h2>
-      <p class="section-subtitle">You don't need to be technical. OpenClaw's zero-prompt intelligence handles everything &mdash; here's the three-step process.</p>
+      <div class="tag" style="margin-bottom: var(--space-sm);">What You Get</div>
+      <h2 class="section-title">One Bundle. Total Domination.</h2>
+      <p class="section-subtitle">Here is everything you are going to get &mdash; the complete software suite, training, live support, done-for-you skills, and your own custom Control Board.</p>
 
-      <div class="steps-grid">
-        <div class="step-card">
-          <span class="step-number">01</span>
-          <h3>Activate It</h3>
-          <p>Log into your cloud dashboard and click the "Activate" button. This single action triggers the autonomous AI brain. No terminal, no configuration, no prompt engineering. The onboarding wizard connects your accounts (email, calendar, messaging apps, business tools).</p>
+      <img src="images/openclaw/cover.png" alt="OpenClaw Bundle" class="bundle-hero-img" loading="lazy" />
+
+      <div class="bundle-components-grid">
+        <div class="bundle-component">
+          <span class="bundle-component-number">01</span>
+          <span class="bundle-component-value">Value: $297</span>
+          <h3>Claw Launcher Install</h3>
+          <p>We'll walk you through the exact installation process so your system is ready to go.</p>
+          <ul>
+            <li>Complete OpenClaw setup</li>
+            <li>Connect everything correctly</li>
+            <li>Get your system ready to start generating results</li>
+          </ul>
         </div>
-        <div class="step-card">
-          <span class="step-number">02</span>
-          <h3>Build or Delegate</h3>
-          <p>For new businesses: the Trend-Sensing Engine scans for profitable niches, then auto-generates digital products, sales pages, and marketing assets. For existing businesses: set up your "Messaging Office" &mdash; text OpenClaw via WhatsApp/Slack/Telegram to delegate tasks like "summarize my emails", "draft an invoice", or "schedule a meeting".</p>
+
+        <div class="bundle-component">
+          <span class="bundle-component-number">02</span>
+          <span class="bundle-component-value">Value: $497</span>
+          <h3>Claw Launcher Onboarder</h3>
+          <p>A simple onboarding system that shows you exactly how to start using OpenClaw the right way.</p>
+          <ul>
+            <li>Step-by-step onboarding</li>
+            <li>Understand how the system works</li>
+            <li>Avoid beginner mistakes</li>
+            <li>Start using the system faster</li>
+          </ul>
         </div>
-        <div class="step-card" style="background: var(--ink); color: var(--bg-paper);">
-          <span class="step-number" style="color: var(--bg-paper);">03</span>
-          <h3 style="border-color: var(--bg-paper);">Launch & Optimize</h3>
-          <p>One click syndicates content across WordPress, social media, and marketplaces. OpenClaw then enters Background Execution mode &mdash; monitoring performance, self-adjusting strategy, sending you alerts, and optimizing even after you log out.</p>
+
+        <div class="bundle-component">
+          <span class="bundle-component-number">03</span>
+          <span class="bundle-component-value">Value: $497</span>
+          <h3>3-Day Onboarding Workshop</h3>
+          <p>Join our live 3-day workshop where we walk you through everything step-by-step.</p>
+          <ul>
+            <li>Watch the system being implemented live</li>
+            <li>Ask questions and get guidance</li>
+            <li>See exactly how to use the tools for results</li>
+            <li>Learn the fastest path to getting started</li>
+          </ul>
+        </div>
+
+        <div class="bundle-component" style="background: var(--gold); color: #000;">
+          <span class="bundle-component-number">04</span>
+          <span class="bundle-component-value" style="background: var(--ink); color: #fff;">Value: $497</span>
+          <h3>Cashflow Engine</h3>
+          <p>A powerful suite of skills designed to help you create revenue assets fast. Inside you'll get:</p>
+          <ul>
+            <li><strong>Revenue Page Architect</strong> &mdash; Build revenue pages designed to convert</li>
+            <li><strong>Conversion Copywriter</strong> &mdash; Generate persuasive copy that sells</li>
+            <li><strong>Hero Hook Builder</strong> &mdash; Create powerful hooks that grab attention</li>
+            <li><strong>VSL Script Creator</strong> &mdash; High-converting video sales letter scripts</li>
+          </ul>
         </div>
       </div>
 
-      <!-- Integrations bar -->
-      <div class="integrations-bar">
-        <h4>Works With Your Favorite Tools</h4>
-        <div class="platform-pills">
-          <span class="platform-pill">WhatsApp</span>
-          <span class="platform-pill">Slack</span>
-          <span class="platform-pill">Telegram</span>
-          <span class="platform-pill">Discord</span>
-          <span class="platform-pill">Gmail</span>
-          <span class="platform-pill">Google Calendar</span>
-          <span class="platform-pill">Notion</span>
-          <span class="platform-pill">Trello</span>
-          <span class="platform-pill">QuickBooks</span>
-          <span class="platform-pill">Salesforce</span>
-          <span class="platform-pill">WordPress</span>
-          <span class="platform-pill">Shopify</span>
-          <span class="platform-pill">Facebook</span>
-          <span class="platform-pill">Instagram</span>
-          <span class="platform-pill">YouTube</span>
-          <span class="platform-pill">TikTok</span>
-          <span class="platform-pill">Twitter/X</span>
-          <span class="platform-pill">LinkedIn</span>
-          <span class="platform-pill">JVZoo</span>
-          <span class="platform-pill">WarriorPlus</span>
-        </div>
-        <p class="stat-line">Seamless integration with your messaging apps, business tools, marketplaces, and social platforms</p>
+      <div class="bundle-total-value">
+        <h3>Total Value: $1,788</h3>
       </div>
+
+      <div class="guarantee-callout">
+        <h3>100% Installation Guarantee</h3>
+        <p>You <em>will</em> be installed and talking to OpenClaw. If you can't complete the two simple setup steps, we will do it for you.</p>
+      </div>
+
       <div class="section-cta">
-        <p>Three steps. Under 5 minutes. Your AI is live and working.</p>
-        <a href="https://pl.setyourownsalary.com/email997" class="btn btn-lobster" target="_blank" rel="noopener noreferrer">Get Started Today &rarr;</a>
+        <p>All of this runs autonomously &mdash; so you can focus on what matters.</p>
+        <a href="#bundle-pricing" class="btn btn-lobster toc-link">Get The Complete Bundle &rarr;</a>
       </div>
     </div>
   </section>
 
-  <!-- ========== REAL WORLD ========== -->
-  <section class="sec-real-world" id="real-world">
+  <!-- ========== BUNDLE UPGRADES ========== -->
+  <section class="sec-bundle-upgrades" id="bundle-upgrades">
     <div class="container">
-      <div class="tag" style="margin-bottom: var(--space-sm);">Case Studies</div>
-      <h2 class="section-title">Your Business, But Smarter</h2>
-      <p class="section-subtitle">Here's what OpenClaw looks like in action for entrepreneurs just like you.</p>
+      <div class="tag" style="margin-bottom: var(--space-sm);">Full Suite</div>
+      <h2 class="section-title">Plus Everything You Need to Win</h2>
+      <p class="section-subtitle">The complete OpenClaw ecosystem &mdash; skill repository, control panel, business builder, agency license, and more.</p>
 
-      <div class="use-cases-grid">
-        <!-- Alex's Side Hustle -->
-        <div class="use-case-card">
-          <div class="use-case-header" style="background: var(--blue); color: #fff;">Alex's Side Hustle</div>
-          <div class="use-case-body">
-            <h4>Before OpenClaw</h4>
-            <p>Alex spent weeks researching niches, outlining an ebook, learning design tools, and trying to figure out how to build a sales page. Nothing ever launched.</p>
-            <h4 style="margin-top: var(--space-sm);">After OpenClaw</h4>
-            <p>OpenClaw's Trend-Sensing Engine identified a profitable niche, auto-generated an ebook, built a conversion-focused sales page with PageMate, and had the entire funnel live in under a day.</p>
-            <div class="savings">From idea to live in &lt;24 hrs</div>
-          </div>
-        </div>
-
-        <!-- Priya's Coaching Business -->
-        <div class="use-case-card">
-          <div class="use-case-header" style="background: var(--gold); color: #000;">Priya's Coaching Business</div>
-          <div class="use-case-body">
-            <h4>Before OpenClaw</h4>
-            <p>Priya spent $2,000+ on freelancers for a course outline, sales page, and email sequences. The process took three months and still needed revisions.</p>
-            <h4 style="margin-top: var(--space-sm);">After OpenClaw</h4>
-            <p>OpenClaw created her entire product suite &mdash; course content, lead magnets, sales funnel, and email marketing sequences &mdash; in a single afternoon. Zero freelancer costs.</p>
-            <div class="savings">Saved $2K+ in freelancer fees</div>
-          </div>
-        </div>
-
-        <!-- Marcus's Content Empire -->
-        <div class="use-case-card">
-          <div class="use-case-header" style="background: var(--coral); color: #fff;">Marcus's Content Empire</div>
-          <div class="use-case-body">
-            <h4>Before OpenClaw</h4>
-            <p>Marcus manually posted to 5 platforms every day, spending hours reformatting content for each one. Engagement was declining because he couldn't keep up the pace.</p>
-            <h4 style="margin-top: var(--space-sm);">After OpenClaw</h4>
-            <p>One-Click Content Syndication distributes content across WordPress, Facebook, Instagram, Twitter/X, and LinkedIn simultaneously. Social ghostwriting maintains his brand voice. Engagement tripled.</p>
-            <div class="savings">3x engagement, 5x less effort</div>
-          </div>
-        </div>
-
-        <!-- Chen's Digital Agency -->
-        <div class="use-case-card">
-          <div class="use-case-header" style="background: var(--green); color: #fff;">Chen's Digital Agency</div>
-          <div class="use-case-body">
-            <h4>Before OpenClaw</h4>
-            <p>Chen spent two weeks onboarding each new client &mdash; setting up folders, sending welcome emails, scheduling kickoff calls, and configuring tools. Scaling past 10 clients felt impossible.</p>
-            <h4 style="margin-top: var(--space-sm);">After OpenClaw</h4>
-            <p>Agency Rights with sub-account management launches new clients in hours. OpenClaw auto-creates Google Drive folders, sends welcome sequences, books kickoff calls, and sets up client dashboards automatically.</p>
-            <div class="savings">2 weeks to hours per client</div>
-          </div>
-        </div>
-
-        <!-- Fatima's Passive Income -->
-        <div class="use-case-card">
-          <div class="use-case-header" style="background: var(--lavender); color: var(--ink);">Fatima's Passive Income</div>
-          <div class="use-case-body">
-            <h4>Before OpenClaw</h4>
-            <p>Fatima read dozens of courses about building passive income streams online. She learned a lot but never actually launched a single product. Analysis paralysis kept her stuck for over a year.</p>
-            <h4 style="margin-top: var(--space-sm);">After OpenClaw</h4>
-            <p>OpenClaw's zero-prompt intelligence removed the guesswork entirely. Three digital products were live within a week &mdash; ebook, template pack, and mini-course &mdash; each with its own sales page and funnel.</p>
-            <div class="savings">3 products live in 1 week</div>
-          </div>
-        </div>
-
-        <!-- Jordan's Reseller Business -->
-        <div class="use-case-card">
-          <div class="use-case-header" style="background: var(--pink); color: #000;">Jordan's Reseller Business</div>
-          <div class="use-case-body">
-            <h4>Before OpenClaw</h4>
-            <p>Jordan had zero technical skills and no product of their own. Every "make money online" tool required coding, complex setup, or expensive monthly subscriptions that ate into margins.</p>
-            <h4 style="margin-top: var(--space-sm);">After OpenClaw</h4>
-            <p>Reseller Rights let Jordan white-label OpenClaw and sell it under their own brand, keeping 100% of profits. No infrastructure to manage, no technical knowledge needed, no ongoing costs.</p>
-            <div class="savings">100% profit, zero tech skills</div>
+      <!-- Skill Repository -->
+      <div class="upgrade-item">
+        <img src="images/openclaw/oto1-skill-repo.png" alt="OpenClaw Skill Repository" loading="lazy" />
+        <div class="upgrade-item-body">
+          <span class="bundle-component-value">Value: $3,997</span>
+          <h3>OpenClaw Skill Repository</h3>
+          <p>Unlock access to <strong>100+ ready-to-deploy automation skills</strong> that dramatically expand what your AI agents can do.</p>
+          <div class="upgrade-features">
+            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128231;</span><span>Email &amp; Marketing &mdash; ActiveCampaign, ConvertKit, Brevo, Klaviyo</span></div>
+            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#129309;</span><span>CRM &amp; Sales &mdash; HubSpot, Freshsales, Close CRM</span></div>
+            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#9881;&#65039;</span><span>Productivity &mdash; Asana, ClickUp, Jira, Google Calendar</span></div>
+            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#129302;</span><span>AI &amp; Voice &mdash; Claude, Gemini, ElevenLabs</span></div>
+            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#9729;&#65039;</span><span>Cloud &amp; Storage &mdash; AWS, Google Drive, Dropbox</span></div>
+            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128722;</span><span>Ecommerce &mdash; Gumroad, Magento, Ecwid</span></div>
+            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128736;&#65039;</span><span>Developer Tools &mdash; GitHub, GitLab, Firebase</span></div>
+            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128203;</span><span>Forms &amp; Data &mdash; Google Forms, Jotform, Airtable</span></div>
           </div>
         </div>
       </div>
 
-      <!-- Savings callout -->
-      <div class="savings-callout">
-        <h3>Solo entrepreneurs report going from zero to a live online business in under 48 hours</h3>
-        <p>That's product creation, sales pages, payment integration, and content syndication &mdash; all handled by OpenClaw.</p>
+      <!-- Control Panel -->
+      <div class="upgrade-item">
+        <img src="images/openclaw/oto2-control-panel.png" alt="OpenClaw Control Panel" loading="lazy" />
+        <div class="upgrade-item-body">
+          <span class="bundle-component-value">Value: $997</span>
+          <h3>OpenClaw Control Panel</h3>
+          <p>The advanced dashboard that makes managing your entire AI automation system simple and organized.</p>
+          <div class="upgrade-features">
+            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#129513;</span><span>Manage agents, skills, and workflows from one place</span></div>
+            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128200;</span><span>Monitor activity and track automation performance</span></div>
+            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128640;</span><span>Launch and control tasks instantly through the dashboard</span></div>
+            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128269;</span><span>Access logs, sessions, and system insights easily</span></div>
+          </div>
+        </div>
       </div>
+
+      <!-- Business Builder -->
+      <div class="upgrade-item">
+        <img src="images/openclaw/oto4-business-builder.png" alt="OpenClaw Business Builder" loading="lazy" />
+        <div class="upgrade-item-body">
+          <span class="bundle-component-value">Value: $2,997</span>
+          <h3>OpenClaw Business Builder</h3>
+          <p>A complete training system designed to help you turn OpenClaw into a <strong>real business.</strong></p>
+          <div class="upgrade-features">
+            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128161;</span><span>Create profitable AI service offers</span></div>
+            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128176;</span><span>Build systems that generate consistent income</span></div>
+            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128230;</span><span>Package and sell OpenClaw solutions</span></div>
+            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128200;</span><span>Scale into a sustainable business</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Agency License -->
+      <div class="upgrade-item">
+        <img src="images/openclaw/oto5-agency-license.png" alt="OpenClaw Agency License" loading="lazy" />
+        <div class="upgrade-item-body">
+          <span class="bundle-component-value">Value: $9,997</span>
+          <h3>OpenClaw Agency License (200 Clients)</h3>
+          <p>Launch and scale your own OpenClaw-powered agency with up to <strong>200 clients.</strong></p>
+          <div class="upgrade-features">
+            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128101;</span><span>Provide OpenClaw solutions to up to 200 clients</span></div>
+            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#9881;&#65039;</span><span>Create and manage client automation systems</span></div>
+            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128230;</span><span>Package OpenClaw as a high-value service</span></div>
+            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128200;</span><span>Scale your operations and grow recurring revenue</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Connector Series -->
+      <div class="upgrade-item">
+        <img src="images/openclaw/oto6-connector-series.png" alt="OpenClaw Connector Series" loading="lazy" />
+        <div class="upgrade-item-body">
+          <span class="bundle-component-value">Value: $2,997</span>
+          <h3>OpenClaw Connector Series</h3>
+          <p>Expand what OpenClaw can do by connecting it with <strong>apps, tools, and online services.</strong></p>
+          <div class="upgrade-features">
+            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128279;</span><span>Connect OpenClaw with external apps and services</span></div>
+            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128260;</span><span>Send and receive data between different tools</span></div>
+            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#9889;</span><span>Trigger automations across platforms</span></div>
+            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128268;</span><span>Build more powerful workflows</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Members Area -->
+      <div class="upgrade-item">
+        <img src="images/openclaw/cover.png" alt="OpenClaw Members Area" loading="lazy" />
+        <div class="upgrade-item-body">
+          <span class="bundle-component-value">Value: $497</span>
+          <h3>OpenClaw Members Area</h3>
+          <p>Your central hub for <strong>learning and mastering OpenClaw</strong> with step-by-step guidance.</p>
+          <div class="upgrade-features">
+            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#127916;</span><span>Step-by-step video lessons</span></div>
+            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#127942;</span><span>Progress tracking and rewards</span></div>
+            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128101;</span><span>Community support and discussions</span></div>
+            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128260;</span><span>Access to all training replays and updates</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Titanium Suite -->
+      <div class="upgrade-item" style="background: var(--gold); border-color: var(--ink);">
+        <img src="images/openclaw/titanium.png" alt="OpenClaw Titanium Suite" loading="lazy" />
+        <div class="upgrade-item-body">
+          <span class="bundle-component-value" style="background: var(--ink); color: #fff;">Value: $997</span>
+          <h3>OpenClaw Titanium Suite</h3>
+          <p>A powerful collection of tools designed to <strong>support and expand your OpenClaw ecosystem.</strong></p>
+          <div class="upgrade-features">
+            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128038;</span><span><strong>Mintbird</strong> &mdash; pages and funnels</span></div>
+            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#127807;</span><span><strong>Page Sprout</strong> &mdash; tracking links and bridge pages</span></div>
+            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#127891;</span><span><strong>Course Sprout</strong> &mdash; courses and memberships</span></div>
+            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128231;</span><span><strong>Letterman</strong> &mdash; newsletter publishing engine</span></div>
+            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128203;</span><span><strong>Quizforma</strong> &mdash; quizzes and surveys</span></div>
+            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#127760;</span><span><strong>Global Control</strong> &mdash; contacts, tags, and automations</span></div>
+          </div>
+        </div>
+      </div>
+
       <div class="section-cta">
-        <p>Real entrepreneurs. Real results. Ready to write your own?</p>
-        <a href="https://pl.setyourownsalary.com/email997" class="btn btn-lobster" target="_blank" rel="noopener noreferrer">Start Your Story &rarr;</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== SAFETY ========== -->
-  <section class="sec-safety" id="safety">
-    <div class="safety-split">
-      <div class="safety-left">
-        <h2>Power Tools Need Safety Gear</h2>
-        <p>You wouldn't let an untrained person operate a forklift without a cage and a hard hat. The same logic applies here.</p>
-        <p style="margin-top: var(--space-sm);">OpenClaw is an incredibly powerful tool that can build businesses and manage operations autonomously. But because it can publish content, send messages, and execute on your behalf, you should understand its safeguards.</p>
-        <p style="margin-top: var(--space-sm);">The good news: OpenClaw benefits from an active open-source community's security track record and its own cloud-hosted protections. You approve before anything goes live.</p>
-      </div>
-      <div class="safety-right">
-        <h3>Your Safety Checklist</h3>
-        <ul class="safety-checklist">
-          <li>Review before publishing &mdash; OpenClaw drafts content and pages for your approval before anything goes live</li>
-          <li>Cloud-hosted security &mdash; OpenClaw's managed infrastructure handles updates, encryption, and authenticated access</li>
-          <li>Open-source community patches &mdash; CVEs fixed within 48 hours, 85,000+ developers watching the code</li>
-          <li>No stored payment info &mdash; financial transactions are handled by secure third-party processors</li>
-          <li>Content compliance filters &mdash; built-in safeguards prevent inappropriate or harmful content generation</li>
-          <li>Revoke access anytime &mdash; disconnect accounts or deactivate OpenClaw at any time from the dashboard</li>
-          <li>Start with one project &mdash; begin with a single product or workflow and expand once you're comfortable</li>
-        </ul>
-      </div>
-    </div>
-    <div class="security-note">
-      <div class="container" style="padding: var(--space-sm) var(--space-md);">
-        <h4>Security Track Record</h4>
-        <p>OpenClaw benefits from both worlds: the open-source community's rapid security patching (CVEs fixed within 48 hours, 85,000+ developers watching the code) AND managed cloud infrastructure with automatic updates, encrypted data, and authenticated dashboard access.</p>
-      </div>
-    </div>
-    <div class="container" style="padding-top: var(--space-md); padding-bottom: var(--space-md);">
-      <div class="section-cta" style="margin-top: 0;">
-        <p>Enterprise-grade security. No technical setup. You own everything.</p>
-        <a href="https://pl.setyourownsalary.com/email997" class="btn btn-lobster" target="_blank" rel="noopener noreferrer">Get OpenClaw Securely &rarr;</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== GETTING STARTED ========== -->
-  <section class="sec-getting-started" id="getting-started">
-    <div class="container">
-      <div class="tag" style="margin-bottom: var(--space-sm);">Your Next Step</div>
-      <h2 class="section-title">Getting Started</h2>
-      <p class="section-subtitle">Setup takes under 5 minutes. No technical skills required.</p>
-
-      <div class="start-card" style="margin-bottom: var(--space-lg);">
-        <div class="start-card-inner">
-          <div>
-            <h3>Get Started with OpenClaw</h3>
-            <div class="time-estimate">Setup time: Under 5 minutes</div>
-            <p>Create your account, connect your accounts (email, calendar, messaging apps), let the Trend-Sensing Engine suggest a niche or choose your own, and click "Activate" &mdash; OpenClaw builds your first business.</p>
-            <ul>
-              <li>Core autonomous features</li>
-              <li>One-Click Content Syndication</li>
-              <li>Background Execution</li>
-              <li>Persistent Memory</li>
-            </ul>
-          </div>
-          <div class="start-cta-box">
-            <p class="start-cta-kicker">Limited Launch Pricing</p>
-            <a href="https://pl.setyourownsalary.com/997" class="btn btn-lobster-cta" target="_blank" rel="noopener noreferrer" style="width: 100%; text-align: center;">Get Instant Access &rarr;</a>
-            <p class="start-guarantee">&#10003; 14-day money-back guarantee</p>
-            <p class="start-guarantee">&#10003; No technical skills required</p>
-            <p class="start-guarantee">&#10003; Setup in under 5 minutes</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Community stats -->
-      <div class="community-strip">
-        <div class="community-stat">
-          <div class="stat-val">85K+</div>
-          <div class="stat-label">GitHub Stars</div>
-        </div>
-        <div class="community-stat">
-          <div class="stat-val">100K+</div>
-          <div class="stat-label">Discord Members</div>
-        </div>
-        <div class="community-stat">
-          <div class="stat-val">30-Day</div>
-          <div class="stat-label">Money-Back Guarantee</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== FULL STACK ========== -->
-  <section class="sec-full-stack" id="full-stack">
-    <div class="container">
-      <div class="tag" style="margin-bottom: var(--space-sm);">What You Unlock</div>
-      <h2 class="section-title">The Complete OpenClaw Stack</h2>
-      <p class="section-subtitle">From live coaching to a fully installed command center — here's everything included in the full OpenClaw experience.</p>
-
-      <div class="stack-grid">
-        <div class="stack-item">
-          <img class="stack-item-img" src="https://img.flexifunnels.com/images/7455/9f8caac23ab74b8b913598041a201489_7yjng_1536.png" alt="OpenClaw Shadow Intensive" loading="lazy" />
-          <div class="stack-item-body">
-            <span class="stack-item-value">$997 Value</span>
-            <h3>Shadow Intensive (14 Days Live)</h3>
-            <p>Watch Chad and his team set up and train OpenClaw in real time. Live support to get you past any technical blocker — over your shoulder.</p>
-          </div>
-        </div>
-
-        <div class="stack-item">
-          <img class="stack-item-img" src="https://img.flexifunnels.com/images/7455/27bf546f96b14562936b4ed6f5913564_z7gm9_1536.png" alt="OpenClaw VPS Install" loading="lazy" />
-          <div class="stack-item-body">
-            <span class="stack-item-value">$497 Value</span>
-            <h3>Private VPS Install</h3>
-            <p>OpenClaw installed inside your own VPS. Full ownership, full control, full security — running on your infrastructure, not theirs.</p>
-          </div>
-        </div>
-
-        <div class="stack-item">
-          <img class="stack-item-img" src="https://img.flexifunnels.com/images/7455/0b4a5cf4717d410d9e28b374b6a2de11_vidzx_1536.png" alt="OpenClaw Control Board" loading="lazy" />
-          <div class="stack-item-body">
-            <span class="stack-item-value">$997 Value</span>
-            <h3>Control Board</h3>
-            <p>Your complete command center — every board, engine, and automation unified in one custom-built dashboard, ready to run your operation.</p>
-          </div>
-        </div>
-
-        <div class="stack-item">
-          <img class="stack-item-img" src="https://img.flexifunnels.com/images/7455/1d291744cd164cf38c62c3fc36c0e0d3_spefd_1536.png" alt="OpenClaw Skills Vault" loading="lazy" />
-          <div class="stack-item-body">
-            <span class="stack-item-value">$997 Value</span>
-            <h3>Skills Vault</h3>
-            <p>The complete library of proven OpenClaw skills, commands, and workflows. Plug battle-tested automations directly into your system.</p>
-          </div>
-        </div>
-
-        <div class="stack-item">
-          <img class="stack-item-img" src="https://img.flexifunnels.com/images/7455/9459cc2c50a346c394a9e2c168312d11_e2o39_1536.png" alt="OpenClaw Micro-SaaS Accelerator" loading="lazy" />
-          <div class="stack-item-body">
-            <span class="stack-item-value">$997 Value</span>
-            <h3>Micro-SaaS Accelerator</h3>
-            <p>A 3-day intensive to build, deploy, and monetize AI-powered apps controlled by OpenClaw — with users, branding, and payments built in.</p>
-          </div>
-        </div>
-
-        <div class="stack-item">
-          <img class="stack-item-img" src="https://img.flexifunnels.com/images/7455/7ac2ac8d5a9046829e695fa34e17eba5_jd4iu_1536.png" alt="OpenClaw Members Area" loading="lazy" />
-          <div class="stack-item-body">
-            <span class="stack-item-value">$497 Value</span>
-            <h3>Free Members Area</h3>
-            <p>Your central hub for training, updates, and implementation walkthroughs. Every new release, all in one place.</p>
-          </div>
-        </div>
-
-        <div class="stack-item stack-item-featured">
-          <img class="stack-item-img" src="https://img.flexifunnels.com/images/7455/b6ed97fc72c543b89a2aec4b2c1ce38c_ryffr_1536.png" alt="OpenClaw Titanium Suite" loading="lazy" />
-          <div class="stack-item-body">
-            <span class="stack-item-value">$997 Value</span>
-            <h3>Titanium Software Suite</h3>
-            <p>The complete integrated stack powering your OpenClaw ecosystem: Mintbird, Page Sprout, Course Sprout, Letterman, Quizforma, and Global Control — all wired together, all working as one unified operational engine.</p>
-          </div>
-        </div>
-      </div>
-      <div class="section-cta">
-        <p>Everything installed, configured, and ready — $5,373 in value, one bundle.</p>
-        <a href="https://pl.setyourownsalary.com/997" class="btn btn-lobster" target="_blank" rel="noopener noreferrer">Unlock the Full Arsenal &rarr;</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== BONUSES ========== -->
-  <section class="sec-bonuses">
-    <div class="container">
-      <div class="tag" style="margin-bottom: var(--space-sm);">Also Included</div>
-      <h2 class="section-title">Plus These Special Bonuses</h2>
-      <p class="section-subtitle">Five extra modules that give OpenClaw the personality, permissions, and intelligence to run your operation exactly the way you want it.</p>
-
-      <div class="bonuses-grid">
-        <div class="bonus-card">
-          <div class="bonus-icon">📡</div>
-          <div class="bonus-card-body">
-            <h4>ClawPusher</h4>
-            <p>Automatic content syndication across your social networks — without giving OpenClaw direct access to your accounts.</p>
-            <span class="bonus-value-tag">$497 Value</span>
-          </div>
-        </div>
-
-        <div class="bonus-card">
-          <div class="bonus-icon">🔌</div>
-          <div class="bonus-card-body">
-            <h4>API Skills Builder</h4>
-            <p>The structured framework that trains OpenClaw to control any software with a public API — turning integrations into real, working skills.</p>
-            <span class="bonus-value-tag">$497 Value</span>
-          </div>
-        </div>
-
-        <div class="bonus-card">
-          <div class="bonus-icon">🧠</div>
-          <div class="bonus-card-body">
-            <h4>Custom Soul Builder</h4>
-            <p>Align OpenClaw with your mission, objectives, and voice — giving it a tailored personality and strategic direction you won't get out of the box.</p>
-            <span class="bonus-value-tag">$297 Value</span>
-          </div>
-        </div>
-
-        <div class="bonus-card">
-          <div class="bonus-icon">🛡️</div>
-          <div class="bonus-card-body">
-            <h4>Cost Permission Directive</h4>
-            <p>A built-in budget safeguard — OpenClaw pauses and requests your approval before spending beyond your defined limit.</p>
-            <span class="bonus-value-tag">$297 Value</span>
-          </div>
-        </div>
-
-        <div class="bonus-card" style="grid-column: 1 / -1;">
-          <div class="bonus-icon">👔</div>
-          <div class="bonus-card-body">
-            <h4>CEO Directive</h4>
-            <p>Upgrades OpenClaw from passive responder to active executive — identifying risks, correcting breakdowns, and preventing issues before they ever reach you.</p>
-            <span class="bonus-value-tag">$297 Value</span>
-          </div>
-        </div>
-      </div>
-      <div class="section-cta">
-        <p>All five bonuses included at no extra cost during launch.</p>
-        <a href="https://pl.setyourownsalary.com/997" class="btn btn-lobster" target="_blank" rel="noopener noreferrer">Claim the Bonuses &rarr;</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== SOCIAL PROOF ========== -->
-  <section class="sec-social-proof">
-    <div class="container">
-      <div class="tag" style="margin-bottom: var(--space-sm); background: var(--green); color: #000;">Real Results</div>
-      <h2 class="section-title">What People Are Saying</h2>
-      <p class="section-subtitle">Here's what early OpenClaw users are reporting from the field.</p>
-
-      <div class="testimonial-grid">
-        <div class="testimonial-img-card">
-          <img src="https://img.flexifunnels.com/images/7455/964676777c744108b9e7973c48cca350_at9nr_744.png" alt="OpenClaw user testimonial" loading="lazy" />
-        </div>
-        <div class="testimonial-img-card">
-          <img src="https://img.flexifunnels.com/images/7455/e9a3ac4c65584a03a58489b6c3e86610_8iec3_744.png" alt="OpenClaw user testimonial" loading="lazy" />
-        </div>
-      </div>
-      <div class="section-cta">
-        <p>Join the entrepreneurs already using OpenClaw to run their operations.</p>
-        <a href="https://pl.setyourownsalary.com/997" class="btn btn-lobster" target="_blank" rel="noopener noreferrer">Get Instant Access &rarr;</a>
+        <p>Everything installed, configured, and ready to go.</p>
+        <a href="#bundle-pricing" class="btn btn-lobster toc-link">Choose Your Bundle &rarr;</a>
       </div>
     </div>
   </section>
 
   <!-- ========== PRICING ========== -->
-  <section class="sec-pricing">
+  <section class="sec-pricing" id="bundle-pricing">
     <div class="container">
-      <div class="tag" style="background: var(--lobster); color: #fff; border-color: #000; margin-bottom: var(--space-sm);">Choose Your Path &mdash; Limited Launch Pricing</div>
-      <h2 class="section-title" style="color: #000;">Which OpenClaw Is Right for You?</h2>
-      <p class="section-subtitle" style="color: #000; opacity: 0.85;">Same powerful AI engine. Three ways to get started. Lock in launch pricing before it goes up.</p>
+      <div class="tag" style="background: var(--lobster); color: #fff; border-color: #000; margin-bottom: var(--space-sm);">Choose Your Bundle</div>
+      <h2 class="section-title" style="color: #000;">Pick The Bundle That's Right For You</h2>
+      <p class="section-subtitle" style="color: #000; opacity: 0.85;">All bundles include the core OpenClaw system. Choose the level that matches your goals.</p>
 
-      <img src="https://img.flexifunnels.com/images/7455/1f56421aca974d3fb3ea5ad4d556b284_y91aw_1038.png" alt="OpenClaw Mega Bundle options" loading="lazy" style="width: 100%; display: block; border: var(--border-thick); box-shadow: var(--shadow-hard); margin-bottom: var(--space-lg);" />
-
-      <div class="pricing-grid">
-
-        <!-- Pro Bundle $997 (featured) -->
-        <div class="pricing-card pricing-pro">
-          <div class="pricing-featured-badge">&#128293; Most Popular</div>
+      <div class="pricing-grid-3">
+        <!-- Silver -->
+        <div class="pricing-card-3">
+          <img src="images/openclaw/silver.png" alt="Silver Bundle" class="pricing-card-img" loading="lazy" />
           <div class="pricing-card-header">
-            <span class="pricing-tier-label">Pro Mega Bundle</span>
+            <span class="pricing-tier-name" style="color: var(--blue);">Silver</span>
             <div class="pricing-amount">
-              <span class="pricing-was">$3,985</span>
-              <span class="pricing-price pricing-price-gold">$997</span>
+              <span class="pricing-was">,276</span>
+              <span class="pricing-price" style="color: var(--blue);"></span>
             </div>
-            <p class="pricing-tagline" style="color: var(--green); opacity: 0.9;">Done With You</p>
+            <p class="pricing-tagline">One-Time Payment</p>
           </div>
-          <ul class="pricing-includes pricing-includes-white">
-            <li><strong>Shadow Intensive (14 Days Live)</strong> — Chad &amp; team deploy + optimize in real time</li>
-            <li><strong>Private VPS Install</strong> — Fully configured on your own infrastructure</li>
-            <li><strong>OpenClaw Control Board</strong> — Custom execution dashboard</li>
-            <li><strong>Skills Vault</strong> — Full training portal + ongoing updates</li>
-            <li><strong>Titanium Suite</strong> — Complete integrated software stack</li>
-          </ul>
+          <div class="pricing-feature-table">
+            <div class="pricing-feature-row"><span>Claw Launcher Install</span><span class="pricing-check">&#10003;</span></div>
+            <div class="pricing-feature-row"><span>Claw Launcher Onboarder</span><span class="pricing-check">&#10003;</span></div>
+            <div class="pricing-feature-row"><span>3-Day Onboarding Workshop</span><span class="pricing-check">&#10003;</span></div>
+            <div class="pricing-feature-row"><span>Cashflow Engine</span><span class="pricing-check">&#10003;</span></div>
+            <div class="pricing-feature-row"><span>Skill Repository (100+ Skills)</span><span class="pricing-check">&#10003;</span></div>
+            <div class="pricing-feature-row"><span>Control Panel</span><span class="pricing-check">&#10003;</span></div>
+            <div class="pricing-feature-row"><span>Business Builder</span><span class="pricing-check">&#10003;</span></div>
+            <div class="pricing-feature-row"><span>Agency License (200 Clients)</span><span class="pricing-cross">&#10007;</span></div>
+            <div class="pricing-feature-row"><span>Connector Series</span><span class="pricing-check">&#10003;</span></div>
+            <div class="pricing-feature-row"><span>Members Area</span><span class="pricing-check">&#10003;</span></div>
+            <div class="pricing-feature-row"><span>Titanium Suite</span><span class="pricing-cross">&#10007;</span></div>
+          </div>
           <div class="pricing-cta">
-            <a href="https://pl.setyourownsalary.com/997" class="btn btn-lobster-cta" target="_blank" rel="noopener noreferrer" style="width: 100%; text-align: center;">Get Instant Access &rarr;</a>
-            <p style="font-size: 12px; color: rgba(255,255,255,0.55); margin: 0; text-align: center;">&#10003; 14-day money-back guarantee &nbsp;&middot;&nbsp; Price goes to $1,497 after launch</p>
+            <a href="https://www.jvzoo.com/b/115699/435843/3" class="btn btn-lobster" target="_blank" rel="noopener noreferrer" style="width: 100%; text-align: center;">Get Silver Now &rarr;</a>
+            <p style="font-size: 12px; opacity: 0.55; margin: 0; text-align: center;">&#10003; 14-day money-back guarantee</p>
           </div>
         </div>
 
-        <!-- Enterprise -->
-        <div class="pricing-card pricing-enterprise">
+        <!-- Platinum (featured) -->
+        <div class="pricing-card-3 pricing-featured">
+          <div class="pricing-featured-badge">&#128293; Best Value</div>
+          <img src="images/openclaw/platinum.png" alt="Platinum Bundle" class="pricing-card-img" loading="lazy" />
           <div class="pricing-card-header">
-            <span class="pricing-tier-label">Enterprise</span>
+            <span class="pricing-tier-name">Platinum</span>
             <div class="pricing-amount">
-              <span class="pricing-price" style="font-size: 38px;">Custom</span>
+              <span class="pricing-was" style="color: rgba(255,255,255,0.5);">,270</span>
+              <span class="pricing-price pricing-price-gold">,497</span>
             </div>
-            <p class="pricing-tagline">Done For Your Team</p>
+            <p class="pricing-tagline" style="color: var(--green); opacity: 0.9;">Everything Included</p>
           </div>
-          <ul class="pricing-includes">
-            <li>10+ VPS installs &amp; deployments</li>
-            <li>Dedicated onboarding support</li>
-            <li>Bulk licensing &amp; team access</li>
-            <li>Ongoing account management</li>
-            <li>Custom configuration per team member</li>
-          </ul>
+          <div class="pricing-feature-table">
+            <div class="pricing-feature-row"><span>Claw Launcher Install</span><span class="pricing-check">&#10003;</span></div>
+            <div class="pricing-feature-row"><span>Claw Launcher Onboarder</span><span class="pricing-check">&#10003;</span></div>
+            <div class="pricing-feature-row"><span>3-Day Onboarding Workshop</span><span class="pricing-check">&#10003;</span></div>
+            <div class="pricing-feature-row"><span>Cashflow Engine</span><span class="pricing-check">&#10003;</span></div>
+            <div class="pricing-feature-row"><span>Skill Repository (100+ Skills)</span><span class="pricing-check">&#10003;</span></div>
+            <div class="pricing-feature-row"><span>Control Panel</span><span class="pricing-check">&#10003;</span></div>
+            <div class="pricing-feature-row"><span>Business Builder</span><span class="pricing-check">&#10003;</span></div>
+            <div class="pricing-feature-row"><span>Agency License (200 Clients)</span><span class="pricing-check">&#10003;</span></div>
+            <div class="pricing-feature-row"><span>Connector Series</span><span class="pricing-check">&#10003;</span></div>
+            <div class="pricing-feature-row"><span>Members Area</span><span class="pricing-check">&#10003;</span></div>
+            <div class="pricing-feature-row"><span>Titanium Suite</span><span class="pricing-check">&#10003;</span></div>
+          </div>
           <div class="pricing-cta">
-            <a href="openclaw-enterprise.html" class="btn" target="_blank" rel="noopener noreferrer" style="width: 100%; text-align: center; background: var(--ink); color: var(--bg-paper);">Talk to Us &rarr;</a>
-            <p style="font-size: 12px; opacity: 0.55; margin: 0; text-align: center;">Response within 24 hours</p>
+            <a href="https://www.jvzoo.com/b/115699/435839/3" class="btn btn-lobster-cta" target="_blank" rel="noopener noreferrer" style="width: 100%; text-align: center;">Get Platinum Now &rarr;</a>
+            <p style="font-size: 12px; color: rgba(255,255,255,0.55); margin: 0; text-align: center;">&#10003; 14-day money-back guarantee &middot; Price goes up after launch</p>
           </div>
         </div>
 
+        <!-- Gold -->
+        <div class="pricing-card-3">
+          <img src="images/openclaw/gold.png" alt="Gold Bundle" class="pricing-card-img" loading="lazy" />
+          <div class="pricing-card-header">
+            <span class="pricing-tier-name" style="color: var(--gold);">Gold</span>
+            <div class="pricing-amount">
+              <span class="pricing-was">,273</span>
+              <span class="pricing-price" style="color: var(--gold);"></span>
+            </div>
+            <p class="pricing-tagline">One-Time Payment</p>
+          </div>
+          <div class="pricing-feature-table">
+            <div class="pricing-feature-row"><span>Claw Launcher Install</span><span class="pricing-check">&#10003;</span></div>
+            <div class="pricing-feature-row"><span>Claw Launcher Onboarder</span><span class="pricing-check">&#10003;</span></div>
+            <div class="pricing-feature-row"><span>3-Day Onboarding Workshop</span><span class="pricing-check">&#10003;</span></div>
+            <div class="pricing-feature-row"><span>Cashflow Engine</span><span class="pricing-check">&#10003;</span></div>
+            <div class="pricing-feature-row"><span>Skill Repository (100+ Skills)</span><span class="pricing-check">&#10003;</span></div>
+            <div class="pricing-feature-row"><span>Control Panel</span><span class="pricing-check">&#10003;</span></div>
+            <div class="pricing-feature-row"><span>Business Builder</span><span class="pricing-check">&#10003;</span></div>
+            <div class="pricing-feature-row"><span>Agency License (100 Clients)</span><span class="pricing-check">&#10003;</span></div>
+            <div class="pricing-feature-row"><span>Connector Series</span><span class="pricing-check">&#10003;</span></div>
+            <div class="pricing-feature-row"><span>Members Area</span><span class="pricing-check">&#10003;</span></div>
+            <div class="pricing-feature-row"><span>Titanium Suite</span><span class="pricing-cross">&#10007;</span></div>
+          </div>
+          <div class="pricing-cta">
+            <a href="https://www.jvzoo.com/b/115699/435841/3" class="btn btn-lobster" target="_blank" rel="noopener noreferrer" style="width: 100%; text-align: center;">Get Gold Now &rarr;</a>
+            <p style="font-size: 12px; opacity: 0.55; margin: 0; text-align: center;">&#10003; 14-day money-back guarantee</p>
+          </div>
+        </div>
       </div>
 
       <!-- Guarantee bar -->
       <div class="pricing-guarantee">
-        <img src="https://img.flexifunnels.com/images/7455/guarantee1_2eywk_1920.png" alt="14-day money-back guarantee" loading="lazy" style="width: 80px; flex-shrink: 0;" />
+        <div style="font-size: 36px; flex-shrink: 0;">&#128176;</div>
         <div>
-          <strong>No-Questions-Asked Guarantee</strong>
-          <p>If OpenClaw isn&rsquo;t the right fit for your business &mdash; for any reason &mdash; contact us within 14 days. No interrogations, no hoops. We refund.</p>
+          <strong>One-Time Payment &mdash; No Monthly Fees Ever</strong>
+          <p>All bundles are a single payment. No subscriptions, no hidden charges, no upsells after purchase.</p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== GUARANTEE ========== -->
+  <section class="sec-guarantee" id="guarantee">
+    <div class="container">
+      <div class="tag" style="background: var(--green); color: #000; margin-bottom: var(--space-sm);">Risk-Free</div>
+      <h2 class="section-title">14-Day Simple Guarantee</h2>
+      <p class="section-subtitle">No hoops. No fine print. Just results &mdash; or your money back.</p>
+
+      <div class="guarantee-box">
+        <div class="guarantee-badge">
+          <span class="guarantee-badge-number">14</span>
+          <span class="guarantee-badge-label">Day</span>
+        </div>
+        <div class="guarantee-text">
+          <h3>Try It Risk-Free</h3>
+          <p>Go through the guide. Deploy your first AI worker. Test the system. If you don't see how this changes execution&hellip; email us within <strong>14 days</strong>. We'll refund you. No drama. No questions. You take the risk off your shoulders.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== MORE SOCIAL PROOF ========== -->
+  <section class="sec-social-proof-new">
+    <div class="container">
+      <div class="tag" style="background: var(--coral); color: #fff; border-color: var(--ink); margin-bottom: var(--space-sm);">More Results</div>
+      <h2 class="section-title">The Community Keeps Winning</h2>
+      <p class="section-subtitle">Still on the fence? Let them do the talking.</p>
+
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="testimonial-card-header" style="background: var(--gold);">
+            <span class="testimonial-quote">&ldquo;This completely changed how I run my business!&rdquo;</span>
+            <span class="testimonial-verified">&#10003; Verified</span>
+          </div>
+          <img src="images/openclaw/test25.png" alt="Customer result" loading="lazy" />
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-card-header" style="background: var(--lavender);">
+            <span class="testimonial-quote">&ldquo;I deployed my first AI worker in under 20 minutes!&rdquo;</span>
+            <span class="testimonial-verified">&#10003; Verified</span>
+          </div>
+          <img src="images/openclaw/test26.png" alt="Customer result" loading="lazy" />
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-card-header" style="background: var(--green); color: #fff;">
+            <span class="testimonial-quote">&ldquo;Revenue up. Workload down. This is the cheat code.&rdquo;</span>
+            <span class="testimonial-verified" style="color: #fff;">&#10003; Verified</span>
+          </div>
+          <img src="images/openclaw/test27.png" alt="Customer result" loading="lazy" />
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-card-header" style="background: var(--pink);">
+            <span class="testimonial-quote">&ldquo;Hands down the best investment I've ever made online.&rdquo;</span>
+            <span class="testimonial-verified">&#10003; Verified</span>
+          </div>
+          <img src="images/openclaw/test28.png" alt="Customer result" loading="lazy" />
+        </div>
+      </div>
+
+      <div class="section-cta">
+        <p>450+ entrepreneurs already seeing results just like these</p>
+        <a href="#bundle-pricing" class="btn btn-lobster toc-link">Get Instant Access &rarr;</a>
       </div>
     </div>
   </section>
@@ -2419,17 +2727,15 @@
       <div class="quote-with-photo">
         <img class="quote-photo" src="images/dario-amodei.jpg" alt="Dario Amodei, CEO of Anthropic" />
         <blockquote>
-          "AI is not just automating specific tasks &mdash; it is becoming a general labor substitute for humans."
+          &ldquo;AI is not just automating specific tasks &mdash; it is becoming a general labor substitute for humans.&rdquo;
           <br><span style="font-style: normal; font-size: 14px; font-weight: 700;">&mdash; Dario Amodei, CEO of Anthropic</span>
         </blockquote>
       </div>
 
-      <p class="highlight-text">This isn't about replacing you. It's about making sure you're not replaced. Business owners who adopt AI tools early gain a significant competitive advantage &mdash; lower costs, faster response times, and the ability to operate at a scale that was previously impossible without hiring.</p>
-
-      <p class="highlight-text" style="opacity: 0.8;">OpenClaw is one of the most accessible AI business tools available today. The question isn't whether to start &mdash; it's how soon.</p>
+      <p class="highlight-text">This isn't about replacing you. It's about making sure you're not replaced. Business owners who adopt AI tools early gain a significant competitive advantage.</p>
 
       <div class="cta-row">
-        <a href="https://pl.setyourownsalary.com/997" class="btn btn-lobster" target="_blank" rel="noopener noreferrer">Get OpenClaw Now &rarr;</a>
+        <a href="#bundle-pricing" class="btn btn-lobster toc-link">Get OpenClaw Now &rarr;</a>
         <a href="ai-resources.html" class="btn btn-outline">Explore More AI Resources</a>
       </div>
     </div>
@@ -2449,7 +2755,7 @@
     </div>
   </section>
 
-  <!-- FOOTER (injected by navigation.js) -->
+    <!-- FOOTER (injected by navigation.js) -->
 
   <!-- WAITLIST MODAL -->
   <div id="waitlistModal" style="
@@ -2660,15 +2966,14 @@
       var revealSelectors = [
         '.section-title', '.section-subtitle',
         '.analogy-card', '.pillar-card',
-        '.capability-card', '.step-card',
-        '.use-case-card', '.savings-callout',
-        '.stack-item', '.bonus-card',
-        '.testimonial-img-card', '.community-stat',
+        '.testimonial-card', '.bundle-component',
+        '.bundle-total-value', '.guarantee-callout',
+        '.upgrade-item',
         '.section-cta', '.origin-box',
-        '.security-note', '.start-cta-box',
-        '.pricing-card', '.pricing-guarantee',
+        '.pricing-card-3', '.pricing-guarantee',
+        '.guarantee-box',
         '.enterprise-strip-inner',
-        '.quote-with-photo', '.integrations-bar'
+        '.quote-with-photo'
       ];
 
       // Collect all elements
@@ -2695,8 +3000,8 @@
       if (videoBlock) { videoBlock.classList.add('reveal-scale'); }
 
       // Pricing featured card scale
-      var pricingPro = document.querySelector('.pricing-pro');
-      if (pricingPro) { pricingPro.classList.remove('reveal'); pricingPro.classList.add('reveal-scale'); }
+      var pricingFeatured = document.querySelector('.pricing-featured');
+      if (pricingFeatured) { pricingFeatured.classList.remove('reveal'); pricingFeatured.classList.add('reveal-scale'); }
 
       var observer = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
