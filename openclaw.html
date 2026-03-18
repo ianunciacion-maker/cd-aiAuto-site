@@ -2240,6 +2240,117 @@
       .pricing-guarantee { flex-direction: column; text-align: center; }
     }
 
+    /* Bundle Hero / Pitch Section */
+    .sec-bundle-hero {
+      background: #0a0a14;
+      color: #fff;
+      padding: var(--space-xxl) 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .sec-bundle-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(99,102,241,0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 50%, rgba(245,166,35,0.1) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .bundle-hero-headline {
+      font-size: clamp(32px, 5vw, 56px);
+      line-height: 1.15;
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto var(--space-md);
+    }
+    .bundle-hero-headline .gradient-text {
+      background: linear-gradient(135deg, #6366f1, #a78bfa, #f5a623);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .bundle-hero-sub {
+      text-align: center;
+      font-size: clamp(16px, 2vw, 20px);
+      opacity: 0.8;
+      max-width: 700px;
+      margin: 0 auto var(--space-lg);
+      line-height: 1.6;
+    }
+    .bundle-capsules {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: var(--space-lg);
+    }
+    .bundle-capsule {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 40px;
+      padding: 8px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      backdrop-filter: blur(4px);
+    }
+    .bundle-capsule svg {
+      opacity: 0.7;
+      flex-shrink: 0;
+    }
+    .bundle-capsule-accent {
+      background: rgba(245,166,35,0.15);
+      border-color: rgba(245,166,35,0.3);
+      color: #f5a623;
+    }
+    .bundle-video-frame {
+      max-width: 860px;
+      margin: 0 auto;
+      position: relative;
+      border: 3px solid rgba(255,255,255,0.12);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 0 60px rgba(99,102,241,0.2), 0 0 120px rgba(99,102,241,0.05);
+    }
+    .bundle-video-hud {
+      background: rgba(0,0,0,0.7);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .bundle-video-hud-dot {
+      width: 8px;
+      height: 8px;
+      background: #22c55e;
+      border-radius: 50%;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    .bundle-video-hud-tag {
+      background: rgba(99,102,241,0.3);
+      padding: 3px 10px;
+      border-radius: 4px;
+      font-size: 10px;
+      margin-left: auto;
+    }
+    .bundle-video-frame iframe {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      display: block;
+    }
+
     /* Coming Soon Modal */
     .coming-soon-overlay {
       display: none;
@@ -2404,6 +2515,67 @@
 
       <div class="video-cta">
         <a href="#" class="btn btn-lobster-cta" onclick="event.preventDefault(); document.getElementById('coming-soon-modal').classList.add('active');">Get Instant Access &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== BUNDLE HERO / PITCH ========== -->
+  <section class="sec-bundle-hero">
+    <div class="container">
+      <h2 class="bundle-hero-headline">
+        Finally&hellip; A Fully Installed, Fully Integrated
+        <span class="gradient-text">AI Command Center</span>
+        That Builds, Manages, and Runs
+        <span class="gradient-text">Your Entire Operation</span>
+      </h2>
+      <p class="bundle-hero-sub">
+        Plus you get the training, live support, done-for-you skills, the complete software suite, and your own
+        <strong>custom Control Board built to ensure you actually win with OpenClaw.</strong>
+      </p>
+
+      <div class="bundle-capsules">
+        <div class="bundle-capsule">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+          Complete Software Suite
+        </div>
+        <div class="bundle-capsule">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+          All Upgrades Included
+        </div>
+        <div class="bundle-capsule">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+          Live Support Access
+        </div>
+        <div class="bundle-capsule">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+          Done-For-You Skills
+        </div>
+        <div class="bundle-capsule">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+          Full Training Program
+        </div>
+        <div class="bundle-capsule">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M3 9h18M9 21V9"></path></svg>
+          Custom Control Board
+        </div>
+        <div class="bundle-capsule bundle-capsule-accent">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg>
+          Fully Installed &amp; Integrated
+        </div>
+        <div class="bundle-capsule bundle-capsule-accent">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          One-Time Price &mdash; Today Only
+        </div>
+      </div>
+
+      <!-- Vimeo Video Embed -->
+      <div class="bundle-video-frame">
+        <div class="bundle-video-hud">
+          <span class="bundle-video-hud-dot"></span>
+          <span>OPENCLAW LIVE DEMO</span>
+          <span class="bundle-video-hud-tag">AI SYSTEM ACTIVE</span>
+        </div>
+        <iframe src="https://player.vimeo.com/video/1174520054?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" allowfullscreen title="OpenClaw Demo" loading="lazy"></iframe>
       </div>
     </div>
   </section>
@@ -3110,7 +3282,9 @@
         '.pricing-card-3', '.pricing-guarantee',
         '.guarantee-box',
         '.enterprise-strip-inner',
-        '.quote-with-photo'
+        '.quote-with-photo',
+        '.bundle-hero-headline', '.bundle-capsules',
+        '.bundle-video-frame'
       ];
 
       // Collect all elements
