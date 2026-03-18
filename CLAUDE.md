@@ -27,7 +27,7 @@ vercel --prod            # Manual production deploy (auto-deploys on push to mai
 
 ## Code Style Rules
 
-**JavaScript (ESLint):** Single quotes, semicolons required, 2-space indent, `prefer-const` (error), `no-var` (error), `prefer-arrow-callback`, `prefer-template`, `object-shorthand`, max line length 100 (warn).
+**JavaScript (ESLint):** Single quotes, semicolons required, 2-space indent, `prefer-const` (error), `no-var` (error), `prefer-arrow-callback`, `prefer-template`, `object-shorthand`, max line length 100 (warn), `no-trailing-spaces` (error), `eol-last` (error). ESLint only covers `js/**/*.js` — API functions in `api/` are not linted.
 
 **CSS (Stylelint):** Single quotes, `declaration-no-important: true`, `color-named: never`, kebab-case custom properties, numeric `font-weight-notation`, 2-space indent. **Exception:** Quill.js blog editor styles require `!important` overrides — these files must bypass or disable the `declaration-no-important` rule.
 
@@ -111,3 +111,5 @@ Local dev: `/api/.env.local` (gitignored). Production: Vercel dashboard. Templat
 - `vercel.json` is intentionally minimal — complex `functions` config breaks static file serving
 - Stripe webhook events logged to `webhook_events` Supabase table for audit trail
 - Blog editor Quill styles need `!important` which conflicts with stylelint rule — disable rule inline for those files
+- `.gitignore` has aggressive wildcard patterns (`*secret*`, `*token*`, `*password*`) — new files with these substrings in the name will be silently ignored. Exceptions exist for `user/*password*.html` and `plans/*password*.md`.
+- `npm run validate` only checks `*.html` in the project root — HTML files in subdirectories (`admin/`, `user/`, `tools/`, `blog/`) are not validated
