@@ -2239,6 +2239,53 @@
       .bundle-total-value h3 { font-size: 20px; }
       .pricing-guarantee { flex-direction: column; text-align: center; }
     }
+
+    /* Coming Soon Modal */
+    .coming-soon-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(4px);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+    }
+    .coming-soon-overlay.active { display: flex; }
+    .coming-soon-box {
+      background: var(--bg-white);
+      border: var(--border-thick);
+      box-shadow: var(--shadow-hard);
+      padding: var(--space-lg) var(--space-xl);
+      text-align: center;
+      max-width: 420px;
+      width: 90%;
+      position: relative;
+    }
+    .coming-soon-box h3 {
+      font-size: 28px;
+      margin-bottom: var(--space-xs);
+    }
+    .coming-soon-box p {
+      font-size: 15px;
+      opacity: 0.8;
+      margin-bottom: var(--space-md);
+    }
+    .coming-soon-close {
+      background: var(--ink);
+      color: #fff;
+      border: none;
+      padding: 10px 28px;
+      font-weight: 900;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      border: var(--border-thin);
+      transition: transform 0.15s ease;
+    }
+    .coming-soon-close:hover { transform: scale(1.04); }
+    [data-theme="dark"] .coming-soon-box { background: var(--bg-paper); }
   </style>
 </head>
 
@@ -2257,7 +2304,7 @@
       <p class="hero-subtitle">The autonomous AI agent that builds, manages, and scales entire online businesses &mdash; without technical skills.</p>
       <p class="hero-stats">85K+ GitHub Stars &nbsp;&middot;&nbsp; 100K+ Community &nbsp;&middot;&nbsp; $5,373 in Value</p>
       <div class="hero-buttons">
-        <a href="https://pl.setyourownsalary.com/997" class="btn btn-lobster-cta" target="_blank" rel="noopener noreferrer">Get Instant Access &rarr;</a>
+        <a href="#" class="btn btn-lobster-cta" onclick="event.preventDefault(); document.getElementById('coming-soon-modal').classList.add('active');">Get Instant Access &rarr;</a>
         <a href="#what-is-openclaw" class="btn btn-outline toc-link">Explore the Guide &darr;</a>
       </div>
     </div>
@@ -2356,7 +2403,7 @@
       </div>
 
       <div class="video-cta">
-        <a href="https://pl.setyourownsalary.com/email997" class="btn btn-lobster-cta" target="_blank" rel="noopener noreferrer">Get Instant Access &rarr;</a>
+        <a href="#" class="btn btn-lobster-cta" onclick="event.preventDefault(); document.getElementById('coming-soon-modal').classList.add('active');">Get Instant Access &rarr;</a>
       </div>
     </div>
   </section>
@@ -2639,7 +2686,7 @@
             <p class="pricing-subtext">&#128293; Today Only &mdash; One-Time Payment</p>
           </div>
           <div class="pricing-cta-mid">
-            <a href="https://www.jvzoo.com/b/115699/435843/3" class="btn btn-silver-cta" target="_blank" rel="noopener noreferrer">GET SILVER NOW &rarr;</a>
+            <a href="#" class="btn btn-silver-cta" onclick="event.preventDefault(); document.getElementById('coming-soon-modal').classList.add('active');">GET SILVER NOW &rarr;</a>
           </div>
           <div class="pricing-features-label">Included Features</div>
           <div class="pricing-feature-table">
@@ -2673,7 +2720,7 @@
             <p class="pricing-subtext" style="opacity: 0.7;">&#128293; Today Only &mdash; One-Time Payment</p>
           </div>
           <div class="pricing-cta-mid">
-            <a href="https://www.jvzoo.com/b/115699/435839/3" class="btn btn-platinum-cta" target="_blank" rel="noopener noreferrer">GET PLATINUM NOW &rarr;</a>
+            <a href="#" class="btn btn-platinum-cta" onclick="event.preventDefault(); document.getElementById('coming-soon-modal').classList.add('active');">GET PLATINUM NOW &rarr;</a>
           </div>
           <div class="pricing-features-label">Included Features</div>
           <div class="pricing-feature-table">
@@ -2706,7 +2753,7 @@
             <p class="pricing-subtext">&#128293; Today Only &mdash; One-Time Payment</p>
           </div>
           <div class="pricing-cta-mid">
-            <a href="https://www.jvzoo.com/b/115699/435841/3" class="btn btn-gold-cta" target="_blank" rel="noopener noreferrer">GET GOLD NOW &rarr;</a>
+            <a href="#" class="btn btn-gold-cta" onclick="event.preventDefault(); document.getElementById('coming-soon-modal').classList.add('active');">GET GOLD NOW &rarr;</a>
           </div>
           <div class="pricing-features-label">Included Features</div>
           <div class="pricing-feature-table">
@@ -3154,6 +3201,15 @@
       });
     })();
   </script>
+
+  <!-- Coming Soon Modal -->
+  <div id="coming-soon-modal" class="coming-soon-overlay" onclick="if(event.target===this) this.classList.remove('active');">
+    <div class="coming-soon-box">
+      <h3>&#128640; Coming Soon</h3>
+      <p>Bundle pricing links are being finalized. Check back shortly!</p>
+      <button class="coming-soon-close" onclick="document.getElementById('coming-soon-modal').classList.remove('active');">Got It</button>
+    </div>
+  </div>
 
 </body>
 
