@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>OpenClaw Cracked – The Complete AI Business Bundle | Ai-Auto</title>
+  <title>OpenClaw 101 – Ai-Auto</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="The plain-English guide to OpenClaw, the cloud-based autonomous AI agent that builds and manages online businesses. Built on the open-source framework with 85K+ GitHub stars." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1991,10 +1991,8 @@
 
     /* ========== SECTION: 3-TIER PRICING ========== */
     .pricing-grid-3 {
-      display: grid;
-      grid-template-columns: 1fr 1.15fr 1fr;
-      gap: var(--space-md);
-      align-items: start;
+      display: flex;
+      justify-content: center;
       margin: var(--space-md) 0;
     }
 
@@ -2011,22 +2009,21 @@
       overflow: hidden;
     }
 
-    .pricing-card-3:not(.pricing-featured):hover {
+    .pricing-card-3:hover {
       transform: translateY(-4px);
       box-shadow: 0 12px 40px rgba(0,0,0,0.4);
     }
 
-    .pricing-card-silver { background: #2a2d35; }
-    .pricing-card-gold { background: #2d3328; }
-
-    .pricing-featured {
+    .pricing-card-gold {
       background: linear-gradient(160deg, #1a1d3a 0%, #0d1025 100%);
       color: #fff;
       border-color: var(--gold);
+      max-width: 480px;
+      width: 100%;
       animation: floatY 4s ease-in-out infinite, floatShadow 4s ease-in-out infinite;
     }
 
-    .pricing-featured:hover {
+    .pricing-card-gold:hover {
       animation-play-state: paused;
       transform: translateY(-4px);
     }
@@ -2056,7 +2053,7 @@
       font-size: 48px;
     }
 
-    .pricing-featured .pricing-tier-name {
+    .pricing-card-gold .pricing-tier-name {
       color: var(--gold);
     }
 
@@ -2079,26 +2076,44 @@
       letter-spacing: 0.03em;
     }
 
-    .btn-silver-cta {
-      background: #5a5e6b;
-      color: #fff;
-      border: 2px solid #6e7280;
-    }
-    .btn-silver-cta:hover { background: #6e7280; }
-
     .btn-gold-cta {
-      background: linear-gradient(135deg, #c5962a, #e6b040);
-      color: #000;
-      border: 2px solid #d4a833;
-    }
-    .btn-gold-cta:hover { background: linear-gradient(135deg, #d4a833, #f0c050); }
-
-    .btn-platinum-cta {
       background: linear-gradient(135deg, #e8920a, #f5a623);
       color: #000;
       border: 2px solid #f0a01a;
+      font-size: 17px;
+      padding: 14px 32px;
     }
-    .btn-platinum-cta:hover { background: linear-gradient(135deg, #f0a01a, #ffb733); }
+    .btn-gold-cta:hover { background: linear-gradient(135deg, #f0a01a, #ffb733); }
+
+    .pricing-email-cta {
+      text-align: center;
+      margin-top: var(--space-lg);
+      padding: var(--space-md);
+      border: var(--border-thick);
+      background: var(--bg-white);
+      box-shadow: var(--shadow-hard);
+    }
+
+    .pricing-email-cta h3 {
+      font-size: 22px;
+      margin-bottom: var(--space-xs);
+    }
+
+    .pricing-email-cta p {
+      font-size: 15px;
+      opacity: 0.8;
+      margin-bottom: var(--space-sm);
+    }
+
+    .btn-email-cta {
+      background: var(--bg-paper);
+      color: var(--ink);
+      border: var(--border-thick);
+      font-weight: 800;
+      font-size: 15px;
+      letter-spacing: 0.03em;
+    }
+    .btn-email-cta:hover { background: var(--lavender); }
 
     .pricing-features-label {
       padding: var(--space-sm) var(--space-md) 0;
@@ -2226,177 +2241,19 @@
       .upgrade-item { grid-template-columns: 1fr; }
       .upgrade-item img { border-right: none; border-bottom: var(--border-thick); height: auto; max-height: 250px; }
       .upgrade-features { grid-template-columns: 1fr; }
-      .pricing-grid-3 { grid-template-columns: 1fr; max-width: 480px; margin-left: auto; margin-right: auto; }
-      .pricing-featured { animation: none; }
+      .pricing-card-gold { animation: none; }
       .guarantee-box { grid-template-columns: 1fr; justify-items: center; text-align: center; }
     }
 
     @media (max-width: 480px) {
       .upgrade-item-body { padding: var(--space-sm); }
       .upgrade-item-body h3 { font-size: 20px; }
-      .pricing-card-3 .pricing-price { font-size: 38px; }
-      .pricing-card-3 .pricing-tier-name { font-size: 24px; }
+      .pricing-card-3 .pricing-price { font-size: 42px; }
+      .pricing-card-3 .pricing-tier-name { font-size: 26px; }
+      .pricing-card-gold { max-width: 100%; }
       .bundle-total-value h3 { font-size: 20px; }
       .pricing-guarantee { flex-direction: column; text-align: center; }
     }
-
-    /* Bundle Hero / Pitch Section */
-    .sec-bundle-hero {
-      background: #0a0a14;
-      color: #fff;
-      padding: var(--space-xxl) 0;
-      position: relative;
-      overflow: hidden;
-    }
-    .sec-bundle-hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse at 20% 50%, rgba(99,102,241,0.15) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 50%, rgba(245,166,35,0.1) 0%, transparent 50%);
-      pointer-events: none;
-    }
-    .bundle-hero-headline {
-      font-size: clamp(32px, 5vw, 56px);
-      line-height: 1.15;
-      text-align: center;
-      max-width: 900px;
-      margin: 0 auto var(--space-md);
-    }
-    .bundle-hero-headline .gradient-text {
-      background: linear-gradient(135deg, #6366f1, #a78bfa, #f5a623);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .bundle-hero-sub {
-      text-align: center;
-      font-size: clamp(16px, 2vw, 20px);
-      opacity: 0.8;
-      max-width: 700px;
-      margin: 0 auto var(--space-lg);
-      line-height: 1.6;
-    }
-    .bundle-capsules {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: var(--space-lg);
-    }
-    .bundle-capsule {
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 40px;
-      padding: 8px 18px;
-      font-size: 13px;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      backdrop-filter: blur(4px);
-    }
-    .bundle-capsule svg {
-      opacity: 0.7;
-      flex-shrink: 0;
-    }
-    .bundle-capsule-accent {
-      background: rgba(245,166,35,0.15);
-      border-color: rgba(245,166,35,0.3);
-      color: #f5a623;
-    }
-    .bundle-video-frame {
-      max-width: 860px;
-      margin: 0 auto;
-      position: relative;
-      border: 3px solid rgba(255,255,255,0.12);
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 0 60px rgba(99,102,241,0.2), 0 0 120px rgba(99,102,241,0.05);
-    }
-    .bundle-video-hud {
-      background: rgba(0,0,0,0.7);
-      padding: 10px 16px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
-    .bundle-video-hud-dot {
-      width: 8px;
-      height: 8px;
-      background: #22c55e;
-      border-radius: 50%;
-      animation: pulse-dot 2s ease-in-out infinite;
-    }
-    @keyframes pulse-dot {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
-    }
-    .bundle-video-hud-tag {
-      background: rgba(99,102,241,0.3);
-      padding: 3px 10px;
-      border-radius: 4px;
-      font-size: 10px;
-      margin-left: auto;
-    }
-    .bundle-video-frame iframe {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      display: block;
-    }
-
-    /* Coming Soon Modal */
-    .coming-soon-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(4px);
-      z-index: 9999;
-      justify-content: center;
-      align-items: center;
-    }
-    .coming-soon-overlay.active { display: flex; }
-    .coming-soon-box {
-      background: var(--bg-white);
-      border: var(--border-thick);
-      box-shadow: var(--shadow-hard);
-      padding: var(--space-lg) var(--space-xl);
-      text-align: center;
-      max-width: 420px;
-      width: 90%;
-      position: relative;
-    }
-    .coming-soon-box h3 {
-      font-size: 28px;
-      margin-bottom: var(--space-xs);
-    }
-    .coming-soon-box p {
-      font-size: 15px;
-      opacity: 0.8;
-      margin-bottom: var(--space-md);
-    }
-    .coming-soon-close {
-      background: var(--ink);
-      color: #fff;
-      border: none;
-      padding: 10px 28px;
-      font-weight: 900;
-      font-size: 14px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      cursor: pointer;
-      border: var(--border-thin);
-      transition: transform 0.15s ease;
-    }
-    .coming-soon-close:hover { transform: scale(1.04); }
-    [data-theme="dark"] .coming-soon-box { background: var(--bg-paper); }
   </style>
 </head>
 
@@ -2408,15 +2265,15 @@
   <section class="hero">
     <div class="container">
       <div class="hero-badges">
-        <span class="hero-tag">Exclusive Bundle</span>
+        <span class="hero-tag">Official Guide</span>
         <span class="hero-tag-launch">&#128293; Launch Pricing Active</span>
       </div>
-      <h1>OpenClaw <span class="highlight">Cracked</span></h1>
-      <p class="hero-subtitle">The complete AI business automation bundle &mdash; fully installed, fully integrated, with training, live support, and the entire software suite. One-time payment.</p>
-      <p class="hero-stats">85K+ GitHub Stars &nbsp;&middot;&nbsp; 100K+ Community &nbsp;&middot;&nbsp; $5,373 in Value &nbsp;&middot;&nbsp; 14-Day Guarantee</p>
+      <h1>OpenClaw <span class="highlight">101</span></h1>
+      <p class="hero-subtitle">The autonomous AI agent that builds, manages, and scales entire online businesses &mdash; without technical skills.</p>
+      <p class="hero-stats">85K+ GitHub Stars &nbsp;&middot;&nbsp; 100K+ Community &nbsp;&middot;&nbsp; $5,373 in Value</p>
       <div class="hero-buttons">
-        <a href="#" class="btn btn-lobster-cta" onclick="event.preventDefault(); document.getElementById('coming-soon-modal').classList.add('active');">Get Instant Access &rarr;</a>
-        <a href="#what-is-openclaw" class="btn btn-outline toc-link">See What's Inside &darr;</a>
+        <a href="https://pl.setyourownsalary.com/997" class="btn btn-lobster-cta" target="_blank" rel="noopener noreferrer">Get Instant Access &rarr;</a>
+        <a href="#what-is-openclaw" class="btn btn-outline toc-link">Explore the Guide &darr;</a>
       </div>
     </div>
   </section>
@@ -2441,18 +2298,18 @@
       <span class="marquee-item">$5,373 in Value <span class="marquee-dot">★</span></span>
       <span class="marquee-item">14-Day Money-Back Guarantee <span class="marquee-dot">★</span></span>
       <span class="marquee-item">No Technical Skills Required <span class="marquee-dot">★</span></span>
-      <span class="marquee-item">Fully Installed &amp; Integrated <span class="marquee-dot">★</span></span>
-      <span class="marquee-item">One-Time Payment <span class="marquee-dot">★</span></span>
-      <span class="marquee-item">Complete Software Suite <span class="marquee-dot">★</span></span>
+      <span class="marquee-item">Setup in Under 5 Minutes <span class="marquee-dot">★</span></span>
+      <span class="marquee-item">Zero Prompt Engineering <span class="marquee-dot">★</span></span>
+      <span class="marquee-item">Full Business Automation <span class="marquee-dot">★</span></span>
       <!-- duplicate for seamless loop -->
       <span class="marquee-item">85K+ GitHub Stars <span class="marquee-dot">★</span></span>
       <span class="marquee-item">100K+ Community Members <span class="marquee-dot">★</span></span>
       <span class="marquee-item">$5,373 in Value <span class="marquee-dot">★</span></span>
       <span class="marquee-item">14-Day Money-Back Guarantee <span class="marquee-dot">★</span></span>
       <span class="marquee-item">No Technical Skills Required <span class="marquee-dot">★</span></span>
-      <span class="marquee-item">Fully Installed &amp; Integrated <span class="marquee-dot">★</span></span>
-      <span class="marquee-item">One-Time Payment <span class="marquee-dot">★</span></span>
-      <span class="marquee-item">Complete Software Suite <span class="marquee-dot">★</span></span>
+      <span class="marquee-item">Setup in Under 5 Minutes <span class="marquee-dot">★</span></span>
+      <span class="marquee-item">Zero Prompt Engineering <span class="marquee-dot">★</span></span>
+      <span class="marquee-item">Full Business Automation <span class="marquee-dot">★</span></span>
     </div>
   </div>
 
@@ -2461,7 +2318,7 @@
     <div class="container">
       <div class="tag" style="margin-bottom: var(--space-sm);">The Basics</div>
       <h2 class="section-title">What Is OpenClaw?</h2>
-      <p class="section-subtitle">Before you see everything inside the bundle, here's <strong>what OpenClaw actually is</strong> &mdash; and why thousands of entrepreneurs are using it to build and run entire businesses on autopilot.</p>
+      <p class="section-subtitle">OpenClaw is the cloud-based autonomous AI agent that turns powerful AI automation into a one-click product. It plans, builds, and manages entire online businesses AND automates your daily operations &mdash; all from a single chat thread.</p>
 
       <!-- Analogy -->
       <div class="analogy-grid">
@@ -2514,69 +2371,7 @@
       </div>
 
       <div class="video-cta">
-        <p style="font-size: 15px; opacity: 0.7; margin-bottom: var(--space-sm);">That's the engine. Now see what the complete bundle looks like&hellip;</p>
-        <a href="#social-proof" class="btn btn-lobster toc-link">See The Full Bundle &darr;</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== BUNDLE HERO / PITCH ========== -->
-  <section class="sec-bundle-hero">
-    <div class="container">
-      <h2 class="bundle-hero-headline">
-        Finally&hellip; A Fully Installed, Fully Integrated
-        <span class="gradient-text">AI Command Center</span>
-        That Builds, Manages, and Runs
-        <span class="gradient-text">Your Entire Operation</span>
-      </h2>
-      <p class="bundle-hero-sub">
-        Plus you get the training, live support, done-for-you skills, the complete software suite, and your own
-        <strong>custom Control Board built to ensure you actually win with OpenClaw.</strong>
-      </p>
-
-      <div class="bundle-capsules">
-        <div class="bundle-capsule">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-          Complete Software Suite
-        </div>
-        <div class="bundle-capsule">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
-          All Upgrades Included
-        </div>
-        <div class="bundle-capsule">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
-          Live Support Access
-        </div>
-        <div class="bundle-capsule">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-          Done-For-You Skills
-        </div>
-        <div class="bundle-capsule">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
-          Full Training Program
-        </div>
-        <div class="bundle-capsule">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M3 9h18M9 21V9"></path></svg>
-          Custom Control Board
-        </div>
-        <div class="bundle-capsule bundle-capsule-accent">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg>
-          Fully Installed &amp; Integrated
-        </div>
-        <div class="bundle-capsule bundle-capsule-accent">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-          One-Time Price &mdash; Today Only
-        </div>
-      </div>
-
-      <!-- Vimeo Video Embed -->
-      <div class="bundle-video-frame">
-        <div class="bundle-video-hud">
-          <span class="bundle-video-hud-dot"></span>
-          <span>OPENCLAW LIVE DEMO</span>
-          <span class="bundle-video-hud-tag">AI SYSTEM ACTIVE</span>
-        </div>
-        <iframe src="https://player.vimeo.com/video/1174520054?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" allowfullscreen title="OpenClaw Demo" loading="lazy"></iframe>
+        <a href="https://pl.setyourownsalary.com/email997" class="btn btn-lobster-cta" target="_blank" rel="noopener noreferrer">Get Instant Access &rarr;</a>
       </div>
     </div>
   </section>
@@ -2624,7 +2419,7 @@
 
       <div class="section-cta">
         <p>5,000+ entrepreneurs already deployed their AI business</p>
-        <a href="#bundle-pricing" class="btn btn-lobster toc-link">Get The Complete Bundle &rarr;</a>
+        <a href="#bundle-pricing" class="btn btn-lobster toc-link">Get OpenClaw Gold &rarr;</a>
       </div>
     </div>
   </section>
@@ -2702,7 +2497,7 @@
 
       <div class="section-cta">
         <p>All of this runs autonomously &mdash; so you can focus on what matters.</p>
-        <a href="#bundle-pricing" class="btn btn-lobster toc-link">Get The Complete Bundle &rarr;</a>
+        <a href="#bundle-pricing" class="btn btn-lobster toc-link">Get OpenClaw Gold &rarr;</a>
       </div>
     </div>
   </section>
@@ -2834,7 +2629,7 @@
 
       <div class="section-cta">
         <p>Everything installed, configured, and ready to go.</p>
-        <a href="#bundle-pricing" class="btn btn-lobster toc-link">Choose Your Bundle &rarr;</a>
+        <a href="#bundle-pricing" class="btn btn-lobster toc-link">Get OpenClaw Gold &rarr;</a>
       </div>
     </div>
   </section>
@@ -2842,91 +2637,25 @@
   <!-- ========== PRICING ========== -->
   <section class="sec-pricing" id="bundle-pricing">
     <div class="container">
-      <div class="tag" style="background: var(--lobster); color: #fff; border-color: #000; margin-bottom: var(--space-sm);">Choose Your Bundle</div>
-      <h2 class="section-title" style="color: #000;">Pick The Bundle That's Right For You</h2>
-      <p class="section-subtitle" style="color: #000; opacity: 0.85;">All bundles include the core OpenClaw system. Choose the level that matches your goals.</p>
+      <div class="tag" style="background: var(--lobster); color: #fff; border-color: #000; margin-bottom: var(--space-sm);">Get Started</div>
+      <h2 class="section-title" style="color: #000;">Get The Complete OpenClaw System</h2>
+      <p class="section-subtitle" style="color: #000; opacity: 0.85;">Everything you need to build, automate, and scale &mdash; in one package.</p>
 
       <div class="pricing-grid-3">
-        <!-- Silver -->
-        <div class="pricing-card-3 pricing-card-silver">
-          <img src="images/openclaw/silver.png" alt="Silver Bundle" class="pricing-card-img" loading="lazy" />
+        <!-- Gold (only tier) -->
+        <div class="pricing-card-3 pricing-card-gold">
+          <div class="pricing-featured-badge">&#127942; Recommended</div>
+          <img src="images/openclaw/gold.png" alt="OpenClaw Gold Bundle" class="pricing-card-img" loading="lazy" />
           <div class="pricing-card-header">
-            <span class="pricing-tier-name" style="color: #b0b8c8;"><span class="pricing-tier-icon">&#129352;</span> Silver</span>
+            <span class="pricing-tier-name" style="color: var(--gold);"><span class="pricing-tier-icon">&#127942;</span> Gold</span>
             <div class="pricing-amount">
-              <span class="pricing-was">$13,276</span>
-              <span class="pricing-price" style="color: #b0b8c8;">$297</span>
-            </div>
-            <p class="pricing-subtext">&#128293; Today Only &mdash; One-Time Payment</p>
-          </div>
-          <div class="pricing-cta-mid">
-            <a href="#" class="btn btn-silver-cta" onclick="event.preventDefault(); document.getElementById('coming-soon-modal').classList.add('active');">GET SILVER NOW &rarr;</a>
-          </div>
-          <div class="pricing-features-label">Included Features</div>
-          <div class="pricing-feature-table">
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#9881;</span> Claw Launcher Install</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#128640;</span> Claw Launcher Onboarder</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#128218;</span> 3-Day Onboarding Workshop</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#128176;</span> Cashflow Engine</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#128161;</span> Skill Repository (100+ Skills)</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#127918;</span> Control Panel</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#127970;</span> Business Builder</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#129309;</span> Agency License (200 Clients)</span><span class="pricing-cross">&#10007;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#128279;</span> Connector Series</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#128100;</span> Members Area</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#128142;</span> Titanium Suite</span><span class="pricing-cross">&#10007;</span></div>
-          </div>
-          <div class="pricing-cta">
-            <p style="font-size: 12px; opacity: 0.45; margin: 0; text-align: center;">&#10003; 14-day money-back guarantee</p>
-          </div>
-        </div>
-
-        <!-- Platinum (featured) -->
-        <div class="pricing-card-3 pricing-featured">
-          <div class="pricing-featured-badge">&#10024; Best Value</div>
-          <img src="images/openclaw/platinum.png" alt="Platinum Bundle" class="pricing-card-img" loading="lazy" />
-          <div class="pricing-card-header">
-            <span class="pricing-tier-name"><span class="pricing-tier-icon">&#128142;</span> Platinum</span>
-            <div class="pricing-amount">
-              <span class="pricing-was" style="color: rgba(255,255,255,0.5);">$24,270</span>
-              <span class="pricing-price pricing-price-gold">$1,497</span>
+              <span class="pricing-was" style="color: rgba(255,255,255,0.5);">$23,273</span>
+              <span class="pricing-price" style="color: var(--gold);">$997</span>
             </div>
             <p class="pricing-subtext" style="opacity: 0.7;">&#128293; Today Only &mdash; One-Time Payment</p>
           </div>
           <div class="pricing-cta-mid">
-            <a href="#" class="btn btn-platinum-cta" onclick="event.preventDefault(); document.getElementById('coming-soon-modal').classList.add('active');">GET PLATINUM NOW &rarr;</a>
-          </div>
-          <div class="pricing-features-label">Included Features</div>
-          <div class="pricing-feature-table">
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#9881;</span> Claw Launcher Install</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#128640;</span> Claw Launcher Onboarder</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#128218;</span> 3-Day Onboarding Workshop</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#128176;</span> Cashflow Engine</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#128161;</span> Skill Repository (100+ Skills)</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#127918;</span> Control Panel</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#127970;</span> Business Builder</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#129309;</span> Agency License (200 Clients)</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#128279;</span> Connector Series</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#128100;</span> Members Area</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#128142;</span> Titanium Suite</span><span class="pricing-check">&#10003;</span></div>
-          </div>
-          <div class="pricing-cta">
-            <p style="font-size: 12px; color: rgba(255,255,255,0.45); margin: 0; text-align: center;">&#10003; 14-day money-back guarantee &middot; Price goes up after launch</p>
-          </div>
-        </div>
-
-        <!-- Gold -->
-        <div class="pricing-card-3 pricing-card-gold">
-          <img src="images/openclaw/gold.png" alt="Gold Bundle" class="pricing-card-img" loading="lazy" />
-          <div class="pricing-card-header">
-            <span class="pricing-tier-name" style="color: var(--gold);"><span class="pricing-tier-icon">&#127942;</span> Gold</span>
-            <div class="pricing-amount">
-              <span class="pricing-was">$23,273</span>
-              <span class="pricing-price" style="color: var(--gold);">$997</span>
-            </div>
-            <p class="pricing-subtext">&#128293; Today Only &mdash; One-Time Payment</p>
-          </div>
-          <div class="pricing-cta-mid">
-            <a href="#" class="btn btn-gold-cta" onclick="event.preventDefault(); document.getElementById('coming-soon-modal').classList.add('active');">GET GOLD NOW &rarr;</a>
+            <a href="https://pl.setyourownsalary.com/997" class="btn btn-gold-cta" target="_blank" rel="noopener noreferrer">GET OPENCLAW GOLD &rarr;</a>
           </div>
           <div class="pricing-features-label">Included Features</div>
           <div class="pricing-feature-table">
@@ -2940,10 +2669,9 @@
             <div class="pricing-feature-row"><span><span class="feature-icon">&#129309;</span> Agency License (100 Clients)</span><span class="pricing-check">&#10003;</span></div>
             <div class="pricing-feature-row"><span><span class="feature-icon">&#128279;</span> Connector Series</span><span class="pricing-check">&#10003;</span></div>
             <div class="pricing-feature-row"><span><span class="feature-icon">&#128100;</span> Members Area</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#128142;</span> Titanium Suite</span><span class="pricing-cross">&#10007;</span></div>
           </div>
           <div class="pricing-cta">
-            <p style="font-size: 12px; opacity: 0.45; margin: 0; text-align: center;">&#10003; 14-day money-back guarantee</p>
+            <p style="font-size: 12px; color: rgba(255,255,255,0.45); margin: 0; text-align: center;">&#10003; 14-day money-back guarantee &middot; Price goes up after launch</p>
           </div>
         </div>
       </div>
@@ -2953,8 +2681,15 @@
         <div style="font-size: 36px; flex-shrink: 0;">&#128176;</div>
         <div>
           <strong>One-Time Payment &mdash; No Monthly Fees Ever</strong>
-          <p>All bundles are a single payment. No subscriptions, no hidden charges, no upsells after purchase.</p>
+          <p>A single payment. No subscriptions, no hidden charges, no upsells after purchase.</p>
         </div>
+      </div>
+
+      <!-- Email capture for unsure visitors / enterprise -->
+      <div class="pricing-email-cta">
+        <h3>Need More Than 10 Setups? Or Just Want to Learn More?</h3>
+        <p>Drop your email and we'll send you everything you need to make the right decision.</p>
+        <a href="https://pl.setyourownsalary.com/email997" class="btn btn-email-cta" target="_blank" rel="noopener noreferrer">Get More Info &rarr;</a>
       </div>
     </div>
   </section>
@@ -3283,9 +3018,7 @@
         '.pricing-card-3', '.pricing-guarantee',
         '.guarantee-box',
         '.enterprise-strip-inner',
-        '.quote-with-photo',
-        '.bundle-hero-headline', '.bundle-capsules',
-        '.bundle-video-frame'
+        '.quote-with-photo'
       ];
 
       // Collect all elements
@@ -3312,7 +3045,7 @@
       if (videoBlock) { videoBlock.classList.add('reveal-scale'); }
 
       // Pricing featured card scale
-      var pricingFeatured = document.querySelector('.pricing-featured');
+      var pricingFeatured = document.querySelector('.pricing-card-gold');
       if (pricingFeatured) { pricingFeatured.classList.remove('reveal'); pricingFeatured.classList.add('reveal-scale'); }
 
       var observer = new IntersectionObserver(function(entries) {
@@ -3376,15 +3109,6 @@
       });
     })();
   </script>
-
-  <!-- Coming Soon Modal -->
-  <div id="coming-soon-modal" class="coming-soon-overlay" onclick="if(event.target===this) this.classList.remove('active');">
-    <div class="coming-soon-box">
-      <h3>&#128640; Coming Soon</h3>
-      <p>Bundle pricing links are being finalized. Check back shortly!</p>
-      <button class="coming-soon-close" onclick="document.getElementById('coming-soon-modal').classList.remove('active');">Got It</button>
-    </div>
-  </div>
 
 </body>
 
