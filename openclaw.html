@@ -1991,10 +1991,8 @@
 
     /* ========== SECTION: 3-TIER PRICING ========== */
     .pricing-grid-3 {
-      display: grid;
-      grid-template-columns: 1fr 1.15fr 1fr;
-      gap: var(--space-md);
-      align-items: start;
+      display: flex;
+      justify-content: center;
       margin: var(--space-md) 0;
     }
 
@@ -2011,22 +2009,21 @@
       overflow: hidden;
     }
 
-    .pricing-card-3:not(.pricing-featured):hover {
+    .pricing-card-3:hover {
       transform: translateY(-4px);
       box-shadow: 0 12px 40px rgba(0,0,0,0.4);
     }
 
-    .pricing-card-silver { background: #2a2d35; }
-    .pricing-card-gold { background: #2d3328; }
-
-    .pricing-featured {
+    .pricing-card-gold {
       background: linear-gradient(160deg, #1a1d3a 0%, #0d1025 100%);
       color: #fff;
       border-color: var(--gold);
+      max-width: 480px;
+      width: 100%;
       animation: floatY 4s ease-in-out infinite, floatShadow 4s ease-in-out infinite;
     }
 
-    .pricing-featured:hover {
+    .pricing-card-gold:hover {
       animation-play-state: paused;
       transform: translateY(-4px);
     }
@@ -2056,7 +2053,7 @@
       font-size: 48px;
     }
 
-    .pricing-featured .pricing-tier-name {
+    .pricing-card-gold .pricing-tier-name {
       color: var(--gold);
     }
 
@@ -2079,26 +2076,44 @@
       letter-spacing: 0.03em;
     }
 
-    .btn-silver-cta {
-      background: #5a5e6b;
-      color: #fff;
-      border: 2px solid #6e7280;
-    }
-    .btn-silver-cta:hover { background: #6e7280; }
-
     .btn-gold-cta {
-      background: linear-gradient(135deg, #c5962a, #e6b040);
-      color: #000;
-      border: 2px solid #d4a833;
-    }
-    .btn-gold-cta:hover { background: linear-gradient(135deg, #d4a833, #f0c050); }
-
-    .btn-platinum-cta {
       background: linear-gradient(135deg, #e8920a, #f5a623);
       color: #000;
       border: 2px solid #f0a01a;
+      font-size: 17px;
+      padding: 14px 32px;
     }
-    .btn-platinum-cta:hover { background: linear-gradient(135deg, #f0a01a, #ffb733); }
+    .btn-gold-cta:hover { background: linear-gradient(135deg, #f0a01a, #ffb733); }
+
+    .pricing-email-cta {
+      text-align: center;
+      margin-top: var(--space-lg);
+      padding: var(--space-md);
+      border: var(--border-thick);
+      background: var(--bg-white);
+      box-shadow: var(--shadow-hard);
+    }
+
+    .pricing-email-cta h3 {
+      font-size: 22px;
+      margin-bottom: var(--space-xs);
+    }
+
+    .pricing-email-cta p {
+      font-size: 15px;
+      opacity: 0.8;
+      margin-bottom: var(--space-sm);
+    }
+
+    .btn-email-cta {
+      background: var(--bg-paper);
+      color: var(--ink);
+      border: var(--border-thick);
+      font-weight: 800;
+      font-size: 15px;
+      letter-spacing: 0.03em;
+    }
+    .btn-email-cta:hover { background: var(--lavender); }
 
     .pricing-features-label {
       padding: var(--space-sm) var(--space-md) 0;
@@ -2226,16 +2241,16 @@
       .upgrade-item { grid-template-columns: 1fr; }
       .upgrade-item img { border-right: none; border-bottom: var(--border-thick); height: auto; max-height: 250px; }
       .upgrade-features { grid-template-columns: 1fr; }
-      .pricing-grid-3 { grid-template-columns: 1fr; max-width: 480px; margin-left: auto; margin-right: auto; }
-      .pricing-featured { animation: none; }
+      .pricing-card-gold { animation: none; }
       .guarantee-box { grid-template-columns: 1fr; justify-items: center; text-align: center; }
     }
 
     @media (max-width: 480px) {
       .upgrade-item-body { padding: var(--space-sm); }
       .upgrade-item-body h3 { font-size: 20px; }
-      .pricing-card-3 .pricing-price { font-size: 38px; }
-      .pricing-card-3 .pricing-tier-name { font-size: 24px; }
+      .pricing-card-3 .pricing-price { font-size: 42px; }
+      .pricing-card-3 .pricing-tier-name { font-size: 26px; }
+      .pricing-card-gold { max-width: 100%; }
       .bundle-total-value h3 { font-size: 20px; }
       .pricing-guarantee { flex-direction: column; text-align: center; }
     }
@@ -2404,7 +2419,7 @@
 
       <div class="section-cta">
         <p>5,000+ entrepreneurs already deployed their AI business</p>
-        <a href="#bundle-pricing" class="btn btn-lobster toc-link">Get The Complete Bundle &rarr;</a>
+        <a href="#bundle-pricing" class="btn btn-lobster toc-link">Get OpenClaw Gold &rarr;</a>
       </div>
     </div>
   </section>
@@ -2482,7 +2497,7 @@
 
       <div class="section-cta">
         <p>All of this runs autonomously &mdash; so you can focus on what matters.</p>
-        <a href="#bundle-pricing" class="btn btn-lobster toc-link">Get The Complete Bundle &rarr;</a>
+        <a href="#bundle-pricing" class="btn btn-lobster toc-link">Get OpenClaw Gold &rarr;</a>
       </div>
     </div>
   </section>
@@ -2614,7 +2629,7 @@
 
       <div class="section-cta">
         <p>Everything installed, configured, and ready to go.</p>
-        <a href="#bundle-pricing" class="btn btn-lobster toc-link">Choose Your Bundle &rarr;</a>
+        <a href="#bundle-pricing" class="btn btn-lobster toc-link">Get OpenClaw Gold &rarr;</a>
       </div>
     </div>
   </section>
@@ -2622,91 +2637,25 @@
   <!-- ========== PRICING ========== -->
   <section class="sec-pricing" id="bundle-pricing">
     <div class="container">
-      <div class="tag" style="background: var(--lobster); color: #fff; border-color: #000; margin-bottom: var(--space-sm);">Choose Your Bundle</div>
-      <h2 class="section-title" style="color: #000;">Pick The Bundle That's Right For You</h2>
-      <p class="section-subtitle" style="color: #000; opacity: 0.85;">All bundles include the core OpenClaw system. Choose the level that matches your goals.</p>
+      <div class="tag" style="background: var(--lobster); color: #fff; border-color: #000; margin-bottom: var(--space-sm);">Get Started</div>
+      <h2 class="section-title" style="color: #000;">Get The Complete OpenClaw System</h2>
+      <p class="section-subtitle" style="color: #000; opacity: 0.85;">Everything you need to build, automate, and scale &mdash; in one package.</p>
 
       <div class="pricing-grid-3">
-        <!-- Silver -->
-        <div class="pricing-card-3 pricing-card-silver">
-          <img src="images/openclaw/silver.png" alt="Silver Bundle" class="pricing-card-img" loading="lazy" />
+        <!-- Gold (only tier) -->
+        <div class="pricing-card-3 pricing-card-gold">
+          <div class="pricing-featured-badge">&#127942; Recommended</div>
+          <img src="images/openclaw/gold.png" alt="OpenClaw Gold Bundle" class="pricing-card-img" loading="lazy" />
           <div class="pricing-card-header">
-            <span class="pricing-tier-name" style="color: #b0b8c8;"><span class="pricing-tier-icon">&#129352;</span> Silver</span>
+            <span class="pricing-tier-name" style="color: var(--gold);"><span class="pricing-tier-icon">&#127942;</span> Gold</span>
             <div class="pricing-amount">
-              <span class="pricing-was">$13,276</span>
-              <span class="pricing-price" style="color: #b0b8c8;">$297</span>
-            </div>
-            <p class="pricing-subtext">&#128293; Today Only &mdash; One-Time Payment</p>
-          </div>
-          <div class="pricing-cta-mid">
-            <a href="https://www.jvzoo.com/b/115699/435843/3" class="btn btn-silver-cta" target="_blank" rel="noopener noreferrer">GET SILVER NOW &rarr;</a>
-          </div>
-          <div class="pricing-features-label">Included Features</div>
-          <div class="pricing-feature-table">
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#9881;</span> Claw Launcher Install</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#128640;</span> Claw Launcher Onboarder</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#128218;</span> 3-Day Onboarding Workshop</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#128176;</span> Cashflow Engine</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#128161;</span> Skill Repository (100+ Skills)</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#127918;</span> Control Panel</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#127970;</span> Business Builder</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#129309;</span> Agency License (200 Clients)</span><span class="pricing-cross">&#10007;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#128279;</span> Connector Series</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#128100;</span> Members Area</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#128142;</span> Titanium Suite</span><span class="pricing-cross">&#10007;</span></div>
-          </div>
-          <div class="pricing-cta">
-            <p style="font-size: 12px; opacity: 0.45; margin: 0; text-align: center;">&#10003; 14-day money-back guarantee</p>
-          </div>
-        </div>
-
-        <!-- Platinum (featured) -->
-        <div class="pricing-card-3 pricing-featured">
-          <div class="pricing-featured-badge">&#10024; Best Value</div>
-          <img src="images/openclaw/platinum.png" alt="Platinum Bundle" class="pricing-card-img" loading="lazy" />
-          <div class="pricing-card-header">
-            <span class="pricing-tier-name"><span class="pricing-tier-icon">&#128142;</span> Platinum</span>
-            <div class="pricing-amount">
-              <span class="pricing-was" style="color: rgba(255,255,255,0.5);">$24,270</span>
-              <span class="pricing-price pricing-price-gold">$1,497</span>
+              <span class="pricing-was" style="color: rgba(255,255,255,0.5);">$23,273</span>
+              <span class="pricing-price" style="color: var(--gold);">$997</span>
             </div>
             <p class="pricing-subtext" style="opacity: 0.7;">&#128293; Today Only &mdash; One-Time Payment</p>
           </div>
           <div class="pricing-cta-mid">
-            <a href="https://www.jvzoo.com/b/115699/435839/3" class="btn btn-platinum-cta" target="_blank" rel="noopener noreferrer">GET PLATINUM NOW &rarr;</a>
-          </div>
-          <div class="pricing-features-label">Included Features</div>
-          <div class="pricing-feature-table">
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#9881;</span> Claw Launcher Install</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#128640;</span> Claw Launcher Onboarder</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#128218;</span> 3-Day Onboarding Workshop</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#128176;</span> Cashflow Engine</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#128161;</span> Skill Repository (100+ Skills)</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#127918;</span> Control Panel</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#127970;</span> Business Builder</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#129309;</span> Agency License (200 Clients)</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#128279;</span> Connector Series</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#128100;</span> Members Area</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#128142;</span> Titanium Suite</span><span class="pricing-check">&#10003;</span></div>
-          </div>
-          <div class="pricing-cta">
-            <p style="font-size: 12px; color: rgba(255,255,255,0.45); margin: 0; text-align: center;">&#10003; 14-day money-back guarantee &middot; Price goes up after launch</p>
-          </div>
-        </div>
-
-        <!-- Gold -->
-        <div class="pricing-card-3 pricing-card-gold">
-          <img src="images/openclaw/gold.png" alt="Gold Bundle" class="pricing-card-img" loading="lazy" />
-          <div class="pricing-card-header">
-            <span class="pricing-tier-name" style="color: var(--gold);"><span class="pricing-tier-icon">&#127942;</span> Gold</span>
-            <div class="pricing-amount">
-              <span class="pricing-was">$23,273</span>
-              <span class="pricing-price" style="color: var(--gold);">$997</span>
-            </div>
-            <p class="pricing-subtext">&#128293; Today Only &mdash; One-Time Payment</p>
-          </div>
-          <div class="pricing-cta-mid">
-            <a href="https://www.jvzoo.com/b/115699/435841/3" class="btn btn-gold-cta" target="_blank" rel="noopener noreferrer">GET GOLD NOW &rarr;</a>
+            <a href="https://pl.setyourownsalary.com/997" class="btn btn-gold-cta" target="_blank" rel="noopener noreferrer">GET OPENCLAW GOLD &rarr;</a>
           </div>
           <div class="pricing-features-label">Included Features</div>
           <div class="pricing-feature-table">
@@ -2720,10 +2669,9 @@
             <div class="pricing-feature-row"><span><span class="feature-icon">&#129309;</span> Agency License (100 Clients)</span><span class="pricing-check">&#10003;</span></div>
             <div class="pricing-feature-row"><span><span class="feature-icon">&#128279;</span> Connector Series</span><span class="pricing-check">&#10003;</span></div>
             <div class="pricing-feature-row"><span><span class="feature-icon">&#128100;</span> Members Area</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#128142;</span> Titanium Suite</span><span class="pricing-cross">&#10007;</span></div>
           </div>
           <div class="pricing-cta">
-            <p style="font-size: 12px; opacity: 0.45; margin: 0; text-align: center;">&#10003; 14-day money-back guarantee</p>
+            <p style="font-size: 12px; color: rgba(255,255,255,0.45); margin: 0; text-align: center;">&#10003; 14-day money-back guarantee &middot; Price goes up after launch</p>
           </div>
         </div>
       </div>
@@ -2733,8 +2681,15 @@
         <div style="font-size: 36px; flex-shrink: 0;">&#128176;</div>
         <div>
           <strong>One-Time Payment &mdash; No Monthly Fees Ever</strong>
-          <p>All bundles are a single payment. No subscriptions, no hidden charges, no upsells after purchase.</p>
+          <p>A single payment. No subscriptions, no hidden charges, no upsells after purchase.</p>
         </div>
+      </div>
+
+      <!-- Email capture for unsure visitors / enterprise -->
+      <div class="pricing-email-cta">
+        <h3>Need More Than 10 Setups? Or Just Want to Learn More?</h3>
+        <p>Drop your email and we'll send you everything you need to make the right decision.</p>
+        <a href="https://pl.setyourownsalary.com/email997" class="btn btn-email-cta" target="_blank" rel="noopener noreferrer">Get More Info &rarr;</a>
       </div>
     </div>
   </section>
@@ -3090,7 +3045,7 @@
       if (videoBlock) { videoBlock.classList.add('reveal-scale'); }
 
       // Pricing featured card scale
-      var pricingFeatured = document.querySelector('.pricing-featured');
+      var pricingFeatured = document.querySelector('.pricing-card-gold');
       if (pricingFeatured) { pricingFeatured.classList.remove('reveal'); pricingFeatured.classList.add('reveal-scale'); }
 
       var observer = new IntersectionObserver(function(entries) {
