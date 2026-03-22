@@ -19,11 +19,13 @@ class SiteNavigation {
             <a href="${this.getBaseUrl()}tools.html" class="nav-link" id="toolsLink">Tools</a>
             <a href="${this.getBaseUrl()}blog.html" class="nav-link" id="blogLink">Blog</a>
             <a href="${this.getBaseUrl()}ai-resources.html" class="nav-link" id="aiResourcesLink">AI Resources</a>
-            <a href="${this.getBaseUrl()}openclaw.html" class="nav-link" id="openclawLink">OpenClaw</a>
+            <a href="${this.getBaseUrl()}openclaw.html" class="nav-link" id="openclawLink">ClawLauncher (OpenClaw)</a>
           </div>
           <div class="nav-auth" style="display: flex; gap: 12px; align-items: center;">
-            <a href="${this.getBaseUrl()}user/login.html" style="font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink);">Log In</a>
-            <a href="${this.getBaseUrl()}user/signup.html" class="btn btn-gold">Get Started</a>
+            ${this.isOpenClawPage()
+              ? '<a href="#bundle-pricing" class="btn btn-gold" onclick="document.querySelector(\'#bundle-pricing\').scrollIntoView({behavior:\'smooth\',block:\'start\'});return false;">Get Installed Now</a>'
+              : `<a href="${this.getBaseUrl()}user/login.html" style="font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink);">Log In</a>
+            <a href="${this.getBaseUrl()}user/signup.html" class="btn btn-gold">Get Started</a>`}
           </div>
         </div>
       </nav>
@@ -50,9 +52,11 @@ class SiteNavigation {
           <a href="${this.getBaseUrl()}tools.html" class="mobile-menu-link">Tools</a>
           <a href="${this.getBaseUrl()}blog.html" class="mobile-menu-link">Blog</a>
           <a href="${this.getBaseUrl()}ai-resources.html" class="mobile-menu-link">AI Resources</a>
-          <a href="${this.getBaseUrl()}openclaw.html" class="mobile-menu-link">OpenClaw</a>
-          <a href="${this.getBaseUrl()}user/login.html" class="mobile-menu-link">Log In</a>
-          <a href="${this.getBaseUrl()}user/signup.html" class="btn btn-gold" style="width: 100%; margin-top: 16px;">Get Started</a>
+          <a href="${this.getBaseUrl()}openclaw.html" class="mobile-menu-link">ClawLauncher (OpenClaw)</a>
+          ${this.isOpenClawPage()
+            ? '<a href="#bundle-pricing" class="btn btn-gold" style="width: 100%; margin-top: 16px;" onclick="document.getElementById(\'mobileMenu\').classList.remove(\'active\');document.querySelector(\'#bundle-pricing\').scrollIntoView({behavior:\'smooth\',block:\'start\'});return false;">Get Installed Now</a>'
+            : `<a href="${this.getBaseUrl()}user/login.html" class="mobile-menu-link">Log In</a>
+          <a href="${this.getBaseUrl()}user/signup.html" class="btn btn-gold" style="width: 100%; margin-top: 16px;">Get Started</a>`}
         </div>
       </div>
     `;
@@ -115,6 +119,11 @@ class SiteNavigation {
         </div>
       </footer>
     `;
+  }
+
+  // Check if current page is the OpenClaw page
+  isOpenClawPage() {
+    return window.location.pathname.includes('openclaw');
   }
 
   // Detect base URL based on current page location

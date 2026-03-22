@@ -3,9 +3,9 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>OpenClaw 101 – Ai-Auto</title>
+  <title>AI Automation Installation – Ai-Auto</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="The plain-English guide to OpenClaw, the cloud-based autonomous AI agent that builds and manages online businesses. Built on the open-source framework with 85K+ GitHub stars." />
+  <meta name="description" content="Get a fully installed, fully integrated AI automation system that builds, manages, and runs your entire operation. Done-for-you installation, training, and ongoing support." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Playfair+Display:wght@500;600;700;900&display=swap" rel="stylesheet">
@@ -13,42 +13,51 @@
 
   <style>
     :root {
-      --bg-paper: #f2f0e9;
-      --bg-white: #ffffff;
-      --ink: #121212;
-      --blue: #2357ff;
-      --gold: #ffcc00;
-      --coral: #ff6b58;
-      --lavender: #dcd6f7;
-      --green: #2ecc71;
-      --pink: #ff9ff3;
-      --lobster: #C41E3A;
+      --bg-paper: #0e0e0e;
+      --bg-white: #1a1a1a;
+      --bg-elevated: #222120;
+      --ink: #efe5cd;
+      --ink-secondary: #958f80;
+      --ink-muted: #736f64;
+      --blue: #e50000;
+      --gold: #f5a623;
+      --coral: #e55040;
+      --lavender: #1e1d2a;
+      --green: #03ffa7;
+      --pink: #ff6eb4;
+      --lobster: #e50000;
 
-      --border-thick: 3px solid var(--ink);
-      --border-thin: 2px solid var(--ink);
-      --shadow-hard: 6px 6px 0px 0px var(--ink);
-      --shadow-hover: 10px 10px 0px 0px var(--ink);
+      --border-thick: 1px solid #292825;
+      --border-thin: 1px solid #302e2b;
+      --shadow-hard: 0 2px 16px rgba(0,0,0,0.25);
+      --shadow-hover: 0 8px 40px rgba(0,0,0,0.4);
       --radius-sm: 4px;
-      --max-width: 1200px;
+      --max-width: 1100px;
 
       --space-xs: 8px;
       --space-sm: 16px;
       --space-md: 32px;
-      --space-lg: 64px;
-      --space-xl: 128px;
+      --space-lg: 80px;
+      --space-xl: 140px;
+
+      --gradient-card: linear-gradient(130deg, #191918 0%, #151414 100%);
+      --gradient-subtle: linear-gradient(130deg, #1a1a1a 0%, #161616 100%);
     }
 
     [data-theme="dark"] {
-      --bg-paper: #0a0a0a;
-      --bg-white: #1a1a1a;
-      --ink: #f0f0f0;
-      --blue: #4d7aff;
-      --gold: #ffd633;
-      --coral: #ff8c7a;
-      --lavender: #2a2a40;
-      --green: #3ddb85;
-      --pink: #ffb8f3;
-      --lobster: #E8475D;
+      --bg-paper: #080808;
+      --bg-white: #141413;
+      --bg-elevated: #1c1b1a;
+      --ink: #efe5cd;
+      --ink-secondary: #8a8477;
+      --ink-muted: #68645a;
+      --blue: #f02020;
+      --gold: #f5a623;
+      --coral: #f06050;
+      --lavender: #16152a;
+      --green: #03ffa7;
+      --pink: #ff7ac0;
+      --lobster: #f02020;
     }
 
     * { box-sizing: border-box; }
@@ -57,20 +66,71 @@
       margin: 0;
       font-family: 'Inter', sans-serif;
       background-color: var(--bg-paper);
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+      background-size: 40px 40px;
       color: var(--ink);
       line-height: 1.6;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
     h1, h2, h3, h4, h5, h6 {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Inter', sans-serif;
       margin: 0;
-      font-weight: 900;
+      font-weight: 800;
       line-height: 1.1;
+      letter-spacing: -0.025em;
+      color: #f1f5f9;
     }
 
-    p { margin: 0 0 var(--space-sm); }
+    p { margin: 0 0 var(--space-sm); color: var(--ink-secondary); font-size: 16px; line-height: 1.7; }
     a { color: inherit; text-decoration: none; }
+
+    /* ========== GRADIENT TEXT (Rainbow / Warm) ========== */
+    .gradient-text {
+      background: linear-gradient(135deg, #fbbf24 0%, #f97316 35%, #ec4899 70%, #a78bfa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .gradient-text-gold {
+      background: linear-gradient(135deg, #fbbf24, #f59e0b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .gradient-text-coral {
+      background: linear-gradient(135deg, #f97316, #ef4444);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .gradient-text-green {
+      background: linear-gradient(135deg, #03ffa7, #22d3ee);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .gradient-text-purple {
+      background: linear-gradient(135deg, #a78bfa, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .gradient-text-blue {
+      background: linear-gradient(135deg, #4f8ef7, #22d3ee);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
 
     .container {
       max-width: var(--max-width);
@@ -78,66 +138,78 @@
       padding: 0 var(--space-md);
     }
 
+    /* ========== BUTTONS ========== */
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       padding: 14px 28px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      border: var(--border-thick);
-      background: var(--blue);
-      color: #fff;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      border: 1px solid #302e2b;
+      background: var(--gradient-card);
+      color: var(--ink);
       box-shadow: var(--shadow-hard);
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.25s ease;
       font-size: 14px;
+      border-radius: var(--radius-sm);
+      text-transform: none;
     }
 
     .btn:hover {
-      transform: translate(-2px, -2px);
+      transform: translateY(-2px);
       box-shadow: var(--shadow-hover);
-      filter: brightness(1.1);
+      border-color: #46443e;
     }
 
     .btn-outline {
       background: transparent;
+      border: 1px solid #46443e;
+      color: var(--ink-secondary);
+    }
+
+    .btn-outline:hover {
+      background: rgba(239, 229, 205, 0.04);
       color: var(--ink);
+      border-color: var(--ink-secondary);
     }
 
     .btn-gold {
-      background: var(--gold);
-      color: #000;
+      background: linear-gradient(135deg, #e8920a, #f5a623);
+      color: #0e0e0e;
+      border-color: #f5a623;
     }
 
     .btn-lobster {
-      background: var(--lobster);
+      background: linear-gradient(135deg, #c41e3a, #e50000);
       color: #fff;
+      border-color: #e50000;
     }
 
     @keyframes claw-pulse {
-      0%, 100% {
-        transform: translateY(0);
-        box-shadow: var(--shadow-hard);
-      }
-      50% {
-        transform: translateY(-4px);
-        box-shadow: 10px 10px 0px 0px var(--lobster), 14px 14px 0px 0px var(--ink);
-      }
+      0%, 100% { box-shadow: var(--shadow-hard); }
+      50% { box-shadow: 0 0 24px rgba(229, 0, 0, 0.3), var(--shadow-hard); }
     }
 
     .btn-lobster-cta {
-      background: var(--lobster);
+      background: linear-gradient(135deg, #c41e3a, #e50000);
       color: #fff;
       font-size: 18px;
-      padding: 18px 40px;
-      animation: claw-pulse 2s ease-in-out infinite;
+      font-weight: 800;
+      padding: 20px 48px;
+      animation: claw-pulse 2.5s ease-in-out infinite;
       text-decoration: none;
+      border: 1px solid rgba(229, 0, 0, 0.5);
+      border-radius: var(--radius-sm);
+      letter-spacing: 0.02em;
     }
 
     .btn-lobster-cta:hover {
       animation: none;
+      background: linear-gradient(135deg, #e50000, #ff2020);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(229, 0, 0, 0.25);
     }
 
     .video-cta {
@@ -147,89 +219,118 @@
 
     .tag {
       display: inline-block;
-      padding: 4px 12px;
-      border: var(--border-thin);
-      font-size: 12px;
+      padding: 5px 14px;
+      border: 1px solid #302e2b;
+      font-size: 11px;
       font-weight: 700;
       text-transform: uppercase;
-      background: var(--gold);
-      color: #000;
+      letter-spacing: 0.08em;
+      background: rgba(245, 166, 35, 0.1);
+      color: var(--gold);
+      border-radius: 3px;
     }
 
     .border-box {
       border: var(--border-thick);
-      background: var(--bg-white);
+      background: var(--gradient-card);
       box-shadow: var(--shadow-hard);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      transition: all 0.25s ease;
+      border-radius: var(--radius-sm);
     }
 
     .border-box:hover {
-      transform: translate(-2px, -2px);
+      transform: translateY(-2px);
       box-shadow: var(--shadow-hover);
     }
 
     .section-title {
-      font-size: clamp(36px, 5vw, 56px);
+      font-size: clamp(36px, 5vw, 64px);
       margin-bottom: var(--space-md);
+      color: #f1f5f9;
+      font-weight: 900;
+      line-height: 1.08;
     }
 
     .section-subtitle {
       font-size: 18px;
       max-width: 700px;
       margin-bottom: var(--space-md);
-      font-weight: 500;
-      opacity: 0.85;
+      font-weight: 400;
+      color: #b0bcd4;
+      line-height: 1.7;
     }
 
     /* ========== HERO ========== */
     .hero {
-      padding: var(--space-lg) 0;
+      padding: var(--space-xl) 0 var(--space-lg);
       border-bottom: var(--border-thick);
-      background-color: var(--bg-paper);
-      background-image: radial-gradient(var(--ink) 1px, transparent 1px);
-      background-size: 20px 20px;
+      background:
+        radial-gradient(ellipse 50% 35% at 0% 100%, rgba(251, 191, 36, 0.14) 0%, rgba(249, 115, 22, 0.06) 50%, transparent 75%),
+        radial-gradient(ellipse 50% 35% at 100% 100%, rgba(100, 80, 230, 0.18) 0%, rgba(139, 92, 246, 0.08) 50%, transparent 75%),
+        radial-gradient(ellipse 35% 30% at 2% 2%, rgba(180, 120, 20, 0.12) 0%, transparent 70%),
+        var(--bg-paper);
+      background-image: radial-gradient(rgba(110, 130, 230, 0.04) 1px, transparent 1px),
+        radial-gradient(ellipse 50% 35% at 0% 100%, rgba(251, 191, 36, 0.14) 0%, rgba(249, 115, 22, 0.06) 50%, transparent 75%),
+        radial-gradient(ellipse 50% 35% at 100% 100%, rgba(100, 80, 230, 0.18) 0%, rgba(139, 92, 246, 0.08) 50%, transparent 75%);
+      background-size: 40px 40px, 100% 100%, 100% 100%;
+      background-color: #07080f;
       text-align: center;
+      position: relative;
+      overflow: hidden;
     }
 
     .hero h1 {
-      font-size: clamp(56px, 10vw, 120px);
-      text-transform: uppercase;
-      letter-spacing: -0.02em;
+      font-size: clamp(36px, 6.3vw, 77px);
+      letter-spacing: -0.03em;
       margin-bottom: var(--space-sm);
+      color: #f1f5f9;
+      font-weight: 900;
+      line-height: 1.05;
     }
 
     .hero h1 .highlight {
-      display: inline-block;
-      background: var(--gold);
-      color: #000;
-      padding: 0 16px;
-      transform: rotate(-2deg);
-      border: var(--border-thin);
+      display: inline;
+      background: none;
+      color: inherit;
+      padding: 0;
+      border-radius: 0;
+      border: none;
+      transform: none;
+      -webkit-text-fill-color: unset;
     }
 
     .hero-tag {
       display: inline-block;
-      padding: 6px 20px;
-      background: var(--coral);
-      color: #fff;
-      font-weight: 900;
-      font-size: 14px;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      border: var(--border-thin);
+      padding: 8px 22px;
+      background: rgba(79, 142, 247, 0.1);
+      color: #b0bcd4;
+      font-weight: 600;
+      font-size: 13px;
+      text-transform: none;
+      letter-spacing: 0.02em;
+      border: 1px solid rgba(79, 142, 247, 0.15);
       margin-bottom: var(--space-sm);
+      border-radius: 40px;
+      backdrop-filter: blur(8px);
     }
 
     .hero-subtitle {
       font-size: clamp(18px, 2.5vw, 24px);
-      max-width: 700px;
-      margin: 0 auto var(--space-sm);
-      font-weight: 500;
+      max-width: 760px;
+      margin: 0 auto var(--space-md);
+      font-weight: 400;
+      color: #b0bcd4;
+      line-height: 1.6;
+    }
+
+    .hero-subtitle strong {
+      color: #f1f5f9;
+      font-weight: 700;
     }
 
     .hero-meta {
-      font-size: 14px;
-      opacity: 0.7;
+      font-size: 15px;
+      color: var(--ink-muted);
       margin-bottom: var(--space-md);
       font-weight: 500;
     }
@@ -239,6 +340,7 @@
       gap: var(--space-sm);
       justify-content: center;
       flex-wrap: wrap;
+      margin-bottom: var(--space-sm);
     }
 
     .hero-badges {
@@ -246,28 +348,29 @@
       gap: 10px;
       justify-content: center;
       flex-wrap: wrap;
-      margin-bottom: var(--space-sm);
+      margin-bottom: var(--space-md);
     }
 
     .hero-tag-launch {
       display: inline-block;
-      padding: 6px 20px;
-      background: var(--lobster);
-      color: #fff;
-      font-weight: 900;
-      font-size: 14px;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      border: var(--border-thin);
+      padding: 8px 22px;
+      background: rgba(239, 68, 68, 0.12);
+      color: #f87171;
+      font-weight: 600;
+      font-size: 13px;
+      text-transform: none;
+      letter-spacing: 0.02em;
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      border-radius: 40px;
+      backdrop-filter: blur(8px);
     }
 
     .hero-stats {
-      font-size: 13px;
-      font-weight: 700;
-      opacity: 0.75;
+      font-size: 15px;
+      font-weight: 600;
+      color: #6b7fa3;
       margin-bottom: var(--space-md);
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.02em;
     }
 
     /* ========== STICKY TOC ========== */
@@ -275,16 +378,16 @@
       position: sticky;
       top: 70px;
       z-index: 90;
-      background: var(--bg-white);
+      background: rgba(14, 14, 14, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border-bottom: var(--border-thick);
       padding: 12px 0;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
     }
 
-    .toc-bar::-webkit-scrollbar {
-      height: 0;
-    }
+    .toc-bar::-webkit-scrollbar { height: 0; }
 
     .toc-inner {
       display: flex;
@@ -298,33 +401,39 @@
     .toc-pill {
       padding: 8px 18px;
       font-size: 13px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
-      border: var(--border-thin);
-      background: var(--bg-paper);
-      color: var(--ink);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      border: 1px solid #302e2b;
+      background: transparent;
+      color: var(--ink-secondary);
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.25s;
       flex-shrink: 0;
+      border-radius: 3px;
+      text-transform: none;
     }
 
     .toc-pill:hover {
-      background: var(--gold);
-      color: #000;
+      background: rgba(239, 229, 205, 0.06);
+      color: var(--ink);
+      border-color: #46443e;
     }
 
     .toc-pill.active {
-      background: var(--gold);
-      color: #000;
-      box-shadow: 3px 3px 0 var(--ink);
+      background: rgba(245, 166, 35, 0.12);
+      color: var(--gold);
+      border-color: rgba(245, 166, 35, 0.3);
+      box-shadow: none;
     }
 
-    /* ========== SECTION: WHAT IS CLAWMATE ========== */
+    /* ========== SECTION: WHAT IS ========== */
     .sec-what-is {
       padding: var(--space-lg) 0;
       border-bottom: var(--border-thick);
-      background: var(--bg-white);
+      background:
+        radial-gradient(ellipse 60% 40% at 100% 0%, rgba(79, 142, 247, 0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 50% at 0% 100%, rgba(167, 139, 250, 0.06) 0%, transparent 70%),
+        #0f1219;
     }
 
     .analogy-grid {
@@ -337,34 +446,45 @@
     .analogy-card {
       border: var(--border-thick);
       padding: var(--space-md);
-      background: var(--bg-paper);
+      background: var(--gradient-card);
       box-shadow: var(--shadow-hard);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      transition: all 0.25s ease;
+      border-radius: var(--radius-sm);
     }
 
     .analogy-card:not(.featured):hover {
-      transform: translate(-2px, -2px);
+      transform: translateY(-3px);
       box-shadow: var(--shadow-hover);
+      border-color: #46443e;
     }
 
     .analogy-card.featured {
-      background: var(--gold);
-      color: #000;
-      transform: rotate(1deg);
-      box-shadow: var(--shadow-hard);
+      background: linear-gradient(130deg, rgba(16, 185, 129, 0.1), rgba(79, 142, 247, 0.06));
+      color: var(--ink);
+      transform: none;
+      border-color: rgba(16, 185, 129, 0.25);
+      box-shadow: 0 4px 32px rgba(16, 185, 129, 0.1);
     }
 
     .analogy-card h3 {
-      font-size: 24px;
+      font-size: 26px;
       margin-bottom: var(--space-xs);
+      color: #f1f5f9;
     }
 
     .analogy-card .analogy-type {
       font-size: 13px;
       font-weight: 700;
       text-transform: uppercase;
-      opacity: 0.7;
+      letter-spacing: 0.06em;
+      color: #6b7fa3;
       margin-bottom: var(--space-sm);
+    }
+
+    .analogy-card p {
+      font-size: 16px;
+      color: #b0bcd4;
+      line-height: 1.7;
     }
 
     .pillars-grid {
@@ -377,16 +497,18 @@
     .pillar-card {
       border: var(--border-thick);
       padding: var(--space-md);
-      background: var(--bg-white);
+      background: var(--gradient-card);
       box-shadow: var(--shadow-hard);
       position: relative;
       overflow: hidden;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      transition: all 0.25s ease;
+      border-radius: var(--radius-sm);
     }
 
     .pillar-card:hover {
-      transform: translate(-2px, -2px);
+      transform: translateY(-3px);
       box-shadow: var(--shadow-hover);
+      border-color: #46443e;
     }
 
     .pillar-card .accent-bar {
@@ -394,24 +516,30 @@
       top: 0;
       left: 0;
       width: 100%;
-      height: 6px;
+      height: 3px;
+      opacity: 0.7;
     }
 
     .pillar-card h4 {
-      font-size: 22px;
+      font-size: 24px;
       margin-bottom: var(--space-xs);
-      text-transform: uppercase;
+      color: #f1f5f9;
+      text-transform: none;
     }
 
     .origin-box {
-      border: var(--border-thin);
-      background: var(--lavender);
-      padding: var(--space-sm) var(--space-md);
-      font-size: 14px;
+      border: 1px solid rgba(79, 142, 247, 0.15);
+      background: rgba(22, 27, 58, 0.5);
+      padding: var(--space-md);
+      font-size: 16px;
+      border-radius: 8px;
+      color: #b0bcd4;
+      line-height: 1.7;
     }
 
     .origin-box strong {
       font-weight: 700;
+      color: var(--ink);
     }
 
     .video-block {
@@ -420,18 +548,19 @@
       background: var(--bg-paper);
       box-shadow: var(--shadow-hard);
       overflow: hidden;
+      border-radius: 6px;
     }
 
     .video-block-header {
       padding: var(--space-sm) var(--space-md);
-      background: var(--ink);
-      color: var(--bg-paper);
-      font-family: 'Playfair Display', serif;
-      font-weight: 900;
-      font-size: 18px;
+      background: rgba(79, 142, 247, 0.06);
+      color: #f1f5f9;
+      font-family: 'Inter', sans-serif;
+      font-weight: 800;
+      font-size: 16px;
+      letter-spacing: 0.01em;
+      border-bottom: 1px solid rgba(79, 142, 247, 0.12);
       text-transform: uppercase;
-      letter-spacing: 0.03em;
-      border-bottom: var(--border-thick);
     }
 
     .video-block video {
@@ -450,16 +579,17 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 120px;
-      height: 120px;
+      width: 100px;
+      height: 100px;
       border-radius: 50%;
-      background: rgba(0, 0, 0, 0.45);
-      border: 4px solid rgba(255, 255, 255, 0.8);
+      background: rgba(0, 0, 0, 0.6);
+      border: 2px solid rgba(239, 229, 205, 0.4);
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background 0.2s, transform 0.2s, opacity 0.3s;
+      transition: all 0.3s ease;
       z-index: 2;
+      backdrop-filter: blur(8px);
     }
 
     .video-play-btn::after {
@@ -467,15 +597,16 @@
       display: block;
       width: 0;
       height: 0;
-      border-top: 24px solid transparent;
-      border-bottom: 24px solid transparent;
-      border-left: 40px solid rgba(255, 255, 255, 0.9);
-      margin-left: 6px;
+      border-top: 20px solid transparent;
+      border-bottom: 20px solid transparent;
+      border-left: 34px solid rgba(239, 229, 205, 0.9);
+      margin-left: 4px;
     }
 
     .video-wrapper:hover .video-play-btn:not(.hidden) {
-      background: rgba(0, 0, 0, 0.6);
+      background: rgba(0, 0, 0, 0.75);
       transform: translate(-50%, -50%) scale(1.08);
+      border-color: rgba(239, 229, 205, 0.6);
     }
 
     .video-play-btn.hidden {
@@ -498,29 +629,30 @@
 
     .capability-card {
       border: var(--border-thick);
-      background: var(--bg-white);
+      background: var(--gradient-card);
       box-shadow: var(--shadow-hard);
-      transition: transform 0.2s, box-shadow 0.2s;
+      transition: all 0.25s;
       overflow: hidden;
+      border-radius: var(--radius-sm);
     }
 
     .capability-card:hover {
-      transform: translate(-2px, -2px);
+      transform: translateY(-3px);
       box-shadow: var(--shadow-hover);
+      border-color: #46443e;
     }
 
     .capability-header {
       padding: var(--space-sm) var(--space-md);
       border-bottom: var(--border-thick);
-      font-weight: 900;
-      font-size: 18px;
-      text-transform: uppercase;
-      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 16px;
+      font-family: 'Inter', sans-serif;
+      color: var(--ink);
+      text-transform: none;
     }
 
-    .capability-body {
-      padding: var(--space-md);
-    }
+    .capability-body { padding: var(--space-md); }
 
     .capability-body ul {
       list-style: none;
@@ -529,18 +661,17 @@
     }
 
     .capability-body li {
-      padding: 6px 0;
-      border-bottom: 1px solid rgba(0,0,0,0.08);
+      padding: 8px 0;
+      border-bottom: 1px solid #292825;
       font-size: 14px;
       font-weight: 500;
+      color: var(--ink-secondary);
     }
 
-    .capability-body li:last-child {
-      border-bottom: none;
-    }
+    .capability-body li:last-child { border-bottom: none; }
 
     [data-theme="dark"] .capability-body li {
-      border-bottom-color: rgba(255,255,255,0.08);
+      border-bottom-color: #1e1d1b;
     }
 
     /* ========== SECTION: HOW IT WORKS ========== */
@@ -560,49 +691,53 @@
     .step-card {
       border: var(--border-thick);
       padding: var(--space-md);
-      background: var(--bg-paper);
+      background: var(--gradient-card);
       position: relative;
       box-shadow: var(--shadow-hard);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      transition: all 0.25s ease;
+      border-radius: var(--radius-sm);
     }
 
     .step-card:hover {
-      transform: translate(-2px, -2px);
+      transform: translateY(-3px);
       box-shadow: var(--shadow-hover);
-      background: var(--gold);
-      color: #000;
+      border-color: rgba(245, 166, 35, 0.3);
     }
 
     .step-number {
       font-size: 64px;
       font-weight: 900;
-      opacity: 0.1;
+      opacity: 0.05;
       position: absolute;
       top: 0;
       right: 10px;
       line-height: 1;
+      color: var(--ink);
     }
 
     .step-card h3 {
-      font-size: 24px;
+      font-size: 22px;
       margin-bottom: var(--space-xs);
-      border-bottom: var(--border-thin);
+      border-bottom: 1px solid #292825;
       padding-bottom: 8px;
+      color: var(--ink);
     }
 
     .integrations-bar {
-      background: var(--ink);
-      color: var(--bg-paper);
+      background: var(--gradient-card);
+      color: var(--ink);
       border: var(--border-thick);
       padding: var(--space-md);
       text-align: center;
+      border-radius: var(--radius-sm);
     }
 
     .integrations-bar h4 {
-      font-size: 16px;
+      font-size: 15px;
       margin-bottom: var(--space-sm);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.03em;
+      color: var(--ink-secondary);
+      text-transform: none;
     }
 
     .platform-pills {
@@ -614,16 +749,18 @@
 
     .platform-pill {
       padding: 6px 16px;
-      border: 2px solid var(--bg-paper);
+      border: 1px solid #302e2b;
       font-size: 13px;
-      font-weight: 700;
-      text-transform: uppercase;
+      font-weight: 600;
+      border-radius: 3px;
+      color: var(--ink-secondary);
+      text-transform: none;
     }
 
     .integrations-bar .stat-line {
       margin-top: var(--space-sm);
       font-size: 14px;
-      opacity: 0.8;
+      color: var(--ink-muted);
       font-weight: 600;
     }
 
@@ -643,68 +780,69 @@
 
     .use-case-card {
       border: var(--border-thick);
-      background: var(--bg-white);
+      background: var(--gradient-card);
       box-shadow: var(--shadow-hard);
       overflow: hidden;
+      border-radius: var(--radius-sm);
     }
 
     .use-case-header {
       padding: var(--space-sm) var(--space-md);
       border-bottom: var(--border-thick);
-      font-weight: 900;
-      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-family: 'Inter', sans-serif;
+      color: var(--ink);
     }
 
-    .use-case-body {
-      padding: var(--space-md);
-    }
+    .use-case-body { padding: var(--space-md); }
 
     .use-case-body h4 {
-      font-size: 14px;
+      font-size: 13px;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.04em;
       margin-bottom: var(--space-xs);
       font-family: 'Inter', sans-serif;
+      color: var(--ink-muted);
     }
 
-    .use-case-body p {
-      font-size: 14px;
-    }
+    .use-case-body p { font-size: 14px; }
 
     .use-case-body .savings {
       display: inline-block;
-      background: var(--gold);
-      color: #000;
+      background: rgba(245, 166, 35, 0.12);
+      color: var(--gold);
       padding: 4px 12px;
-      font-weight: 900;
-      font-size: 14px;
-      border: var(--border-thin);
+      font-weight: 700;
+      font-size: 13px;
+      border: 1px solid rgba(245, 166, 35, 0.25);
       margin-top: var(--space-xs);
+      border-radius: 3px;
     }
 
     .savings-callout {
-      background: var(--gold);
-      color: #000;
-      border: var(--border-thick);
+      background: rgba(245, 166, 35, 0.08);
+      color: var(--ink);
+      border: 1px solid rgba(245, 166, 35, 0.2);
       padding: var(--space-md);
       text-align: center;
       box-shadow: var(--shadow-hard);
+      border-radius: var(--radius-sm);
     }
 
     .savings-callout h3 {
-      font-size: clamp(24px, 3vw, 36px);
+      font-size: clamp(22px, 3vw, 32px);
+      color: var(--gold);
     }
 
     .savings-callout p {
-      font-size: 16px;
+      font-size: 15px;
       margin: var(--space-xs) 0 0;
-      font-weight: 500;
+      font-weight: 400;
+      color: var(--ink-secondary);
     }
 
     /* ========== SECTION: SAFETY ========== */
-    .sec-safety {
-      border-bottom: var(--border-thick);
-    }
+    .sec-safety { border-bottom: var(--border-thick); }
 
     .safety-split {
       display: grid;
@@ -712,8 +850,8 @@
     }
 
     .safety-left {
-      background: var(--ink);
-      color: var(--bg-paper);
+      background: var(--gradient-card);
+      color: var(--ink);
       padding: var(--space-lg);
       display: flex;
       flex-direction: column;
@@ -722,14 +860,15 @@
     }
 
     .safety-left h2 {
-      font-size: clamp(36px, 5vw, 56px);
+      font-size: clamp(32px, 4.5vw, 48px);
       margin-bottom: var(--space-md);
     }
 
     .safety-left p {
-      font-size: 18px;
+      font-size: 17px;
       max-width: 450px;
       line-height: 1.7;
+      color: var(--ink-secondary);
     }
 
     .safety-right {
@@ -740,7 +879,7 @@
     }
 
     .safety-right h3 {
-      font-size: 28px;
+      font-size: 24px;
       margin-bottom: var(--space-md);
     }
 
@@ -752,16 +891,17 @@
 
     .safety-checklist li {
       padding: 10px 0;
-      border-bottom: 1px solid rgba(0,0,0,0.08);
+      border-bottom: 1px solid #292825;
       font-size: 15px;
       font-weight: 500;
       display: flex;
       align-items: flex-start;
       gap: 10px;
+      color: var(--ink-secondary);
     }
 
     [data-theme="dark"] .safety-checklist li {
-      border-bottom-color: rgba(255,255,255,0.08);
+      border-bottom-color: #1e1d1b;
     }
 
     .safety-checklist li::before {
@@ -775,17 +915,20 @@
       padding: var(--space-md);
       margin: 0 auto;
       max-width: var(--max-width);
+      border-radius: var(--radius-sm);
     }
 
     .security-note h4 {
-      font-size: 18px;
+      font-size: 16px;
       margin-bottom: var(--space-xs);
-      text-transform: uppercase;
+      color: var(--ink);
+      text-transform: none;
     }
 
     .security-note p {
       font-size: 14px;
       margin: 0;
+      color: var(--ink-secondary);
     }
 
     /* ========== SECTION: GETTING STARTED ========== */
@@ -805,57 +948,61 @@
     .start-card {
       border: var(--border-thick);
       padding: var(--space-md);
-      background: var(--bg-white);
+      background: var(--gradient-card);
       box-shadow: var(--shadow-hard);
       display: flex;
       flex-direction: column;
+      border-radius: var(--radius-sm);
     }
 
     .start-card.featured {
-      background: var(--gold);
-      color: #000;
+      background: linear-gradient(130deg, rgba(245, 166, 35, 0.1), rgba(245, 166, 35, 0.03));
+      border-color: rgba(245, 166, 35, 0.25);
+      color: var(--ink);
       position: relative;
     }
 
     .start-card.featured::before {
       content: 'BEST VALUE';
       position: absolute;
-      top: -14px;
+      top: -12px;
       right: 16px;
-      background: var(--coral);
+      background: linear-gradient(135deg, #e50000, #ff2020);
       color: #fff;
       font-size: 11px;
-      font-weight: 900;
+      font-weight: 700;
       padding: 4px 12px;
-      text-transform: uppercase;
       letter-spacing: 0.05em;
-      border: var(--border-thin);
+      border-radius: 3px;
+      border: none;
     }
 
     .start-card h3 {
-      font-size: 28px;
+      font-size: 24px;
       margin-bottom: var(--space-sm);
     }
 
     .start-card .time-estimate {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 700;
       text-transform: uppercase;
-      opacity: 0.7;
+      color: var(--ink-muted);
       margin-bottom: var(--space-sm);
+      letter-spacing: 0.04em;
     }
 
     .code-block {
-      background: var(--ink);
-      color: var(--bg-paper);
+      background: #0a0a0a;
+      color: var(--green);
       padding: 14px 18px;
       font-family: 'Courier New', monospace;
       font-size: 14px;
-      font-weight: 600;
-      border: var(--border-thin);
+      font-weight: 500;
+      border: 1px solid #292825;
       margin: var(--space-sm) 0;
       overflow-x: auto;
       word-break: break-all;
+      border-radius: var(--radius-sm);
     }
 
     .start-card ul {
@@ -868,12 +1015,14 @@
       padding: 4px 0;
       font-size: 14px;
       font-weight: 500;
+      color: var(--ink-secondary);
     }
 
     .start-card li::before {
       content: '\2713';
       margin-right: 8px;
       font-weight: 900;
+      color: var(--green);
     }
 
     .start-card .btn { margin-top: auto; padding-top: var(--space-sm); width: 100%; }
@@ -886,8 +1035,8 @@
     }
 
     .start-cta-box {
-      background: var(--ink);
-      color: var(--bg-paper);
+      background: var(--gradient-card);
+      color: var(--ink);
       border: var(--border-thick);
       padding: var(--space-md);
       display: flex;
@@ -895,22 +1044,23 @@
       align-items: center;
       gap: 12px;
       text-align: center;
+      border-radius: var(--radius-sm);
     }
 
     .start-cta-kicker {
       font-size: 11px;
-      font-weight: 900;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.08em;
       color: var(--gold);
       margin: 0;
     }
 
     .start-guarantee {
       font-size: 13px;
-      font-weight: 600;
+      font-weight: 500;
       margin: 0;
-      opacity: 0.75;
+      color: var(--ink-muted);
     }
 
     .community-strip {
@@ -921,36 +1071,40 @@
 
     .community-stat {
       border: var(--border-thick);
-      background: var(--bg-white);
+      background: var(--gradient-card);
       padding: var(--space-md);
       text-align: center;
       box-shadow: var(--shadow-hard);
+      border-radius: var(--radius-sm);
     }
 
     .community-stat .stat-val {
       font-size: 36px;
-      font-weight: 900;
-      color: var(--blue);
+      font-weight: 700;
+      color: var(--green);
       font-family: 'Inter', sans-serif;
     }
 
     .community-stat .stat-label {
       font-size: 13px;
-      font-weight: 700;
-      text-transform: uppercase;
+      font-weight: 600;
       margin-top: 4px;
+      color: var(--ink-secondary);
     }
 
     /* ========== SECTION: BIGGER PICTURE ========== */
     .sec-bigger-picture {
       padding: var(--space-lg) 0;
-      background: var(--ink);
-      color: var(--bg-paper);
+      background:
+        radial-gradient(ellipse 60% 50% at 0% 50%, rgba(239, 68, 68, 0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 50% at 100% 50%, rgba(99, 102, 241, 0.06) 0%, transparent 70%),
+        #0a0c14;
+      color: var(--ink);
       border-bottom: var(--border-thick);
     }
 
     .sec-bigger-picture h2 {
-      font-size: clamp(36px, 5vw, 56px);
+      font-size: clamp(36px, 5vw, 60px);
       margin-bottom: var(--space-md);
     }
 
@@ -959,20 +1113,25 @@
       max-width: 800px;
       line-height: 1.7;
       margin-bottom: var(--space-md);
+      color: #b0bcd4;
     }
 
     .sec-bigger-picture blockquote {
-      border-left: 4px solid var(--gold);
+      border-left: 3px solid var(--gold);
       padding: var(--space-sm) var(--space-md);
       margin: var(--space-md) 0;
-      font-size: 18px;
+      font-size: 17px;
       font-style: italic;
-      font-weight: 500;
+      font-weight: 400;
       max-width: 700px;
+      color: var(--ink-secondary);
     }
 
     .sec-bigger-picture .cta-row {
       margin-top: var(--space-md);
+      display: flex;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
     }
 
     .quote-with-photo {
@@ -984,27 +1143,28 @@
     }
 
     .quote-photo {
-      width: 120px;
-      height: 120px;
+      width: 100px;
+      height: 100px;
       flex-shrink: 0;
-      border: var(--border-thick);
-      border-color: var(--gold);
-      box-shadow: 6px 6px 0px 0px var(--gold);
+      border: 1px solid rgba(245, 166, 35, 0.3);
+      border-radius: 6px;
       object-fit: cover;
+      box-shadow: 0 4px 16px rgba(245, 166, 35, 0.1);
     }
 
     .quote-with-photo blockquote {
-      border-left: 4px solid var(--gold);
+      border-left: 3px solid var(--gold);
       padding: var(--space-sm) var(--space-md);
       margin: 0;
-      font-size: 18px;
+      font-size: 17px;
       font-style: italic;
-      font-weight: 500;
+      font-weight: 400;
+      color: var(--ink-secondary);
     }
 
     /* ========== FOOTER ========== */
     .footer-cta {
-      background: var(--blue);
+      background: linear-gradient(130deg, #1a0000, #2a0000);
       color: #fff;
       padding: var(--space-xl) 0;
       text-align: center;
@@ -1012,14 +1172,14 @@
     }
 
     .footer-cta h2 {
-      font-size: 64px;
+      font-size: 52px;
       margin-bottom: var(--space-md);
-      text-shadow: 4px 4px 0 var(--ink);
+      text-shadow: none;
     }
 
     .site-footer {
-      background: var(--ink);
-      color: var(--bg-paper);
+      background: #0a0a0a;
+      color: var(--ink-secondary);
       padding: var(--space-md) 0;
       border-top: var(--border-thick);
     }
@@ -1044,21 +1204,10 @@
         grid-template-columns: 1fr;
       }
 
-      .safety-right {
-        border-left: none;
-      }
-
-      .analogy-card.featured {
-        transform: none;
-      }
-
-      .hero h1 {
-        font-size: 56px;
-      }
-
-      .toc-bar {
-        top: 60px;
-      }
+      .safety-right { border-left: none; }
+      .analogy-card.featured { transform: none; }
+      .hero h1 { font-size: 48px; }
+      .toc-bar { top: 60px; }
 
       .quote-with-photo {
         flex-direction: column;
@@ -1068,28 +1217,21 @@
 
       .quote-with-photo blockquote {
         border-left: none;
-        border-top: 4px solid var(--gold);
+        border-top: 3px solid var(--gold);
         padding: var(--space-sm) 0;
       }
     }
 
     @media (max-width: 480px) {
-      .hero h1 {
-        font-size: 42px;
-      }
-
-      .section-title {
-        font-size: 32px;
-      }
+      .hero h1 { font-size: 38px; }
+      .section-title { font-size: 28px; }
 
       .hero-buttons {
         flex-direction: column;
         align-items: stretch;
       }
 
-      .hero-buttons .btn {
-        width: 100%;
-      }
+      .hero-buttons .btn { width: 100%; }
     }
 
     /* ========== SECTION: FULL STACK ========== */
@@ -1108,17 +1250,19 @@
 
     .stack-item {
       border: var(--border-thick);
-      background: var(--bg-paper);
+      background: var(--gradient-card);
       box-shadow: var(--shadow-hard);
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      transition: all 0.25s ease;
+      border-radius: var(--radius-sm);
     }
 
     .stack-item:hover {
-      transform: translate(-2px, -2px);
+      transform: translateY(-3px);
       box-shadow: var(--shadow-hover);
+      border-color: #46443e;
     }
 
     .stack-item-img {
@@ -1139,27 +1283,29 @@
 
     .stack-item-value {
       display: inline-block;
-      background: var(--coral);
-      color: #fff;
+      background: rgba(229, 0, 0, 0.12);
+      color: #e55040;
       font-size: 11px;
-      font-weight: 900;
+      font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       padding: 3px 10px;
-      border: 2px solid var(--ink);
+      border: 1px solid rgba(229, 0, 0, 0.2);
       margin-bottom: 8px;
       align-self: flex-start;
+      border-radius: 3px;
     }
 
     .stack-item-body h3 {
-      font-size: 20px;
+      font-size: 18px;
       margin-bottom: 8px;
+      color: var(--ink);
     }
 
     .stack-item-body p {
       font-size: 14px;
       margin: 0;
-      opacity: 0.8;
+      color: var(--ink-muted);
       flex: 1;
     }
 
@@ -1194,17 +1340,18 @@
 
     .bonus-card {
       border: var(--border-thick);
-      background: var(--bg-white);
+      background: var(--gradient-card);
       box-shadow: var(--shadow-hard);
       padding: var(--space-sm) var(--space-md);
       display: flex;
       align-items: flex-start;
       gap: var(--space-sm);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      transition: all 0.25s ease;
+      border-radius: var(--radius-sm);
     }
 
     .bonus-card:hover {
-      transform: translate(-2px, -2px);
+      transform: translateY(-2px);
       box-shadow: var(--shadow-hover);
     }
 
@@ -1216,20 +1363,21 @@
     }
 
     .bonus-card-body h4 {
-      font-size: 18px;
+      font-size: 17px;
       margin-bottom: 4px;
+      color: var(--ink);
     }
 
     .bonus-card-body p {
       font-size: 14px;
       margin: 0 0 4px;
-      opacity: 0.8;
+      color: var(--ink-muted);
     }
 
     .bonus-value-tag {
       font-size: 11px;
-      font-weight: 900;
-      color: var(--lobster);
+      font-weight: 700;
+      color: #e55040;
       text-transform: uppercase;
       letter-spacing: 0.05em;
     }
@@ -1239,8 +1387,8 @@
       padding: var(--space-lg) 0;
       border-bottom: var(--border-thick);
       background: var(--bg-paper);
-      background-image: radial-gradient(var(--ink) 1px, transparent 1px);
-      background-size: 20px 20px;
+      background-image: radial-gradient(rgba(239, 229, 205, 0.03) 1px, transparent 1px);
+      background-size: 24px 24px;
     }
 
     .testimonial-grid {
@@ -1255,11 +1403,12 @@
       box-shadow: var(--shadow-hard);
       overflow: hidden;
       background: var(--bg-white);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      transition: all 0.25s ease;
+      border-radius: var(--radius-sm);
     }
 
     .testimonial-img-card:hover {
-      transform: translate(-2px, -2px);
+      transform: translateY(-3px);
       box-shadow: var(--shadow-hover);
     }
 
@@ -1272,7 +1421,7 @@
     .sec-offer-cta {
       padding: var(--space-lg) 0;
       border-bottom: var(--border-thick);
-      background: var(--gold);
+      background: rgba(245, 166, 35, 0.06);
     }
 
     .offer-boxes {
@@ -1288,11 +1437,12 @@
       padding: var(--space-md);
       display: flex;
       flex-direction: column;
+      border-radius: var(--radius-sm);
     }
 
     .offer-box-main {
-      background: #000;
-      color: #fff;
+      background: var(--gradient-card);
+      color: var(--ink);
     }
 
     .offer-box-guarantee {
@@ -1303,15 +1453,15 @@
     .offer-box-header {
       margin-bottom: var(--space-md);
       padding-bottom: var(--space-sm);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+      border-bottom: 1px solid #292825;
     }
 
     .offer-box-label {
       display: block;
       font-size: 12px;
-      font-weight: 900;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       color: var(--gold);
       margin-bottom: 8px;
     }
@@ -1324,24 +1474,24 @@
     }
 
     .offer-price-was {
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 700;
       text-decoration: line-through;
-      opacity: 0.5;
+      color: var(--ink-muted);
     }
 
     .offer-price-now {
-      font-size: 52px;
-      font-weight: 900;
-      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      font-weight: 700;
+      font-family: 'Inter', sans-serif;
       color: var(--gold);
       line-height: 1;
     }
 
     .offer-price-note {
       font-size: 13px;
-      font-weight: 600;
-      opacity: 0.7;
+      font-weight: 500;
+      color: var(--ink-muted);
       margin: 0;
     }
 
@@ -1354,14 +1504,13 @@
 
     .offer-includes li {
       padding: 10px 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid #292825;
       font-size: 14px;
       line-height: 1.5;
+      color: var(--ink-secondary);
     }
 
-    .offer-includes li:last-child {
-      border-bottom: none;
-    }
+    .offer-includes li:last-child { border-bottom: none; }
 
     .offer-includes li::before {
       content: '\2713  ';
@@ -1399,28 +1548,28 @@
     .section-cta {
       margin-top: var(--space-lg);
       padding-top: var(--space-md);
-      border-top: var(--border-thin);
+      border-top: 1px solid #292825;
       text-align: center;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
     }
 
     .section-cta p {
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 600;
-      opacity: 0.7;
+      color: #6b7fa3;
       margin: 0;
     }
 
     .section-cta-alt {
       font-size: 13px;
-      font-weight: 700;
-      color: var(--blue);
+      font-weight: 600;
+      color: var(--gold);
       text-decoration: underline;
       text-underline-offset: 3px;
-      opacity: 0.8;
+      opacity: 0.7;
       transition: opacity 0.2s;
     }
     .section-cta-alt:hover { opacity: 1; }
@@ -1428,8 +1577,8 @@
     /* ========== MARQUEE TICKER ========== */
     .marquee-strip {
       overflow: hidden;
-      background: var(--ink);
-      color: var(--bg-paper);
+      background: rgba(239, 229, 205, 0.03);
+      color: var(--ink-secondary);
       border-bottom: var(--border-thick);
       padding: 11px 0;
     }
@@ -1445,11 +1594,11 @@
       display: inline-flex;
       align-items: center;
       gap: 20px;
-      padding: 0 20px;
-      font-size: 13px;
+      padding: 0 24px;
+      font-size: 14px;
       font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.03em;
+      color: #b0bcd4;
     }
     .marquee-dot { color: var(--gold); font-size: 16px; }
     @keyframes marquee {
@@ -1459,73 +1608,70 @@
 
     /* ========== HERO ENTRANCE ANIMATIONS ========== */
     @keyframes heroFadeUp {
-      from { opacity: 0; transform: translateY(28px); }
+      from { opacity: 0; transform: translateY(24px); }
       to { opacity: 1; transform: translateY(0); }
     }
     @keyframes heroPop {
-      0% { opacity: 0; transform: scale(0.8) rotate(-5deg); }
-      65% { transform: scale(1.08) rotate(-1deg); }
-      100% { opacity: 1; transform: scale(1) rotate(-2deg); }
+      0% { opacity: 0; transform: scale(0.85); }
+      65% { transform: scale(1.05); }
+      100% { opacity: 1; transform: scale(1); }
     }
-    @keyframes heroGlitch {
-      0%, 100% { clip-path: none; transform: none; }
-      10% { clip-path: polygon(0 20%, 100% 20%, 100% 40%, 0 40%); transform: translate(-3px, 0); }
-      15% { clip-path: none; transform: none; }
-      20% { clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%); transform: translate(3px, 0); }
-      25% { clip-path: none; transform: none; }
-    }
-    .hero-badges { animation: heroFadeUp 0.55s 0.05s cubic-bezier(0.34, 1.4, 0.64, 1) both; }
-    .hero h1 { animation: heroFadeUp 0.6s 0.15s cubic-bezier(0.34, 1.4, 0.64, 1) both; }
-    .hero h1 .highlight { animation: heroPop 0.65s 0.38s cubic-bezier(0.34, 1.5, 0.64, 1) both; }
-    .hero-subtitle { animation: heroFadeUp 0.5s 0.35s cubic-bezier(0.34, 1.4, 0.64, 1) both; }
-    .hero-stats { animation: heroFadeUp 0.5s 0.48s cubic-bezier(0.34, 1.4, 0.64, 1) both; }
-    .hero-buttons { animation: heroFadeUp 0.5s 0.58s cubic-bezier(0.34, 1.4, 0.64, 1) both; }
+    .hero-badges { animation: heroFadeUp 0.6s 0.05s cubic-bezier(0.22, 1, 0.36, 1) both; }
+    .hero h1 { animation: heroFadeUp 0.65s 0.15s cubic-bezier(0.22, 1, 0.36, 1) both; }
+    .hero h1 .highlight { animation: heroPop 0.5s 0.4s cubic-bezier(0.22, 1, 0.36, 1) both; }
+    .hero-subtitle { animation: heroFadeUp 0.55s 0.35s cubic-bezier(0.22, 1, 0.36, 1) both; }
+    .hero-stats { animation: heroFadeUp 0.55s 0.48s cubic-bezier(0.22, 1, 0.36, 1) both; }
+    .hero-buttons { animation: heroFadeUp 0.55s 0.58s cubic-bezier(0.22, 1, 0.36, 1) both; }
 
     /* ========== SCROLL REVEAL ========== */
     .reveal {
       opacity: 0;
-      transform: translateY(32px);
-      transition: opacity 0.55s cubic-bezier(0.34, 1.2, 0.64, 1),
-                  transform 0.55s cubic-bezier(0.34, 1.2, 0.64, 1);
+      transform: translateY(24px);
+      transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
     }
     .reveal.visible { opacity: 1; transform: translateY(0); }
     .reveal-left {
       opacity: 0;
-      transform: translateX(-36px);
-      transition: opacity 0.55s cubic-bezier(0.34, 1.2, 0.64, 1),
-                  transform 0.55s cubic-bezier(0.34, 1.2, 0.64, 1);
+      transform: translateX(-30px);
+      transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
     }
     .reveal-left.visible { opacity: 1; transform: translateX(0); }
     .reveal-right {
       opacity: 0;
-      transform: translateX(36px);
-      transition: opacity 0.55s cubic-bezier(0.34, 1.2, 0.64, 1),
-                  transform 0.55s cubic-bezier(0.34, 1.2, 0.64, 1);
+      transform: translateX(30px);
+      transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
     }
     .reveal-right.visible { opacity: 1; transform: translateX(0); }
     .reveal-scale {
       opacity: 0;
-      transform: scale(0.88);
-      transition: opacity 0.5s cubic-bezier(0.34, 1.4, 0.64, 1),
-                  transform 0.5s cubic-bezier(0.34, 1.4, 0.64, 1);
+      transform: scale(0.92);
+      transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
     }
     .reveal-scale.visible { opacity: 1; transform: scale(1); }
 
     /* ========== FLOATING ANIMATION ========== */
     @keyframes floatY {
-      0%, 100% { transform: translateY(0) rotate(0deg); }
-      50% { transform: translateY(-8px) rotate(0.5deg); }
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
     }
     @keyframes floatShadow {
       0%, 100% { box-shadow: var(--shadow-hard); }
-      50% { box-shadow: 10px 14px 0px 0px var(--ink); }
+      50% { box-shadow: 0 12px 40px rgba(245, 166, 35, 0.12); }
     }
 
     /* ========== PRICING SECTION ========== */
     .sec-pricing {
       padding: var(--space-lg) 0;
       border-bottom: var(--border-thick);
-      background: var(--gold);
+      background:
+        radial-gradient(ellipse 50% 50% at 50% 100%, rgba(251, 191, 36, 0.1) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 0% 0%, rgba(79, 142, 247, 0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 100% 0%, rgba(167, 139, 250, 0.06) 0%, transparent 70%),
+        #0b0d14;
     }
 
     .pricing-grid {
@@ -1542,11 +1688,12 @@
       display: flex;
       flex-direction: column;
       position: relative;
-      background: var(--bg-white);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      background: var(--gradient-card);
+      transition: all 0.25s ease;
+      border-radius: 6px;
     }
     .pricing-card:not(.pricing-pro):hover {
-      transform: translate(-2px, -2px);
+      transform: translateY(-3px);
       box-shadow: var(--shadow-hover);
     }
 
@@ -1554,47 +1701,46 @@
     .pricing-enterprise { color: var(--ink); }
 
     .pricing-pro {
-      background: #000;
+      background: linear-gradient(160deg, #1a1d3a 0%, #0d1025 100%);
       color: #fff;
-      border-color: #000;
+      border-color: rgba(245, 166, 35, 0.25);
       animation: floatY 4s ease-in-out infinite, floatShadow 4s ease-in-out infinite;
     }
     .pricing-pro:hover {
       animation-play-state: paused;
-      transform: translate(-2px, -2px);
+      transform: translateY(-3px);
     }
 
     .pricing-featured-badge {
       position: absolute;
-      top: -16px;
+      top: -14px;
       left: 50%;
       transform: translateX(-50%);
       background: linear-gradient(135deg, #e8920a, #f5a623);
-      color: #000;
+      color: #0e0e0e;
       font-size: 12px;
-      font-weight: 900;
-      padding: 6px 22px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
+      font-weight: 700;
+      padding: 5px 20px;
+      letter-spacing: 0.06em;
       border-radius: 20px;
       border: none;
       white-space: nowrap;
-      box-shadow: 0 4px 12px rgba(245,166,35,0.4);
+      box-shadow: 0 4px 16px rgba(245, 166, 35, 0.3);
     }
 
     .pricing-card-header {
       padding: var(--space-md);
-      border-bottom: var(--border-thick);
+      border-bottom: 1px solid #292825;
     }
-    .pricing-pro .pricing-card-header { border-color: rgba(255,255,255,0.15); }
+    .pricing-pro .pricing-card-header { border-color: rgba(255,255,255,0.1); }
 
     .pricing-tier-label {
       display: block;
       font-size: 11px;
-      font-weight: 900;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      opacity: 0.65;
+      letter-spacing: 0.08em;
+      color: var(--ink-muted);
       margin-bottom: 8px;
     }
     .pricing-pro .pricing-tier-label { color: var(--gold); opacity: 1; }
@@ -1606,24 +1752,23 @@
       margin-bottom: 6px;
     }
     .pricing-price {
-      font-size: 52px;
-      font-weight: 900;
-      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      font-weight: 700;
+      font-family: 'Inter', sans-serif;
       line-height: 1;
     }
     .pricing-price-gold { color: var(--gold); }
     .pricing-was {
       font-size: 18px;
-      font-weight: 700;
+      font-weight: 600;
       text-decoration: line-through;
-      opacity: 0.45;
+      color: var(--ink-muted);
     }
     .pricing-tagline {
       font-size: 13px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      opacity: 0.6;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      color: var(--ink-muted);
       margin: 0;
     }
     .pricing-pro .pricing-tagline { color: var(--green); opacity: 0.9; }
@@ -1636,14 +1781,15 @@
     }
     .pricing-includes li {
       padding: 9px 0;
-      border-bottom: 1px solid rgba(0,0,0,0.08);
+      border-bottom: 1px solid #292825;
       font-size: 14px;
       font-weight: 500;
       line-height: 1.4;
+      color: var(--ink-secondary);
     }
     .pricing-includes li:last-child { border-bottom: none; }
     .pricing-includes li::before { content: '\2713  '; font-weight: 900; color: var(--green); }
-    .pricing-includes-white li { border-bottom-color: rgba(255,255,255,0.1); }
+    .pricing-includes-white li { border-bottom-color: rgba(255,255,255,0.08); }
     .pricing-includes-white li::before { color: var(--green); }
 
     .pricing-cta {
@@ -1657,11 +1803,11 @@
 
     .pricing-info-link {
       font-size: 12px;
-      font-weight: 700;
-      color: var(--blue);
+      font-weight: 600;
+      color: var(--gold);
       text-decoration: underline;
       text-underline-offset: 3px;
-      opacity: 0.75;
+      opacity: 0.65;
       transition: opacity 0.2s;
     }
     .pricing-info-link:hover { opacity: 1; }
@@ -1670,13 +1816,14 @@
       display: flex;
       align-items: center;
       gap: var(--space-md);
-      background: rgba(0,0,0,0.07);
+      background: rgba(239, 229, 205, 0.03);
       border: var(--border-thin);
       padding: var(--space-md);
       margin-top: var(--space-md);
+      border-radius: var(--radius-sm);
     }
-    .pricing-guarantee strong { display: block; font-size: 16px; margin-bottom: 4px; }
-    .pricing-guarantee p { font-size: 14px; margin: 0; opacity: 0.8; }
+    .pricing-guarantee strong { display: block; font-size: 16px; margin-bottom: 4px; color: var(--ink); }
+    .pricing-guarantee p { font-size: 14px; margin: 0; color: var(--ink-muted); }
 
     @media (max-width: 900px) {
       .pricing-grid { grid-template-columns: 1fr; }
@@ -1685,10 +1832,13 @@
 
     /* ========== ENTERPRISE STRIP ========== */
     .sec-enterprise-strip {
-      background: var(--blue);
+      background:
+        radial-gradient(ellipse 50% 80% at 0% 50%, rgba(99, 102, 241, 0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 80% at 100% 50%, rgba(251, 191, 36, 0.08) 0%, transparent 70%),
+        linear-gradient(130deg, #0f1126, #140a1a);
       color: #fff;
       border-bottom: var(--border-thick);
-      padding: var(--space-md) 0;
+      padding: var(--space-lg) 0;
     }
     .enterprise-strip-inner {
       display: flex;
@@ -1698,43 +1848,43 @@
       flex-wrap: wrap;
     }
     .enterprise-strip-inner h3 {
-      font-size: 24px;
+      font-size: 28px;
       margin: var(--space-xs) 0;
     }
     .enterprise-strip-inner p {
-      font-size: 15px;
-      opacity: 0.85;
+      font-size: 14px;
+      color: rgba(239, 229, 205, 0.65);
       margin: 0;
       max-width: 600px;
     }
     .enterprise-strip-inner .btn {
-      background: var(--gold);
-      color: #000;
-      border-color: #000;
+      background: linear-gradient(135deg, #e8920a, #f5a623);
+      color: #0e0e0e;
+      border-color: #f5a623;
       white-space: nowrap;
       flex-shrink: 0;
     }
 
-    /* ========== PULSE RING on primary CTAs ========== */
+    /* ========== PULSE RING ========== */
     @keyframes pulseRing {
-      0% { box-shadow: 0 0 0 0 rgba(196, 30, 58, 0.4), var(--shadow-hard); }
-      70% { box-shadow: 0 0 0 12px rgba(196, 30, 58, 0), var(--shadow-hard); }
-      100% { box-shadow: 0 0 0 0 rgba(196, 30, 58, 0), var(--shadow-hard); }
+      0% { box-shadow: 0 0 0 0 rgba(229, 0, 0, 0.3), var(--shadow-hard); }
+      70% { box-shadow: 0 0 0 14px rgba(229, 0, 0, 0), var(--shadow-hard); }
+      100% { box-shadow: 0 0 0 0 rgba(229, 0, 0, 0), var(--shadow-hard); }
     }
     .start-cta-box .btn-lobster-cta {
-      animation: claw-pulse 2s ease-in-out infinite, pulseRing 2.5s ease-out infinite;
+      animation: claw-pulse 2.5s ease-in-out infinite, pulseRing 2.5s ease-out infinite;
     }
-    .start-cta-box .btn-lobster-cta:hover {
-      animation: none;
-    }
+    .start-cta-box .btn-lobster-cta:hover { animation: none; }
 
     /* ========== SECTION: SOCIAL PROOF (TESTIMONIALS) ========== */
     .sec-social-proof-new {
       padding: var(--space-lg) 0;
       border-bottom: var(--border-thick);
-      background: var(--bg-paper);
-      background-image: radial-gradient(var(--ink) 1px, transparent 1px);
-      background-size: 20px 20px;
+      background:
+        radial-gradient(ellipse 50% 40% at 50% 0%, rgba(16, 185, 129, 0.06) 0%, transparent 70%),
+        radial-gradient(rgba(110, 130, 230, 0.03) 1px, transparent 1px),
+        #0a0c12;
+      background-size: 100% 100%, 32px 32px, 100% 100%;
     }
 
     .testimonials-grid {
@@ -1749,12 +1899,14 @@
       background: var(--bg-white);
       box-shadow: var(--shadow-hard);
       overflow: hidden;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      transition: all 0.25s ease;
+      border-radius: 6px;
     }
 
     .testimonial-card:hover {
-      transform: translate(-2px, -2px);
+      transform: translateY(-3px);
       box-shadow: var(--shadow-hover);
+      border-color: #46443e;
     }
 
     .testimonial-card-header {
@@ -1769,13 +1921,16 @@
       font-weight: 700;
       font-size: 15px;
       font-style: italic;
+      color: #f1f5f9;
+      display: block;
+      margin-top: 4px;
     }
 
     .testimonial-verified {
       font-size: 11px;
-      font-weight: 900;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.04em;
       color: var(--green);
     }
 
@@ -1788,25 +1943,30 @@
       padding: 10px var(--space-md);
       border-top: var(--border-thick);
       font-size: 13px;
-      font-weight: 700;
+      font-weight: 600;
       display: flex;
       gap: var(--space-sm);
+      color: var(--ink-secondary);
     }
 
     /* ========== SECTION: BUNDLE CONTENTS ========== */
     .sec-bundle-contents {
       padding: var(--space-lg) 0;
       border-bottom: var(--border-thick);
-      background: var(--bg-white);
+      background:
+        radial-gradient(ellipse 50% 50% at 0% 50%, rgba(251, 191, 36, 0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 50% at 100% 50%, rgba(236, 72, 153, 0.05) 0%, transparent 70%),
+        #0d0f16;
     }
 
     .bundle-hero-img {
       width: 100%;
-      max-width: 500px;
+      max-width: 700px;
       display: block;
       margin: 0 auto var(--space-lg);
       border: var(--border-thick);
       box-shadow: var(--shadow-hard);
+      border-radius: 6px;
     }
 
     .bundle-components-grid {
@@ -1817,50 +1977,56 @@
 
     .bundle-component {
       border: var(--border-thick);
-      background: var(--bg-paper);
+      background: var(--gradient-card);
       box-shadow: var(--shadow-hard);
       padding: var(--space-md);
       position: relative;
       overflow: hidden;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      transition: all 0.25s ease;
+      border-radius: var(--radius-sm);
     }
 
     .bundle-component:hover {
-      transform: translate(-2px, -2px);
+      transform: translateY(-3px);
       box-shadow: var(--shadow-hover);
+      border-color: #46443e;
     }
 
     .bundle-component-number {
       font-size: 64px;
       font-weight: 900;
-      opacity: 0.08;
+      opacity: 0.04;
       position: absolute;
       top: -4px;
       right: 10px;
       line-height: 1;
+      color: var(--ink);
     }
 
     .bundle-component-value {
       display: inline-block;
-      background: var(--coral);
-      color: #fff;
+      background: rgba(229, 0, 0, 0.12);
+      color: #e55040;
       font-size: 11px;
-      font-weight: 900;
+      font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       padding: 3px 10px;
-      border: 2px solid var(--ink);
+      border: 1px solid rgba(229, 0, 0, 0.2);
       margin-bottom: 8px;
+      border-radius: 3px;
     }
 
     .bundle-component h3 {
-      font-size: 22px;
+      font-size: 24px;
       margin-bottom: var(--space-xs);
+      color: #f1f5f9;
     }
 
     .bundle-component p {
-      font-size: 14px;
-      opacity: 0.85;
+      font-size: 16px;
+      color: #b0bcd4;
+      line-height: 1.7;
     }
 
     .bundle-component ul {
@@ -1870,9 +2036,10 @@
     }
 
     .bundle-component li {
-      padding: 4px 0;
-      font-size: 14px;
+      padding: 6px 0;
+      font-size: 15px;
       font-weight: 500;
+      color: #b0bcd4;
     }
 
     .bundle-component li::before {
@@ -1883,37 +2050,40 @@
     }
 
     .bundle-total-value {
-      background: var(--gold);
-      color: #000;
-      border: var(--border-thick);
+      background: rgba(245, 166, 35, 0.08);
+      color: var(--ink);
+      border: 1px solid rgba(245, 166, 35, 0.2);
       padding: var(--space-md);
       text-align: center;
       box-shadow: var(--shadow-hard);
       margin-top: var(--space-md);
+      border-radius: var(--radius-sm);
     }
 
     .bundle-total-value h3 {
-      font-size: clamp(24px, 3vw, 36px);
+      font-size: clamp(26px, 3.5vw, 40px);
+      color: var(--gold);
     }
 
     .guarantee-callout {
-      background: var(--ink);
-      color: var(--bg-paper);
+      background: var(--gradient-card);
+      color: var(--ink);
       border: var(--border-thick);
       padding: var(--space-md);
       text-align: center;
       margin-top: var(--space-md);
       box-shadow: var(--shadow-hard);
+      border-radius: var(--radius-sm);
     }
 
     .guarantee-callout h3 {
-      font-size: 24px;
+      font-size: 26px;
       margin-bottom: var(--space-xs);
     }
 
     .guarantee-callout p {
       font-size: 15px;
-      opacity: 0.85;
+      color: var(--ink-secondary);
       margin: 0;
     }
 
@@ -1921,24 +2091,29 @@
     .sec-bundle-upgrades {
       padding: var(--space-lg) 0;
       border-bottom: var(--border-thick);
-      background: var(--bg-paper);
+      background:
+        radial-gradient(ellipse 60% 40% at 100% 100%, rgba(99, 102, 241, 0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 0% 0%, rgba(249, 115, 22, 0.06) 0%, transparent 70%),
+        #080a10;
     }
 
     .upgrade-item {
       display: grid;
-      grid-template-columns: 280px 1fr;
+      grid-template-columns: 390px 1fr;
       gap: var(--space-md);
       border: var(--border-thick);
       background: var(--bg-white);
       box-shadow: var(--shadow-hard);
       margin-bottom: var(--space-md);
       overflow: hidden;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      transition: all 0.25s ease;
+      border-radius: 6px;
     }
 
     .upgrade-item:hover {
-      transform: translate(-2px, -2px);
+      transform: translateY(-3px);
       box-shadow: var(--shadow-hover);
+      border-color: #46443e;
     }
 
     .upgrade-item img {
@@ -1947,7 +2122,7 @@
       object-fit: contain;
       display: block;
       border-right: var(--border-thick);
-      background: #0a0a14;
+      background: #080810;
       padding: var(--space-sm);
     }
 
@@ -1959,13 +2134,15 @@
     }
 
     .upgrade-item-body h3 {
-      font-size: 24px;
+      font-size: 28px;
       margin-bottom: var(--space-xs);
+      color: #f1f5f9;
     }
 
     .upgrade-item-body p {
-      font-size: 14px;
-      opacity: 0.85;
+      font-size: 16px;
+      color: #b0bcd4;
+      line-height: 1.7;
     }
 
     .upgrade-features {
@@ -1979,8 +2156,9 @@
       display: flex;
       align-items: flex-start;
       gap: 8px;
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 500;
+      color: #b0bcd4;
     }
 
     .upgrade-feature-icon {
@@ -1997,27 +2175,27 @@
     }
 
     .pricing-card-3 {
-      border: 3px solid rgba(255,255,255,0.1);
-      border-radius: 16px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
       display: flex;
       flex-direction: column;
       position: relative;
-      background: #2a2d35;
-      color: #e0e0e0;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      background: linear-gradient(130deg, #1a1a1a, #141414);
+      color: var(--ink-secondary);
+      transition: all 0.25s ease;
       overflow: hidden;
     }
 
     .pricing-card-3:hover {
       transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.5);
     }
 
     .pricing-card-gold {
       background: linear-gradient(160deg, #1a1d3a 0%, #0d1025 100%);
       color: #fff;
-      border-color: var(--gold);
+      border-color: rgba(245, 166, 35, 0.25);
       max-width: 480px;
       width: 100%;
       animation: floatY 4s ease-in-out infinite, floatShadow 4s ease-in-out infinite;
@@ -2034,9 +2212,9 @@
     }
 
     .pricing-card-3 .pricing-tier-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 28px;
-      font-weight: 900;
+      font-family: 'Inter', sans-serif;
+      font-size: 26px;
+      font-weight: 700;
       margin-bottom: 4px;
     }
 
@@ -2059,7 +2237,7 @@
 
     .pricing-card-3 .pricing-subtext {
       font-size: 13px;
-      opacity: 0.6;
+      opacity: 0.5;
       margin-top: 2px;
     }
 
@@ -2071,57 +2249,66 @@
       width: 100%;
       text-align: center;
       border-radius: 8px;
-      font-weight: 800;
+      font-weight: 700;
       font-size: 15px;
-      letter-spacing: 0.03em;
+      letter-spacing: 0.02em;
     }
 
     .btn-gold-cta {
       background: linear-gradient(135deg, #e8920a, #f5a623);
-      color: #000;
-      border: 2px solid #f0a01a;
-      font-size: 17px;
+      color: #0e0e0e;
+      border: 1px solid rgba(245, 166, 35, 0.5);
+      font-size: 16px;
       padding: 14px 32px;
+      font-weight: 700;
     }
-    .btn-gold-cta:hover { background: linear-gradient(135deg, #f0a01a, #ffb733); }
+    .btn-gold-cta:hover {
+      background: linear-gradient(135deg, #f0a01a, #ffb733);
+      box-shadow: 0 4px 24px rgba(245, 166, 35, 0.25);
+    }
 
     .pricing-email-cta {
       text-align: center;
       margin-top: var(--space-lg);
       padding: var(--space-md);
       border: var(--border-thick);
-      background: var(--bg-white);
+      background: var(--gradient-card);
       box-shadow: var(--shadow-hard);
+      border-radius: var(--radius-sm);
     }
 
     .pricing-email-cta h3 {
-      font-size: 22px;
+      font-size: 24px;
       margin-bottom: var(--space-xs);
+      color: #f1f5f9;
     }
 
     .pricing-email-cta p {
-      font-size: 15px;
-      opacity: 0.8;
+      font-size: 14px;
+      color: var(--ink-muted);
       margin-bottom: var(--space-sm);
     }
 
     .btn-email-cta {
-      background: var(--bg-paper);
+      background: rgba(239, 229, 205, 0.04);
       color: var(--ink);
-      border: var(--border-thick);
-      font-weight: 800;
+      border: 1px solid #302e2b;
+      font-weight: 700;
       font-size: 15px;
-      letter-spacing: 0.03em;
+      letter-spacing: 0.02em;
     }
-    .btn-email-cta:hover { background: var(--lavender); }
+    .btn-email-cta:hover {
+      background: rgba(239, 229, 205, 0.08);
+      border-color: #46443e;
+    }
 
     .pricing-features-label {
       padding: var(--space-sm) var(--space-md) 0;
       font-size: 11px;
-      font-weight: 800;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      opacity: 0.5;
+      letter-spacing: 0.08em;
+      color: var(--ink-muted);
     }
 
     .pricing-feature-table {
@@ -2134,14 +2321,13 @@
       align-items: center;
       justify-content: space-between;
       padding: 8px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
       font-size: 13px;
       font-weight: 500;
+      color: var(--ink-secondary);
     }
 
-    .pricing-feature-row:last-child {
-      border-bottom: none;
-    }
+    .pricing-feature-row:last-child { border-bottom: none; }
 
     .pricing-feature-row .feature-icon {
       margin-right: 6px;
@@ -2150,7 +2336,7 @@
 
     .pricing-check {
       background: var(--green);
-      color: #fff;
+      color: #0e0e0e;
       font-size: 11px;
       font-weight: 900;
       width: 22px;
@@ -2161,7 +2347,7 @@
       border-radius: 6px;
       flex-shrink: 0;
     }
-    .pricing-cross { opacity: 0.3; }
+    .pricing-cross { opacity: 0.25; }
 
     .pricing-card-3 .pricing-cta {
       padding: var(--space-md);
@@ -2175,14 +2361,16 @@
     .pricing-card-img {
       width: 100%;
       display: block;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
     }
 
     /* ========== SECTION: GUARANTEE ========== */
     .sec-guarantee {
       padding: var(--space-lg) 0;
       border-bottom: var(--border-thick);
-      background: var(--bg-white);
+      background:
+        radial-gradient(ellipse 50% 50% at 50% 50%, rgba(16, 185, 129, 0.06) 0%, transparent 70%),
+        #0d1018;
     }
 
     .guarantee-box {
@@ -2191,48 +2379,53 @@
       gap: var(--space-md);
       align-items: center;
       border: var(--border-thick);
-      background: var(--bg-paper);
+      background: var(--gradient-card);
       box-shadow: var(--shadow-hard);
       padding: var(--space-lg);
+      border-radius: 6px;
     }
 
     .guarantee-badge {
       width: 120px;
       height: 120px;
-      background: var(--gold);
-      border: var(--border-thick);
-      box-shadow: var(--shadow-hard);
+      background: linear-gradient(135deg, #10b981, #22d3ee);
+      border: none;
+      box-shadow: 0 4px 32px rgba(16, 185, 129, 0.25);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
       flex-shrink: 0;
+      border-radius: 12px;
     }
 
     .guarantee-badge-number {
-      font-family: 'Playfair Display', serif;
-      font-size: 48px;
-      font-weight: 900;
+      font-family: 'Inter', sans-serif;
+      font-size: 44px;
+      font-weight: 700;
       line-height: 1;
+      color: #0e0e0e;
     }
 
     .guarantee-badge-label {
       font-size: 11px;
-      font-weight: 900;
+      font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.05em;
+      color: #0e0e0e;
     }
 
     .guarantee-text h3 {
-      font-size: clamp(28px, 3vw, 40px);
+      font-size: clamp(28px, 3.5vw, 42px);
       margin-bottom: var(--space-sm);
     }
 
     .guarantee-text p {
-      font-size: 16px;
+      font-size: 15px;
       line-height: 1.7;
       max-width: 600px;
+      color: var(--ink-secondary);
     }
 
     @media (max-width: 900px) {
@@ -2247,9 +2440,9 @@
 
     @media (max-width: 480px) {
       .upgrade-item-body { padding: var(--space-sm); }
-      .upgrade-item-body h3 { font-size: 20px; }
+      .upgrade-item-body h3 { font-size: 18px; }
       .pricing-card-3 .pricing-price { font-size: 42px; }
-      .pricing-card-3 .pricing-tier-name { font-size: 26px; }
+      .pricing-card-3 .pricing-tier-name { font-size: 22px; }
       .pricing-card-gold { max-width: 100%; }
       .bundle-total-value h3 { font-size: 20px; }
       .pricing-guarantee { flex-direction: column; text-align: center; }
@@ -2261,68 +2454,77 @@
       position: fixed;
       inset: 0;
       z-index: 10000;
-      background: rgba(0, 0, 0, 0.65);
+      background: rgba(0, 0, 0, 0.75);
       align-items: center;
       justify-content: center;
       padding: 20px;
+      backdrop-filter: blur(8px);
     }
     .setup-modal-overlay.open { display: flex; }
 
     @keyframes setupModalPop {
-      from { opacity: 0; transform: scale(0.88) translateY(20px); }
+      from { opacity: 0; transform: scale(0.92) translateY(16px); }
       to   { opacity: 1; transform: scale(1)    translateY(0);    }
     }
 
     .setup-modal {
-      background: var(--bg-white, #fff);
-      border: 3px solid #121212;
-      box-shadow: 10px 10px 0 #121212;
+      background: var(--bg-white, #1a1a1a);
+      border: 1px solid #292825;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
       max-width: 540px;
       width: 100%;
       padding: 40px;
       position: relative;
-      animation: setupModalPop 0.3s cubic-bezier(0.34, 1.5, 0.64, 1) both;
+      animation: setupModalPop 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+      border-radius: 8px;
     }
 
     .setup-modal-close {
       position: absolute;
       top: 14px;
       right: 14px;
-      background: none;
-      border: 2px solid #121212;
+      background: transparent;
+      border: 1px solid #302e2b;
       width: 32px;
       height: 32px;
       font-size: 18px;
       cursor: pointer;
-      font-weight: 700;
+      font-weight: 600;
       line-height: 1;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background 0.15s;
+      transition: all 0.2s;
+      color: var(--ink-secondary);
+      border-radius: 4px;
     }
-    .setup-modal-close:hover { background: var(--gold, #ffcc00); }
+    .setup-modal-close:hover {
+      background: rgba(245, 166, 35, 0.1);
+      border-color: rgba(245, 166, 35, 0.3);
+      color: var(--ink);
+    }
 
     .setup-modal-kicker {
       font-size: 11px;
-      font-weight: 900;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      opacity: 0.55;
+      letter-spacing: 0.08em;
+      color: var(--ink-muted);
       margin-bottom: 10px;
     }
 
     .setup-modal-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 28px;
-      font-weight: 900;
+      font-family: 'Inter', sans-serif;
+      font-size: 26px;
+      font-weight: 700;
       margin: 0 0 8px;
       line-height: 1.15;
+      color: var(--ink);
     }
 
     .setup-modal-sub {
       font-size: 14px;
-      opacity: 0.6;
+      color: var(--ink-muted);
       margin: 0 0 28px;
     }
 
@@ -2333,55 +2535,395 @@
     }
 
     .setup-option {
-      border: 3px solid #121212;
+      border: 1px solid #302e2b;
       padding: 28px 20px;
       text-align: center;
       cursor: pointer;
-      background: var(--bg-paper, #f2f0e9);
-      box-shadow: 5px 5px 0 #121212;
-      transition: transform 0.15s cubic-bezier(0.34, 1.5, 0.64, 1),
-                  box-shadow 0.15s ease;
+      background: var(--gradient-card);
+      box-shadow: var(--shadow-hard);
+      transition: all 0.25s ease;
       text-decoration: none;
-      color: inherit;
+      color: var(--ink);
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 6px;
+      border-radius: 6px;
     }
     .setup-option:hover {
-      transform: translate(-3px, -3px);
-      box-shadow: 8px 8px 0 #121212;
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+      border-color: #46443e;
     }
     .setup-option.option-featured {
-      background: #000;
+      background: linear-gradient(160deg, #1a1d3a 0%, #0d1025 100%);
       color: #fff;
+      border-color: rgba(245, 166, 35, 0.2);
     }
 
     .setup-option-icon { font-size: 38px; line-height: 1; }
     .setup-option-label {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Inter', sans-serif;
       font-size: 20px;
-      font-weight: 900;
+      font-weight: 700;
       margin-top: 4px;
     }
     .setup-option-desc {
       font-size: 13px;
-      font-weight: 600;
-      opacity: 0.6;
+      font-weight: 500;
+      color: var(--ink-muted);
     }
     .setup-option-price {
       font-size: 24px;
-      font-weight: 900;
+      font-weight: 700;
       margin-top: 8px;
-      color: var(--lobster, #C41E3A);
+      color: var(--blue, #e50000);
     }
-    .setup-option.option-featured .setup-option-price { color: var(--gold, #ffcc00); }
+    .setup-option.option-featured .setup-option-price { color: var(--gold, #f5a623); }
 
     @media (max-width: 480px) {
       .setup-options { grid-template-columns: 1fr; }
       .setup-modal { padding: 28px 20px; }
       .setup-modal-title { font-size: 22px; }
     }
+
+    /* ========== CAPSULE GRID ========== */
+    .capsule-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: var(--space-md);
+      max-width: 760px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .capsule {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border: 1px solid #292825;
+      border-radius: 40px;
+      background: rgba(239, 229, 205, 0.03);
+      color: var(--ink-secondary);
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: all 0.25s;
+    }
+
+    .capsule:hover {
+      background: rgba(239, 229, 205, 0.06);
+      border-color: #46443e;
+      color: var(--ink);
+    }
+
+    .capsule-accent {
+      background: rgba(229, 0, 0, 0.08);
+      border-color: rgba(229, 0, 0, 0.2);
+      color: var(--ink);
+    }
+
+    .capsule-icon {
+      display: flex;
+      align-items: center;
+      color: var(--ink-muted);
+    }
+
+    .capsule-accent .capsule-icon {
+      color: #e55040;
+    }
+
+    /* ========== DASHBOARD PREVIEW ========== */
+    .dashboard-preview {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-md);
+      margin-top: var(--space-lg);
+      max-width: 1260px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .dashboard-preview img {
+      width: 100%;
+      display: block;
+      border: 1px solid #292825;
+      border-radius: 8px;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.35);
+      transition: all 0.3s ease;
+    }
+
+    .dashboard-preview img:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 56px rgba(0, 0, 0, 0.5);
+      border-color: rgba(245, 166, 35, 0.2);
+    }
+
+    @media (max-width: 600px) {
+      .dashboard-preview { grid-template-columns: 1fr; }
+    }
+
+    /* ========== PROOF IMAGE CARD ========== */
+    .proof-card {
+      border: 1px solid #292825;
+      background: var(--bg-white);
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+      transition: all 0.25s ease;
+    }
+
+    .proof-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+      border-color: #46443e;
+    }
+
+    .proof-card img {
+      width: 100%;
+      display: block;
+    }
+
+    /* ========== TESTIMONIAL REACTIONS ========== */
+    .testimonial-reactions {
+      padding: 10px var(--space-md);
+      border-top: 1px solid #292825;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    .testimonial-reactions strong {
+      color: var(--ink-secondary);
+    }
+
+    .testimonial-reactions .react-label {
+      margin-left: auto;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--ink-muted);
+    }
+
+    /* ========== STAR RATING ========== */
+    .star-rating {
+      color: #f5a623;
+      font-size: 14px;
+      letter-spacing: 2px;
+    }
+
+    /* ========== TWO-CARD PRICING ========== */
+    .pricing-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-md);
+      margin: var(--space-md) 0;
+      align-items: start;
+    }
+
+    @media (max-width: 768px) {
+      .pricing-grid-2 { grid-template-columns: 1fr; }
+    }
+
+    .pricing-card-2 {
+      border: 1px solid #292825;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      background: linear-gradient(130deg, #1a1a1a, #141414);
+      color: var(--ink-secondary);
+      transition: all 0.25s ease;
+      overflow: hidden;
+    }
+
+    .pricing-card-2:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+    }
+
+    .pricing-card-2.pricing-card-featured {
+      background: linear-gradient(160deg, #1a1d3a 0%, #0d1025 100%);
+      border-color: rgba(245, 166, 35, 0.25);
+      animation: floatY 4s ease-in-out infinite, floatShadow 4s ease-in-out infinite;
+    }
+
+    .pricing-card-2.pricing-card-featured:hover {
+      animation-play-state: paused;
+      transform: translateY(-4px);
+    }
+
+    .pricing-card-2 .pricing-card-header {
+      padding: var(--space-md);
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .pricing-card-2 .pricing-tier-name {
+      font-family: 'Inter', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: var(--ink);
+    }
+
+    .pricing-card-2.pricing-card-featured .pricing-tier-name {
+      color: var(--gold);
+    }
+
+    .pricing-card-2 .pricing-amount {
+      justify-content: center;
+    }
+
+    .pricing-card-2 .pricing-monthly {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--green);
+      margin-top: 4px;
+    }
+
+    .pricing-card-2 .pricing-cta-mid {
+      padding: 0 var(--space-md) var(--space-sm);
+    }
+
+    .pricing-card-2 .pricing-cta-mid .btn {
+      width: 100%;
+      text-align: center;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    @media (max-width: 768px) {
+      .pricing-card-2.pricing-card-featured { animation: none; }
+    }
+
+    /* ========== GUARANTEE STEPS ========== */
+    .guarantee-steps {
+      display: flex;
+      gap: var(--space-md);
+      margin: var(--space-md) 0;
+      flex-wrap: wrap;
+    }
+
+    .guarantee-step {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--ink-secondary);
+    }
+
+    .guarantee-step-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .guarantee-condition {
+      margin-top: var(--space-md);
+      padding-top: var(--space-md);
+      border-top: 1px solid #292825;
+    }
+
+    .guarantee-condition p {
+      font-size: 16px;
+      color: var(--ink-secondary);
+      margin-bottom: var(--space-xs);
+    }
+
+    .guarantee-nodrama {
+      display: flex;
+      gap: var(--space-md);
+      margin-top: var(--space-sm);
+    }
+
+    .guarantee-nodrama span {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    /* ========== VIDEO IFRAME ========== */
+    .video-iframe-wrap {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+    }
+
+    .video-iframe-wrap iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* ========== SKILL CATEGORY GRID ========== */
+    .skill-cat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: var(--space-md);
+    }
+
+    .skill-cat {
+      border: 1px solid #292825;
+      border-radius: 6px;
+      padding: 16px;
+      background: rgba(239, 229, 205, 0.02);
+      text-align: center;
+      transition: all 0.25s;
+    }
+
+    .skill-cat:hover {
+      background: rgba(239, 229, 205, 0.05);
+      border-color: #46443e;
+    }
+
+    .skill-cat-icon {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .skill-cat-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+
+    .skill-cat-tools {
+      font-size: 11px;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+
+    @media (max-width: 768px) {
+      .skill-cat-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 480px) {
+      .skill-cat-grid { grid-template-columns: 1fr 1fr; }
+      .capsule-grid { gap: 8px; }
+      .capsule { font-size: 12px; padding: 8px 14px; }
+    }
+
   </style>
 </head>
 
@@ -2393,15 +2935,33 @@
   <section class="hero">
     <div class="container">
       <div class="hero-badges">
-        <span class="hero-tag">Official Guide</span>
-        <span class="hero-tag-launch">&#128293; Launch Pricing Active</span>
+        <span class="hero-tag">Done-For-You AI Installation</span>
+        <span class="hero-tag-launch">&#128293; Limited Availability</span>
       </div>
-      <h1>OpenClaw <span class="highlight">101</span></h1>
-      <p class="hero-subtitle">The autonomous AI agent that builds, manages, and scales entire online businesses &mdash; without technical skills.</p>
-      <p class="hero-stats">85K+ GitHub Stars &nbsp;&middot;&nbsp; 100K+ Community &nbsp;&middot;&nbsp; $5,373 in Value</p>
+      <h1>Finally... A Fully Installed, Fully Integrated <span class="gradient-text">AI Command Center</span> That Builds, Manages, and Runs <span class="gradient-text-coral">Your Entire Operation</span></h1>
+      <p class="hero-subtitle">Plus you get the training, live support, done-for-you skills, the complete software suite, and your own <strong>custom Control Board built to ensure you actually win.</strong></p>
+      <p class="hero-stats">500+ Installs Done &nbsp;&middot;&nbsp; 350+ Clients Onboarded &nbsp;&middot;&nbsp; 4.7 Client Rating</p>
+
+      <div class="capsule-grid">
+        <div class="capsule"><span class="capsule-icon">&#9881;&#65039;</span> Complete Software Suite</div>
+        <div class="capsule"><span class="capsule-icon">&#128295;</span> Full Installation &amp; Setup</div>
+        <div class="capsule"><span class="capsule-icon">&#128101;</span> Live Support Access</div>
+        <div class="capsule"><span class="capsule-icon">&#129302;</span> Done-For-You Skills</div>
+        <div class="capsule"><span class="capsule-icon">&#127891;</span> Full Training Program</div>
+        <div class="capsule"><span class="capsule-icon">&#128203;</span> Custom Control Board</div>
+        <div class="capsule capsule-accent"><span class="capsule-icon">&#128737;&#65039;</span> Fully Installed &amp; Integrated</div>
+        <div class="capsule capsule-accent"><span class="capsule-icon">&#9889;</span> Ongoing Monthly Support</div>
+      </div>
+
       <div class="hero-buttons">
-        <a href="https://pl.setyourownsalary.com/997" class="btn btn-lobster-cta" target="_blank" rel="noopener noreferrer">Get Instant Access &rarr;</a>
-        <a href="#what-is-openclaw" class="btn btn-outline toc-link">Explore the Guide &darr;</a>
+        <a href="#bundle-pricing" class="btn btn-lobster-cta toc-link">Get Installed Now &rarr;</a>
+        <a href="#what-you-get" class="btn btn-outline toc-link">See What's Included &darr;</a>
+      </div>
+
+      <!-- Dashboard Preview -->
+      <div class="dashboard-preview">
+        <img src="images/openclaw/agency/dashboard1.png" alt="AI System Dashboard - Login" loading="lazy" />
+        <img src="images/openclaw/agency/dashboard2.png" alt="AI System Dashboard - Management" loading="lazy" />
       </div>
     </div>
   </section>
@@ -2409,9 +2969,9 @@
   <!-- ========== STICKY TOC ========== -->
   <div class="toc-bar" id="tocBar">
     <div class="toc-inner">
-      <a href="#what-is-openclaw" class="toc-pill toc-link active" data-section="what-is-openclaw">What Is It?</a>
+      <a href="#what-you-get" class="toc-pill toc-link active" data-section="what-you-get">What You Get</a>
       <a href="#social-proof" class="toc-pill toc-link" data-section="social-proof">Results</a>
-      <a href="#bundle-contents" class="toc-pill toc-link" data-section="bundle-contents">What You Get</a>
+      <a href="#bundle-contents" class="toc-pill toc-link" data-section="bundle-contents">What's Included</a>
       <a href="#bundle-upgrades" class="toc-pill toc-link" data-section="bundle-upgrades">Full Suite</a>
       <a href="#bundle-pricing" class="toc-pill toc-link" data-section="bundle-pricing">Pricing</a>
       <a href="#guarantee" class="toc-pill toc-link" data-section="guarantee">Guarantee</a>
@@ -2421,44 +2981,44 @@
   <!-- ========== MARQUEE TICKER ========== -->
   <div class="marquee-strip" aria-hidden="true">
     <div class="marquee-track">
-      <span class="marquee-item">85K+ GitHub Stars <span class="marquee-dot">★</span></span>
-      <span class="marquee-item">100K+ Community Members <span class="marquee-dot">★</span></span>
-      <span class="marquee-item">$5,373 in Value <span class="marquee-dot">★</span></span>
-      <span class="marquee-item">14-Day Money-Back Guarantee <span class="marquee-dot">★</span></span>
-      <span class="marquee-item">No Technical Skills Required <span class="marquee-dot">★</span></span>
-      <span class="marquee-item">Setup in Under 5 Minutes <span class="marquee-dot">★</span></span>
-      <span class="marquee-item">Zero Prompt Engineering <span class="marquee-dot">★</span></span>
-      <span class="marquee-item">Full Business Automation <span class="marquee-dot">★</span></span>
+      <span class="marquee-item">500+ Installs Done <span class="marquee-dot">&#9733;</span></span>
+      <span class="marquee-item">350+ Clients Onboarded <span class="marquee-dot">&#9733;</span></span>
+      <span class="marquee-item">4.7 Client Rating <span class="marquee-dot">&#9733;</span></span>
+      <span class="marquee-item">30-Day Money-Back Guarantee <span class="marquee-dot">&#9733;</span></span>
+      <span class="marquee-item">No Technical Skills Required <span class="marquee-dot">&#9733;</span></span>
+      <span class="marquee-item">Setup in Under 5 Minutes <span class="marquee-dot">&#9733;</span></span>
+      <span class="marquee-item">Zero Prompt Engineering <span class="marquee-dot">&#9733;</span></span>
+      <span class="marquee-item">Full Business Automation <span class="marquee-dot">&#9733;</span></span>
       <!-- duplicate for seamless loop -->
-      <span class="marquee-item">85K+ GitHub Stars <span class="marquee-dot">★</span></span>
-      <span class="marquee-item">100K+ Community Members <span class="marquee-dot">★</span></span>
-      <span class="marquee-item">$5,373 in Value <span class="marquee-dot">★</span></span>
-      <span class="marquee-item">14-Day Money-Back Guarantee <span class="marquee-dot">★</span></span>
-      <span class="marquee-item">No Technical Skills Required <span class="marquee-dot">★</span></span>
-      <span class="marquee-item">Setup in Under 5 Minutes <span class="marquee-dot">★</span></span>
-      <span class="marquee-item">Zero Prompt Engineering <span class="marquee-dot">★</span></span>
-      <span class="marquee-item">Full Business Automation <span class="marquee-dot">★</span></span>
+      <span class="marquee-item">500+ Installs Done <span class="marquee-dot">&#9733;</span></span>
+      <span class="marquee-item">350+ Clients Onboarded <span class="marquee-dot">&#9733;</span></span>
+      <span class="marquee-item">4.7 Client Rating <span class="marquee-dot">&#9733;</span></span>
+      <span class="marquee-item">30-Day Money-Back Guarantee <span class="marquee-dot">&#9733;</span></span>
+      <span class="marquee-item">No Technical Skills Required <span class="marquee-dot">&#9733;</span></span>
+      <span class="marquee-item">Setup in Under 5 Minutes <span class="marquee-dot">&#9733;</span></span>
+      <span class="marquee-item">Zero Prompt Engineering <span class="marquee-dot">&#9733;</span></span>
+      <span class="marquee-item">Full Business Automation <span class="marquee-dot">&#9733;</span></span>
     </div>
   </div>
 
-  <!-- ========== WHAT IS OPENCLAW ========== -->
-  <section class="sec-what-is" id="what-is-openclaw">
+  <!-- ========== WHAT YOU GET ========== -->
+  <section class="sec-what-is" id="what-you-get">
     <div class="container">
-      <div class="tag" style="margin-bottom: var(--space-sm);">The Basics</div>
-      <h2 class="section-title">What Is OpenClaw?</h2>
-      <p class="section-subtitle">OpenClaw is the cloud-based autonomous AI agent that turns powerful AI automation into a one-click product. It plans, builds, and manages entire online businesses AND automates your daily operations &mdash; all from a single chat thread.</p>
+      <div class="tag" style="margin-bottom: var(--space-sm);">What You Get</div>
+      <h2 class="section-title">Your Complete AI Automation System &mdash; <span class="gradient-text-blue">Installed &amp; Ready</span></h2>
+      <p class="section-subtitle">We take the most powerful open-source AI agent framework and install it as a fully managed system for your business &mdash; configured, connected, and ready to generate results from day one.</p>
 
       <!-- Analogy -->
       <div class="analogy-grid">
         <div class="analogy-card">
-          <div class="analogy-type">Standard AI Chatbot</div>
-          <h3>The Librarian</h3>
-          <p>You ask a question, it gives you information. You still have to do all the work yourself. It forgets you the moment you close the tab.</p>
+          <div class="analogy-type">DIY Setup</div>
+          <h3>Do It Yourself</h3>
+          <p>You research, configure servers, install dependencies, troubleshoot errors, connect APIs &mdash; weeks of trial and error with no guarantee it works. You're on your own.</p>
         </div>
         <div class="analogy-card featured">
-          <div class="analogy-type">OpenClaw</div>
-          <h3>The Business Builder on Autopilot</h3>
-          <p>OpenClaw scans trending niches, creates digital products from scratch, writes conversion-focused sales pages, syndicates content across platforms, manages your calendar, drafts emails in your voice, monitors your sales pipeline, and remembers everything about your business.</p>
+          <div class="analogy-type">We Install It For You</div>
+          <h3>Done-For-You Installation</h3>
+          <p>We handle the entire setup &mdash; server, configuration, integrations, custom skills, and onboarding. You get a fully working AI automation system from day one, with training and support included.</p>
         </div>
       </div>
 
@@ -2466,88 +3026,129 @@
       <div class="pillars-grid">
         <div class="pillar-card">
           <div class="accent-bar" style="background: var(--blue);"></div>
-          <h4>Open-Source Engine</h4>
-          <p>Built on the 85K-star open-source framework trusted by 100K+ developers. OpenClaw packages this battle-tested technology into a zero-prompt commercial product &mdash; no coding, no terminal, no configuration required.</p>
+          <h4>Complete Installation</h4>
+          <p>We set up your entire AI system on secure cloud infrastructure &mdash; fully configured, connected, and tested before handoff. You never touch a terminal.</p>
         </div>
         <div class="pillar-card">
           <div class="accent-bar" style="background: var(--gold);"></div>
-          <h4>Cloud-Based</h4>
-          <p>OpenClaw runs entirely in the cloud, accessible from any device. Your "Messaging Office" &mdash; manage your entire business via a single WhatsApp, Slack, or Telegram chat thread.</p>
+          <h4>Custom Configuration</h4>
+          <p>Your system is tailored to your business &mdash; custom skills, workflows, and integrations set up to match your operations and goals.</p>
         </div>
         <div class="pillar-card">
           <div class="accent-bar" style="background: var(--coral);"></div>
-          <h4>Always Working</h4>
-          <p>Background Execution means OpenClaw keeps building, monitoring, and optimizing even after you log out. Plus Persistent Memory &mdash; it stores your business preferences, writing style, and project history, getting smarter about your operations over time. Self-adjusts strategy if something underperforms.</p>
+          <h4>Ongoing Support</h4>
+          <p>We don't just install and disappear. Get live training, a 3-day onboarding workshop, and continued support to ensure you succeed long-term.</p>
         </div>
       </div>
 
       <!-- Origin -->
       <div class="origin-box">
-        <strong>The backstory:</strong> OpenClaw (originally called Clawdbot/Moltbot) went viral with small businesses in early 2026. With <strong>85,000+ GitHub stars</strong> and <strong>100,000+ Discord members</strong>, it's one of the most powerful open-source AI agents available. OpenClaw wraps this battle-tested engine in a commercial cloud product &mdash; adding a visual dashboard, pre-built templates, PageMate page builder, NanoAI Pro design studio, and business automation tools. OpenClaw makes powerful AI automation accessible to non-technical entrepreneurs.
+        <strong>The technology:</strong> Built on the <strong>85,000+ star</strong> open-source AI agent framework trusted by <strong>100,000+ developers</strong>. We package this battle-tested technology into a fully managed installation &mdash; no coding, no terminal, no configuration required. Your system runs entirely in the cloud, accessible from any device.
       </div>
 
       <!-- Video Explainer -->
       <div class="video-block">
-        <div class="video-block-header">Watch: OpenClaw Explained in 3 Minutes</div>
-        <div class="video-wrapper" id="videoWrapper">
-          <div class="video-play-btn" id="videoPlayBtn"></div>
-          <video id="openclawVideo" controls preload="none" playsinline>
-            <source src="videos/OpenClawExplainer.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-          </video>
+        <div class="video-block-header">Watch: Your AI System Explained</div>
+        <div class="video-iframe-wrap">
+          <iframe
+            src="https://player.vimeo.com/video/1174520054?badge=0&autopause=0&player_id=0&app_id=58479"
+            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+            allowfullscreen
+            title="AI System Demo">
+          </iframe>
         </div>
       </div>
 
       <div class="video-cta">
-        <a href="https://pl.setyourownsalary.com/email997" class="btn btn-lobster-cta" target="_blank" rel="noopener noreferrer">Get Instant Access &rarr;</a>
+        <a href="#bundle-pricing" class="btn btn-lobster-cta toc-link">Get Installed Now &rarr;</a>
       </div>
     </div>
   </section>
 
-  <!-- ========== SOCIAL PROOF: TESTIMONIALS ========== -->
+  <!-- ========== SOCIAL PROOF: TESTIMONIALS #1 ========== -->
   <section class="sec-social-proof-new" id="social-proof">
     <div class="container">
-      <div class="tag" style="background: var(--green); color: #000; margin-bottom: var(--space-sm);">Real Results</div>
-      <h2 class="section-title">They're Already Crushing It</h2>
+      <div class="tag" style="background: rgba(3, 255, 167, 0.12); color: var(--green); border-color: rgba(3, 255, 167, 0.25); margin-bottom: var(--space-sm);">Real Results</div>
+      <h2 class="section-title">They're Already <span class="gradient-text-green">Crushing It</span></h2>
       <p class="section-subtitle">No hype. No filters. Just screenshots straight from the community.</p>
 
       <div class="testimonials-grid">
+        <!-- Card 1 -->
         <div class="testimonial-card">
-          <div class="testimonial-card-header" style="background: var(--lavender);">
-            <span class="testimonial-quote">&ldquo;Total newbie &mdash; and he had a live bot in MINUTES!&rdquo;</span>
+          <div class="testimonial-card-header" style="background: rgba(30, 29, 42, 0.6);">
+            <div>
+              <span class="star-rating">&#11088;&#11088;&#11088;&#11088;&#11088;</span>
+              <span class="testimonial-quote">&ldquo;Total newbie &mdash; and he had a live bot in MINUTES!&rdquo;</span>
+            </div>
             <span class="testimonial-verified">&#10003; Verified</span>
           </div>
-          <img src="images/openclaw/test21.png" alt="Priscilla's result" loading="lazy" />
+          <img src="images/openclaw/test21.png" alt="Installation result" loading="lazy" />
+          <div class="testimonial-reactions">
+            <span>&#10084;&#65039; <strong>312</strong></span>
+            <span>&#128293; <strong>248</strong></span>
+            <span>&#128525; <strong>197</strong></span>
+            <span class="react-label">People loved this</span>
+          </div>
         </div>
 
+        <!-- Card 2 -->
         <div class="testimonial-card">
-          <div class="testimonial-card-header" style="background: var(--gold);">
-            <span class="testimonial-quote">&ldquo;Bilingual AI bot. Built &amp; live. Under 10 minutes!&rdquo;</span>
+          <div class="testimonial-card-header" style="background: rgba(245, 166, 35, 0.12);">
+            <div>
+              <span class="star-rating">&#11088;&#11088;&#11088;&#11088;&#11088;</span>
+              <span class="testimonial-quote">&ldquo;Bilingual AI bot. Built &amp; live. Under 10 minutes!&rdquo;</span>
+            </div>
             <span class="testimonial-verified">&#10003; Verified</span>
           </div>
-          <img src="images/openclaw/test22.png" alt="Craig's result" loading="lazy" />
+          <img src="images/openclaw/test22.png" alt="Installation result" loading="lazy" />
+          <div class="testimonial-reactions">
+            <span>&#10084;&#65039; <strong>289</strong></span>
+            <span>&#128293; <strong>221</strong></span>
+            <span>&#129321; <strong>178</strong></span>
+            <span class="react-label">People loved this</span>
+          </div>
         </div>
 
+        <!-- Card 3 -->
         <div class="testimonial-card">
-          <div class="testimonial-card-header" style="background: var(--pink);">
-            <span class="testimonial-quote">&ldquo;10 minutes to build. She called it a GAME CHANGER.&rdquo;</span>
+          <div class="testimonial-card-header" style="background: rgba(255, 110, 180, 0.12);">
+            <div>
+              <span class="star-rating">&#11088;&#11088;&#11088;&#11088;&#11088;</span>
+              <span class="testimonial-quote">&ldquo;10 minutes to build. She called it a GAME CHANGER.&rdquo;</span>
+            </div>
             <span class="testimonial-verified">&#10003; Verified</span>
           </div>
-          <img src="images/openclaw/test23.png" alt="Myrlene's result" loading="lazy" />
+          <img src="images/openclaw/test23.png" alt="Installation result" loading="lazy" />
+          <div class="testimonial-reactions">
+            <span>&#10084;&#65039; <strong>341</strong></span>
+            <span>&#128293; <strong>274</strong></span>
+            <span>&#128525; <strong>203</strong></span>
+            <span class="react-label">People loved this</span>
+          </div>
         </div>
 
+        <!-- Card 4 -->
         <div class="testimonial-card">
-          <div class="testimonial-card-header" style="background: var(--coral); color: #fff;">
-            <span class="testimonial-quote">&ldquo;Full setup &mdash; data, logos, API keys &mdash; done in 15 mins!&rdquo;</span>
-            <span class="testimonial-verified" style="color: #fff;">&#10003; Verified</span>
+          <div class="testimonial-card-header" style="background: rgba(229, 80, 64, 0.15);">
+            <div>
+              <span class="star-rating">&#11088;&#11088;&#11088;&#11088;&#11088;</span>
+              <span class="testimonial-quote">&ldquo;Full setup &mdash; data, logos, API keys &mdash; done in 15 mins!&rdquo;</span>
+            </div>
+            <span class="testimonial-verified">&#10003; Verified</span>
           </div>
-          <img src="images/openclaw/test24.png" alt="Curtiss's result" loading="lazy" />
+          <img src="images/openclaw/test24.png" alt="Installation result" loading="lazy" />
+          <div class="testimonial-reactions">
+            <span>&#10084;&#65039; <strong>267</strong></span>
+            <span>&#128293; <strong>198</strong></span>
+            <span>&#129321; <strong>154</strong></span>
+            <span class="react-label">People loved this</span>
+          </div>
         </div>
       </div>
 
       <div class="section-cta">
-        <p>5,000+ entrepreneurs already deployed their AI business</p>
-        <a href="#bundle-pricing" class="btn btn-lobster toc-link">Get OpenClaw Gold &rarr;</a>
+        <p>500+ entrepreneurs already deployed their AI business</p>
+        <a href="#bundle-pricing" class="btn btn-lobster toc-link">Get Installed Now &rarr;</a>
       </div>
     </div>
   </section>
@@ -2555,20 +3156,20 @@
   <!-- ========== BUNDLE CONTENTS ========== -->
   <section class="sec-bundle-contents" id="bundle-contents">
     <div class="container">
-      <div class="tag" style="margin-bottom: var(--space-sm);">What You Get</div>
-      <h2 class="section-title">One Bundle. Total Domination.</h2>
+      <div class="tag" style="margin-bottom: var(--space-sm);">What's Included</div>
+      <h2 class="section-title">One Bundle. <span class="gradient-text-gold">Total Domination.</span></h2>
       <p class="section-subtitle">Here is everything you are going to get &mdash; the complete software suite, training, live support, done-for-you skills, and your own custom Control Board.</p>
 
-      <img src="images/openclaw/cover.png" alt="OpenClaw Bundle" class="bundle-hero-img" loading="lazy" />
+      <img src="images/openclaw/cover.png" alt="AI Automation Bundle" class="bundle-hero-img" loading="lazy" />
 
       <div class="bundle-components-grid">
         <div class="bundle-component">
           <span class="bundle-component-number">01</span>
           <span class="bundle-component-value">Value: $297</span>
           <h3>Claw Launcher Install</h3>
-          <p>We'll walk you through the exact installation process so your system is ready to go.</p>
+          <p>We walk you through the exact installation process so your system is ready to go.</p>
           <ul>
-            <li>Complete OpenClaw setup</li>
+            <li>Complete system setup</li>
             <li>Connect everything correctly</li>
             <li>Get your system ready to start generating results</li>
           </ul>
@@ -2578,7 +3179,7 @@
           <span class="bundle-component-number">02</span>
           <span class="bundle-component-value">Value: $497</span>
           <h3>Claw Launcher Onboarder</h3>
-          <p>A simple onboarding system that shows you exactly how to start using OpenClaw the right way.</p>
+          <p>A simple onboarding system that shows you exactly how to start using the system the right way.</p>
           <ul>
             <li>Step-by-step onboarding</li>
             <li>Understand how the system works</li>
@@ -2600,9 +3201,9 @@
           </ul>
         </div>
 
-        <div class="bundle-component" style="background: var(--gold); color: #000;">
+        <div class="bundle-component" style="background: linear-gradient(130deg, rgba(245, 166, 35, 0.15), rgba(245, 166, 35, 0.05)); border-color: rgba(245, 166, 35, 0.25);">
           <span class="bundle-component-number">04</span>
-          <span class="bundle-component-value" style="background: var(--ink); color: #fff;">Value: $497</span>
+          <span class="bundle-component-value" style="background: rgba(3, 255, 167, 0.15); color: var(--green);">Value: $497</span>
           <h3>Cashflow Engine</h3>
           <p>A powerful suite of skills designed to help you create revenue assets fast. Inside you'll get:</p>
           <ul>
@@ -2620,49 +3221,81 @@
 
       <div class="guarantee-callout">
         <h3>100% Installation Guarantee</h3>
-        <p>You <em>will</em> be installed and talking to OpenClaw. If you can't complete the two simple setup steps, we will do it for you.</p>
+        <p>You <em>will</em> be installed and operational. If you can't complete the two simple setup steps, we will do it for you.</p>
       </div>
 
       <div class="section-cta">
         <p>All of this runs autonomously &mdash; so you can focus on what matters.</p>
-        <a href="#bundle-pricing" class="btn btn-lobster toc-link">Get OpenClaw Gold &rarr;</a>
+        <a href="#bundle-pricing" class="btn btn-lobster toc-link">Get Installed Now &rarr;</a>
       </div>
     </div>
   </section>
 
-  <!-- ========== BUNDLE UPGRADES ========== -->
+  <!-- ========== BUNDLE UPGRADES (FULL SUITE) ========== -->
   <section class="sec-bundle-upgrades" id="bundle-upgrades">
     <div class="container">
       <div class="tag" style="margin-bottom: var(--space-sm);">Full Suite</div>
-      <h2 class="section-title">Plus Everything You Need to Win</h2>
-      <p class="section-subtitle">The complete OpenClaw ecosystem &mdash; skill repository, control panel, business builder, agency license, and more.</p>
+      <h2 class="section-title">Plus Everything You Need to <span class="gradient-text-purple">Win</span></h2>
+      <p class="section-subtitle">The complete ecosystem &mdash; skill repository, control panel, business builder, and connector series.</p>
 
       <!-- Skill Repository -->
       <div class="upgrade-item">
-        <img src="images/openclaw/oto1-skill-repo.png" alt="OpenClaw Skill Repository" loading="lazy" />
+        <img src="images/openclaw/oto1-skill-repo.png" alt="Skill Repository" loading="lazy" />
         <div class="upgrade-item-body">
           <span class="bundle-component-value">Value: $3,997</span>
-          <h3>OpenClaw Skill Repository</h3>
-          <p>Unlock access to <strong>100+ ready-to-deploy automation skills</strong> that dramatically expand what your AI agents can do.</p>
-          <div class="upgrade-features">
-            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128231;</span><span>Email &amp; Marketing &mdash; ActiveCampaign, ConvertKit, Brevo, Klaviyo</span></div>
-            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#129309;</span><span>CRM &amp; Sales &mdash; HubSpot, Freshsales, Close CRM</span></div>
-            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#9881;&#65039;</span><span>Productivity &mdash; Asana, ClickUp, Jira, Google Calendar</span></div>
-            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#129302;</span><span>AI &amp; Voice &mdash; Claude, Gemini, ElevenLabs</span></div>
-            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#9729;&#65039;</span><span>Cloud &amp; Storage &mdash; AWS, Google Drive, Dropbox</span></div>
-            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128722;</span><span>Ecommerce &mdash; Gumroad, Magento, Ecwid</span></div>
-            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128736;&#65039;</span><span>Developer Tools &mdash; GitHub, GitLab, Firebase</span></div>
-            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128203;</span><span>Forms &amp; Data &mdash; Google Forms, Jotform, Airtable</span></div>
+          <h3>Skill Repository</h3>
+          <p>Unlock access to <strong>100+ ready-to-deploy automation skills</strong> that dramatically expand what your AI system can do. Instantly connect with powerful business tools, platforms, and automation systems.</p>
+          <div class="skill-cat-grid">
+            <div class="skill-cat">
+              <div class="skill-cat-icon">&#128231;</div>
+              <div class="skill-cat-name">Email &amp; Marketing</div>
+              <div class="skill-cat-tools">ActiveCampaign &middot; ConvertKit &middot; Brevo &middot; Klaviyo</div>
+            </div>
+            <div class="skill-cat">
+              <div class="skill-cat-icon">&#129309;</div>
+              <div class="skill-cat-name">CRM &amp; Sales</div>
+              <div class="skill-cat-tools">HubSpot &middot; Freshsales &middot; Close CRM &middot; Copper</div>
+            </div>
+            <div class="skill-cat">
+              <div class="skill-cat-icon">&#9881;&#65039;</div>
+              <div class="skill-cat-name">Productivity</div>
+              <div class="skill-cat-tools">Asana &middot; ClickUp &middot; Jira &middot; Google Calendar</div>
+            </div>
+            <div class="skill-cat">
+              <div class="skill-cat-icon">&#129302;</div>
+              <div class="skill-cat-name">AI &amp; Voice</div>
+              <div class="skill-cat-tools">Claude &middot; Gemini &middot; ElevenLabs</div>
+            </div>
+            <div class="skill-cat">
+              <div class="skill-cat-icon">&#9729;&#65039;</div>
+              <div class="skill-cat-name">Cloud &amp; Storage</div>
+              <div class="skill-cat-tools">AWS &middot; Google Drive &middot; Dropbox</div>
+            </div>
+            <div class="skill-cat">
+              <div class="skill-cat-icon">&#128722;</div>
+              <div class="skill-cat-name">Ecommerce</div>
+              <div class="skill-cat-tools">Gumroad &middot; Magento &middot; Ecwid</div>
+            </div>
+            <div class="skill-cat">
+              <div class="skill-cat-icon">&#128736;&#65039;</div>
+              <div class="skill-cat-name">Developer Tools</div>
+              <div class="skill-cat-tools">GitHub &middot; GitLab &middot; Firebase</div>
+            </div>
+            <div class="skill-cat">
+              <div class="skill-cat-icon">&#128203;</div>
+              <div class="skill-cat-name">Forms &amp; Data</div>
+              <div class="skill-cat-tools">Google Forms &middot; Jotform &middot; Airtable</div>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Control Panel -->
       <div class="upgrade-item">
-        <img src="images/openclaw/oto2-control-panel.png" alt="OpenClaw Control Panel" loading="lazy" />
+        <img src="images/openclaw/oto2-control-panel.png" alt="Control Panel" loading="lazy" />
         <div class="upgrade-item-body">
           <span class="bundle-component-value">Value: $997</span>
-          <h3>OpenClaw Control Panel</h3>
+          <h3>Control Panel</h3>
           <p>The advanced dashboard that makes managing your entire AI automation system simple and organized.</p>
           <div class="upgrade-features">
             <div class="upgrade-feature"><span class="upgrade-feature-icon">&#129513;</span><span>Manage agents, skills, and workflows from one place</span></div>
@@ -2675,45 +3308,29 @@
 
       <!-- Business Builder -->
       <div class="upgrade-item">
-        <img src="images/openclaw/oto4-business-builder.png" alt="OpenClaw Business Builder" loading="lazy" />
+        <img src="images/openclaw/oto4-business-builder.png" alt="Business Builder" loading="lazy" />
         <div class="upgrade-item-body">
           <span class="bundle-component-value">Value: $2,997</span>
-          <h3>OpenClaw Business Builder</h3>
-          <p>A complete training system designed to help you turn OpenClaw into a <strong>real business.</strong></p>
+          <h3>Business Builder</h3>
+          <p>A complete training system designed to help you turn your AI system into a <strong>real business.</strong></p>
           <div class="upgrade-features">
             <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128161;</span><span>Create profitable AI service offers</span></div>
             <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128176;</span><span>Build systems that generate consistent income</span></div>
-            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128230;</span><span>Package and sell OpenClaw solutions</span></div>
+            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128230;</span><span>Package and sell AI solutions</span></div>
             <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128200;</span><span>Scale into a sustainable business</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Agency License -->
-      <div class="upgrade-item">
-        <img src="images/openclaw/oto5-agency-license.png" alt="OpenClaw Agency License" loading="lazy" />
-        <div class="upgrade-item-body">
-          <span class="bundle-component-value">Value: $9,997</span>
-          <h3>OpenClaw Agency License (200 Clients)</h3>
-          <p>Launch and scale your own OpenClaw-powered agency with up to <strong>200 clients.</strong></p>
-          <div class="upgrade-features">
-            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128101;</span><span>Provide OpenClaw solutions to up to 200 clients</span></div>
-            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#9881;&#65039;</span><span>Create and manage client automation systems</span></div>
-            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128230;</span><span>Package OpenClaw as a high-value service</span></div>
-            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128200;</span><span>Scale your operations and grow recurring revenue</span></div>
           </div>
         </div>
       </div>
 
       <!-- Connector Series -->
       <div class="upgrade-item">
-        <img src="images/openclaw/oto6-connector-series.png" alt="OpenClaw Connector Series" loading="lazy" />
+        <img src="images/openclaw/oto6-connector-series.png" alt="Connector Series" loading="lazy" />
         <div class="upgrade-item-body">
           <span class="bundle-component-value">Value: $2,997</span>
-          <h3>OpenClaw Connector Series</h3>
-          <p>Expand what OpenClaw can do by connecting it with <strong>apps, tools, and online services.</strong></p>
+          <h3>Connector Series</h3>
+          <p>Expand what your system can do by connecting it with <strong>apps, tools, and online services.</strong></p>
           <div class="upgrade-features">
-            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128279;</span><span>Connect OpenClaw with external apps and services</span></div>
+            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128279;</span><span>Connect with external apps and services</span></div>
             <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128260;</span><span>Send and receive data between different tools</span></div>
             <div class="upgrade-feature"><span class="upgrade-feature-icon">&#9889;</span><span>Trigger automations across platforms</span></div>
             <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128268;</span><span>Build more powerful workflows</span></div>
@@ -2721,43 +3338,9 @@
         </div>
       </div>
 
-      <!-- Members Area -->
-      <div class="upgrade-item">
-        <img src="images/openclaw/cover.png" alt="OpenClaw Members Area" loading="lazy" />
-        <div class="upgrade-item-body">
-          <span class="bundle-component-value">Value: $497</span>
-          <h3>OpenClaw Members Area</h3>
-          <p>Your central hub for <strong>learning and mastering OpenClaw</strong> with step-by-step guidance.</p>
-          <div class="upgrade-features">
-            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#127916;</span><span>Step-by-step video lessons</span></div>
-            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#127942;</span><span>Progress tracking and rewards</span></div>
-            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128101;</span><span>Community support and discussions</span></div>
-            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128260;</span><span>Access to all training replays and updates</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Titanium Suite -->
-      <div class="upgrade-item" style="background: var(--gold); border-color: var(--ink);">
-        <img src="images/openclaw/titanium.png" alt="OpenClaw Titanium Suite" loading="lazy" />
-        <div class="upgrade-item-body">
-          <span class="bundle-component-value" style="background: var(--ink); color: #fff;">Value: $997</span>
-          <h3>OpenClaw Titanium Suite</h3>
-          <p>A powerful collection of tools designed to <strong>support and expand your OpenClaw ecosystem.</strong></p>
-          <div class="upgrade-features">
-            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128038;</span><span><strong>Mintbird</strong> &mdash; pages and funnels</span></div>
-            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#127807;</span><span><strong>Page Sprout</strong> &mdash; tracking links and bridge pages</span></div>
-            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#127891;</span><span><strong>Course Sprout</strong> &mdash; courses and memberships</span></div>
-            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128231;</span><span><strong>Letterman</strong> &mdash; newsletter publishing engine</span></div>
-            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128203;</span><span><strong>Quizforma</strong> &mdash; quizzes and surveys</span></div>
-            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#127760;</span><span><strong>Global Control</strong> &mdash; contacts, tags, and automations</span></div>
-          </div>
-        </div>
-      </div>
-
       <div class="section-cta">
         <p>Everything installed, configured, and ready to go.</p>
-        <a href="#bundle-pricing" class="btn btn-lobster toc-link">Get OpenClaw Gold &rarr;</a>
+        <a href="#bundle-pricing" class="btn btn-lobster toc-link">Get Installed Now &rarr;</a>
       </div>
     </div>
   </section>
@@ -2765,25 +3348,24 @@
   <!-- ========== PRICING ========== -->
   <section class="sec-pricing" id="bundle-pricing">
     <div class="container">
-      <div class="tag" style="background: var(--lobster); color: #fff; border-color: #000; margin-bottom: var(--space-sm);">Get Started</div>
-      <h2 class="section-title" style="color: #000;">Get The Complete OpenClaw System</h2>
-      <p class="section-subtitle" style="color: #000; opacity: 0.85;">Everything you need to build, automate, and scale &mdash; in one package.</p>
+      <div class="tag" style="background: rgba(229, 0, 0, 0.15); color: #e55040; border-color: rgba(229, 0, 0, 0.25); margin-bottom: var(--space-sm);">Get Started</div>
+      <h2 class="section-title">Get Your AI System <span class="gradient-text">Installed</span></h2>
+      <p class="section-subtitle">Choose the installation package that fits your business.</p>
 
-      <div class="pricing-grid-3">
-        <!-- Gold (only tier) -->
-        <div class="pricing-card-3 pricing-card-gold">
-          <div class="pricing-featured-badge">&#127942; Recommended</div>
-          <img src="images/openclaw/gold.png" alt="OpenClaw Gold Bundle" class="pricing-card-img" loading="lazy" />
+      <div class="pricing-grid-2">
+        <!-- Basic Install -->
+        <div class="pricing-card-2">
+          <img src="images/openclaw/silver.png" alt="Basic Install" class="pricing-card-img" loading="lazy" />
           <div class="pricing-card-header">
-            <span class="pricing-tier-name" style="color: var(--gold);"><span class="pricing-tier-icon">&#127942;</span> Gold</span>
+            <span class="pricing-tier-name">&#9881;&#65039; Basic Install</span>
             <div class="pricing-amount">
-              <span class="pricing-was" style="color: rgba(255,255,255,0.5);">$23,273</span>
-              <span class="pricing-price" style="color: var(--gold);">$997</span>
+              <span class="pricing-was" style="color: var(--ink-muted);">$13,276</span>
+              <span class="pricing-price" style="color: var(--ink);">$1,497</span>
             </div>
-            <p class="pricing-subtext" style="opacity: 0.7;">&#128293; Today Only &mdash; One-Time Payment</p>
+            <p class="pricing-subtext" style="opacity: 0.6;">&#128293; One-Time Payment</p>
           </div>
           <div class="pricing-cta-mid">
-            <a href="javascript:void(0)" onclick="openSetupModal()" class="btn btn-gold-cta">GET OPENCLAW GOLD &rarr;</a>
+            <a href="javascript:void(0)" onclick="openSetupModal()" class="btn btn-outline" style="width:100%; border-radius:8px; font-weight:700;">Get Basic Install &rarr;</a>
           </div>
           <div class="pricing-features-label">Included Features</div>
           <div class="pricing-feature-table">
@@ -2794,12 +3376,48 @@
             <div class="pricing-feature-row"><span><span class="feature-icon">&#128161;</span> Skill Repository (100+ Skills)</span><span class="pricing-check">&#10003;</span></div>
             <div class="pricing-feature-row"><span><span class="feature-icon">&#127918;</span> Control Panel</span><span class="pricing-check">&#10003;</span></div>
             <div class="pricing-feature-row"><span><span class="feature-icon">&#127970;</span> Business Builder</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#129309;</span> Agency License (100 Clients)</span><span class="pricing-check">&#10003;</span></div>
             <div class="pricing-feature-row"><span><span class="feature-icon">&#128279;</span> Connector Series</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#128100;</span> Members Area</span><span class="pricing-check">&#10003;</span></div>
+            <div class="pricing-feature-row" style="opacity:0.35;"><span><span class="feature-icon">&#129513;</span> Custom Configuration</span><span class="pricing-cross">&#10005;</span></div>
+            <div class="pricing-feature-row" style="opacity:0.35;"><span><span class="feature-icon">&#128260;</span> Ongoing Monthly Support</span><span class="pricing-cross">&#10005;</span></div>
+            <div class="pricing-feature-row" style="opacity:0.35;"><span><span class="feature-icon">&#9889;</span> Priority Support</span><span class="pricing-cross">&#10005;</span></div>
           </div>
           <div class="pricing-cta">
-            <p style="font-size: 12px; color: rgba(255,255,255,0.45); margin: 0; text-align: center;">&#10003; 14-day money-back guarantee &middot; Price goes up after launch</p>
+            <p style="font-size: 12px; color: var(--ink-muted); margin: 0; text-align: center;">&#10003; 30-day money-back guarantee</p>
+          </div>
+        </div>
+
+        <!-- Custom Install (Featured) -->
+        <div class="pricing-card-2 pricing-card-featured">
+          <div class="pricing-featured-badge">&#11088; BEST VALUE</div>
+          <img src="images/openclaw/gold.png" alt="Custom Install" class="pricing-card-img" loading="lazy" />
+          <div class="pricing-card-header">
+            <span class="pricing-tier-name">&#127942; Custom Install</span>
+            <div class="pricing-amount">
+              <span class="pricing-was" style="color: rgba(255,255,255,0.4);">$23,273</span>
+              <span class="pricing-price" style="color: var(--gold);">$2,497</span>
+            </div>
+            <p class="pricing-monthly">+ $297/mo after installation</p>
+            <p class="pricing-subtext" style="opacity: 0.6;">&#128293; One-Time + Monthly Support</p>
+          </div>
+          <div class="pricing-cta-mid">
+            <a href="javascript:void(0)" onclick="openSetupModal()" class="btn btn-gold-cta">Get Custom Install &rarr;</a>
+          </div>
+          <div class="pricing-features-label">Included Features</div>
+          <div class="pricing-feature-table">
+            <div class="pricing-feature-row"><span><span class="feature-icon">&#9881;</span> Claw Launcher Install</span><span class="pricing-check">&#10003;</span></div>
+            <div class="pricing-feature-row"><span><span class="feature-icon">&#128640;</span> Claw Launcher Onboarder</span><span class="pricing-check">&#10003;</span></div>
+            <div class="pricing-feature-row"><span><span class="feature-icon">&#128218;</span> 3-Day Onboarding Workshop</span><span class="pricing-check">&#10003;</span></div>
+            <div class="pricing-feature-row"><span><span class="feature-icon">&#128176;</span> Cashflow Engine</span><span class="pricing-check">&#10003;</span></div>
+            <div class="pricing-feature-row"><span><span class="feature-icon">&#128161;</span> Skill Repository (100+ Skills)</span><span class="pricing-check">&#10003;</span></div>
+            <div class="pricing-feature-row"><span><span class="feature-icon">&#127918;</span> Control Panel</span><span class="pricing-check">&#10003;</span></div>
+            <div class="pricing-feature-row"><span><span class="feature-icon">&#127970;</span> Business Builder</span><span class="pricing-check">&#10003;</span></div>
+            <div class="pricing-feature-row"><span><span class="feature-icon">&#128279;</span> Connector Series</span><span class="pricing-check">&#10003;</span></div>
+            <div class="pricing-feature-row"><span><span class="feature-icon">&#129513;</span> Custom Configuration</span><span class="pricing-check">&#10003;</span></div>
+            <div class="pricing-feature-row"><span><span class="feature-icon">&#128260;</span> Ongoing Monthly Support</span><span class="pricing-check">&#10003;</span></div>
+            <div class="pricing-feature-row"><span><span class="feature-icon">&#9889;</span> Priority Support</span><span class="pricing-check">&#10003;</span></div>
+          </div>
+          <div class="pricing-cta">
+            <p style="font-size: 12px; color: rgba(255,255,255,0.4); margin: 0; text-align: center;">&#10003; 30-day money-back guarantee &middot; Cancel monthly support anytime</p>
           </div>
         </div>
       </div>
@@ -2808,16 +3426,16 @@
       <div class="pricing-guarantee">
         <div style="font-size: 36px; flex-shrink: 0;">&#128176;</div>
         <div>
-          <strong>One-Time Payment &mdash; No Monthly Fees Ever</strong>
-          <p>A single payment. No subscriptions, no hidden charges, no upsells after purchase.</p>
+          <strong>One-Time Install + Ongoing Support</strong>
+          <p>Both packages include a $297/mo fee for continued support, updates, and system maintenance after installation. Cancel anytime.</p>
         </div>
       </div>
 
-      <!-- Email capture for unsure visitors / enterprise -->
+      <!-- Email capture -->
       <div class="pricing-email-cta">
-        <h3>Need Set Up for 10 or More Employees?</h3>
+        <h3>Need a setup for your whole team?</h3>
         <p>Drop your email and we'll send you everything you need to make the right decision.</p>
-        <a href="javascript:void(0)" onclick="openSetupModal()" class="btn btn-email-cta">Get More Info &rarr;</a>
+        <a href="javascript:void(0)" onclick="openTeamModal()" class="btn btn-email-cta">Get Team Setup &rarr;</a>
       </div>
     </div>
   </section>
@@ -2825,67 +3443,163 @@
   <!-- ========== GUARANTEE ========== -->
   <section class="sec-guarantee" id="guarantee">
     <div class="container">
-      <div class="tag" style="background: var(--green); color: #000; margin-bottom: var(--space-sm);">Risk-Free</div>
-      <h2 class="section-title">14-Day Simple Guarantee</h2>
+      <div class="tag" style="background: rgba(3, 255, 167, 0.12); color: var(--green); border-color: rgba(3, 255, 167, 0.25); margin-bottom: var(--space-sm);">Risk-Free</div>
+      <h2 class="section-title">30-Day <span class="gradient-text-green">Simple Guarantee</span></h2>
       <p class="section-subtitle">No hoops. No fine print. Just results &mdash; or your money back.</p>
 
       <div class="guarantee-box">
         <div class="guarantee-badge">
-          <span class="guarantee-badge-number">14</span>
+          <span class="guarantee-badge-number">30</span>
           <span class="guarantee-badge-label">Day</span>
         </div>
         <div class="guarantee-text">
           <h3>Try It Risk-Free</h3>
-          <p>Go through the guide. Deploy your first AI worker. Test the system. If you don't see how this changes execution&hellip; email us within <strong>14 days</strong>. We'll refund you. No drama. No questions. You take the risk off your shoulders.</p>
+
+          <div class="guarantee-steps">
+            <div class="guarantee-step">
+              <span class="guarantee-step-icon" style="background: rgba(99, 102, 241, 0.15); color: #818cf8;">&#128218;</span>
+              <span>Go through the guide.</span>
+            </div>
+            <div class="guarantee-step">
+              <span class="guarantee-step-icon" style="background: rgba(3, 255, 167, 0.15); color: var(--green);">&#129302;</span>
+              <span>Deploy your first AI worker.</span>
+            </div>
+            <div class="guarantee-step">
+              <span class="guarantee-step-icon" style="background: rgba(245, 166, 35, 0.15); color: var(--gold);">&#9889;</span>
+              <span>Test the system.</span>
+            </div>
+          </div>
+
+          <div class="guarantee-condition">
+            <p>If you don't see the shift&hellip;</p>
+            <p>If you don't see how this changes execution&hellip;</p>
+            <p style="color: var(--ink);">Email us within <strong>30 days</strong>. We'll refund you.</p>
+          </div>
+
+          <div class="guarantee-nodrama">
+            <span>&#10060; No drama.</span>
+            <span>&#10067; No questions.</span>
+          </div>
+          <p style="margin-top: var(--space-sm); color: var(--ink); font-weight: 600;">You take the risk off your shoulders.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ========== MORE SOCIAL PROOF ========== -->
+  <!-- ========== MORE SOCIAL PROOF (with proof screenshots woven in) ========== -->
   <section class="sec-social-proof-new">
     <div class="container">
-      <div class="tag" style="background: var(--coral); color: #fff; border-color: var(--ink); margin-bottom: var(--space-sm);">More Results</div>
-      <h2 class="section-title">The Community Keeps Winning</h2>
+      <div class="tag" style="background: rgba(229, 80, 64, 0.12); color: var(--coral); border-color: rgba(229, 80, 64, 0.25); margin-bottom: var(--space-sm);">More Results</div>
+      <h2 class="section-title">The Community Keeps <span class="gradient-text-coral">Winning</span></h2>
       <p class="section-subtitle">Still on the fence? Let them do the talking.</p>
 
       <div class="testimonials-grid">
+        <!-- Testimonial 5 -->
         <div class="testimonial-card">
-          <div class="testimonial-card-header" style="background: var(--gold);">
-            <span class="testimonial-quote">&ldquo;This completely changed how I run my business!&rdquo;</span>
+          <div class="testimonial-card-header" style="background: rgba(245, 166, 35, 0.12);">
+            <div>
+              <span class="star-rating">&#11088;&#11088;&#11088;&#11088;&#11088;</span>
+              <span class="testimonial-quote">&ldquo;This completely changed how I run my business!&rdquo;</span>
+            </div>
             <span class="testimonial-verified">&#10003; Verified</span>
           </div>
           <img src="images/openclaw/test25.png" alt="Customer result" loading="lazy" />
+          <div class="testimonial-reactions">
+            <span>&#10084;&#65039; <strong>298</strong></span>
+            <span>&#128293; <strong>231</strong></span>
+            <span>&#128525; <strong>184</strong></span>
+            <span class="react-label">People loved this</span>
+          </div>
         </div>
 
+        <!-- Proof 1 -->
+        <div class="proof-card">
+          <img src="images/openclaw/agency/proof1.png" alt="Revenue proof" loading="lazy" />
+        </div>
+
+        <!-- Proof 2 -->
+        <div class="proof-card">
+          <img src="images/openclaw/agency/proof2.png" alt="Revenue proof" loading="lazy" />
+        </div>
+
+        <!-- Testimonial 6 -->
         <div class="testimonial-card">
-          <div class="testimonial-card-header" style="background: var(--lavender);">
-            <span class="testimonial-quote">&ldquo;I deployed my first AI worker in under 20 minutes!&rdquo;</span>
+          <div class="testimonial-card-header" style="background: rgba(30, 29, 42, 0.6);">
+            <div>
+              <span class="star-rating">&#11088;&#11088;&#11088;&#11088;&#11088;</span>
+              <span class="testimonial-quote">&ldquo;I deployed my first AI worker in under 20 minutes!&rdquo;</span>
+            </div>
             <span class="testimonial-verified">&#10003; Verified</span>
           </div>
           <img src="images/openclaw/test26.png" alt="Customer result" loading="lazy" />
+          <div class="testimonial-reactions">
+            <span>&#10084;&#65039; <strong>274</strong></span>
+            <span>&#128293; <strong>209</strong></span>
+            <span>&#129321; <strong>167</strong></span>
+            <span class="react-label">People loved this</span>
+          </div>
         </div>
 
+        <!-- Testimonial 7 -->
         <div class="testimonial-card">
-          <div class="testimonial-card-header" style="background: var(--green); color: #fff;">
-            <span class="testimonial-quote">&ldquo;Revenue up. Workload down. This is the cheat code.&rdquo;</span>
-            <span class="testimonial-verified" style="color: #fff;">&#10003; Verified</span>
+          <div class="testimonial-card-header" style="background: rgba(3, 255, 167, 0.12);">
+            <div>
+              <span class="star-rating">&#11088;&#11088;&#11088;&#11088;&#11088;</span>
+              <span class="testimonial-quote">&ldquo;Revenue up. Workload down. This is the cheat code.&rdquo;</span>
+            </div>
+            <span class="testimonial-verified">&#10003; Verified</span>
           </div>
           <img src="images/openclaw/test27.png" alt="Customer result" loading="lazy" />
+          <div class="testimonial-reactions">
+            <span>&#10084;&#65039; <strong>319</strong></span>
+            <span>&#128293; <strong>255</strong></span>
+            <span>&#128525; <strong>211</strong></span>
+            <span class="react-label">People loved this</span>
+          </div>
         </div>
 
+        <!-- Proof 3 -->
+        <div class="proof-card">
+          <img src="images/openclaw/agency/proof3.png" alt="Revenue proof" loading="lazy" />
+        </div>
+
+        <!-- Proof 4 -->
+        <div class="proof-card">
+          <img src="images/openclaw/agency/proof4.png" alt="Revenue proof" loading="lazy" />
+        </div>
+
+        <!-- Testimonial 8 -->
         <div class="testimonial-card">
-          <div class="testimonial-card-header" style="background: var(--pink);">
-            <span class="testimonial-quote">&ldquo;Hands down the best investment I've ever made online.&rdquo;</span>
+          <div class="testimonial-card-header" style="background: rgba(255, 110, 180, 0.12);">
+            <div>
+              <span class="star-rating">&#11088;&#11088;&#11088;&#11088;&#11088;</span>
+              <span class="testimonial-quote">&ldquo;Hands down the best investment I've ever made online.&rdquo;</span>
+            </div>
             <span class="testimonial-verified">&#10003; Verified</span>
           </div>
           <img src="images/openclaw/test28.png" alt="Customer result" loading="lazy" />
+          <div class="testimonial-reactions">
+            <span>&#10084;&#65039; <strong>342</strong></span>
+            <span>&#128293; <strong>278</strong></span>
+            <span>&#129321; <strong>193</strong></span>
+            <span class="react-label">People loved this</span>
+          </div>
+        </div>
+
+        <!-- Proof 5 -->
+        <div class="proof-card">
+          <img src="images/openclaw/agency/proof5.png" alt="Revenue proof" loading="lazy" />
+        </div>
+
+        <!-- Proof 6 -->
+        <div class="proof-card">
+          <img src="images/openclaw/agency/proof6.png" alt="Revenue proof" loading="lazy" />
         </div>
       </div>
 
       <div class="section-cta">
         <p>450+ entrepreneurs already seeing results just like these</p>
-        <a href="#bundle-pricing" class="btn btn-lobster toc-link">Get Instant Access &rarr;</a>
+        <a href="#bundle-pricing" class="btn btn-lobster toc-link">Get Installed Now &rarr;</a>
       </div>
     </div>
   </section>
@@ -2893,8 +3607,8 @@
   <!-- ========== BIGGER PICTURE ========== -->
   <section class="sec-bigger-picture">
     <div class="container">
-      <div class="tag" style="background: var(--coral); margin-bottom: var(--space-sm);">Why This Matters</div>
-      <h2>The Bigger Picture</h2>
+      <div class="tag" style="background: rgba(229, 80, 64, 0.12); color: var(--coral); border-color: rgba(229, 80, 64, 0.25); margin-bottom: var(--space-sm);">Why This Matters</div>
+      <h2>The <span class="gradient-text-purple">Bigger Picture</span></h2>
       <p class="highlight-text">The CEO of Anthropic (the company behind Claude AI) predicts that AI could displace 50% of entry-level white-collar jobs within one to five years, potentially driving unemployment to 10&ndash;20%.</p>
 
       <div class="quote-with-photo">
@@ -2908,7 +3622,7 @@
       <p class="highlight-text">This isn't about replacing you. It's about making sure you're not replaced. Business owners who adopt AI tools early gain a significant competitive advantage.</p>
 
       <div class="cta-row">
-        <a href="#bundle-pricing" class="btn btn-lobster toc-link">Get OpenClaw Now &rarr;</a>
+        <a href="#bundle-pricing" class="btn btn-lobster toc-link">Get Installed Now &rarr;</a>
         <a href="ai-resources.html" class="btn btn-outline">Explore More AI Resources</a>
       </div>
     </div>
@@ -2919,44 +3633,106 @@
     <div class="container">
       <div class="enterprise-strip-inner">
         <div>
-          <span class="tag" style="background: rgba(255,255,255,0.2); color: #fff; border-color: rgba(255,255,255,0.4); margin-bottom: var(--space-xs);">For Teams &amp; Agencies</span>
-          <h3>Deploying OpenClaw Across Your Business?</h3>
+          <span class="tag" style="background: rgba(239, 229, 205, 0.08); color: rgba(239, 229, 205, 0.8); border-color: rgba(239, 229, 205, 0.15); margin-bottom: var(--space-xs);">For Teams &amp; Agencies</span>
+          <h3>Deploying AI Across Your Business?</h3>
           <p>We handle end-to-end setup for teams of 10 or more &mdash; VPS installs, custom onboarding, bulk licensing, and dedicated support included.</p>
         </div>
-        <a href="openclaw-enterprise.html" class="btn" style="background: var(--gold); color: #000; border-color: #000;">Talk to Us &rarr;</a>
+        <a href="openclaw-enterprise.html" class="btn" style="background: linear-gradient(135deg, #e8920a, #f5a623); color: #0e0e0e; border-color: #f5a623;">Talk to Us &rarr;</a>
       </div>
     </div>
   </section>
 
-    <!-- FOOTER (injected by navigation.js) -->
+  <!-- FOOTER (injected by navigation.js) -->
 
   <!-- SETUP SELECTOR MODAL -->
   <div id="setupModal" class="setup-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="setupModalTitle">
     <div class="setup-modal">
       <button onclick="closeSetupModal()" class="setup-modal-close" aria-label="Close">&times;</button>
-      <p class="setup-modal-kicker">Before You Continue</p>
-      <h2 class="setup-modal-title" id="setupModalTitle">How many setups do you need?</h2>
+      <p class="setup-modal-kicker">Choose Your Package</p>
+      <h2 class="setup-modal-title" id="setupModalTitle">Which installation do you need?</h2>
       <p class="setup-modal-sub">Pick the option that fits and we'll route you to the right place instantly.</p>
       <div class="setup-options">
-        <a href="https://pl.setyourownsalary.com/email997"
+        <a href="https://pl.setyourownsalary.com/1497install-15005"
            class="setup-option option-featured"
            target="_blank" rel="noopener noreferrer"
            onclick="closeSetupModal()">
-          <span class="setup-option-icon">👤</span>
-          <span class="setup-option-label">Just Me</span>
-          <span class="setup-option-desc">1 Setup</span>
-          <span class="setup-option-price">$997</span>
+          <span class="setup-option-icon">&#9881;&#65039;</span>
+          <span class="setup-option-label">Basic Install</span>
+          <span class="setup-option-desc">One-Time Setup</span>
+          <span class="setup-option-price" style="color: var(--gold);">$1,497</span>
         </a>
-        <a href="https://pl.setyourownsalary.com/10PLUS"
+        <a href="https://pl.setyourownsalary.com/2497install-15008"
            class="setup-option"
            target="_blank" rel="noopener noreferrer"
            onclick="closeSetupModal()">
-          <span class="setup-option-icon">👥</span>
-          <span class="setup-option-label">My Team</span>
-          <span class="setup-option-desc">10+ Setups</span>
-          <span class="setup-option-price" style="color: var(--blue);">Custom</span>
+          <span class="setup-option-icon">&#127942;</span>
+          <span class="setup-option-label">Custom Install</span>
+          <span class="setup-option-desc">Setup + Monthly Support</span>
+          <span class="setup-option-price">$2,497 <span style="font-size:13px; opacity:0.6;">+ $297/mo</span></span>
         </a>
       </div>
+    </div>
+  </div>
+
+  <!-- TEAM SETUP MODAL -->
+  <div id="teamModal" class="setup-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="teamModalTitle">
+    <div class="setup-modal">
+      <button onclick="closeTeamModal()" class="setup-modal-close" aria-label="Close">&times;</button>
+
+      <!-- Step 1: Ask team size -->
+      <div id="teamStep1">
+        <p class="setup-modal-kicker">Team Setup</p>
+        <h2 class="setup-modal-title" id="teamModalTitle">Do you have a team of 10 or more?</h2>
+        <p class="setup-modal-sub">Team setup requires a minimum of 10 members to proceed.</p>
+        <div class="setup-options">
+          <a href="https://pl.setyourownsalary.com/team-set-up-15009"
+             class="setup-option option-featured"
+             target="_blank" rel="noopener noreferrer"
+             onclick="closeTeamModal()">
+            <span class="setup-option-icon">&#128101;</span>
+            <span class="setup-option-label">Yes, 10+</span>
+            <span class="setup-option-desc">Proceed to Team Setup</span>
+          </a>
+          <a href="javascript:void(0)"
+             class="setup-option"
+             onclick="showTeamStep2()">
+            <span class="setup-option-icon">&#128100;</span>
+            <span class="setup-option-label">Less Than 10</span>
+            <span class="setup-option-desc">Choose an individual plan</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Step 2: Show individual options -->
+      <div id="teamStep2" style="display: none;">
+        <p class="setup-modal-kicker">Individual Setup</p>
+        <h2 class="setup-modal-title">Choose your installation package</h2>
+        <p class="setup-modal-sub">Team setup requires 10+ members. Pick the individual plan that fits you best.</p>
+        <div class="setup-options">
+          <a href="https://pl.setyourownsalary.com/1497install-15005"
+             class="setup-option option-featured"
+             target="_blank" rel="noopener noreferrer"
+             onclick="closeTeamModal()">
+            <span class="setup-option-icon">&#9881;&#65039;</span>
+            <span class="setup-option-label">Basic Install</span>
+            <span class="setup-option-desc">One-Time Setup</span>
+            <span class="setup-option-price" style="color: var(--gold);">$1,497</span>
+          </a>
+          <a href="https://pl.setyourownsalary.com/2497install-15008"
+             class="setup-option"
+             target="_blank" rel="noopener noreferrer"
+             onclick="closeTeamModal()">
+            <span class="setup-option-icon">&#127942;</span>
+            <span class="setup-option-label">Custom Install</span>
+            <span class="setup-option-desc">Setup + Monthly Support</span>
+            <span class="setup-option-price">$2,497 <span style="font-size:13px; opacity:0.6;">+ $297/mo</span></span>
+          </a>
+        </div>
+        <p style="text-align: center; margin-top: var(--space-sm);">
+          <a href="javascript:void(0)" onclick="showTeamStep1()" style="font-size: 13px; color: var(--ink-muted); text-decoration: underline; text-underline-offset: 3px;">&larr; Back</a>
+        </p>
+      </div>
+
     </div>
   </div>
 
@@ -2966,59 +3742,60 @@
     background: rgba(0,0,0,0.6); align-items: center; justify-content: center;
   ">
     <div style="
-      background: var(--bg-white, #fff); border: 3px solid #121212;
-      box-shadow: 8px 8px 0 #121212; max-width: 460px; width: 90%; padding: 40px;
+      background: var(--bg-white, #1a1a1a); border: 1px solid #292825;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6); border-radius: 8px; max-width: 460px; width: 90%; padding: 40px;
       position: relative;
     ">
       <button onclick="closeWaitlistModal()" style="
         position: absolute; top: 16px; right: 16px; background: none;
-        border: 2px solid #121212; width: 32px; height: 32px; font-size: 18px;
-        cursor: pointer; font-weight: 700; line-height: 1;
-      ">×</button>
+        border: 1px solid #302e2b; width: 32px; height: 32px; font-size: 18px;
+        cursor: pointer; font-weight: 700; line-height: 1; border-radius: 4px; color: #958f80;
+      ">&#215;</button>
 
       <!-- Default state -->
       <div id="waitlistForm">
-        <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; opacity: 0.6;">Early Access</div>
-        <h2 style="font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; margin: 0 0 8px;">Join the OpenClaw Waitlist</h2>
-        <p style="font-size: 15px; margin: 0 0 28px; opacity: 0.75;">We're onboarding users in waves. Drop your info and we'll reach out when your spot is ready.</p>
+        <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; color: #736f64;">Early Access</div>
+        <h2 style="font-family: 'Inter', sans-serif; font-size: 26px; font-weight: 700; margin: 0 0 8px; color: #efe5cd;">Join the Waitlist</h2>
+        <p style="font-size: 15px; margin: 0 0 28px; color: #736f64;">We're onboarding clients in waves. Drop your info and we'll reach out when your spot is ready.</p>
 
         <div style="margin-bottom: 16px;">
-          <label style="display: block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px;">Name</label>
+          <label style="display: block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; color: #958f80;">Name</label>
           <input id="waitlistName" type="text" placeholder="Your name" style="
-            width: 100%; padding: 12px 14px; border: 3px solid #121212;
-            font-size: 15px; font-family: inherit; background: #f2f0e9; box-sizing: border-box;
+            width: 100%; padding: 12px 14px; border: 1px solid #292825;
+            font-size: 15px; font-family: inherit; background: #141413; color: #efe5cd; border-radius: 4px; box-sizing: border-box;
           ">
         </div>
 
         <div style="margin-bottom: 24px;">
-          <label style="display: block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px;">Email</label>
+          <label style="display: block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; color: #958f80;">Email</label>
           <input id="waitlistEmail" type="email" placeholder="you@example.com" style="
-            width: 100%; padding: 12px 14px; border: 3px solid #121212;
-            font-size: 15px; font-family: inherit; background: #f2f0e9; box-sizing: border-box;
+            width: 100%; padding: 12px 14px; border: 1px solid #292825;
+            font-size: 15px; font-family: inherit; background: #141413; color: #efe5cd; border-radius: 4px; box-sizing: border-box;
           ">
         </div>
 
-        <div id="waitlistError" style="display:none; color: #ff6b58; font-size: 13px; font-weight: 600; margin-bottom: 12px;"></div>
+        <div id="waitlistError" style="display:none; color: #e55040; font-size: 13px; font-weight: 600; margin-bottom: 12px;"></div>
 
         <button id="waitlistSubmitBtn" onclick="submitWaitlist()" style="
-          width: 100%; padding: 14px; background: #C41E3A; color: #fff;
-          border: 3px solid #121212; font-size: 15px; font-weight: 700;
+          width: 100%; padding: 14px; background: linear-gradient(135deg, #c41e3a, #e50000); color: #fff;
+          border: 1px solid rgba(229, 0, 0, 0.5); border-radius: 4px; font-size: 15px; font-weight: 700;
           text-transform: uppercase; letter-spacing: 0.05em; cursor: pointer;
-          box-shadow: 4px 4px 0 #121212; transition: transform 0.15s, box-shadow 0.15s;
-        " onmouseover="this.style.transform='translate(-2px,-2px)';this.style.boxShadow='6px 6px 0 #121212'"
-           onmouseout="this.style.transform='';this.style.boxShadow='4px 4px 0 #121212'">
+          box-shadow: 0 2px 16px rgba(229, 0, 0, 0.2); transition: all 0.25s ease;
+        " onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 32px rgba(229,0,0,0.25)'"
+           onmouseout="this.style.transform='';this.style.boxShadow='0 2px 16px rgba(229,0,0,0.2)'">
           Reserve My Spot
         </button>
       </div>
 
       <!-- Success state -->
       <div id="waitlistSuccess" style="display: none; text-align: center; padding: 20px 0;">
-        <div style="font-size: 48px; margin-bottom: 16px;">🎉</div>
-        <h2 style="font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; margin: 0 0 12px;">You're on the list!</h2>
-        <p style="font-size: 15px; opacity: 0.75; margin: 0;">We'll reach out when your spot is ready. Keep an eye on your inbox.</p>
+        <div style="font-size: 48px; margin-bottom: 16px;">&#127881;</div>
+        <h2 style="font-family: 'Inter', sans-serif; font-size: 26px; font-weight: 700; margin: 0 0 12px; color: #efe5cd;">You're on the list!</h2>
+        <p style="font-size: 15px; color: #736f64; margin: 0;">We'll reach out when your spot is ready. Keep an eye on your inbox.</p>
       </div>
     </div>
   </div>
+
 
   <script src="js/components/navigation.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -3117,6 +3894,39 @@
       if (e.key === 'Escape' && setupModal.classList.contains('open')) closeSetupModal();
     });
 
+    // ===== TEAM SETUP MODAL =====
+    var teamModal = document.getElementById('teamModal');
+
+    function openTeamModal() {
+      document.getElementById('teamStep1').style.display = '';
+      document.getElementById('teamStep2').style.display = 'none';
+      teamModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeTeamModal() {
+      teamModal.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function showTeamStep2() {
+      document.getElementById('teamStep1').style.display = 'none';
+      document.getElementById('teamStep2').style.display = '';
+    }
+
+    function showTeamStep1() {
+      document.getElementById('teamStep1').style.display = '';
+      document.getElementById('teamStep2').style.display = 'none';
+    }
+
+    teamModal.addEventListener('click', function(e) {
+      if (e.target === teamModal) closeTeamModal();
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && teamModal.classList.contains('open')) closeTeamModal();
+    });
+
     // ===== WAITLIST MODAL =====
     var waitlistModal = document.getElementById('waitlistModal');
 
@@ -3194,10 +4004,12 @@
         '.bundle-total-value', '.guarantee-callout',
         '.upgrade-item',
         '.section-cta', '.origin-box',
-        '.pricing-card-3', '.pricing-guarantee',
+        '.pricing-card-2', '.pricing-guarantee',
         '.guarantee-box',
         '.enterprise-strip-inner',
-        '.quote-with-photo'
+        '.quote-with-photo',
+        '.proof-card', '.dashboard-preview img',
+        '.capsule-grid', '.skill-cat'
       ];
 
       // Collect all elements
@@ -3224,7 +4036,7 @@
       if (videoBlock) { videoBlock.classList.add('reveal-scale'); }
 
       // Pricing featured card scale
-      var pricingFeatured = document.querySelector('.pricing-card-gold');
+      var pricingFeatured = document.querySelector('.pricing-card-featured');
       if (pricingFeatured) { pricingFeatured.classList.remove('reveal'); pricingFeatured.classList.add('reveal-scale'); }
 
       var observer = new IntersectionObserver(function(entries) {
@@ -3288,6 +4100,7 @@
       });
     })();
   </script>
+
 
 </body>
 
