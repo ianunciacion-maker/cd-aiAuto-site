@@ -35,20 +35,23 @@ vercel --prod            # Manual production deploy (auto-deploys on push to mai
 
 ### Core File: `supabase.js`
 
-The heart of the application — exports 5 manager classes, all exposed globally via `window`:
+The heart of the application — exports 8 manager classes, all exposed globally via `window`:
 
-- **AuthManager** — signup, login, logout, admin checks. Admin emails hardcoded at ~line 25.
+- **AuthManager** — signup, login, logout, admin checks. Admin status checked via `is_admin` column in `profiles` table (not hardcoded emails).
 - **BlogManager** — CRUD for blog posts (HTML content, not markdown), image uploads to Supabase Storage `blog-images` bucket
+- **BlogHistoryManager** — tracks AI-generated blog content history per user
 - **UserManager** — profiles, subscription status, tool usage tracking. `canAccessTools()` gates tool access.
 - **StripeManager** — client-side checkout, billing portal, tool usage
 - **AdminUserManager** — admin dashboard stats, user management
+- **AIResourcesManager** — CRUD for curated AI resource listings (public + admin pages)
+- **WaitlistManager** — waitlist/email capture functionality
 
 ### Key Directories
 
 - `api/` — Vercel serverless functions. All endpoints are POST. Stripe webhook at `api/webhooks/stripe.js` (1024MB memory, 10s timeout configured in `vercel.json`).
 - `api/tools/` — AI generation endpoints. Blog + captions proxy to **n8n webhooks**; email campaign + product descriptions call **OpenRouter** directly. All require `use-tool.js` to track usage.
-- `css/` — Organized: `base/` (variables, reset), `components/`, `layout/`, `pages/`, `themes/` (dark mode), `utilities/`. Entry point: `main.css`.
-- `js/` — ES6 modules. Entry point: `main.js`. Components (navigation, forms), modules (theme, animations, tool history).
+- `css/` — Organized: `base/` (variables, reset, typography), `components/`, `layout/`, `pages/`, `utilities/`. Entry point: `main.css`. Dark mode is in `css/base/variables.css` via `[data-theme="dark"]` selector, not a separate folder.
+- `js/` — ES6 modules. Entry point: `main.js`. Components: `navigation.js`, `forms.js`, `tool-navigation.js`. Modules: `theme.js`, `animations.js`, plus per-tool history modules (`social-captions-history.js`, `email-campaigns-history.js`, `product-descriptions-history.js`).
 - `admin/` — Dashboard, blog editor (Quill.js WYSIWYG). Protected by `authManager.protectAdminRoute()`.
 - `user/` — Login, signup, dashboard, checkout. Signup → checkout → Stripe subscription flow.
 - `tools/` — Individual AI tool pages. Require active subscription.
@@ -64,9 +67,36 @@ The heart of the application — exports 5 manager classes, all exposed globally
 3. Stripe webhook updates subscription in Supabase
 4. `userManager.canAccessTools()` gates tool access
 
-Admin access: email whitelist in `supabase.js` (~line 25). Routes protected by `authManager.protectAdminRoute()`.
+Admin access: `is_admin` boolean flag in `profiles` database table. Routes protected by `authManager.protectAdminRoute()`.
 
 Logout accepts optional `redirectUrl` param — defaults to `/user/login.html`. Admin pages should pass `/admin/login.html`. Always use absolute paths for redirects.
+
+### API Endpoints (all POST)
+
+- `/api/checkout` — Create Stripe checkout session
+- `/api/check-subscription` — Sync subscription status (DB → Stripe fallback)
+- `/api/billing-portal` — Create Stripe billing portal session
+- `/api/update-profile` — Update user profile
+- `/api/track-avatar-selection` — Track avatar selection
+- `/api/tools/generate-blog` — Proxies to n8n webhook
+- `/api/tools/generate-captions` — Proxies to n8n webhook
+- `/api/tools/generate-email-campaign` — Calls OpenRouter directly
+- `/api/tools/generate-product-description` — Calls OpenRouter directly
+- `/api/webhooks/stripe` — Stripe webhook handler (1024MB memory, 10s timeout)
+
+All tool endpoints use `use-tool.js` middleware to track usage against subscription limits.
+
+### Key Database Tables
+
+- `profiles` — User profiles with `is_admin` flag
+- `blog_posts` — Blog content (stored as HTML)
+- `tool_usage` — Per-user tool usage tracking against subscription limits
+- `ai_resources` — Curated AI resource listings
+- `waitlist` — Email capture/waitlist entries
+- `blog_generation_history` — AI-generated blog history
+- `webhook_events` — Stripe webhook audit trail
+
+Schema migrations live in `docs/sql/`. Run via Supabase SQL editor.
 
 ### Stripe Integration Gotchas
 
@@ -88,7 +118,7 @@ Logout accepts optional `redirectUrl` param — defaults to `/user/login.html`. 
 - Thick borders, hard shadows, bold colors (blue, gold, coral, lavender, green, pink)
 - Serif headers (Playfair Display) + sans-serif body (Inter)
 - Dark mode: `data-theme="dark"` on `<html>`, toggle via Ctrl/Cmd+Shift+T, saved to localStorage key `ai-auto-theme`
-- CSS variables in `css/base/variables.css` and `css/themes/`. See `design_system.md` for full token reference.
+- CSS variables in `css/base/variables.css`. See `design_system.md` for full token reference.
 - **Always use semantic variables** (`--bg-primary`, `--text-main`) not hardcoded colors
 - New components: create CSS in `css/components/`, import in `css/main.css`, support dark mode
 
@@ -108,7 +138,7 @@ Local dev: `/api/.env.local` (gitignored). Production: Vercel dashboard. Templat
 
 - `package-lock.json` is gitignored (unusual — `npm install` generates fresh lockfile each time)
 - Supabase anon key is hardcoded in `supabase.js` (safe for client-side, but service key must stay server-side only)
-- `vercel.json` is intentionally minimal — complex `functions` config breaks static file serving
+- `vercel.json` is intentionally minimal — complex `functions` config breaks static file serving. It sets security headers (`X-Content-Type-Options`, `X-Frame-Options`, `X-XSS-Protection`) globally and 1-year immutable cache on `css/`, `js/`, `images/`.
 - Stripe webhook events logged to `webhook_events` Supabase table for audit trail
 - Blog editor Quill styles need `!important` which conflicts with stylelint rule — disable rule inline for those files
 - `.gitignore` has aggressive wildcard patterns (`*secret*`, `*token*`, `*password*`) — new files with these substrings in the name will be silently ignored. Exceptions exist for `user/*password*.html` and `plans/*password*.md`.

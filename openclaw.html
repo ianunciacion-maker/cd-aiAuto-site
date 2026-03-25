@@ -1830,40 +1830,6 @@
       .pricing-pro { animation: none; }
     }
 
-    /* ========== ENTERPRISE STRIP ========== */
-    .sec-enterprise-strip {
-      background:
-        radial-gradient(ellipse 50% 80% at 0% 50%, rgba(99, 102, 241, 0.12) 0%, transparent 70%),
-        radial-gradient(ellipse 50% 80% at 100% 50%, rgba(251, 191, 36, 0.08) 0%, transparent 70%),
-        linear-gradient(130deg, #0f1126, #140a1a);
-      color: #fff;
-      border-bottom: var(--border-thick);
-      padding: var(--space-lg) 0;
-    }
-    .enterprise-strip-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: var(--space-md);
-      flex-wrap: wrap;
-    }
-    .enterprise-strip-inner h3 {
-      font-size: 28px;
-      margin: var(--space-xs) 0;
-    }
-    .enterprise-strip-inner p {
-      font-size: 14px;
-      color: rgba(239, 229, 205, 0.65);
-      margin: 0;
-      max-width: 600px;
-    }
-    .enterprise-strip-inner .btn {
-      background: linear-gradient(135deg, #e8920a, #f5a623);
-      color: #0e0e0e;
-      border-color: #f5a623;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
 
     /* ========== PULSE RING ========== */
     @keyframes pulseRing {
@@ -2719,90 +2685,128 @@
     }
 
     /* ========== TWO-CARD PRICING ========== */
-    .pricing-grid-2 {
+    /* ========== 3-TIER PRICING GRID ========== */
+    .pricing-tiers-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1.15fr 1fr 1fr;
       gap: var(--space-md);
       margin: var(--space-md) 0;
-      align-items: start;
+      align-items: end;
     }
 
-    @media (max-width: 768px) {
-      .pricing-grid-2 { grid-template-columns: 1fr; }
-    }
-
-    .pricing-card-2 {
+    .pricing-tier-card {
       border: 1px solid #292825;
       border-radius: 12px;
       box-shadow: 0 8px 32px rgba(0,0,0,0.4);
       display: flex;
       flex-direction: column;
+      align-items: center;
+      text-align: center;
       position: relative;
       background: linear-gradient(130deg, #1a1a1a, #141414);
       color: var(--ink-secondary);
       transition: all 0.25s ease;
-      overflow: hidden;
+      overflow: visible;
+      padding: var(--space-md) var(--space-md) var(--space-sm);
     }
 
-    .pricing-card-2:hover {
+    .pricing-tier-card:hover {
       transform: translateY(-4px);
       box-shadow: 0 16px 48px rgba(0,0,0,0.5);
     }
 
-    .pricing-card-2.pricing-card-featured {
+    .pricing-tier-card.tier-featured {
       background: linear-gradient(160deg, #1a1d3a 0%, #0d1025 100%);
       border-color: rgba(245, 166, 35, 0.25);
       animation: floatY 4s ease-in-out infinite, floatShadow 4s ease-in-out infinite;
+      padding: var(--space-lg) var(--space-md) var(--space-md);
     }
 
-    .pricing-card-2.pricing-card-featured:hover {
+    .pricing-tier-card.tier-featured:hover {
       animation-play-state: paused;
       transform: translateY(-4px);
     }
 
-    .pricing-card-2 .pricing-card-header {
-      padding: var(--space-md);
-      text-align: center;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .pricing-card-2 .pricing-tier-name {
-      font-family: 'Inter', sans-serif;
-      font-size: 24px;
+    .tier-label {
+      font-size: 11px;
       font-weight: 700;
-      margin-bottom: 4px;
-      color: var(--ink);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ink-muted);
+      margin-bottom: 8px;
     }
+    .tier-featured .tier-label { color: var(--gold); }
 
-    .pricing-card-2.pricing-card-featured .pricing-tier-name {
+    .tier-name {
+      font-family: 'Inter', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 10px;
+    }
+    .tier-featured .tier-name {
+      font-size: 26px;
       color: var(--gold);
     }
 
-    .pricing-card-2 .pricing-amount {
-      justify-content: center;
+    .tier-price {
+      font-size: 38px;
+      font-weight: 700;
+      font-family: 'Inter', sans-serif;
+      line-height: 1;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+    .tier-featured .tier-price {
+      font-size: 52px;
+      color: var(--gold);
     }
 
-    .pricing-card-2 .pricing-monthly {
-      font-size: 15px;
-      font-weight: 600;
+    .tier-subtitle {
+      font-size: 13px;
+      color: var(--ink-muted);
+      margin-bottom: var(--space-sm);
+      line-height: 1.5;
+    }
+    .tier-featured .tier-subtitle {
       color: var(--green);
-      margin-top: 4px;
+      font-weight: 600;
+      font-size: 14px;
     }
 
-    .pricing-card-2 .pricing-cta-mid {
-      padding: 0 var(--space-md) var(--space-sm);
+    .tier-cta {
+      width: 100%;
+      margin-top: auto;
     }
 
-    .pricing-card-2 .pricing-cta-mid .btn {
+    .tier-cta .btn {
       width: 100%;
       text-align: center;
       border-radius: 8px;
       font-weight: 700;
       font-size: 15px;
+      letter-spacing: 0.02em;
+    }
+
+    .tier-guarantee-note {
+      font-size: 11px;
+      color: var(--ink-muted);
+      margin-top: 8px;
+    }
+    .tier-featured .tier-guarantee-note {
+      color: rgba(255,255,255,0.4);
+    }
+
+    .tier-spread-detail {
+      font-size: 13px;
+      color: var(--ink-muted);
+      margin-top: 2px;
+      margin-bottom: var(--space-sm);
     }
 
     @media (max-width: 768px) {
-      .pricing-card-2.pricing-card-featured { animation: none; }
+      .pricing-tiers-grid { grid-template-columns: 1fr; }
+      .tier-featured { animation: none; }
     }
 
     /* ========== GUARANTEE STEPS ========== */
@@ -3352,90 +3356,46 @@
       <h2 class="section-title">Get Your AI System <span class="gradient-text">Installed</span></h2>
       <p class="section-subtitle">Choose the installation package that fits your business.</p>
 
-      <div class="pricing-grid-2">
-        <!-- Basic Install -->
-        <div class="pricing-card-2">
-          <img src="images/openclaw/silver.png" alt="Basic Install" class="pricing-card-img" loading="lazy" />
-          <div class="pricing-card-header">
-            <span class="pricing-tier-name">&#9881;&#65039; Basic Install</span>
-            <div class="pricing-amount">
-              <span class="pricing-was" style="color: var(--ink-muted);">$13,276</span>
-              <span class="pricing-price" style="color: var(--ink);">$1,497</span>
-            </div>
-            <p class="pricing-subtext" style="opacity: 0.6;">&#128293; One-Time Payment</p>
-          </div>
-          <div class="pricing-cta-mid">
-            <a href="javascript:void(0)" onclick="openSetupModal()" class="btn btn-outline" style="width:100%; border-radius:8px; font-weight:700;">Get Basic Install &rarr;</a>
-          </div>
-          <div class="pricing-features-label">Included Features</div>
-          <div class="pricing-feature-table">
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#9881;</span> Claw Launcher Install</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#128640;</span> Claw Launcher Onboarder</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#128218;</span> 3-Day Onboarding Workshop</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#128176;</span> Cashflow Engine</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#128161;</span> Skill Repository (100+ Skills)</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#127918;</span> Control Panel</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#127970;</span> Business Builder</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#128279;</span> Connector Series</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row" style="opacity:0.35;"><span><span class="feature-icon">&#129513;</span> Custom Configuration</span><span class="pricing-cross">&#10005;</span></div>
-            <div class="pricing-feature-row" style="opacity:0.35;"><span><span class="feature-icon">&#128260;</span> Ongoing Monthly Support</span><span class="pricing-cross">&#10005;</span></div>
-            <div class="pricing-feature-row" style="opacity:0.35;"><span><span class="feature-icon">&#9889;</span> Priority Support</span><span class="pricing-cross">&#10005;</span></div>
-          </div>
-          <div class="pricing-cta">
-            <p style="font-size: 12px; color: var(--ink-muted); margin: 0; text-align: center;">&#10003; 30-day money-back guarantee</p>
-          </div>
-        </div>
+      <div class="pricing-tiers-grid">
 
-        <!-- Custom Install (Featured) -->
-        <div class="pricing-card-2 pricing-card-featured">
+        <!-- TIER 1: ClawLauncher Install (Featured) -->
+        <div class="pricing-tier-card tier-featured">
           <div class="pricing-featured-badge">&#11088; BEST VALUE</div>
-          <img src="images/openclaw/gold.png" alt="Custom Install" class="pricing-card-img" loading="lazy" />
-          <div class="pricing-card-header">
-            <span class="pricing-tier-name">&#127942; Custom Install</span>
-            <div class="pricing-amount">
-              <span class="pricing-was" style="color: rgba(255,255,255,0.4);">$23,273</span>
-              <span class="pricing-price" style="color: var(--gold);">$2,497</span>
-            </div>
-            <p class="pricing-monthly">+ $297/mo after installation</p>
-            <p class="pricing-subtext" style="opacity: 0.6;">&#128293; One-Time + Monthly Support</p>
+          <span class="tier-label">Tier 1</span>
+          <span class="tier-name">&#9881;&#65039; ClawLauncher Install</span>
+          <span class="tier-price">$1,297</span>
+          <p class="tier-subtitle">&#128293; One-Time Payment &mdash; Full Installation</p>
+          <div class="tier-cta">
+            <a href="javascript:void(0)" class="btn btn-gold-cta">Get Installed Now &rarr;</a>
           </div>
-          <div class="pricing-cta-mid">
-            <a href="javascript:void(0)" onclick="openSetupModal()" class="btn btn-gold-cta">Get Custom Install &rarr;</a>
-          </div>
-          <div class="pricing-features-label">Included Features</div>
-          <div class="pricing-feature-table">
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#9881;</span> Claw Launcher Install</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#128640;</span> Claw Launcher Onboarder</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#128218;</span> 3-Day Onboarding Workshop</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#128176;</span> Cashflow Engine</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#128161;</span> Skill Repository (100+ Skills)</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#127918;</span> Control Panel</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#127970;</span> Business Builder</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#128279;</span> Connector Series</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#129513;</span> Custom Configuration</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#128260;</span> Ongoing Monthly Support</span><span class="pricing-check">&#10003;</span></div>
-            <div class="pricing-feature-row"><span><span class="feature-icon">&#9889;</span> Priority Support</span><span class="pricing-check">&#10003;</span></div>
-          </div>
-          <div class="pricing-cta">
-            <p style="font-size: 12px; color: rgba(255,255,255,0.4); margin: 0; text-align: center;">&#10003; 30-day money-back guarantee &middot; Cancel monthly support anytime</p>
-          </div>
+          <p class="tier-guarantee-note">&#10003; 30-day money-back guarantee</p>
         </div>
-      </div>
 
-      <!-- Guarantee bar -->
-      <div class="pricing-guarantee">
-        <div style="font-size: 36px; flex-shrink: 0;">&#128176;</div>
-        <div>
-          <strong>One-Time Install + Ongoing Support</strong>
-          <p>Both packages include a $297/mo fee for continued support, updates, and system maintenance after installation. Cancel anytime.</p>
+        <!-- TIER 2: 10+ Setups -->
+        <div class="pricing-tier-card">
+          <span class="tier-label">Tier 2</span>
+          <span class="tier-name">&#128101; 10+ Setups</span>
+          <span class="tier-price">$1,500 &ndash; $2,500</span>
+          <p class="tier-subtitle">For teams and agencies deploying 10 or more installations.</p>
+          <div class="tier-cta">
+            <a href="javascript:void(0)" onclick="openSetupModal()" class="btn btn-outline" style="border-radius:8px;">Get Multi-Setup &rarr;</a>
+          </div>
+          <p class="tier-guarantee-note">&#10003; 30-day money-back guarantee</p>
         </div>
-      </div>
 
-      <!-- Email capture -->
-      <div class="pricing-email-cta">
-        <h3>Need a setup for your whole team?</h3>
-        <p>Drop your email and we'll send you everything you need to make the right decision.</p>
-        <a href="javascript:void(0)" onclick="openTeamModal()" class="btn btn-email-cta">Get Team Setup &rarr;</a>
+        <!-- TIER 3: Spread Pay -->
+        <div class="pricing-tier-card">
+          <span class="tier-label">Tier 3</span>
+          <span class="tier-name">&#128197; Spread Pay</span>
+          <span class="tier-price">$1,256 <span style="font-size: 18px; font-weight: 600; opacity: 0.6;">down</span></span>
+          <p class="tier-spread-detail">then $209/mo &times; 6 months &mdash; total $2,511</p>
+          <p class="tier-subtitle">50% now, 50% spread over 6 months.</p>
+          <div class="tier-cta">
+            <a href="javascript:void(0)" class="btn btn-outline" style="border-radius:8px;">Get Spread Pay &rarr;</a>
+          </div>
+          <p class="tier-guarantee-note">&#10003; 30-day money-back guarantee</p>
+        </div>
+
       </div>
     </div>
   </section>
@@ -3628,111 +3588,35 @@
     </div>
   </section>
 
-  <!-- ========== ENTERPRISE STRIP ========== -->
-  <section class="sec-enterprise-strip">
-    <div class="container">
-      <div class="enterprise-strip-inner">
-        <div>
-          <span class="tag" style="background: rgba(239, 229, 205, 0.08); color: rgba(239, 229, 205, 0.8); border-color: rgba(239, 229, 205, 0.15); margin-bottom: var(--space-xs);">For Teams &amp; Agencies</span>
-          <h3>Deploying AI Across Your Business?</h3>
-          <p>We handle end-to-end setup for teams of 10 or more &mdash; VPS installs, custom onboarding, bulk licensing, and dedicated support included.</p>
-        </div>
-        <a href="openclaw-enterprise.html" class="btn" style="background: linear-gradient(135deg, #e8920a, #f5a623); color: #0e0e0e; border-color: #f5a623;">Talk to Us &rarr;</a>
-      </div>
-    </div>
-  </section>
 
   <!-- FOOTER (injected by navigation.js) -->
 
-  <!-- SETUP SELECTOR MODAL -->
+  <!-- INSTALL COUNT MODAL (Tier 2) -->
   <div id="setupModal" class="setup-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="setupModalTitle">
     <div class="setup-modal">
       <button onclick="closeSetupModal()" class="setup-modal-close" aria-label="Close">&times;</button>
-      <p class="setup-modal-kicker">Choose Your Package</p>
-      <h2 class="setup-modal-title" id="setupModalTitle">Which installation do you need?</h2>
-      <p class="setup-modal-sub">Pick the option that fits and we'll route you to the right place instantly.</p>
+      <p class="setup-modal-kicker">Confirm Your Setup</p>
+      <h2 class="setup-modal-title" id="setupModalTitle">How many setups do you need?</h2>
+      <p class="setup-modal-sub">Pick the option that fits and we'll route you to the right place.</p>
       <div class="setup-options">
-        <a href="https://pl.setyourownsalary.com/1497install-15005"
+        <a href="javascript:void(0)"
+           class="setup-option"
+           onclick="closeSetupModal()">
+          <span class="setup-option-icon">&#128100;</span>
+          <span class="setup-option-label">1 Setup</span>
+          <span class="setup-option-desc">Single installation</span>
+          <span class="setup-option-price" style="color: var(--gold);">$1,297</span>
+        </a>
+        <a href="https://pl.setyourownsalary.com/2497install-15008"
            class="setup-option option-featured"
            target="_blank" rel="noopener noreferrer"
            onclick="closeSetupModal()">
-          <span class="setup-option-icon">&#9881;&#65039;</span>
-          <span class="setup-option-label">Basic Install</span>
-          <span class="setup-option-desc">One-Time Setup</span>
-          <span class="setup-option-price" style="color: var(--gold);">$1,497</span>
-        </a>
-        <a href="https://pl.setyourownsalary.com/2497install-15008"
-           class="setup-option"
-           target="_blank" rel="noopener noreferrer"
-           onclick="closeSetupModal()">
-          <span class="setup-option-icon">&#127942;</span>
-          <span class="setup-option-label">Custom Install</span>
-          <span class="setup-option-desc">Setup + Monthly Support</span>
-          <span class="setup-option-price">$2,497 <span style="font-size:13px; opacity:0.6;">+ $297/mo</span></span>
+          <span class="setup-option-icon">&#128101;</span>
+          <span class="setup-option-label">10+ Setups</span>
+          <span class="setup-option-desc">Team &amp; agency installs</span>
+          <span class="setup-option-price">$1,500 &ndash; $2,500</span>
         </a>
       </div>
-    </div>
-  </div>
-
-  <!-- TEAM SETUP MODAL -->
-  <div id="teamModal" class="setup-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="teamModalTitle">
-    <div class="setup-modal">
-      <button onclick="closeTeamModal()" class="setup-modal-close" aria-label="Close">&times;</button>
-
-      <!-- Step 1: Ask team size -->
-      <div id="teamStep1">
-        <p class="setup-modal-kicker">Team Setup</p>
-        <h2 class="setup-modal-title" id="teamModalTitle">Do you have a team of 10 or more?</h2>
-        <p class="setup-modal-sub">Team setup requires a minimum of 10 members to proceed.</p>
-        <div class="setup-options">
-          <a href="https://pl.setyourownsalary.com/team-set-up-15009"
-             class="setup-option option-featured"
-             target="_blank" rel="noopener noreferrer"
-             onclick="closeTeamModal()">
-            <span class="setup-option-icon">&#128101;</span>
-            <span class="setup-option-label">Yes, 10+</span>
-            <span class="setup-option-desc">Proceed to Team Setup</span>
-          </a>
-          <a href="javascript:void(0)"
-             class="setup-option"
-             onclick="showTeamStep2()">
-            <span class="setup-option-icon">&#128100;</span>
-            <span class="setup-option-label">Less Than 10</span>
-            <span class="setup-option-desc">Choose an individual plan</span>
-          </a>
-        </div>
-      </div>
-
-      <!-- Step 2: Show individual options -->
-      <div id="teamStep2" style="display: none;">
-        <p class="setup-modal-kicker">Individual Setup</p>
-        <h2 class="setup-modal-title">Choose your installation package</h2>
-        <p class="setup-modal-sub">Team setup requires 10+ members. Pick the individual plan that fits you best.</p>
-        <div class="setup-options">
-          <a href="https://pl.setyourownsalary.com/1497install-15005"
-             class="setup-option option-featured"
-             target="_blank" rel="noopener noreferrer"
-             onclick="closeTeamModal()">
-            <span class="setup-option-icon">&#9881;&#65039;</span>
-            <span class="setup-option-label">Basic Install</span>
-            <span class="setup-option-desc">One-Time Setup</span>
-            <span class="setup-option-price" style="color: var(--gold);">$1,497</span>
-          </a>
-          <a href="https://pl.setyourownsalary.com/2497install-15008"
-             class="setup-option"
-             target="_blank" rel="noopener noreferrer"
-             onclick="closeTeamModal()">
-            <span class="setup-option-icon">&#127942;</span>
-            <span class="setup-option-label">Custom Install</span>
-            <span class="setup-option-desc">Setup + Monthly Support</span>
-            <span class="setup-option-price">$2,497 <span style="font-size:13px; opacity:0.6;">+ $297/mo</span></span>
-          </a>
-        </div>
-        <p style="text-align: center; margin-top: var(--space-sm);">
-          <a href="javascript:void(0)" onclick="showTeamStep1()" style="font-size: 13px; color: var(--ink-muted); text-decoration: underline; text-underline-offset: 3px;">&larr; Back</a>
-        </p>
-      </div>
-
     </div>
   </div>
 
@@ -3894,38 +3778,6 @@
       if (e.key === 'Escape' && setupModal.classList.contains('open')) closeSetupModal();
     });
 
-    // ===== TEAM SETUP MODAL =====
-    var teamModal = document.getElementById('teamModal');
-
-    function openTeamModal() {
-      document.getElementById('teamStep1').style.display = '';
-      document.getElementById('teamStep2').style.display = 'none';
-      teamModal.classList.add('open');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeTeamModal() {
-      teamModal.classList.remove('open');
-      document.body.style.overflow = '';
-    }
-
-    function showTeamStep2() {
-      document.getElementById('teamStep1').style.display = 'none';
-      document.getElementById('teamStep2').style.display = '';
-    }
-
-    function showTeamStep1() {
-      document.getElementById('teamStep1').style.display = '';
-      document.getElementById('teamStep2').style.display = 'none';
-    }
-
-    teamModal.addEventListener('click', function(e) {
-      if (e.target === teamModal) closeTeamModal();
-    });
-
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && teamModal.classList.contains('open')) closeTeamModal();
-    });
 
     // ===== WAITLIST MODAL =====
     var waitlistModal = document.getElementById('waitlistModal');
@@ -4004,9 +3856,8 @@
         '.bundle-total-value', '.guarantee-callout',
         '.upgrade-item',
         '.section-cta', '.origin-box',
-        '.pricing-card-2', '.pricing-guarantee',
+        '.pricing-tier-card',
         '.guarantee-box',
-        '.enterprise-strip-inner',
         '.quote-with-photo',
         '.proof-card', '.dashboard-preview img',
         '.capsule-grid', '.skill-cat'
@@ -4036,7 +3887,7 @@
       if (videoBlock) { videoBlock.classList.add('reveal-scale'); }
 
       // Pricing featured card scale
-      var pricingFeatured = document.querySelector('.pricing-card-featured');
+      var pricingFeatured = document.querySelector('.tier-featured');
       if (pricingFeatured) { pricingFeatured.classList.remove('reveal'); pricingFeatured.classList.add('reveal-scale'); }
 
       var observer = new IntersectionObserver(function(entries) {
