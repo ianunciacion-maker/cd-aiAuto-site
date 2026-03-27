@@ -1,145 +1,146 @@
 /**
- * Blog Generator API Proxy
- * Proxies requests to n8n webhook to keep URL secure
+ * Blog Generator API
+ * Uses OpenRouter with x-ai/grok-4.1-fast for AI generation
  *
  * POST /api/tools/generate-blog
  * Body: { topic, length, tone, keywords, userId, userEmail }
- * Returns: { success: boolean, content: object }
+ * Returns: { success: boolean, title: string, content: string, isHtml: boolean }
  */
 
 module.exports = async (req, res) => {
-    // Only allow POST requests
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method not allowed' });
     }
 
-    // Set CORS headers
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-    // Handle OPTIONS preflight request
     if (req.method === 'OPTIONS') {
         return res.status(200).end();
     }
 
     try {
-        const payload = req.body;
+        const { topic, length, tone, keywords } = req.body;
 
-        // Validate required fields
-        if (!payload.topic) {
+        if (!topic) {
             return res.status(400).json({
                 error: 'Missing required field: topic',
                 success: false
             });
         }
 
-        console.log('📝 Proxying blog generation request...');
+        console.log('📝 Generating blog post:', topic);
 
-        // Get n8n webhook URL from environment variable
-        const webhookUrl = process.env.N8N_BLOG_GENERATOR_WEBHOOK;
-        if (!webhookUrl) {
-            console.error('❌ N8N_BLOG_GENERATOR_WEBHOOK not configured');
+        const openRouterApiKey = process.env.OPENROUTER_API_KEY;
+        if (!openRouterApiKey) {
+            console.error('❌ OPENROUTER_API_KEY not configured');
             return res.status(500).json({
-                error: 'Webhook configuration error',
+                error: 'API configuration error',
                 success: false
             });
         }
 
-        const webhookResponse = await fetch(webhookUrl, {
+        const lengthGuide = {
+            short: '400-600 words',
+            medium: '600-1000 words',
+            long: '1000-1500 words',
+            detailed: '1500-2500 words'
+        };
+
+        const systemPrompt = `You are Alex Hormozi writing blog posts.
+
+STYLE GUIDE (STRICT):
+- Write at a 5th-grade reading level. Short sentences. Punchy.
+- "Hook-Retain-Reward" structure: hook in the first line, keep them reading, deliver massive value.
+- Use "I" and "You". Be direct. Talk like a real person.
+- High contrast: "Old way" vs "New way" framing.
+- No corporate jargon. No filler. Every sentence earns its place.
+- Use subheadings, bullet points, and bold text for scanners.
+- Open with a pattern interrupt — a bold claim, stat, or question.
+- Close with a clear takeaway and call to action.
+
+OUTPUT FORMAT: Return ONLY valid JSON matching this exact schema:
+{
+  "blogTitle": "Compelling, benefit-driven title",
+  "blogContent": "<h2>Subheading</h2><p>Paragraph text...</p>..."
+}
+
+CRITICAL RULES:
+- blogContent MUST be valid HTML using <h2>, <h3>, <p>, <ul>, <li>, <strong>, <em> tags.
+- Do NOT use <h1> (the title is displayed separately).
+- Do NOT wrap in markdown code blocks.
+- Tone: ${tone || 'Professional and direct'}`;
+
+        const userPrompt = `Write a ${lengthGuide[length] || '600-1000 words'} blog post about:
+
+Topic: ${topic}
+${keywords ? `Keywords to naturally include: ${keywords}` : ''}
+Tone: ${tone || 'professional'}
+
+Return ONLY the JSON object. No markdown, no explanation.`;
+
+        const messages = [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: userPrompt }
+        ];
+
+        console.log('🚀 Calling OpenRouter API...');
+
+        const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
             method: 'POST',
             headers: {
+                'Authorization': `Bearer ${openRouterApiKey}`,
                 'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'HTTP-Referer': 'https://ai-auto.ai',
+                'X-Title': 'Ai-Auto Blog Generator'
             },
-            body: JSON.stringify(payload),
-            signal: AbortSignal.timeout(60000) // 60 second timeout for blog generation
+            body: JSON.stringify({
+                model: 'x-ai/grok-4.1-fast',
+                messages,
+                temperature: 0.7,
+                max_tokens: 4000,
+                response_format: { type: 'json_object' }
+            })
         });
 
-        if (!webhookResponse.ok) {
-            console.error('❌ Webhook HTTP error:', webhookResponse.status);
-            throw new Error(`Webhook returned ${webhookResponse.status}`);
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            console.error('❌ OpenRouter API error:', response.status, JSON.stringify(errorData));
+            throw new Error(errorData.error?.message || `API error: ${response.status}`);
         }
 
-        console.log('✅ Webhook response received');
+        const data = await response.json();
+        const content = data.choices?.[0]?.message?.content;
 
-        // Parse response
-        const responseData = await webhookResponse.json();
+        if (!content) throw new Error('No content generated');
 
-        // Helper function to recursively parse nested JSON strings
-        const deepParse = (data) => {
-            if (typeof data === 'string') {
-                try {
-                    return deepParse(JSON.parse(data));
-                } catch (e) {
-                    return data;
-                }
+        let blog;
+        try {
+            let cleaned = content.trim();
+            if (cleaned.startsWith('```')) {
+                cleaned = cleaned.replace(/^```json?\s*/, '').replace(/\s*```$/, '');
             }
-            if (Array.isArray(data) && data.length > 0) {
-                return deepParse(data[0]);
-            }
-            return data;
-        };
-
-        const result = deepParse(responseData);
-        console.log('📡 Parsed response type:', typeof result);
-
-        // Extract blog data
-        const extractBlogData = (obj) => {
-            if (obj.blogTitle && obj.blogContent) {
-                return {
-                    title: obj.blogTitle,
-                    content: obj.blogContent,
-                    isHtml: true
-                };
-            }
-
-            if (obj.output) {
-                const outputData = deepParse(obj.output);
-                if (outputData.blogTitle && outputData.blogContent) {
-                    return {
-                        title: outputData.blogTitle,
-                        content: outputData.blogContent,
-                        isHtml: true
-                    };
-                }
-            }
-
-            if (obj.content) {
-                const contentData = deepParse(obj.content);
-                if (contentData.blogTitle && contentData.blogContent) {
-                    return {
-                        title: contentData.blogTitle,
-                        content: contentData.blogContent,
-                        isHtml: true
-                    };
-                }
-                return { content: obj.content, isHtml: false };
-            }
-
-            return null;
-        };
-
-        const blogData = extractBlogData(result);
-
-        if (blogData) {
-            return res.status(200).json({
-                success: true,
-                ...blogData
-            });
+            blog = JSON.parse(cleaned);
+        } catch {
+            // Fallback: treat raw content as the blog body
+            blog = {
+                blogTitle: topic,
+                blogContent: `<p>${content}</p>`
+            };
         }
 
-        // Fallback
-        console.warn('⚠️ Could not parse blog data from response');
+        console.log('✅ Blog post generated:', blog.blogTitle);
+
         return res.status(200).json({
             success: true,
-            content: JSON.stringify(result, null, 2),
-            isHtml: false
+            title: blog.blogTitle || topic,
+            content: blog.blogContent || content,
+            isHtml: true
         });
 
     } catch (error) {
         console.error('❌ Blog generation error:', error.message);
-
         return res.status(500).json({
             error: 'Failed to generate blog. Please try again.',
             success: false
