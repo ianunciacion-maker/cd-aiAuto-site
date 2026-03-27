@@ -15,11 +15,11 @@ class SiteNavigation {
           <a href="${this.getBaseUrl()}index.html" class="logo">Ai-Auto</a>
           <div class="nav-links">
             <a href="${this.getBaseUrl()}index.html" class="nav-link" id="homeLink">Home</a>
-            <a href="${this.getBaseUrl()}about.html" class="nav-link" id="aboutLink">About</a>
+            <a href="${this.getBaseUrl()}openclaw.html" class="nav-link" id="openclawLink">ClawLauncher</a>
             <a href="${this.getBaseUrl()}tools.html" class="nav-link" id="toolsLink">Tools</a>
+            <a href="${this.getBaseUrl()}about.html" class="nav-link" id="aboutLink">About</a>
             <a href="${this.getBaseUrl()}blog.html" class="nav-link" id="blogLink">Blog</a>
             <a href="${this.getBaseUrl()}ai-resources.html" class="nav-link" id="aiResourcesLink">AI Resources</a>
-            <a href="${this.getBaseUrl()}openclaw.html" class="nav-link" id="openclawLink">ClawLauncher (OpenClaw)</a>
           </div>
           <div class="nav-auth" style="display: flex; gap: 12px; align-items: center;">
             ${this.isOpenClawPage()
@@ -48,11 +48,11 @@ class SiteNavigation {
         </div>
         <div class="mobile-menu-links">
           <a href="${this.getBaseUrl()}index.html" class="mobile-menu-link">Home</a>
-          <a href="${this.getBaseUrl()}about.html" class="mobile-menu-link">About</a>
+          <a href="${this.getBaseUrl()}openclaw.html" class="mobile-menu-link">ClawLauncher</a>
           <a href="${this.getBaseUrl()}tools.html" class="mobile-menu-link">Tools</a>
+          <a href="${this.getBaseUrl()}about.html" class="mobile-menu-link">About</a>
           <a href="${this.getBaseUrl()}blog.html" class="mobile-menu-link">Blog</a>
           <a href="${this.getBaseUrl()}ai-resources.html" class="mobile-menu-link">AI Resources</a>
-          <a href="${this.getBaseUrl()}openclaw.html" class="mobile-menu-link">ClawLauncher (OpenClaw)</a>
           ${this.isOpenClawPage()
             ? '<a href="#bundle-pricing" class="btn btn-gold" style="width: 100%; margin-top: 16px;" onclick="document.getElementById(\'mobileMenu\').classList.remove(\'active\');document.querySelector(\'#bundle-pricing\').scrollIntoView({behavior:\'smooth\',block:\'start\'});return false;">Get Installed Now</a>'
             : `<a href="${this.getBaseUrl()}user/login.html" class="mobile-menu-link">Log In</a>

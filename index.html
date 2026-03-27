@@ -3,10 +3,10 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Ai-Auto – Set Your Own Salary with AI</title>
+  <title>ClawLauncher by Ai-Auto – AI Automation Built For You</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description"
-    content="AI-powered content creation tools and done-for-you automation. Blog posts, social captions, email campaigns, product descriptions — or let OpenClaw build your entire AI system.">
+    content="ClawLauncher: professionally built AI automation that runs your entire business by voice commands. Built by world-class engineers. Starting at $1,297 — others charge $5K-$20K.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -16,7 +16,7 @@
 
   <style>
     /* ═══════════════════════════════════════════
-       VARIABLES
+       VARIABLES (light zone only — tools section)
        ═══════════════════════════════════════════ */
     :root {
       --bg-paper: #f2f0e9;
@@ -64,98 +64,35 @@
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
-      background-color: var(--bg-paper);
-      color: var(--ink);
+      background-color: #07080f;
+      color: #efe5cd;
       line-height: 1.5;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
 
     h1, h2, h3, h4, h5, h6 {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Inter', sans-serif;
       margin: 0;
       font-weight: 900;
       line-height: 1.1;
+      letter-spacing: -0.025em;
+      color: #f1f5f9;
     }
 
-    p { margin: 0 0 var(--space-sm); }
+    p { margin: 0 0 var(--space-sm); color: #958f80; font-size: 16px; line-height: 1.7; }
     a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
 
-    img {
-      max-width: 100%;
-      display: block;
-      border: var(--border-thin);
-    }
-
-    /* ═══════════════════════════════════════════
-       UTILITIES
-       ═══════════════════════════════════════════ */
     .container {
       max-width: var(--max-width);
       margin: 0 auto;
       padding: 0 var(--space-md);
     }
 
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 14px 28px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      border: var(--border-thick);
-      background: var(--blue);
-      color: #fff;
-      box-shadow: var(--shadow-hard);
-      cursor: pointer;
-      transition: all 0.2s;
-      font-size: 14px;
-    }
-
-    .btn:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: var(--shadow-hover);
-      filter: brightness(1.1);
-    }
-
-    .btn-outline {
-      background: transparent;
-      color: var(--ink);
-    }
-
-    .btn-gold {
-      background: var(--gold);
-      color: #000;
-    }
-
-    .tag {
-      display: inline-block;
-      padding: 4px 12px;
-      border: var(--border-thin);
-      font-size: 12px;
-      font-weight: 700;
-      text-transform: uppercase;
-      background: var(--gold);
-      color: #000;
-    }
-
-    .tag-hero { margin-bottom: 24px; }
-
-    .stat-val-sm { font-size: 32px; }
-
-    .hero-card-desc {
-      font-size: 13px;
-      margin: 0;
-    }
-
-    .hero-floating-card:nth-child(1) { animation-delay: 0s; }
-    .hero-floating-card:nth-child(2) { animation-delay: 1.2s; }
-    .hero-floating-card:nth-child(3) { animation-delay: 2.4s; }
-    .hero-floating-card:nth-child(4) { animation-delay: 3.6s; }
-    .hero-floating-card:nth-child(5) { animation-delay: 0.6s; }
-
-    /* Scroll reveal — only active when JS loaded */
+    /* ═══════════════════════════════════════════
+       SCROLL REVEAL
+       ═══════════════════════════════════════════ */
     .js-loaded .reveal {
       opacity: 0;
       transform: translateY(30px);
@@ -172,6 +109,9 @@
     .stagger > .reveal:nth-child(3) { transition-delay: 0.15s; }
     .stagger > .reveal:nth-child(4) { transition-delay: 0.2s; }
     .stagger > .reveal:nth-child(5) { transition-delay: 0.25s; }
+    .stagger > .reveal:nth-child(6) { transition-delay: 0.3s; }
+    .stagger > .reveal:nth-child(7) { transition-delay: 0.35s; }
+    .stagger > .reveal:nth-child(8) { transition-delay: 0.4s; }
 
     /* ═══════════════════════════════════════════
        ANIMATIONS
@@ -186,11 +126,6 @@
       50% { box-shadow: 0 0 24px rgba(229, 0, 0, 0.4), 0 4px 16px rgba(229, 0, 0, 0.2); }
     }
 
-    @keyframes accentPulse {
-      0%, 100% { box-shadow: 0 0 8px rgba(229, 0, 0, 0.3); }
-      50% { box-shadow: 0 0 16px rgba(229, 0, 0, 0.5), 0 0 32px rgba(229, 0, 0, 0.2); }
-    }
-
     @keyframes bounceDown {
       0%, 100% { transform: translateY(0); opacity: 0.6; }
       50% { transform: translateY(10px); opacity: 1; }
@@ -202,18 +137,9 @@
     }
 
     @keyframes borderGlow {
-      0%, 100% {
-        border-color: #f5a623;
-        box-shadow: 0 0 20px rgba(245, 166, 35, 0.12), 0 4px 24px rgba(0,0,0,0.3);
-      }
-      33% {
-        border-color: #e50000;
-        box-shadow: 0 0 20px rgba(229, 0, 0, 0.12), 0 4px 24px rgba(0,0,0,0.3);
-      }
-      66% {
-        border-color: #a78bfa;
-        box-shadow: 0 0 20px rgba(167, 139, 250, 0.12), 0 4px 24px rgba(0,0,0,0.3);
-      }
+      0%, 100% { border-color: #f5a623; box-shadow: 0 0 20px rgba(245, 166, 35, 0.12), 0 4px 24px rgba(0,0,0,0.3); }
+      33% { border-color: #e50000; box-shadow: 0 0 20px rgba(229, 0, 0, 0.12), 0 4px 24px rgba(0,0,0,0.3); }
+      66% { border-color: #a78bfa; box-shadow: 0 0 20px rgba(167, 139, 250, 0.12), 0 4px 24px rgba(0,0,0,0.3); }
     }
 
     @keyframes dotFloat1 {
@@ -230,330 +156,469 @@
     }
 
     /* ═══════════════════════════════════════════
-       HERO (Light Zone)
+       SHARED DARK ZONE
        ═══════════════════════════════════════════ */
-    .hero {
-      padding: var(--space-xl) 0;
-      border-bottom: var(--border-thick);
-      background-image:
-        repeating-linear-gradient(0deg, transparent, transparent 19px, var(--ink) 19px, var(--ink) 20px),
-        repeating-linear-gradient(90deg, transparent, transparent 19px, var(--ink) 19px, var(--ink) 20px);
-      background-size: 20px 20px;
-      position: relative;
+    .gradient-text-warm {
+      background: linear-gradient(135deg, #fbbf24 0%, #f97316 35%, #ec4899 70%, #a78bfa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: var(--bg-paper);
-      opacity: 0.95;
-      z-index: 0;
+    .gradient-text-red {
+      background: linear-gradient(135deg, #f87171, #e50000);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .dark-card {
+      border: 1px solid #292825;
+      background: linear-gradient(130deg, #191918 0%, #151414 100%);
+      padding: var(--space-md);
+      border-radius: var(--radius-sm);
+      box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+      transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .dark-card:hover {
+      border-color: #46443e;
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+    }
+
+    .section-header-dark {
+      margin-bottom: var(--space-lg);
+    }
+
+    .section-header-dark h2 {
+      font-size: clamp(36px, 5vw, 60px);
+      margin-bottom: var(--space-sm);
+    }
+
+    .section-header-dark p {
+      font-size: 18px;
+      color: #b0bcd4;
+      max-width: 700px;
+    }
+
+    .btn-lobster {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px 44px;
+      background: linear-gradient(135deg, #c41e3a, #e50000);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      border: 1px solid rgba(229, 0, 0, 0.5);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      animation: clawPulse 2.5s ease-in-out infinite;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .btn-lobster:hover {
+      animation: none;
+      background: linear-gradient(135deg, #e50000, #ff2020);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(229, 0, 0, 0.25);
+    }
+
+    .btn-outline-dark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px 44px;
+      background: transparent;
+      color: #958f80;
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      border: 1px solid #46443e;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .btn-outline-dark:hover {
+      background: rgba(239, 229, 205, 0.04);
+      color: #efe5cd;
+      border-color: #958f80;
+      transform: translateY(-2px);
+    }
+
+    /* ═══════════════════════════════════════════
+       HERO
+       ═══════════════════════════════════════════ */
+    .hero {
+      padding: 140px 0 100px;
+      position: relative;
+      overflow: hidden;
+      background-color: #07080f;
+      background-image:
+        radial-gradient(rgba(110, 130, 230, 0.04) 1px, transparent 1px),
+        radial-gradient(ellipse 50% 35% at 0% 100%, rgba(251, 191, 36, 0.14) 0%, transparent 75%),
+        radial-gradient(ellipse 50% 35% at 100% 0%, rgba(100, 80, 230, 0.12) 0%, transparent 75%);
+      background-size: 40px 40px, 100% 100%, 100% 100%;
     }
 
     .hero-inner {
-      position: relative;
-      z-index: 1;
       display: grid;
-      grid-template-columns: 1.3fr 1fr;
+      grid-template-columns: 1.2fr 1fr;
       gap: var(--space-lg);
       align-items: center;
+      position: relative;
+      z-index: 1;
     }
 
-    .hero-content h1 {
-      font-size: clamp(56px, 10vw, 120px);
-      margin-bottom: var(--space-md);
-      text-transform: uppercase;
-      letter-spacing: -0.03em;
-      line-height: 0.9;
-    }
-
-    .hero-content h1 .highlight {
+    .hero-pill {
       display: inline-block;
-      background: var(--gold);
-      color: #000;
-      padding: 0 16px;
-      transform: rotate(-2deg);
-      border: var(--border-thick);
-      box-shadow: var(--shadow-brutal);
-    }
-
-    .hero-subtitle {
-      font-size: 22px;
-      max-width: 600px;
-      margin-bottom: var(--space-sm);
+      padding: 8px 22px;
+      background: rgba(245, 166, 35, 0.1);
+      color: #f5a623;
       font-weight: 600;
-      background: var(--bg-white);
-      border: var(--border-thin);
-      padding: var(--space-sm);
-      box-shadow: var(--shadow-hard);
+      font-size: 13px;
+      border: 1px solid rgba(245, 166, 35, 0.2);
+      border-radius: 40px;
+      backdrop-filter: blur(8px);
+      margin-bottom: 28px;
     }
 
-    .hero-cta {
+    .hero-headline-primary {
+      font-size: clamp(32px, 5vw, 64px);
+      line-height: 1.05;
+      margin-bottom: var(--space-sm);
+    }
+
+    .hero-headline-secondary {
+      font-size: clamp(26px, 3.5vw, 44px);
+      color: #f1f5f9;
+      margin-bottom: var(--space-md);
+      line-height: 1.1;
+    }
+
+    .hero-features {
+      margin-bottom: var(--space-md);
+    }
+
+    .hero-feature-line {
+      font-size: clamp(15px, 1.8vw, 18px);
+      color: #b0bcd4;
+      font-weight: 400;
+      line-height: 1.8;
+      margin: 0;
+    }
+
+    .hero-product-name {
+      font-size: clamp(32px, 4.5vw, 56px);
+      margin-top: var(--space-md);
+      margin-bottom: var(--space-xs);
+      text-shadow: 0 0 40px rgba(229, 0, 0, 0.15);
+    }
+
+    .hero-endorsement {
+      font-size: 14px;
+      color: #736f64;
+      font-style: italic;
+      font-weight: 400;
+      margin-bottom: var(--space-md);
+    }
+
+    .hero-cta-row {
       display: flex;
       gap: var(--space-sm);
       flex-wrap: wrap;
-      margin-bottom: var(--space-sm);
     }
 
-    /* OpenClaw Banner */
-    .openclaw-banner {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      padding: 14px 20px 14px 24px;
-      background: #0e0e0e;
-      border: 1px solid #292825;
-      border-left: none;
+    .hero-visual {
+      overflow: visible;
+    }
+
+    .hero-product-image {
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 4px 40px rgba(79, 142, 247, 0.15), 0 0 80px rgba(251, 191, 36, 0.06);
+      animation: float 6s ease-in-out infinite;
+      width: 130%;
+      max-width: 130%;
+      margin-right: -30%;
+    }
+
+    /* ═══════════════════════════════════════════
+       WHY THIS IS DIFFERENT
+       ═══════════════════════════════════════════ */
+    .why-section {
+      padding: 100px 0;
+      background-color: #0e0e0e;
+      background-image: radial-gradient(rgba(110, 130, 230, 0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      border-top: 1px solid #1e1d1b;
+    }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
       margin-bottom: var(--space-md);
-      text-decoration: none;
-      transition: all 0.3s ease;
-      position: relative;
-      max-width: 440px;
-      border-radius: var(--radius-sm);
-      overflow: hidden;
     }
 
-    .openclaw-banner::before {
+    .why-card {
+      position: relative;
+      padding-left: calc(var(--space-md) + 4px);
+    }
+
+    .why-card::before {
       content: '';
       position: absolute;
       left: 0;
       top: 0;
       bottom: 0;
       width: 4px;
-      background: #e50000;
-      animation: accentPulse 2.5s ease-in-out infinite;
+      border-radius: 2px;
     }
 
-    .openclaw-banner:hover {
-      transform: translateY(-2px);
-      border-color: #46443e;
-      box-shadow: 0 8px 32px rgba(229, 0, 0, 0.12);
+    .why-card:nth-child(1)::before { background: #f5a623; }
+    .why-card:nth-child(2)::before { background: #4f8ef7; }
+    .why-card:nth-child(3)::before { background: #03ffa7; }
+
+    .why-card h3 {
+      font-size: 22px;
+      margin-bottom: var(--space-xs);
+      color: #f1f5f9;
     }
 
-    .openclaw-banner-title {
-      display: block;
-      font-size: 11px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #efe5cd;
-      margin-bottom: 2px;
-    }
-
-    .openclaw-banner-link {
-      display: block;
-      font-size: 14px;
-      font-weight: 500;
+    .why-card p {
+      font-size: 15px;
       color: #958f80;
-      transition: color 0.3s;
+      line-height: 1.7;
     }
 
-    .openclaw-banner-link .arrow {
-      display: inline-block;
-      transition: transform 0.3s ease;
-      margin-left: 2px;
-    }
-
-    .openclaw-banner:hover .openclaw-banner-link {
-      color: #efe5cd;
-    }
-
-    .openclaw-banner:hover .openclaw-banner-link .arrow {
-      transform: translateX(4px);
-    }
-
-    /* Hero Stats */
-    .hero-stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: var(--space-md);
-      width: 100%;
-    }
-
-    .stat-box {
-      border: var(--border-thick);
-      background: var(--bg-white);
-      padding: var(--space-md) var(--space-sm);
+    .why-trust-line {
       text-align: center;
-      box-shadow: var(--shadow-hard);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 140px;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .stat-box:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: var(--shadow-hover);
-    }
-
-    .stat-box:nth-child(1) { background: var(--blue); color: #fff; }
-    .stat-box:nth-child(2) { background: var(--coral); color: #fff; }
-    .stat-box:nth-child(3) { background: var(--green); color: #000; }
-
-    .stat-val {
-      font-size: 42px;
-      font-weight: 900;
-      font-family: 'Playfair Display', serif;
-      line-height: 1;
-      margin-bottom: 8px;
-    }
-
-    .stat-label {
-      font-size: 14px;
-      text-transform: uppercase;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-    }
-
-    /* Hero Floating Cards */
-    .hero-visual { position: relative; }
-
-    .hero-card-stack {
-      position: relative;
-      height: 620px;
-    }
-
-    .hero-floating-card {
-      position: absolute;
-      border: var(--border-thick);
-      background: var(--bg-white);
-      padding: var(--space-md);
-      box-shadow: var(--shadow-brutal);
-      animation: float 6s ease-in-out infinite;
-    }
-
-    .hero-floating-card:nth-child(1) {
-      top: 0; left: 20px; width: 190px;
-      background: var(--pink); color: #fff;
-      transform: rotate(-5deg);
-      z-index: 4;
-    }
-    .hero-floating-card:nth-child(2) {
-      top: 10px; right: 0; width: 200px;
-      background: var(--lavender);
-      transform: rotate(3deg);
-      z-index: 3;
-    }
-    .hero-floating-card:nth-child(3) {
-      top: 220px; left: 0; width: 210px;
-      background: var(--gold);
-      transform: rotate(-3deg);
-      z-index: 2;
-    }
-    .hero-floating-card:nth-child(4) {
-      top: 250px; right: 0; width: 190px;
-      background: var(--green); color: #000;
-      transform: rotate(2deg);
-      z-index: 1;
-    }
-    .hero-floating-card:nth-child(5) {
-      bottom: 0; left: 50%; transform: translateX(-50%) rotate(-1deg);
-      width: 230px;
-      background: #0e0e0e; color: #efe5cd;
-      border-color: #292825;
-      z-index: 5;
-      box-shadow: 0 4px 24px rgba(229, 0, 0, 0.15), 8px 8px 0px 0px #1a1a1a;
-    }
-
-    .hero-floating-card:nth-child(5) h4 {
-      color: #efe5cd;
-      border-bottom-color: #292825;
-    }
-
-    .hero-floating-card:nth-child(5) .claw-accent {
-      color: #e50000;
-      font-weight: 900;
-    }
-
-    .hero-floating-card h4 {
-      font-size: 18px;
-      margin-bottom: 8px;
-      border-bottom: var(--border-thin);
-      padding-bottom: 8px;
+      font-size: 15px;
+      font-style: italic;
+      color: #736f64;
+      margin-top: var(--space-md);
+      padding-top: var(--space-md);
+      border-top: 1px solid #1e1d1b;
     }
 
     /* ═══════════════════════════════════════════
-       WHO IT'S FOR (Light Zone)
+       WHAT IT DOES
        ═══════════════════════════════════════════ */
-    .who-section {
-      padding: var(--space-xl) 0;
-      background: var(--bg-white);
-      border-bottom: var(--border-thick);
+    .capabilities-section {
+      padding: 100px 0;
+      background-color: #0f1219;
+      background-image:
+        radial-gradient(rgba(110, 130, 230, 0.03) 1px, transparent 1px),
+        radial-gradient(ellipse 60% 40% at 100% 0%, rgba(79, 142, 247, 0.06) 0%, transparent 70%);
+      background-size: 40px 40px, 100% 100%;
+      border-top: 1px solid #1e1d1b;
     }
 
-    .section-header {
-      text-align: center;
+    .cap-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-sm);
       margin-bottom: var(--space-lg);
     }
 
-    .section-header h2 {
-      font-size: 64px;
-      margin-bottom: var(--space-sm);
-      text-transform: uppercase;
+    .cap-card {
+      border: 1px solid #292825;
+      background: linear-gradient(130deg, #191918, #151414);
+      padding: 20px;
+      border-radius: var(--radius-sm);
+      transition: all 0.3s ease;
     }
 
-    .section-header p {
-      font-size: 18px;
-      color: var(--ink);
-      opacity: 0.7;
+    .cap-card:hover {
+      border-color: #46443e;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
     }
 
-    .who-grid {
+    .cap-icon {
+      font-size: 24px;
+      margin-bottom: 10px;
+      display: block;
+      line-height: 1;
+    }
+
+    .cap-card h4 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #f1f5f9;
+      margin-bottom: 6px;
+    }
+
+    .cap-card p {
+      font-size: 13px;
+      color: #736f64;
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .cap-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+    }
+
+    .cap-pill {
+      padding: 6px 16px;
+      border: 1px solid #292825;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 3px;
+      color: #736f64;
+    }
+
+    /* ═══════════════════════════════════════════
+       HOW IT WORKS
+       ═══════════════════════════════════════════ */
+    .howit-section {
+      padding: 100px 0;
+      background-color: #0e0e0e;
+      border-top: 1px solid #1e1d1b;
+    }
+
+    .steps-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: var(--space-md);
     }
 
-    .who-card {
-      border: var(--border-thick);
-      padding: var(--space-md);
-      background: var(--bg-paper);
-      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    .step-card {
       position: relative;
       overflow: hidden;
     }
 
-    .who-card::before {
-      content: '';
+    .step-number {
       position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 6px;
+      top: -8px;
+      right: 12px;
+      font-size: 90px;
+      font-weight: 900;
+      opacity: 0.04;
+      color: #fff;
+      line-height: 1;
+      pointer-events: none;
     }
 
-    .who-card:nth-child(1)::before { background: var(--blue); }
-    .who-card:nth-child(2)::before { background: var(--coral); }
-    .who-card:nth-child(3)::before { background: var(--gold); }
-    .who-card:nth-child(4)::before { background: var(--green); }
+    .step-card h3 {
+      font-size: 22px;
+      margin-bottom: var(--space-xs);
+      padding-bottom: var(--space-xs);
+      border-bottom: 1px solid #292825;
+    }
 
-    .who-card:hover { transform: translateY(-10px); }
+    .step-card p {
+      font-size: 15px;
+      color: #958f80;
+      line-height: 1.7;
+      margin: 0;
+    }
 
-    .who-icon {
-      width: 60px; height: 60px;
-      border: var(--border-thin);
-      background: var(--ink);
-      color: var(--bg-paper);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 32px;
-      font-weight: 900;
+    /* ═══════════════════════════════════════════
+       TRANSITION ZONE
+       ═══════════════════════════════════════════ */
+    .transition-zone {
+      position: relative;
+      padding: 100px 0;
+      background: linear-gradient(to bottom, #0e0e0e, var(--bg-paper));
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .transition-zone::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(110, 130, 230, 0.06) 1px, transparent 1px);
+      background-size: 40px 40px;
+      -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+      mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+      pointer-events: none;
+    }
+
+    .transition-zone::after {
+      content: '';
+      position: absolute;
+      left: 10%;
+      right: 10%;
+      top: 50%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, #f5a623 20%, #e50000 50%, #a78bfa 80%, transparent 100%);
+      animation: glowPulse 3s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .transition-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .transition-tag {
+      display: inline-block;
+      padding: 6px 16px;
+      background: rgba(245, 166, 35, 0.1);
+      color: #f5a623;
+      font-weight: 700;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border: 1px solid rgba(245, 166, 35, 0.2);
+      border-radius: 3px;
       margin-bottom: var(--space-sm);
     }
 
-    .who-card h3 { font-size: 20px; margin-bottom: 8px; }
-    .who-card p { font-size: 14px; line-height: 1.6; }
+    .transition-text {
+      font-size: clamp(22px, 3.5vw, 36px);
+      font-weight: 700;
+      color: #efe5cd;
+      margin-bottom: var(--space-md);
+      line-height: 1.3;
+    }
+
+    .transition-chevron {
+      display: inline-block;
+      font-size: 28px;
+      color: #958f80;
+      animation: bounceDown 2s ease-in-out infinite;
+    }
 
     /* ═══════════════════════════════════════════
-       YOUR AI TOOLKIT (Light Zone)
+       BUILT-IN AI TOOLS (Light Zone)
        ═══════════════════════════════════════════ */
     .toolkit-section {
       padding: var(--space-xl) 0;
       background: var(--bg-paper);
+      color: var(--ink);
       border-bottom: var(--border-thick);
+    }
+
+    .toolkit-section .section-header {
+      text-align: center;
+      margin-bottom: var(--space-lg);
+    }
+
+    .toolkit-section .section-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 56px;
+      margin-bottom: var(--space-sm);
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+
+    .toolkit-section .section-header p {
+      font-size: 18px;
+      color: var(--ink);
+      opacity: 0.7;
     }
 
     .toolkit-grid {
@@ -592,13 +657,17 @@
     }
 
     .toolkit-card h3 {
+      font-family: 'Playfair Display', serif;
       font-size: 24px;
       margin-bottom: 8px;
+      color: var(--ink);
     }
 
     .toolkit-card p {
       font-size: 15px;
       line-height: 1.6;
+      color: var(--ink);
+      opacity: 0.8;
       margin-bottom: var(--space-sm);
     }
 
@@ -611,6 +680,7 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.04em;
+      color: var(--ink);
     }
 
     .toolkit-cta {
@@ -619,274 +689,43 @@
     }
 
     .toolkit-price {
-      font-size: 20px;
-      font-weight: 600;
+      font-size: 18px;
+      font-weight: 500;
       margin-bottom: var(--space-sm);
+      color: var(--ink);
+      opacity: 0.7;
     }
 
     .toolkit-price strong {
       font-family: 'Playfair Display', serif;
-      font-size: 28px;
+      font-size: 24px;
       font-weight: 900;
       color: var(--blue);
+      opacity: 1;
     }
 
-    /* ═══════════════════════════════════════════
-       TRANSITION ZONE
-       ═══════════════════════════════════════════ */
-    .transition-zone {
-      position: relative;
-      padding: 120px 0;
-      background: linear-gradient(to bottom, var(--bg-paper), #0e0e0e);
-      text-align: center;
-      overflow: hidden;
-      border-bottom: none;
-    }
-
-    /* Dot grid fading in */
-    .transition-zone::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image: radial-gradient(rgba(110, 130, 230, 0.06) 1px, transparent 1px);
-      background-size: 40px 40px;
-      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 100%);
-      mask-image: linear-gradient(to bottom, transparent 0%, black 100%);
-      pointer-events: none;
-    }
-
-    /* Glowing horizontal line */
-    .transition-zone::after {
-      content: '';
-      position: absolute;
-      left: 10%;
-      right: 10%;
-      top: 50%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent 0%, #f5a623 20%, #e50000 50%, #a78bfa 80%, transparent 100%);
-      animation: glowPulse 3s ease-in-out infinite;
-      pointer-events: none;
-    }
-
-    .transition-content {
-      position: relative;
-      z-index: 1;
-    }
-
-    .transition-tag {
-      display: inline-block;
-      padding: 6px 16px;
-      background: rgba(245, 166, 35, 0.1);
-      color: #f5a623;
-      font-weight: 700;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      border: 1px solid rgba(245, 166, 35, 0.2);
-      border-radius: 3px;
-      margin-bottom: var(--space-sm);
-      font-family: 'Inter', sans-serif;
-    }
-
-    .transition-text {
-      font-family: 'Inter', sans-serif;
-      font-size: clamp(22px, 3.5vw, 36px);
-      font-weight: 700;
-      color: #efe5cd;
-      margin-bottom: var(--space-md);
-      line-height: 1.3;
-    }
-
-    .transition-chevron {
-      display: inline-block;
-      font-size: 28px;
-      color: #958f80;
-      animation: bounceDown 2s ease-in-out infinite;
-    }
-
-    /* ═══════════════════════════════════════════
-       CLAWLAUNCHER (Dark Zone)
-       ═══════════════════════════════════════════ */
-    .claw-section {
-      padding: 100px 0;
-      position: relative;
-      overflow: hidden;
-      background-color: #0e0e0e;
-      background-image:
-        radial-gradient(rgba(110, 130, 230, 0.04) 1px, transparent 1px),
-        radial-gradient(ellipse 50% 40% at 0% 100%, rgba(251, 191, 36, 0.12) 0%, transparent 75%),
-        radial-gradient(ellipse 50% 40% at 100% 100%, rgba(100, 80, 230, 0.15) 0%, transparent 75%);
-      background-size: 40px 40px, 100% 100%, 100% 100%;
-    }
-
-    /* Floating particles */
-    .claw-section::before {
-      content: '';
-      position: absolute;
-      width: 2px; height: 2px;
-      border-radius: 50%;
-      top: 0; left: 0;
-      box-shadow:
-        80px 80px 0 rgba(245, 166, 35, 0.18),
-        220px 160px 0 rgba(3, 255, 167, 0.12),
-        450px 60px 0 rgba(167, 139, 250, 0.14),
-        650px 200px 0 rgba(245, 166, 35, 0.1),
-        100px 300px 0 rgba(229, 0, 0, 0.08),
-        550px 320px 0 rgba(3, 255, 167, 0.1),
-        350px 120px 0 rgba(167, 139, 250, 0.08),
-        750px 240px 0 rgba(245, 166, 35, 0.14),
-        180px 400px 0 rgba(3, 255, 167, 0.06),
-        900px 100px 0 rgba(229, 0, 0, 0.1),
-        1000px 300px 0 rgba(245, 166, 35, 0.08),
-        50px 500px 0 rgba(167, 139, 250, 0.1);
-      animation: dotFloat1 25s ease-in-out infinite;
-      pointer-events: none;
-    }
-
-    .claw-section::after {
-      content: '';
-      position: absolute;
-      width: 2px; height: 2px;
-      border-radius: 50%;
-      top: 0; left: 0;
-      box-shadow:
-        160px 140px 0 rgba(3, 255, 167, 0.1),
-        380px 50px 0 rgba(245, 166, 35, 0.12),
-        520px 280px 0 rgba(229, 0, 0, 0.06),
-        700px 100px 0 rgba(167, 139, 250, 0.12),
-        280px 350px 0 rgba(245, 166, 35, 0.08),
-        830px 220px 0 rgba(3, 255, 167, 0.14),
-        60px 180px 0 rgba(167, 139, 250, 0.06),
-        480px 400px 0 rgba(229, 0, 0, 0.1);
-      animation: dotFloat2 30s ease-in-out infinite;
-      pointer-events: none;
-    }
-
-    .claw-inner {
-      position: relative;
-      z-index: 1;
-    }
-
-    .claw-tag {
-      display: inline-block;
-      padding: 8px 22px;
-      background: rgba(79, 142, 247, 0.1);
-      color: #b0bcd4;
-      font-weight: 600;
-      font-size: 13px;
-      letter-spacing: 0.02em;
-      border: 1px solid rgba(79, 142, 247, 0.15);
-      margin-bottom: var(--space-sm);
-      border-radius: 40px;
-      backdrop-filter: blur(8px);
-      font-family: 'Inter', sans-serif;
-    }
-
-    .claw-section .section-title {
-      font-family: 'Inter', sans-serif;
-      font-size: clamp(36px, 5vw, 64px);
-      font-weight: 900;
-      color: #f1f5f9;
-      margin-bottom: var(--space-sm);
-      line-height: 1.08;
-      letter-spacing: -0.025em;
-    }
-
-    .gradient-text-warm {
-      background: linear-gradient(135deg, #fbbf24 0%, #f97316 35%, #ec4899 70%, #a78bfa 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .claw-subtitle {
-      font-size: 18px;
-      max-width: 700px;
-      color: #b0bcd4;
-      line-height: 1.7;
-      margin-bottom: var(--space-lg);
-      font-family: 'Inter', sans-serif;
-    }
-
-    .claw-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: var(--space-md);
-      margin-bottom: var(--space-lg);
-    }
-
-    .claw-card {
-      border: 1px solid #292825;
-      background: linear-gradient(130deg, #191918 0%, #151414 100%);
-      padding: var(--space-md);
-      border-radius: var(--radius-sm);
-      box-shadow: 0 2px 16px rgba(0,0,0,0.25);
-      transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    .claw-card:hover {
-      border-color: #f5a623;
-      transform: translateY(-4px);
-      box-shadow: 0 0 24px rgba(245, 166, 35, 0.1), 0 8px 32px rgba(0,0,0,0.35);
-    }
-
-    .claw-card h3 {
-      font-family: 'Inter', sans-serif;
-      font-size: 22px;
-      font-weight: 800;
-      color: #f1f5f9;
-      margin-bottom: var(--space-xs);
-    }
-
-    .claw-card p {
-      font-size: 15px;
-      color: #958f80;
-      line-height: 1.7;
-      margin: 0;
-    }
-
-    .claw-card-icon {
-      font-size: 28px;
-      margin-bottom: var(--space-sm);
-      display: block;
-      line-height: 1;
-    }
-
-    .claw-cta-area {
-      text-align: center;
-    }
-
-    .btn-lobster {
+    .btn-light {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 18px 44px;
-      background: linear-gradient(135deg, #c41e3a, #e50000);
-      color: #fff;
-      font-size: 16px;
-      font-weight: 800;
-      letter-spacing: 0.02em;
-      border: 1px solid rgba(229, 0, 0, 0.5);
-      border-radius: var(--radius-sm);
+      padding: 14px 28px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border: var(--border-thick);
+      background: transparent;
+      color: var(--ink);
+      box-shadow: var(--shadow-hard);
       cursor: pointer;
-      animation: clawPulse 2.5s ease-in-out infinite;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      font-family: 'Inter', sans-serif;
-    }
-
-    .btn-lobster:hover {
-      animation: none;
-      background: linear-gradient(135deg, #e50000, #ff2020);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 32px rgba(229, 0, 0, 0.25);
-    }
-
-    .claw-cta-sub {
+      transition: all 0.2s;
       font-size: 14px;
-      color: #736f64;
-      margin-top: var(--space-sm);
-      font-weight: 500;
+    }
+
+    .btn-light:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
+      background: var(--ink);
+      color: var(--bg-paper);
     }
 
     /* ═══════════════════════════════════════════
@@ -895,25 +734,23 @@
     .pricing-section-dark {
       padding: 100px 0;
       background-color: #0a0c14;
-      background-image:
-        radial-gradient(rgba(110, 130, 230, 0.03) 1px, transparent 1px);
+      background-image: radial-gradient(rgba(110, 130, 230, 0.03) 1px, transparent 1px);
       background-size: 40px 40px;
       position: relative;
       overflow: hidden;
     }
 
-    .pricing-section-dark .section-header h2 {
-      font-family: 'Inter', sans-serif;
-      font-size: clamp(36px, 5vw, 56px);
-      font-weight: 900;
-      color: #f1f5f9;
-      letter-spacing: -0.02em;
+    .pricing-section-dark .section-header-dark {
+      text-align: center;
+      margin-bottom: var(--space-lg);
     }
 
-    .pricing-section-dark .section-header p {
-      color: #b0bcd4;
-      font-size: 18px;
-      opacity: 1;
+    .pricing-section-dark .section-header-dark p {
+      margin: 0 auto;
+    }
+
+    .pricing-section-dark .pricing-dual {
+      margin-top: 0;
     }
 
     .pricing-dual {
@@ -946,11 +783,6 @@
       position: relative;
     }
 
-    .pricing-path.featured:hover {
-      animation: borderGlow 6s ease-in-out infinite;
-      transform: translateY(-3px);
-    }
-
     .pricing-badge {
       position: absolute;
       top: -1px;
@@ -962,7 +794,6 @@
       padding: 4px 12px;
       letter-spacing: 0.06em;
       border-radius: 0 0 4px 4px;
-      font-family: 'Inter', sans-serif;
       text-transform: uppercase;
     }
 
@@ -981,22 +812,17 @@
       border: 1px solid #302e2b;
       border-radius: 3px;
       margin-bottom: var(--space-sm);
-      font-family: 'Inter', sans-serif;
       color: #958f80;
     }
 
     .pricing-path-header h3 {
-      font-family: 'Inter', sans-serif;
       font-size: 24px;
-      font-weight: 800;
-      color: #f1f5f9;
       margin-bottom: 8px;
     }
 
     .pricing-amount-dark {
       font-size: 42px;
       font-weight: 900;
-      font-family: 'Inter', sans-serif;
       color: #f1f5f9;
       line-height: 1;
     }
@@ -1027,7 +853,6 @@
       font-size: 14px;
       font-weight: 500;
       color: #958f80;
-      font-family: 'Inter', sans-serif;
     }
 
     .pricing-path-features li::before {
@@ -1056,7 +881,6 @@
       text-decoration: none;
       text-transform: uppercase;
       letter-spacing: 0.04em;
-      font-family: 'Inter', sans-serif;
     }
 
     .btn-dark-gold:hover {
@@ -1082,7 +906,6 @@
       text-decoration: none;
       text-transform: uppercase;
       letter-spacing: 0.04em;
-      font-family: 'Inter', sans-serif;
     }
 
     .btn-lobster-sm:hover {
@@ -1093,7 +916,7 @@
     }
 
     /* ═══════════════════════════════════════════
-       ECOSYSTEM CTA (Dark Zone)
+       ECOSYSTEM CTA
        ═══════════════════════════════════════════ */
     .ecosystem-cta {
       background: linear-gradient(130deg, #1a0000, #2a0000);
@@ -1113,28 +936,26 @@
       pointer-events: none;
     }
 
-    .ecosystem-cta-inner {
-      position: relative;
-      z-index: 1;
-    }
+    .ecosystem-cta-inner { position: relative; z-index: 1; }
 
     .ecosystem-cta h2 {
-      font-family: 'Inter', sans-serif;
       font-size: clamp(40px, 6vw, 72px);
-      font-weight: 900;
       margin-bottom: var(--space-sm);
-      color: #f1f5f9;
-      letter-spacing: -0.02em;
     }
 
     .ecosystem-cta p {
       font-size: 18px;
       margin-bottom: var(--space-md);
       color: #958f80;
-      font-weight: 500;
     }
 
-    /* Hide nav component's footer CTA — homepage has its own dark CTA */
+    /* Fix nav colors — page body is dark but nav is light */
+    .nav { color: #121212; }
+    .nav-link, .nav-auth a { color: #121212; }
+    .nav-link:hover { color: #2357ff; }
+    .logo { color: #fff; }
+
+    /* Hide nav component's footer CTA */
     .footer-cta { display: none; }
 
     /* ═══════════════════════════════════════════
@@ -1153,22 +974,10 @@
       gap: var(--space-lg);
     }
 
-    .footer-brand h3 {
-      font-family: 'Inter', sans-serif;
-      font-size: 24px;
-      font-weight: 800;
-      margin-bottom: var(--space-sm);
-      color: #efe5cd;
-    }
-
-    .footer-brand p {
-      font-size: 14px;
-      color: #736f64;
-      line-height: 1.6;
-    }
+    .footer-brand h3 { font-size: 24px; margin-bottom: var(--space-sm); color: #efe5cd; }
+    .footer-brand p { font-size: 14px; color: #736f64; line-height: 1.6; }
 
     .footer-links h4 {
-      font-family: 'Inter', sans-serif;
       font-size: 13px;
       font-weight: 700;
       margin-bottom: var(--space-sm);
@@ -1177,20 +986,9 @@
       color: #efe5cd;
     }
 
-    .footer-links ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
+    .footer-links ul { list-style: none; padding: 0; margin: 0; }
     .footer-links li { margin-bottom: 8px; }
-
-    .footer-links a {
-      font-size: 14px;
-      color: #736f64;
-      transition: color 0.2s;
-    }
-
+    .footer-links a { font-size: 14px; color: #736f64; transition: color 0.2s; }
     .footer-links a:hover { color: #efe5cd; }
 
     .footer-bottom {
@@ -1206,97 +1004,32 @@
        RESPONSIVE
        ═══════════════════════════════════════════ */
     @media (max-width: 900px) {
-      .hero-inner {
-        grid-template-columns: 1fr;
-        gap: var(--space-md);
-      }
-
-      .hero-content h1 { font-size: 48px; }
-
-      .hero-card-stack {
-        height: auto;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: var(--space-sm);
-        margin-top: var(--space-md);
-      }
-
-      .hero-floating-card {
-        position: relative !important;
-        top: auto !important;
-        left: auto !important;
-        right: auto !important;
-        bottom: auto !important;
-        width: 100% !important;
-        transform: none !important;
-        animation: none !important;
-      }
-
-      .section-header h2 { font-size: 40px; }
-
-      .who-grid { grid-template-columns: repeat(2, 1fr); }
-
+      .hero-inner { grid-template-columns: 1fr; gap: var(--space-md); }
+      .hero { padding: 100px 0 60px; }
+      .why-grid { grid-template-columns: 1fr; }
+      .cap-grid { grid-template-columns: repeat(2, 1fr); }
+      .steps-grid { grid-template-columns: 1fr; }
       .toolkit-grid { grid-template-columns: 1fr; }
-
-      .claw-grid { grid-template-columns: 1fr; }
-
       .pricing-dual { grid-template-columns: 1fr; }
-
-      .footer-inner {
-        grid-template-columns: 1fr;
-        text-align: center;
-      }
+      .footer-inner { grid-template-columns: 1fr; text-align: center; }
     }
 
     @media (max-width: 767px) {
-      .hero { padding: var(--space-lg) 0; }
-      .hero-subtitle { font-size: 18px; }
-
-      .hero-cta {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .hero-cta .btn {
-        width: 100%;
-        text-align: center;
-        min-height: 48px;
-      }
-
-      .openclaw-banner { max-width: 100%; }
-
-      .hero-stats {
-        grid-template-columns: 1fr;
-        gap: var(--space-xs);
-      }
-
-      .stat-box { padding: var(--space-sm); min-height: auto; }
-
-      .hero-card-stack { grid-template-columns: 1fr; }
-
-      .who-grid { grid-template-columns: 1fr; }
-
-      .who-card { padding: var(--space-sm); }
-      .who-icon { width: 50px; height: 50px; font-size: 24px; }
-      .who-card h3 { font-size: 18px; }
-      .who-card p { font-size: 13px; }
-
-      .toolkit-card { padding: var(--space-sm); }
-      .toolkit-card h3 { font-size: 20px; }
-
-      .transition-zone { padding: 80px 0; }
-
-      .claw-section { padding: 60px 0; }
-      .claw-card { padding: var(--space-sm); }
-
-      .pricing-section-dark { padding: 60px 0; }
-      .ecosystem-cta { padding: 60px 0; }
+      .hero { padding: 80px 0 48px; }
+      .hero-cta-row { flex-direction: column; align-items: stretch; }
+      .hero-cta-row a { text-align: center; }
+      .cap-grid { grid-template-columns: 1fr; }
+      .why-section, .capabilities-section, .howit-section { padding: 60px 0; }
+      .transition-zone { padding: 60px 0; }
+      .pricing-section-dark, .ecosystem-cta { padding: 60px 0; }
+      .toolkit-section { padding: var(--space-lg) 0; }
+      .toolkit-section .section-header h2 { font-size: 36px; }
     }
 
     @media (max-width: 480px) {
-      .hero-content h1 { font-size: 40px; }
-      .stat-val { font-size: 32px; }
-      .toolkit-price strong { font-size: 24px; }
+      .hero-headline-primary { font-size: 28px; }
+      .hero-headline-secondary { font-size: 22px; }
+      .hero-product-name { font-size: 28px; }
       .pricing-amount-dark { font-size: 32px; }
     }
 
@@ -1309,11 +1042,7 @@
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
       }
-
-      .js-loaded .reveal {
-        opacity: 1;
-        transform: none;
-      }
+      .js-loaded .reveal { opacity: 1; transform: none; }
     }
   </style>
 </head>
@@ -1321,154 +1050,197 @@
 <body>
 
   <!-- ═══════════════════════════════════════════
-       HERO (Light Zone)
+       HERO
        ═══════════════════════════════════════════ -->
   <section class="hero">
     <div class="container hero-inner">
       <div class="hero-content">
-        <div class="tag tag-hero">AI-Powered Automation</div>
-        <h1>
-          Set Your<br>
-          <span class="highlight">Own Salary</span><br>
-          With AI
+        <div class="hero-pill">Only 2 reputable builders in the country &mdash; you just found one</div>
+
+        <h1 class="hero-headline-primary">
+          <span class="gradient-text-warm">Runs Entire Business<br>by Voice Commands</span>
         </h1>
-        <div class="hero-subtitle">
-          Stop trading time for money. The ultimate all-in-one platform for productivity automation — build systems that
-          work while you grow.
-        </div>
-        <div class="hero-cta">
-          <a href="tools.html" class="btn">Explore Tools</a>
-          <a href="about.html" class="btn btn-outline">Learn More</a>
+
+        <h2 class="hero-headline-secondary">
+          Saves Expenses and Makes More Money
+        </h2>
+
+        <div class="hero-features">
+          <p class="hero-feature-line">This Game Changer for Small Business Works While You Sleep</p>
+          <p class="hero-feature-line">Fully Built by Software Authorities using Protocols</p>
+          <p class="hero-feature-line">Reasonably Priced with Ongoing Support</p>
         </div>
 
-        <!-- OpenClaw Banner -->
-        <a href="openclaw.html" class="openclaw-banner">
-          <div>
-            <span class="openclaw-banner-title">Automate Your Business</span>
-            <span class="openclaw-banner-link">Built with OpenClaw <span class="arrow">&rarr;</span> Use Now</span>
-          </div>
-        </a>
+        <h2 class="hero-product-name">
+          <span class="gradient-text-red">Business Builder</span>
+        </h2>
 
-        <div class="hero-stats">
-          <div class="stat-box">
-            <div class="stat-val">24/7</div>
-            <div class="stat-label">Automation</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-val">10x</div>
-            <div class="stat-label">Productivity</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-val stat-val-sm">UNLIMITED</div>
-            <div class="stat-label">Generation</div>
-          </div>
+        <p class="hero-endorsement">
+          Endorsed by Entrepreneurship Professor &amp; Author Clinton E. Day
+        </p>
+
+        <div class="hero-cta-row">
+          <a href="openclaw.html" class="btn-lobster">Get Installed Now</a>
+          <a href="#what-it-does" class="btn-outline-dark"
+            onclick="document.getElementById('what-it-does').scrollIntoView({behavior:'smooth'});return false;">See How It Works</a>
         </div>
       </div>
 
       <div class="hero-visual">
-        <div class="hero-card-stack">
-          <div class="hero-floating-card">
-            <h4>Blog Generation</h4>
-            <p class="hero-card-desc">AI-powered content for your blog.</p>
-          </div>
-          <div class="hero-floating-card">
-            <h4>Social Captions</h4>
-            <p class="hero-card-desc">Engaging captions for every platform.</p>
-          </div>
-          <div class="hero-floating-card">
-            <h4>Email Campaigns</h4>
-            <p class="hero-card-desc">Draft effective marketing emails.</p>
-          </div>
-          <div class="hero-floating-card">
-            <h4>Product Descriptions</h4>
-            <p class="hero-card-desc">Compelling copy for your products.</p>
-          </div>
-          <div class="hero-floating-card">
-            <h4><span class="claw-accent">&#9881;</span> ClawLauncher</h4>
-            <p class="hero-card-desc">Done-for-you AI automation installation.</p>
-          </div>
-        </div>
+        <img src="Picture1.png" alt="OpenClaw Business Builder — AI automation from voice commands"
+          class="hero-product-image">
       </div>
     </div>
   </section>
 
   <!-- ═══════════════════════════════════════════
-       WHO IT'S FOR (Light Zone)
+       WHY THIS IS DIFFERENT
        ═══════════════════════════════════════════ -->
-  <section class="who-section">
+  <section class="why-section">
     <div class="container">
-      <div class="section-header">
-        <h2 class="reveal">Who It's For</h2>
-        <p class="reveal">Built for ambitious individuals ready to scale</p>
+      <div class="section-header-dark">
+        <h2 class="reveal">What You Just Found</h2>
+        <p class="reveal">One of only two professionally built, secure OpenClaw installations in the country.</p>
       </div>
-      <div class="who-grid stagger">
-        <div class="who-card reveal">
-          <div class="who-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-              <circle cx="12" cy="7" r="4"></circle>
-            </svg>
-          </div>
-          <h3>Solopreneurs</h3>
-          <p>Build and scale your business solo. Automate operations and systems so you can focus on growth without
-            hiring a team.</p>
+
+      <div class="why-grid stagger">
+        <div class="why-card dark-card reveal">
+          <h3>Software Jockeys Charge $5K&ndash;$20K</h3>
+          <p>Most AI automation specialists charge $5,000 to $20,000 to build what you're looking at. ClawLauncher
+            delivers the same power &mdash; professionally built, fully integrated &mdash; starting at $1,297.</p>
         </div>
-        <div class="who-card reveal">
-          <div class="who-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-              <line x1="2" y1="20" x2="22" y2="20"></line>
-            </svg>
-          </div>
-          <h3>Freelancers</h3>
-          <p>Multiply your output without multiplying your hours. Automate client work and deliver more value while
-            maintaining work-life balance.</p>
+        <div class="why-card dark-card reveal">
+          <h3>Built by Three of the Best</h3>
+          <p>Designed by Chad Nicely (U.S.), Karthik Ramana (India), and Matt Garrett (UK) &mdash; three of the most
+            respected software architects in the automation space. This isn't a template. It's engineered.</p>
         </div>
-        <div class="who-card reveal">
-          <div class="who-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z">
-              </path>
-              <path
-                d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z">
-              </path>
-              <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path>
-              <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path>
-            </svg>
-          </div>
-          <h3>Entrepreneurs</h3>
-          <p>Build businesses that run themselves. Focus on strategy and vision while AI handles execution and daily
-            operations.</p>
+        <div class="why-card dark-card reveal">
+          <h3>Extremely Difficult to Build</h3>
+          <p>Building a secure, production-grade OpenClaw requires deep technical skill. Most attempts fail or create
+            security risks. You don't need to build it &mdash; we already did.</p>
         </div>
-        <div class="who-card reveal">
-          <div class="who-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path
-                d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7z">
-              </path>
-              <path d="M9 21h6"></path>
-            </svg>
-          </div>
-          <h3>Creators</h3>
-          <p>Produce more content in less time. Let AI handle the repetitive work while you focus on creativity and
-            connection.</p>
+      </div>
+
+      <p class="why-trust-line reveal">Peace of mind: long-term support, voice-activated commands, works while you sleep.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       WHAT IT DOES
+       ═══════════════════════════════════════════ -->
+  <section class="capabilities-section" id="what-it-does">
+    <div class="container">
+      <div class="section-header-dark">
+        <h2 class="reveal">One System. Your Entire Business.</h2>
+        <p class="reveal">All from simple voice commands, from your phone.</p>
+      </div>
+
+      <div class="cap-grid stagger">
+        <div class="cap-card reveal">
+          <span class="cap-icon">&#128227;</span>
+          <h4>Marketing</h4>
+          <p>Campaigns, content, and outreach on autopilot</p>
+        </div>
+        <div class="cap-card reveal">
+          <span class="cap-icon">&#128176;</span>
+          <h4>Sales</h4>
+          <p>Lead follow-up, proposals, and pipeline management</p>
+        </div>
+        <div class="cap-card reveal">
+          <span class="cap-icon">&#127760;</span>
+          <h4>Websites &amp; Apps</h4>
+          <p>Build and manage your web presence</p>
+        </div>
+        <div class="cap-card reveal">
+          <span class="cap-icon">&#128200;</span>
+          <h4>Finance</h4>
+          <p>Invoicing, expense tracking, and reporting</p>
+        </div>
+        <div class="cap-card reveal">
+          <span class="cap-icon">&#128722;</span>
+          <h4>E-Commerce</h4>
+          <p>Product listings, orders, and fulfillment</p>
+        </div>
+        <div class="cap-card reveal">
+          <span class="cap-icon">&#9881;</span>
+          <h4>Automation</h4>
+          <p>Custom workflows connecting all your tools</p>
+        </div>
+        <div class="cap-card reveal">
+          <span class="cap-icon">&#128101;</span>
+          <h4>CRM &amp; Clients</h4>
+          <p>Track every relationship and interaction</p>
+        </div>
+        <div class="cap-card reveal">
+          <span class="cap-icon">&#128203;</span>
+          <h4>Operations</h4>
+          <p>Scheduling, tasks, and team coordination</p>
+        </div>
+      </div>
+
+      <div class="cap-pills reveal">
+        <span class="cap-pill">Plan</span>
+        <span class="cap-pill">Build</span>
+        <span class="cap-pill">Sell</span>
+        <span class="cap-pill">Scale</span>
+        <span class="cap-pill">Automate</span>
+        <span class="cap-pill">Create</span>
+        <span class="cap-pill">Launch</span>
+        <span class="cap-pill">Grow</span>
+        <span class="cap-pill">Monetize</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       HOW IT WORKS
+       ═══════════════════════════════════════════ -->
+  <section class="howit-section">
+    <div class="container">
+      <div class="section-header-dark">
+        <h2 class="reveal">Three Steps. You're Running.</h2>
+      </div>
+
+      <div class="steps-grid stagger">
+        <div class="step-card dark-card reveal">
+          <span class="step-number">01</span>
+          <h3>We Build It</h3>
+          <p>Our team installs and configures your ClawLauncher, custom-tailored to your business. No technical skill
+            required from you.</p>
+        </div>
+        <div class="step-card dark-card reveal">
+          <span class="step-number">02</span>
+          <h3>We Train You</h3>
+          <p>Full training for you and your team. Documentation included. You'll be running it confidently in days.</p>
+        </div>
+        <div class="step-card dark-card reveal">
+          <span class="step-number">03</span>
+          <h3>It Runs Your Business</h3>
+          <p>Voice-activated. Works 24/7. Handles marketing, sales, operations, and more &mdash; while you sleep.</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ═══════════════════════════════════════════
-       YOUR AI TOOLKIT (Light Zone)
+       TRANSITION ZONE
+       ═══════════════════════════════════════════ -->
+  <section class="transition-zone">
+    <div class="transition-content">
+      <div class="transition-tag reveal">Included</div>
+      <p class="transition-text reveal">Your ClawLauncher comes loaded<br>with these AI tools</p>
+      <div class="transition-chevron reveal">&darr;</div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       BUILT-IN AI TOOLS (Light Zone)
        ═══════════════════════════════════════════ -->
   <section class="toolkit-section">
     <div class="container">
       <div class="section-header">
-        <h2 class="reveal">Your AI Toolkit</h2>
-        <p class="reveal">Four tools. Unlimited generation. One subscription.</p>
+        <h2 class="reveal">Built-In AI Tools</h2>
+        <p class="reveal">Included with every ClawLauncher installation</p>
       </div>
       <div class="toolkit-grid stagger">
         <div class="toolkit-card reveal">
@@ -1495,59 +1267,8 @@
         </div>
       </div>
       <div class="toolkit-cta reveal">
-        <p class="toolkit-price">All 4 tools &mdash; <strong>$39.95/month</strong></p>
-        <a href="user/signup.html" class="btn">Get Started</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════
-       TRANSITION ZONE
-       ═══════════════════════════════════════════ -->
-  <section class="transition-zone">
-    <div class="transition-content">
-      <div class="transition-tag reveal">Next Level</div>
-      <p class="transition-text reveal">Stop building alone.<br>Let us install it for you.</p>
-      <div class="transition-chevron reveal">&darr;</div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════
-       CLAWLAUNCHER (Dark Zone)
-       ═══════════════════════════════════════════ -->
-  <section class="claw-section">
-    <div class="container claw-inner">
-      <div class="claw-tag reveal">OpenClaw by Ai-Auto</div>
-      <h2 class="section-title reveal">
-        We Build Your <span class="gradient-text-warm">AI System.</span><br>
-        You Run Your Business.
-      </h2>
-      <p class="claw-subtitle reveal">
-        Done-for-you AI automation installation. We design, build, and integrate custom workflows tailored to how your
-        business actually operates — so you can focus on growth, not setup.
-      </p>
-
-      <div class="claw-grid stagger">
-        <div class="claw-card reveal">
-          <span class="claw-card-icon">&#9881;</span>
-          <h3>Custom AI Workflows</h3>
-          <p>Automation systems designed around how your business actually operates. Not templates — custom builds.</p>
-        </div>
-        <div class="claw-card reveal">
-          <span class="claw-card-icon">&#9879;</span>
-          <h3>Full Integration</h3>
-          <p>Connected to your CRM, email, social, and every tool your team already uses. One unified system.</p>
-        </div>
-        <div class="claw-card reveal">
-          <span class="claw-card-icon">&#9733;</span>
-          <h3>Training &amp; Support</h3>
-          <p>Your team gets trained. You get documentation. And we're here when you need us.</p>
-        </div>
-      </div>
-
-      <div class="claw-cta-area reveal">
-        <a href="openclaw.html" class="btn-lobster">Get Your OpenClaw Installation</a>
-        <p class="claw-cta-sub">Starting from $1,297 — one-time installation</p>
+        <p class="toolkit-price">Also available standalone &mdash; <strong>$39.95/month</strong></p>
+        <a href="user/signup.html" class="btn-light">Get Tools Only</a>
       </div>
     </div>
   </section>
@@ -1557,13 +1278,11 @@
        ═══════════════════════════════════════════ -->
   <section class="pricing-section-dark">
     <div class="container">
-      <div class="section-header">
+      <div class="section-header-dark">
         <h2 class="reveal">Choose Your Path</h2>
         <p class="reveal">DIY tools or done-for-you automation</p>
       </div>
       <div class="pricing-dual stagger">
-
-        <!-- DIY Path -->
         <div class="pricing-path reveal">
           <div class="pricing-path-header">
             <span class="pricing-path-tag">Self-Service</span>
@@ -1581,8 +1300,6 @@
             <a href="user/signup.html" class="btn-dark-gold">Get Started</a>
           </div>
         </div>
-
-        <!-- Done-for-you Path -->
         <div class="pricing-path featured reveal">
           <span class="pricing-badge">Best Value</span>
           <div class="pricing-path-header">
@@ -1596,24 +1313,24 @@
               <li>Full Platform Integration</li>
               <li>Team Training &amp; Documentation</li>
               <li>Ongoing Support</li>
-              <li>Priority Setup</li>
+              <li>Voice-Activated Commands</li>
+              <li>All 4 AI Tools Included</li>
             </ul>
-            <a href="openclaw.html" class="btn-lobster-sm">See Installation Plans</a>
+            <a href="openclaw.html" class="btn-lobster-sm">Get Installed Now</a>
           </div>
         </div>
-
       </div>
     </div>
   </section>
 
   <!-- ═══════════════════════════════════════════
-       ECOSYSTEM CTA (Dark Zone)
+       ECOSYSTEM CTA
        ═══════════════════════════════════════════ -->
   <section class="ecosystem-cta">
     <div class="container ecosystem-cta-inner">
       <h2 class="reveal">Ready to Automate?</h2>
-      <p class="reveal">Join creators and entrepreneurs using AI to scale their business</p>
-      <a href="user/signup.html" class="btn-lobster reveal">Start Building Today</a>
+      <p class="reveal">Join business owners using ClawLauncher to scale on autopilot</p>
+      <a href="openclaw.html" class="btn-lobster reveal">Get Your ClawLauncher</a>
     </div>
   </section>
 
@@ -1624,13 +1341,13 @@
     <div class="container footer-inner">
       <div class="footer-brand">
         <h3>Ai-Auto</h3>
-        <p>AI-powered content creation tools and done-for-you automation that help you scale your business.</p>
+        <p>ClawLauncher: AI automation built by world-class engineers. Runs your entire business by voice commands.</p>
       </div>
       <div class="footer-links">
         <h4>Product</h4>
         <ul>
-          <li><a href="tools.html">Tools</a></li>
-          <li><a href="openclaw.html">OpenClaw</a></li>
+          <li><a href="openclaw.html">ClawLauncher</a></li>
+          <li><a href="tools.html">AI Tools</a></li>
           <li><a href="user/dashboard.html">Dashboard</a></li>
         </ul>
       </div>
@@ -1650,21 +1367,17 @@
     </div>
   </footer>
 
-
   <!-- Navigation Component -->
   <script src="js/components/navigation.js"></script>
-
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="./supabase.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       // Remove inline footer (navigation.js provides its own)
       const existingFooter = document.querySelector('.site-footer');
-      if (existingFooter) {
-        existingFooter.remove();
-      }
+      if (existingFooter) existingFooter.remove();
 
-      // Enable scroll reveal animations
+      // Enable scroll reveal
       document.body.classList.add('js-loaded');
 
       const revealObserver = new IntersectionObserver((entries) => {
@@ -1674,10 +1387,7 @@
             revealObserver.unobserve(entry.target);
           }
         });
-      }, {
-        threshold: 0.1,
-        rootMargin: '0px 0px -40px 0px'
-      });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
       document.querySelectorAll('.reveal').forEach((el) => {
         revealObserver.observe(el);
