@@ -29,6 +29,13 @@ const MARKETING_PAGES = [
   { name: 'AI Resources', path: '/ai-resources.html' },
 ];
 
+// ClawLauncher gets the ambient animations too, but it's not in scope for
+// most redesign checks (it was already openclaw-styled).
+const AMBIENT_PAGES = [
+  ...MARKETING_PAGES,
+  { name: 'ClawLauncher', path: '/openclaw.html' },
+];
+
 // Helper: capture all console errors + failed requests on a page
 async function withErrorCapture(page, fn) {
   const errors = [];
@@ -465,7 +472,7 @@ test('marketing-animations.js serves 200', async ({ request }) => {
 
 // ───── AMBIENT BACKGROUND ANIMATIONS ─────
 test.describe('Ambient background animations on every page', () => {
-  for (const p of MARKETING_PAGES) {
+  for (const p of AMBIENT_PAGES) {
     test(`${p.name}: body has drifting grid + pseudo-element orbs + shimmer animations`, async ({
       page,
     }) => {
@@ -752,6 +759,40 @@ test.describe('Pages do not bounce back up when you hit the bottom', () => {
         y,
         `${p.name}: wheel scroll stuck — scrollY=${y}, max=${max} (wheeled ${totalTicks}×400px)`
       ).toBeGreaterThan(max - 100);
+    });
+  }
+});
+
+// ───── NAV DARK BACKGROUND ─────
+test.describe('Nav bar is dark on every marketing page', () => {
+  for (const p of MARKETING_PAGES) {
+    test(`${p.name}: nav has a dark translucent background`, async ({ page }) => {
+      await page.goto(p.path);
+      await page.waitForLoadState('load');
+      await page.waitForSelector('.nav', { timeout: 5000 });
+
+      const { bg, backdropFilter } = await page.evaluate(() => {
+        const nav = document.querySelector('.nav');
+        if (!nav) return { bg: null, backdropFilter: null };
+        const cs = getComputedStyle(nav);
+        return {
+          bg: cs.backgroundColor,
+          backdropFilter: cs.backdropFilter || cs.webkitBackdropFilter,
+        };
+      });
+
+      expect(bg, 'nav must exist').not.toBeNull();
+      // Parse rgba(r, g, b, a) — r+g+b should be well under 90 for "dark".
+      const m = bg.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+      expect(m, `unparseable bg color ${bg}`).not.toBeNull();
+      const sum = parseInt(m[1]) + parseInt(m[2]) + parseInt(m[3]);
+      expect(sum, `${p.name}: nav bg "${bg}" must be dark (sum ${sum})`).toBeLessThan(90);
+
+      // Should have a blur backdrop-filter for the glassy feel.
+      expect(
+        backdropFilter || '',
+        `${p.name}: nav should have blur backdrop-filter, got "${backdropFilter}"`
+      ).toMatch(/blur/);
     });
   }
 });

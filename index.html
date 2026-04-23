@@ -1042,11 +1042,75 @@
       color: #958f80;
     }
 
-    /* Fix nav colors — page body is dark but nav is light */
-    .nav { color: #121212; }
-    .nav-link, .nav-auth a { color: #121212; }
-    .nav-link:hover { color: #2357ff; }
-    .logo { color: #fff; }
+    /* Dark nav — matches the other marketing pages (clawlauncher.css) */
+    .nav {
+      background: rgba(14, 14, 14, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid #292825;
+    }
+
+    .nav .logo {
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+      padding: 4px 0;
+      color: #efe5cd;
+      letter-spacing: -0.02em;
+      transition: color 0.25s ease;
+    }
+
+    .nav .logo:hover,
+    .nav .logo:focus-visible {
+      background: transparent;
+      box-shadow: none;
+      transform: none;
+      color: #f5a623;
+    }
+
+    .nav-link {
+      color: #b0bcd4;
+      transition: color 0.25s ease;
+    }
+
+    .nav-link:hover {
+      color: #f5a623;
+    }
+
+    .nav-auth a:not(.nav-cta) {
+      color: #b0bcd4;
+    }
+
+    .nav-auth a:not(.nav-cta):hover {
+      color: #f5a623;
+    }
+
+    .hamburger span {
+      background: #efe5cd;
+    }
+
+    .mobile-menu {
+      background: #0e0e0e;
+    }
+
+    .mobile-menu-link {
+      color: #efe5cd;
+      border-bottom: 1px solid #292825;
+    }
+
+    /* Dark-nav Log In (ghost) — cream border + cream text */
+    .nav .nav-cta--ghost {
+      color: #efe5cd;
+      border-color: rgba(239, 229, 205, 0.4);
+    }
+
+    .nav .nav-cta--ghost:hover,
+    .nav .nav-cta--ghost:focus-visible {
+      background: rgba(239, 229, 205, 0.08);
+      color: #f5a623;
+      border-color: #f5a623;
+      transform: translateY(-1px);
+    }
 
     /* Hide nav component's footer CTA */
     .footer-cta { display: none; }

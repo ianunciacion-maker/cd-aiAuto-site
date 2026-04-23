@@ -75,6 +75,102 @@
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      animation: ambient-grid-drift 24s linear infinite;
+    }
+
+    /* ═══════════════════════════════════════════
+       AMBIENT BACKGROUND ANIMATIONS — matches clawlauncher.css
+       ═══════════════════════════════════════════ */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      pointer-events: none;
+      background:
+        radial-gradient(640px circle at 15% 22%, rgba(245, 166, 35, 0.55), transparent 42%),
+        radial-gradient(580px circle at 82% 72%, rgba(229, 0, 0, 0.45), transparent 48%),
+        radial-gradient(720px circle at 55% 42%, rgba(167, 139, 250, 0.35), transparent 50%);
+      mix-blend-mode: screen;
+      animation: ambient-orbs 26s ease-in-out infinite;
+      will-change: transform;
+      filter: blur(4px);
+      opacity: 0.65;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 998;
+      pointer-events: none;
+      background:
+        conic-gradient(
+          from 0deg at 60% 40%,
+          rgba(245, 166, 35, 0.20) 0deg,
+          transparent 60deg,
+          rgba(229, 0, 0, 0.22) 160deg,
+          transparent 240deg,
+          rgba(167, 139, 250, 0.20) 320deg,
+          rgba(245, 166, 35, 0.20) 360deg
+        );
+      mix-blend-mode: screen;
+      animation: ambient-shimmer 60s linear infinite;
+      transform-origin: 60% 40%;
+      transform: scale(1.4);
+      will-change: transform;
+      filter: blur(120px);
+      opacity: 0.55;
+    }
+
+    @keyframes ambient-grid-drift {
+      from { background-position: 0 0, 0 0; }
+      to { background-position: 40px 40px, 40px 40px; }
+    }
+
+    @keyframes ambient-orbs {
+      0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+      33% { transform: translate3d(2%, -2%, 0) scale(1.08); }
+      66% { transform: translate3d(-2%, 3%, 0) scale(1.05); }
+    }
+
+    @keyframes ambient-shimmer {
+      from { transform: scale(1.4) rotate(0deg); }
+      to { transform: scale(1.4) rotate(360deg); }
+    }
+
+    /* Keep openclaw content above the ambient layer via stacking context */
+    .hero,
+    .toc-bar,
+    .sec-what-is,
+    .sec-capabilities,
+    .sec-how,
+    .sec-real-world,
+    .sec-safety,
+    .sec-getting-started,
+    .sec-pricing,
+    .sec-guarantee,
+    .sec-bundle-contents,
+    .sec-bundle-upgrades,
+    .sec-social-proof-new,
+    .sec-bigger-picture,
+    .sec-full-stack,
+    .site-footer,
+    .nav {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Reduced motion — freeze ambient animations */
+    @media (prefers-reduced-motion: reduce) {
+      body,
+      body::before,
+      body::after {
+        animation: none !important;
+      }
+      body::after {
+        transform: scale(1.4);
+      }
     }
 
     h1, h2, h3, h4, h5, h6 {
