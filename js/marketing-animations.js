@@ -44,20 +44,40 @@
   })();
 
   // ===== TOC SCROLL SPY =====
+  // We intentionally do NOT use .scrollIntoView on the active pill,
+  // because browsers sometimes bubble that scroll up to the document
+  // and cause the page to jump/bounce near the last section. Instead,
+  // we manually adjust only the TOC container's horizontal scroll.
   (function () {
     var sections = document.querySelectorAll('section[id]');
     var pills = document.querySelectorAll('.toc-pill');
     if (!sections.length || !pills.length) return;
 
+    function centerPillInContainer(pill) {
+      var container = pill.closest('.toc-bar');
+      if (!container) return;
+      var target =
+        pill.offsetLeft - container.clientWidth / 2 + pill.offsetWidth / 2;
+      var max = container.scrollWidth - container.clientWidth;
+      target = Math.max(0, Math.min(target, max));
+      if (Math.abs(container.scrollLeft - target) > 1) {
+        container.scrollTo({
+          left: target,
+          behavior: reducedMotion ? 'auto' : 'smooth',
+        });
+      }
+    }
+
     var observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          pills.forEach(function (p) { p.classList.remove('active'); });
-          var active = document.querySelector('.toc-pill[data-section="' + entry.target.id + '"]');
-          if (active) {
-            active.classList.add('active');
-            active.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-          }
+        if (!entry.isIntersecting) return;
+        pills.forEach(function (p) { p.classList.remove('active'); });
+        var active = document.querySelector(
+          '.toc-pill[data-section="' + entry.target.id + '"]'
+        );
+        if (active) {
+          active.classList.add('active');
+          centerPillInContainer(active);
         }
       });
     }, { rootMargin: '-150px 0px -60% 0px', threshold: 0 });

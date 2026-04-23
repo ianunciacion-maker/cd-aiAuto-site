@@ -681,6 +681,61 @@ test.describe('Container max-width uses modern 1400px', () => {
   }
 });
 
+// ───── SCROLL STABILITY ─────
+test.describe('Pages do not bounce back up when you hit the bottom', () => {
+  for (const p of MARKETING_PAGES) {
+    test(`${p.name}: scrolling to the bottom stays at the bottom (no bounce)`, async ({ page }) => {
+      await page.goto(p.path);
+      await page.waitForLoadState('load');
+      // Allow dynamic content (blog posts, AI resources) to finish loading
+      // before we measure scrollHeight.
+      await page.waitForTimeout(1500);
+
+      const snapshot = await page.evaluate(() => {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        window.scrollTo({ top: max, left: 0, behavior: 'instant' });
+        return max;
+      });
+
+      // Wait long enough for any errant auto-scroll / scrollIntoView / animation to fire.
+      await page.waitForTimeout(1500);
+
+      const { finalScrollTop, finalMax } = await page.evaluate(() => ({
+        finalScrollTop: window.scrollY,
+        finalMax: document.documentElement.scrollHeight - window.innerHeight,
+      }));
+
+      // Skip if page is too short to scroll (not enough content to test).
+      if (snapshot < 100) return;
+
+      // The page must still be near the bottom (within 80px of either the
+      // pre- or post-timeout maximum scroll position).
+      const distance = Math.min(
+        Math.abs(finalScrollTop - snapshot),
+        Math.abs(finalScrollTop - finalMax)
+      );
+      expect(
+        distance,
+        `${p.name}: bounced by ${distance}px after hitting bottom ` +
+          `(final=${finalScrollTop}, initial max=${snapshot}, current max=${finalMax})`
+      ).toBeLessThan(80);
+    });
+
+    test(`${p.name}: overscroll-behavior is set on html/body`, async ({ page }) => {
+      await page.goto(p.path);
+      await page.waitForLoadState('load');
+      const { htmlBehavior, bodyBehavior } = await page.evaluate(() => ({
+        htmlBehavior: getComputedStyle(document.documentElement).overscrollBehaviorY
+          || getComputedStyle(document.documentElement).overscrollBehavior,
+        bodyBehavior: getComputedStyle(document.body).overscrollBehaviorY
+          || getComputedStyle(document.body).overscrollBehavior,
+      }));
+      expect(['none', 'contain']).toContain(htmlBehavior);
+      expect(['none', 'contain', 'auto']).toContain(bodyBehavior);
+    });
+  }
+});
+
 // ───── NAV CTA BUTTONS ─────
 test.describe('Nav Log In + Get Started render as real buttons on every page', () => {
   for (const p of MARKETING_PAGES) {
