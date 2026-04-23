@@ -681,6 +681,73 @@ test.describe('Container max-width uses modern 1400px', () => {
   }
 });
 
+// ───── NAV CTA BUTTONS ─────
+test.describe('Nav Log In + Get Started render as real buttons on every page', () => {
+  for (const p of MARKETING_PAGES) {
+    test(`${p.name}: Log In + Get Started are styled as buttons, not plain text`, async ({ page }) => {
+      await page.goto(p.path);
+      await page.waitForLoadState('load');
+      // navigation.js injects the nav on DOMContentLoaded
+      await page.waitForSelector('.nav-auth .nav-cta', { timeout: 5000 });
+
+      const buttons = await page.evaluate(() => {
+        return [...document.querySelectorAll('.nav-auth .nav-cta')].map((el) => {
+          const cs = getComputedStyle(el);
+          return {
+            text: el.textContent.trim(),
+            display: cs.display,
+            padding: cs.padding,
+            borderRadius: cs.borderRadius,
+            border: cs.borderTopWidth,
+            bg: cs.backgroundImage || cs.backgroundColor,
+            color: cs.color,
+            fontWeight: cs.fontWeight,
+            textTransform: cs.textTransform,
+            cursor: cs.cursor,
+            textDecoration: cs.textDecorationLine,
+            width: el.getBoundingClientRect().width,
+            height: el.getBoundingClientRect().height,
+          };
+        });
+      });
+
+      expect(buttons.length, 'at least 1 nav CTA must render').toBeGreaterThan(0);
+
+      for (const b of buttons) {
+        expect(b.display, `${b.text}: must be inline-flex-ish, got ${b.display}`).toMatch(/flex|inline/);
+        // Padding should be substantial (not zero / not default inline text).
+        const padNumeric = parseFloat(b.padding);
+        expect(padNumeric, `${b.text}: padding must be > 5px, got ${b.padding}`).toBeGreaterThan(5);
+        // Border-radius should be set (real button shape).
+        expect(parseFloat(b.borderRadius), `${b.text}: must have border-radius`).toBeGreaterThanOrEqual(2);
+        expect(b.fontWeight, `${b.text}: must have bold-ish weight`).toMatch(/[67]00|bold/);
+        expect(b.cursor).toBe('pointer');
+        // Buttons should be at least 32px tall (real clickable size).
+        expect(b.height, `${b.text}: height too small (${b.height}px)`).toBeGreaterThan(32);
+        expect(b.width, `${b.text}: width too small (${b.width}px)`).toBeGreaterThan(60);
+      }
+
+      // Get Started / primary must have a gold-tinted background
+      const primary = buttons.find((b) => /started|installed/i.test(b.text));
+      expect(primary, 'primary CTA must exist').toBeTruthy();
+      // Accept either background-image gradient or solid gold color
+      expect(
+        /gradient|245,\s*166,\s*35|232,\s*146,\s*10|f5a623|e8920a/i.test(primary.bg),
+        `primary CTA bg "${primary.bg}" should contain a gold gradient/color`
+      ).toBe(true);
+
+      // Log In (if present) must have a visible border (ghost style)
+      const login = buttons.find((b) => /log.?in/i.test(b.text));
+      if (login) {
+        expect(
+          parseFloat(login.border),
+          `Log In must have a visible border, got ${login.border}`
+        ).toBeGreaterThan(0);
+      }
+    });
+  }
+});
+
 // ───── RESPONSIVE ─────
 test.describe('Responsive check — pages render at mobile width', () => {
   test.use({ viewport: { width: 390, height: 844 } });

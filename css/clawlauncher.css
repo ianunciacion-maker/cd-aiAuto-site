@@ -3292,3 +3292,17 @@ body::after {
     animation: none !important; /* stylelint-disable-line declaration-no-important */
   }
 }
+
+/* Dark nav: make the ghost Log In button readable on cream text */
+.nav .nav-cta--ghost {
+  color: #efe5cd;
+  border-color: rgba(239, 229, 205, 0.4);
+}
+
+.nav .nav-cta--ghost:hover,
+.nav .nav-cta--ghost:focus-visible {
+  background: rgba(239, 229, 205, 0.08);
+  color: #f5a623;
+  border-color: var(--gold, #f5a623);
+  transform: translateY(-1px);
+}

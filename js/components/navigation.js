@@ -21,11 +21,11 @@ class SiteNavigation {
             <a href="${this.getBaseUrl()}blog.html" class="nav-link" id="blogLink">Blog</a>
             <a href="${this.getBaseUrl()}ai-resources.html" class="nav-link" id="aiResourcesLink">AI Resources</a>
           </div>
-          <div class="nav-auth" style="display: flex; gap: 12px; align-items: center;">
+          <div class="nav-auth">
             ${this.isOpenClawPage()
-              ? '<a href="#bundle-pricing" class="btn btn-gold" onclick="document.querySelector(\'#bundle-pricing\').scrollIntoView({behavior:\'smooth\',block:\'start\'});return false;">Get Installed Now</a>'
-              : `<a href="${this.getBaseUrl()}user/login.html" style="font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink);">Log In</a>
-            <a href="${this.getBaseUrl()}user/signup.html" class="btn btn-gold">Get Started</a>`}
+              ? '<a href="#bundle-pricing" class="nav-cta nav-cta--primary" onclick="document.querySelector(\'#bundle-pricing\').scrollIntoView({behavior:\'smooth\',block:\'start\'});return false;">Get Installed Now</a>'
+              : `<a href="${this.getBaseUrl()}user/login.html" class="nav-cta nav-cta--ghost">Log In</a>
+            <a href="${this.getBaseUrl()}user/signup.html" class="nav-cta nav-cta--primary">Get Started</a>`}
           </div>
         </div>
       </nav>
@@ -54,9 +54,9 @@ class SiteNavigation {
           <a href="${this.getBaseUrl()}blog.html" class="mobile-menu-link">Blog</a>
           <a href="${this.getBaseUrl()}ai-resources.html" class="mobile-menu-link">AI Resources</a>
           ${this.isOpenClawPage()
-            ? '<a href="#bundle-pricing" class="btn btn-gold" style="width: 100%; margin-top: 16px;" onclick="document.getElementById(\'mobileMenu\').classList.remove(\'active\');document.querySelector(\'#bundle-pricing\').scrollIntoView({behavior:\'smooth\',block:\'start\'});return false;">Get Installed Now</a>'
+            ? '<a href="#bundle-pricing" class="nav-cta nav-cta--primary nav-cta--block" onclick="document.getElementById(\'mobileMenu\').classList.remove(\'active\');document.querySelector(\'#bundle-pricing\').scrollIntoView({behavior:\'smooth\',block:\'start\'});return false;">Get Installed Now</a>'
             : `<a href="${this.getBaseUrl()}user/login.html" class="mobile-menu-link">Log In</a>
-          <a href="${this.getBaseUrl()}user/signup.html" class="btn btn-gold" style="width: 100%; margin-top: 16px;">Get Started</a>`}
+          <a href="${this.getBaseUrl()}user/signup.html" class="nav-cta nav-cta--primary nav-cta--block">Get Started</a>`}
         </div>
       </div>
     `;

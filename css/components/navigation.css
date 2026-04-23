@@ -247,3 +247,95 @@
 [data-theme="dark"] .mobile-menu {
   background: var(--bg-white);
 }
+
+/* ═══════════════════════════════════════════
+   NAV AUTH BUTTONS — Log In / Get Started
+   Universal so every page (marketing + app) renders them as
+   real buttons, not plain text.
+   ═══════════════════════════════════════════ */
+.nav-auth {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.nav-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 20px;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease,
+    background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+
+/* Primary (Get Started / Get Installed Now) — filled gold */
+.nav-cta--primary {
+  background: linear-gradient(135deg, #e8920a, #f5a623);
+  color: #0e0e0e;
+  border: 1px solid rgba(245, 166, 35, 0.6);
+  box-shadow: 0 2px 12px rgba(245, 166, 35, 0.25);
+}
+
+.nav-cta--primary:hover,
+.nav-cta--primary:focus-visible {
+  background: linear-gradient(135deg, #f0a01a, #ffb733);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(245, 166, 35, 0.4);
+  outline: none;
+}
+
+/* Ghost (Log In) — outlined, transparent, adapts to the nav bg */
+.nav-cta--ghost {
+  background: transparent;
+  color: var(--ink, #121212);
+  border: 1.5px solid currentColor;
+}
+
+.nav-cta--ghost:hover,
+.nav-cta--ghost:focus-visible {
+  background: var(--ink, #121212);
+  color: var(--bg-white, #fff);
+  transform: translateY(-1px);
+  outline: none;
+}
+
+/* Dark-theme nav (marketing pages that load clawlauncher.css override
+   .nav to use a dark backdrop). Make the ghost button readable there. */
+.nav[style*="rgba(14, 14, 14"],
+.nav.is-scrolled,
+body[data-nav-dark='true'] .nav-cta--ghost,
+[data-theme='dark'] .nav-cta--ghost {
+  /* no-op; covered below */
+}
+
+/* When the nav background itself is dark (clawlauncher override),
+   the ghost button should flip its palette. The clawlauncher
+   stylesheet already sets .nav background to rgba(14,14,14,0.85);
+   we target that via the effective colors here. */
+@supports (color: color-mix(in srgb, red 50%, blue)) {
+  :root {
+    --nav-ghost-color: var(--ink, #121212);
+  }
+}
+
+/* Mobile: hide auth CTAs from header (already covered by existing media query);
+   the mobile menu provides its own "Log In" / "Get Started" links. */
+
+/* Full-width CTA (used inside mobile menu) */
+.nav-cta--block {
+  width: 100%;
+  margin-top: 16px;
+  padding: 14px 24px;
+  font-size: 14px;
+}
