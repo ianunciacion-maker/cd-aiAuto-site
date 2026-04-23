@@ -3133,17 +3133,11 @@
   transform: translateY(0);
 }
 
-/* Prevent horizontal scroll from offscreen mobile-menu transforms,
-   and kill the rubber-band/overscroll bounce that triggers at the
-   bottom of the page on Mac browsers. */
+/* Prevent horizontal scroll from offscreen mobile-menu transforms.
+   NOTE: we intentionally do NOT set overscroll-behavior here — on
+   Mac trackpads it breaks momentum scrolling on this page set. */
 html {
   overflow-x: hidden;
-  max-width: 100%;
-  overscroll-behavior: none;
-}
-
-body {
-  overscroll-behavior: none;
 }
 
 /* ============================================

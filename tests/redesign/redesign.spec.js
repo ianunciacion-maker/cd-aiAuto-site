@@ -721,17 +721,37 @@ test.describe('Pages do not bounce back up when you hit the bottom', () => {
       ).toBeLessThan(80);
     });
 
-    test(`${p.name}: overscroll-behavior is set on html/body`, async ({ page }) => {
+    test(`${p.name}: wheel scroll reaches bottom and stays there`, async ({ page }) => {
       await page.goto(p.path);
       await page.waitForLoadState('load');
-      const { htmlBehavior, bodyBehavior } = await page.evaluate(() => ({
-        htmlBehavior: getComputedStyle(document.documentElement).overscrollBehaviorY
-          || getComputedStyle(document.documentElement).overscrollBehavior,
-        bodyBehavior: getComputedStyle(document.body).overscrollBehaviorY
-          || getComputedStyle(document.body).overscrollBehavior,
+      await page.waitForTimeout(1500);
+
+      const startMax = await page.evaluate(
+        () => document.documentElement.scrollHeight - window.innerHeight
+      );
+      if (startMax < 500) return; // nothing meaningful to scroll
+
+      // Drive wheel events like a trackpad — many small ticks downward.
+      const pageMid = { x: 400, y: 400 };
+      await page.mouse.move(pageMid.x, pageMid.y);
+      const totalTicks = Math.ceil(startMax / 200) + 4;
+      for (let i = 0; i < totalTicks; i++) {
+        await page.mouse.wheel(0, 400);
+        await page.waitForTimeout(30);
+      }
+
+      await page.waitForTimeout(800);
+      const { y, max } = await page.evaluate(() => ({
+        y: window.scrollY,
+        max: document.documentElement.scrollHeight - window.innerHeight,
       }));
-      expect(['none', 'contain']).toContain(htmlBehavior);
-      expect(['none', 'contain', 'auto']).toContain(bodyBehavior);
+      // We drove enough wheel ticks to cover the full page — scrollY
+      // must be within 100px of the max. If a bouncy bug is resetting
+      // scroll mid-journey, this will fail.
+      expect(
+        y,
+        `${p.name}: wheel scroll stuck — scrollY=${y}, max=${max} (wheeled ${totalTicks}×400px)`
+      ).toBeGreaterThan(max - 100);
     });
   }
 });
