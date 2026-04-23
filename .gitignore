@@ -152,3 +152,7 @@ coverage/
 .env*.local
 .kilocode/
 .mcp.json
+
+# Playwright test artifacts
+test-results/
+playwright-report/

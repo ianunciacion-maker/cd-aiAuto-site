@@ -1034,6 +1034,126 @@
     }
 
     /* ═══════════════════════════════════════════
+       ANCHOR QUOTES (shared messaging — 3 quotes)
+       ═══════════════════════════════════════════ */
+    .anchor-tagline {
+      display: inline-block;
+      margin-bottom: 20px;
+      padding: 8px 20px;
+      background: rgba(245, 166, 35, 0.08);
+      border: 1px solid rgba(245, 166, 35, 0.25);
+      border-radius: 40px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #f5a623;
+      letter-spacing: 0.02em;
+      font-style: italic;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .anchor-pull-section {
+      padding: var(--space-lg) 0;
+      background: radial-gradient(ellipse 60% 40% at 50% 50%, rgba(245, 166, 35, 0.06) 0%, transparent 70%), #0e1018;
+      border-top: 1px solid #1a1d2a;
+      border-bottom: 1px solid #1a1d2a;
+    }
+    .anchor-pull-quote {
+      border: 1px solid #292825;
+      background: linear-gradient(130deg, #191918 0%, #151414 100%);
+      padding: var(--space-lg);
+      border-radius: 4px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+      margin: 0 auto;
+      max-width: 900px;
+      text-align: center;
+      position: relative;
+    }
+    .anchor-pull-quote::before {
+      content: '\201C';
+      position: absolute;
+      top: -20px;
+      left: 24px;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 80px;
+      line-height: 1;
+      color: #f5a623;
+      font-weight: 900;
+    }
+    .anchor-pull-quote p {
+      font-family: 'Inter', sans-serif;
+      font-style: italic;
+      font-weight: 700;
+      font-size: clamp(22px, 3vw, 36px);
+      line-height: 1.35;
+      color: #f1f5f9;
+      margin: 0;
+      letter-spacing: -0.015em;
+    }
+    .anchor-pull-quote .accent {
+      background: linear-gradient(135deg, #fbbf24, #f97316, #ec4899);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .anchor-pull-quote__caption {
+      display: block;
+      margin-top: var(--space-sm);
+      font-size: 13px;
+      font-style: normal;
+      font-weight: 500;
+      color: #736f64;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .anchor-closer {
+      padding: var(--space-lg) 0;
+      text-align: center;
+      background: #050505;
+      border-top: 1px solid #292825;
+      border-bottom: 1px solid #292825;
+      position: relative;
+      overflow: hidden;
+    }
+    .anchor-closer::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(245, 166, 35, 0.06), transparent 70%);
+      pointer-events: none;
+    }
+    .anchor-closer__inner {
+      position: relative;
+      z-index: 1;
+    }
+    .anchor-closer__lede {
+      font-family: 'Inter', sans-serif;
+      font-style: italic;
+      font-size: 14px;
+      color: #736f64;
+      margin-bottom: var(--space-md);
+      letter-spacing: 0.02em;
+    }
+    .anchor-closer__quote {
+      font-family: 'Inter', sans-serif;
+      font-style: italic;
+      font-weight: 600;
+      font-size: clamp(20px, 2.8vw, 32px);
+      line-height: 1.4;
+      color: #f1f5f9;
+      max-width: 900px;
+      margin: 0 auto;
+      letter-spacing: -0.01em;
+    }
+    .anchor-closer__quote .quote-accent {
+      background: linear-gradient(135deg, #fbbf24 0%, #f97316 50%, #ec4899 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* ═══════════════════════════════════════════
        REDUCED MOTION
        ═══════════════════════════════════════════ */
     @media (prefers-reduced-motion: reduce) {
@@ -1055,6 +1175,7 @@
   <section class="hero">
     <div class="container hero-inner">
       <div class="hero-content">
+        <div class="anchor-tagline">&ldquo;Business as we know it will never be the same.&rdquo;</div>
         <div class="hero-pill">Only 2 reputable builders in the country &mdash; you just found one</div>
 
         <h1 class="hero-headline-primary">
@@ -1324,6 +1445,20 @@
   </section>
 
   <!-- ═══════════════════════════════════════════
+       ANCHOR PULL QUOTE #2 (positioning)
+       ═══════════════════════════════════════════ -->
+  <section class="anchor-pull-section">
+    <div class="container">
+      <div class="anchor-pull-quote reveal">
+        <p>
+          &ldquo;ClawLauncher automates new startups as it <span class="accent">lowers expenses</span> and <span class="accent">increases revenue</span> for any business.&rdquo;
+        </p>
+        <span class="anchor-pull-quote__caption">— The bet, in one sentence.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
        ECOSYSTEM CTA
        ═══════════════════════════════════════════ -->
   <section class="ecosystem-cta">
@@ -1331,6 +1466,18 @@
       <h2 class="reveal">Ready to Automate?</h2>
       <p class="reveal">Join business owners using ClawLauncher to scale on autopilot</p>
       <a href="openclaw.html" class="btn-lobster reveal">Get Your ClawLauncher</a>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       ANCHOR CLOSER (quote #3)
+       ═══════════════════════════════════════════ -->
+  <section class="anchor-closer">
+    <div class="container anchor-closer__inner">
+      <p class="anchor-closer__lede">The shift is happening to everyone. But only one group comes out ahead.</p>
+      <p class="anchor-closer__quote">
+        &ldquo;<span class="quote-accent">AI will not replace humans</span>, but those who use AI will replace those who don&rsquo;t.&rdquo;
+      </p>
     </div>
   </section>
 
