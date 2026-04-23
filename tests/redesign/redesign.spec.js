@@ -556,6 +556,112 @@ test.describe('Ambient background animations on every page', () => {
   });
 });
 
+// ───── HOMEPAGE TOOLKIT SECTION (openclaw-style dark redesign) ─────
+test.describe('Home: Built-In AI Tools section matches ClawLauncher dark design', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/index.html');
+    await page.waitForLoadState('load');
+  });
+
+  test('toolkit section has a dark background, not the old light cream', async ({ page }) => {
+    const bg = await page.evaluate(() => {
+      const el = document.querySelector('.toolkit-section');
+      if (!el) return null;
+      return getComputedStyle(el).backgroundColor;
+    });
+    expect(bg, '.toolkit-section must exist').not.toBeNull();
+    // Accept any bg color as long as each channel is dark (r+g+b < 80) to ensure it's not cream.
+    const match = bg.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+    expect(match, `got bg ${bg}`).not.toBeNull();
+    const sum = parseInt(match[1]) + parseInt(match[2]) + parseInt(match[3]);
+    expect(sum, `toolkit-section must be dark, got ${bg} (sum=${sum})`).toBeLessThan(80);
+  });
+
+  test('toolkit section headline uses Inter, not Playfair Display', async ({ page }) => {
+    const font = await page.evaluate(() => {
+      const h2 = document.querySelector('.toolkit-section .section-header h2');
+      return h2 ? getComputedStyle(h2).fontFamily : null;
+    });
+    expect(font).not.toBeNull();
+    expect(font.toLowerCase()).toContain('inter');
+    expect(font.toLowerCase()).not.toContain('playfair');
+  });
+
+  test('toolkit cards have dark gradient background and light text', async ({ page }) => {
+    const { cardBg, textColor, borderTopExists } = await page.evaluate(() => {
+      const card = document.querySelector('.toolkit-card');
+      if (!card) return { cardBg: null, textColor: null, borderTopExists: false };
+      const cs = getComputedStyle(card);
+      const before = getComputedStyle(card, '::before');
+      const h3 = card.querySelector('h3');
+      return {
+        cardBg: cs.backgroundImage || cs.backgroundColor,
+        textColor: h3 ? getComputedStyle(h3).color : null,
+        borderTopExists: before.content !== 'none' && (before.height !== 'auto' && parseFloat(before.height) > 0),
+      };
+    });
+
+    expect(cardBg, '.toolkit-card must have a background').not.toBeNull();
+    // Card bg should be dark — check it's NOT cream #ffffff/#f5f5f5 style.
+    // Accept linear-gradient(... #19...) etc. by making sure it isn't "rgb(255, 255, 255)".
+    expect(cardBg.toLowerCase()).not.toBe('rgb(255, 255, 255)');
+    expect(cardBg.toLowerCase()).not.toContain('242, 240, 233'); // --bg-paper neobrutalist cream
+
+    // Heading should be light-colored (blue-white #f1f5f9 or warm cream #efe5cd)
+    const m = textColor && textColor.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+    expect(m, `heading color "${textColor}" must be parsable`).not.toBeNull();
+    const sum = parseInt(m[1]) + parseInt(m[2]) + parseInt(m[3]);
+    expect(sum, `toolkit-card h3 must be light text (sum ${sum})`).toBeGreaterThan(500);
+
+    expect(borderTopExists, 'each toolkit card must show a colored top-border accent via ::before').toBe(true);
+  });
+
+  test('all 4 tools present with tags in the expected order', async ({ page }) => {
+    const data = await page.evaluate(() => {
+      const cards = [...document.querySelectorAll('.toolkit-card')];
+      return cards.map((c) => ({
+        title: (c.querySelector('h3') || {}).textContent,
+        tag: (c.querySelector('.toolkit-tag') || {}).textContent,
+      }));
+    });
+    expect(data.length).toBe(4);
+    expect(data[0].title).toContain('Blog Post Generator');
+    expect(data[1].title).toContain('Social Media Captions');
+    expect(data[2].title).toContain('Email Campaigns');
+    expect(data[3].title).toContain('Product Descriptions');
+    // Tags should still be present (textual content preserved from old design)
+    expect(data[0].tag).toMatch(/Blog Posts/i);
+    expect(data[3].tag).toMatch(/Product Copy/i);
+  });
+
+  test('old neobrutalist "transition zone" is removed from the DOM', async ({ page }) => {
+    const count = await page.locator('.transition-zone, .transition-tag, .transition-chevron').count();
+    expect(count, 'legacy transition-zone markup should be gone').toBe(0);
+  });
+
+  test('"Included" tag pill is visible at the top of the toolkit section', async ({ page }) => {
+    const pill = page.locator('.toolkit-section .section-header .tag');
+    await expect(pill).toBeVisible();
+    await expect(pill).toHaveText(/Included/i);
+    // Must be gold-ish (openclaw tag style), not the old lavender/black pill
+    const color = await pill.evaluate((el) => getComputedStyle(el).color);
+    const m = color.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+    expect(m).not.toBeNull();
+    const [, r, g, b] = m.map((x) => parseInt(x));
+    // Gold #f5a623 = rgb(245, 166, 35). Red channel should dominate.
+    expect(r).toBeGreaterThan(g);
+    expect(r).toBeGreaterThan(b + 100);
+  });
+
+  test('Also available standalone CTA retains the $39.95/mo price and points to signup', async ({ page }) => {
+    const bodyText = await page.evaluate(() => document.body.textContent);
+    expect(bodyText).toContain('$39.95');
+    const cta = page.locator('.toolkit-cta a.btn-light');
+    await expect(cta).toBeVisible();
+    await expect(cta).toHaveAttribute('href', /signup/);
+  });
+});
+
 // ───── WIDER CONTENT AREA ─────
 test.describe('Container max-width uses modern 1400px', () => {
   for (const p of MARKETING_PAGES) {
