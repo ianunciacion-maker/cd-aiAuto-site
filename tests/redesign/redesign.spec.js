@@ -104,6 +104,52 @@ test.describe('Design parity with openclaw.html', () => {
   }
 });
 
+// ───── LOGO VISIBILITY ─────
+test.describe('Brand logo is visible on every page', () => {
+  for (const p of MARKETING_PAGES) {
+    test(`${p.name}: "Ai-Auto" logo is readable (not same-color-as-background)`, async ({ page }) => {
+      await page.goto(p.path);
+      await page.waitForLoadState('load');
+      // navigation.js injects the nav on DOMContentLoaded, but give it a beat.
+      await page.waitForSelector('.nav .logo', { timeout: 5000 });
+
+      const logo = page.locator('.nav .logo').first();
+      await expect(logo).toBeVisible();
+      await expect(logo).toHaveText(/Ai-Auto/i);
+
+      // Check that logo text color differs from its background significantly
+      // (RGB distance > 150 prevents cream-on-cream invisibility).
+      const contrast = await logo.evaluate((el) => {
+        const cs = getComputedStyle(el);
+        function parse(s) {
+          const m = s.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+          return m ? [+m[1], +m[2], +m[3]] : null;
+        }
+        const fg = parse(cs.color);
+        // If background is transparent, walk up to find first non-transparent ancestor
+        let bg = parse(cs.backgroundColor);
+        let node = el;
+        while ((!bg || cs.backgroundColor === 'rgba(0, 0, 0, 0)') && node.parentElement) {
+          node = node.parentElement;
+          const pcs = getComputedStyle(node);
+          const pbg = parse(pcs.backgroundColor);
+          if (pbg && pcs.backgroundColor !== 'rgba(0, 0, 0, 0)') { bg = pbg; break; }
+        }
+        if (!fg || !bg) return { fg, bg, distance: null };
+        const d = Math.sqrt(
+          (fg[0] - bg[0]) ** 2 + (fg[1] - bg[1]) ** 2 + (fg[2] - bg[2]) ** 2
+        );
+        return { fg, bg, distance: Math.round(d) };
+      });
+
+      expect(
+        contrast.distance,
+        `Logo fg ${JSON.stringify(contrast.fg)} vs bg ${JSON.stringify(contrast.bg)} — distance too low`
+      ).toBeGreaterThan(150);
+    });
+  }
+});
+
 // ───── ANCHOR QUOTES ─────
 test.describe('Anchor quotes present on every page', () => {
   for (const p of MARKETING_PAGES) {

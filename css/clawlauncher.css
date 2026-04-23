@@ -2929,7 +2929,21 @@
 }
 
 .nav .logo {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  padding: 4px 0;
   color: #efe5cd;
+  letter-spacing: -0.02em;
+  transition: color 0.25s ease;
+}
+
+.nav .logo:hover,
+.nav .logo:focus-visible {
+  background: transparent;
+  box-shadow: none;
+  transform: none;
+  color: var(--gold);
 }
 
 .nav-link {
