@@ -157,3 +157,7 @@ coverage/
 # Playwright test artifacts
 test-results/
 playwright-report/
+
+# Stock images (explicitly tracked despite binary size)
+!images/stock/*.jpg
+!images/stock/*.md

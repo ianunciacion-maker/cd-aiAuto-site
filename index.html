@@ -447,9 +447,25 @@
     .why-section {
       padding: 100px 0;
       background-color: #0e0e0e;
-      background-image: radial-gradient(rgba(110, 130, 230, 0.03) 1px, transparent 1px);
+      background-image:
+        radial-gradient(rgba(110, 130, 230, 0.03) 1px, transparent 1px);
       background-size: 40px 40px;
       border-top: 1px solid #1e1d1b;
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .why-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, transparent 0%, rgba(14, 14, 14, 0.88) 70%, #0e0e0e 100%),
+        url('images/stock/network_glow.jpg') center/cover no-repeat;
+      opacity: 0.6;
+      z-index: -1;
+      filter: saturate(0.9) brightness(0.65);
     }
 
     .why-grid {

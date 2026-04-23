@@ -763,6 +763,43 @@ test.describe('Pages do not bounce back up when you hit the bottom', () => {
   }
 });
 
+// ───── STOCK IMAGES LOAD ─────
+test.describe('Stock images are present + load', () => {
+  const stockChecks = [
+    { path: '/about.html', src: 'images/stock/seasoned_pro.jpg' },
+    { path: '/about.html', src: 'images/stock/mature_team.jpg' },
+    { path: '/tools.html', src: 'images/stock/ops_dashboard.jpg' },
+    { path: '/blog.html', src: 'images/stock/writing_desk.jpg' },
+    { path: '/ai-resources.html', src: 'images/stock/library_books.jpg' },
+  ];
+
+  for (const { path, src } of stockChecks) {
+    test(`${path} references ${src} and the image loads (naturalWidth > 0)`, async ({ page }) => {
+      await page.goto(path);
+      await page.waitForLoadState('load');
+
+      const img = page.locator(`img[src$="${src}"]`);
+      await expect(img).toHaveCount(1, { timeout: 5000 });
+
+      const dims = await img.first().evaluate((el) => ({
+        naturalWidth: el.naturalWidth,
+        naturalHeight: el.naturalHeight,
+        complete: el.complete,
+      }));
+      expect(dims.complete, `${src} must finish loading`).toBe(true);
+      expect(dims.naturalWidth, `${src} must have non-zero width`).toBeGreaterThan(0);
+      expect(dims.naturalHeight).toBeGreaterThan(0);
+    });
+  }
+
+  test('home: why-section network_glow background image reachable', async ({ request }) => {
+    const res = await request.get('/images/stock/network_glow.jpg');
+    expect(res.status()).toBe(200);
+    const body = await res.body();
+    expect(body.length).toBeGreaterThan(10000);
+  });
+});
+
 // ───── NAV DARK BACKGROUND ─────
 test.describe('Nav bar is dark on every marketing page', () => {
   for (const p of MARKETING_PAGES) {
