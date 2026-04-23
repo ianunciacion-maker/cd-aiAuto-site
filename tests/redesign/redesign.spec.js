@@ -766,7 +766,7 @@ test.describe('Pages do not bounce back up when you hit the bottom', () => {
 // ───── STOCK IMAGES LOAD ─────
 test.describe('Stock images are present + load', () => {
   const stockChecks = [
-    { path: '/about.html', src: 'images/stock/seasoned_pro.jpg' },
+    { path: '/about.html', src: 'images/stock/team_casual.jpg' },
     { path: '/about.html', src: 'images/stock/mature_team.jpg' },
     { path: '/tools.html', src: 'images/stock/ops_dashboard.jpg' },
     { path: '/blog.html', src: 'images/stock/writing_desk.jpg' },

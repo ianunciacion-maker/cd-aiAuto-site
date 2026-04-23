@@ -6,7 +6,7 @@ credited here for transparency).
 
 | File                      | Source                                                                        | Where it's used                                  |
 | ------------------------- | ----------------------------------------------------------------------------- | ------------------------------------------------ |
-| `seasoned_pro.jpg`        | https://unsplash.com/photos/photo-1560250097-0b93528c311a                     | `about.html` hero — right-side portrait         |
+| `team_casual.jpg`         | https://unsplash.com/photos/photo-1543269865-cbf427effbad                     | `about.html` hero — right-side team photo       |
 | `mature_team.jpg`         | https://unsplash.com/photos/photo-1600880292203-757bb62b4baf                  | `about.html` banner before the Journey section  |
 | `ops_dashboard.jpg`       | https://unsplash.com/photos/photo-1551288049-bebda4e38f71                     | `tools.html` hero — right-side visual           |
 | `writing_desk.jpg`        | https://unsplash.com/photos/photo-1455390582262-044cdead277a                  | `blog.html` hero — right-side visual            |
