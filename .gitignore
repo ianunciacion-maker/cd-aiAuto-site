@@ -108,6 +108,7 @@ out/
 logs/
 *.log
 *.sql
+!docs/sql/*.sql
 *.sqlite
 *.sqlite3
 *.db

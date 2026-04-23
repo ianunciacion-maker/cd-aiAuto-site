@@ -884,15 +884,23 @@ var UserManager = class UserManager {
     }
   }
 
-  // Check if user can access tools
+  // Check if user can access tools.
+  // Access is granted if EITHER:
+  //  - there's an active/trialing Stripe subscription, OR
+  //  - the user's profile has has_free_tools_access = true (admin-granted).
   async canAccessTools() {
     try {
-      const { data: subscription, error } = await this.getSubscriptionStatus();
+      // Free-access check first (cheap, single row).
+      const { data: profile } = await this.getCurrentProfile();
+      if (profile?.has_free_tools_access === true) {
+        return true;
+      }
 
+      // Fall back to subscription check.
+      const { data: subscription, error } = await this.getSubscriptionStatus();
       if (error) {
         return false;
       }
-
       return subscription?.status === 'active' || subscription?.status === 'trialing';
     } catch (error) {
       console.error('Can access tools error:', error);
@@ -1214,6 +1222,186 @@ var AdminUserManager = class AdminUserManager {
       return { data: stats, error: null };
     } catch (error) {
       console.error('Dashboard stats exception:', error);
+      return { data: null, error };
+    }
+  }
+
+  // ==========================================================
+  // Admin-granted free tool access
+  // ==========================================================
+
+  // Grant free tools access to an existing user profile.
+  async grantFreeAccess(userId, note) {
+    try {
+      const { data: actor } = await supabase.auth.getUser();
+      const actorId = actor?.user?.id || null;
+      const { data, error } = await supabase
+        .from(this.userProfileTable)
+        .update({
+          has_free_tools_access: true,
+          free_access_granted_at: new Date().toISOString(),
+          free_access_granted_by: actorId,
+          free_access_note: note || null,
+        })
+        .eq('id', userId)
+        .select()
+        .single();
+
+      if (error) {
+        console.error('[AdminUserManager] grantFreeAccess error:', error);
+        return { data: null, error };
+      }
+      return { data, error: null };
+    } catch (error) {
+      console.error('[AdminUserManager] grantFreeAccess exception:', error);
+      return { data: null, error };
+    }
+  }
+
+  // Revoke free tools access from a user profile.
+  async revokeFreeAccess(userId) {
+    try {
+      const { data, error } = await supabase
+        .from(this.userProfileTable)
+        .update({
+          has_free_tools_access: false,
+          free_access_granted_at: null,
+          free_access_granted_by: null,
+          free_access_note: null,
+        })
+        .eq('id', userId)
+        .select()
+        .single();
+
+      if (error) {
+        console.error('[AdminUserManager] revokeFreeAccess error:', error);
+        return { data: null, error };
+      }
+      return { data, error: null };
+    } catch (error) {
+      console.error('[AdminUserManager] revokeFreeAccess exception:', error);
+      return { data: null, error };
+    }
+  }
+
+  // Invite a person by email. If they already have an account, grant
+  // immediately. Otherwise, store a pending invite that the signup
+  // trigger will redeem.
+  async inviteByEmail(email, note) {
+    const normalized = (email || '').trim().toLowerCase();
+    if (!normalized || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalized)) {
+      return { data: null, error: { message: 'Invalid email address' } };
+    }
+
+    try {
+      // 1. If a profile with this email already exists, grant directly.
+      const { data: existing, error: lookupError } = await supabase
+        .from(this.userProfileTable)
+        .select('id, email, has_free_tools_access')
+        .ilike('email', normalized)
+        .maybeSingle();
+
+      if (lookupError && lookupError.code !== 'PGRST116') {
+        console.error('[AdminUserManager] inviteByEmail lookup error:', lookupError);
+        return { data: null, error: lookupError };
+      }
+
+      if (existing && existing.id) {
+        const result = await this.grantFreeAccess(existing.id, note);
+        return {
+          data: { mode: 'granted', profile: result.data, email: normalized },
+          error: result.error,
+        };
+      }
+
+      // 2. No existing profile — insert or refresh a pending invite.
+      const { data: actor } = await supabase.auth.getUser();
+      const actorId = actor?.user?.id || null;
+
+      const { data: invite, error: insertError } = await supabase
+        .from('tool_access_invites')
+        .upsert(
+          {
+            email: normalized,
+            invited_by: actorId,
+            invited_at: new Date().toISOString(),
+            redeemed_at: null,
+            redeemed_by: null,
+            note: note || null,
+          },
+          { onConflict: 'email' }
+        )
+        .select()
+        .single();
+
+      if (insertError) {
+        console.error('[AdminUserManager] inviteByEmail insert error:', insertError);
+        return { data: null, error: insertError };
+      }
+
+      return {
+        data: { mode: 'invited', invite, email: normalized },
+        error: null,
+      };
+    } catch (error) {
+      console.error('[AdminUserManager] inviteByEmail exception:', error);
+      return { data: null, error };
+    }
+  }
+
+  // List tool_access_invites (pending first).
+  async listInvites() {
+    try {
+      const { data, error } = await supabase
+        .from('tool_access_invites')
+        .select('*')
+        .order('redeemed_at', { ascending: true, nullsFirst: true })
+        .order('invited_at', { ascending: false });
+
+      if (error) {
+        console.error('[AdminUserManager] listInvites error:', error);
+        return { data: null, error };
+      }
+      return { data, error: null };
+    } catch (error) {
+      console.error('[AdminUserManager] listInvites exception:', error);
+      return { data: null, error };
+    }
+  }
+
+  // Delete a pending invite by id.
+  async revokeInvite(inviteId) {
+    try {
+      const { error } = await supabase
+        .from('tool_access_invites')
+        .delete()
+        .eq('id', inviteId);
+      if (error) {
+        console.error('[AdminUserManager] revokeInvite error:', error);
+        return { error };
+      }
+      return { error: null };
+    } catch (error) {
+      console.error('[AdminUserManager] revokeInvite exception:', error);
+      return { error };
+    }
+  }
+
+  // Users who currently have admin-granted free access.
+  async getFreeAccessUsers() {
+    try {
+      const { data, error } = await supabase
+        .from(this.userProfileTable)
+        .select('*')
+        .eq('has_free_tools_access', true)
+        .order('free_access_granted_at', { ascending: false });
+      if (error) {
+        console.error('[AdminUserManager] getFreeAccessUsers error:', error);
+        return { data: null, error };
+      }
+      return { data, error: null };
+    } catch (error) {
+      console.error('[AdminUserManager] getFreeAccessUsers exception:', error);
       return { data: null, error };
     }
   }

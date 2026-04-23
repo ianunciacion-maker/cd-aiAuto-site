@@ -819,12 +819,41 @@
         <div class="loading">Loading dashboard...</div>
       </div>
 
+      <!-- Tool Access Invites (admin-granted free access) -->
+      <section class="section" id="toolAccessSection">
+        <div class="section-header">
+          <h2 class="section-title">Tool Access Invites</h2>
+          <span id="freeAccessBadge"
+            style="padding: 4px 12px; background: var(--gold); color: #000; font-weight: 700; font-size: 12px; border: var(--border-thin); letter-spacing: 0.06em; text-transform: uppercase;">
+            Free tool access
+          </span>
+        </div>
+        <div class="section-content">
+          <form id="inviteForm" data-testid="invite-form"
+            style="display: grid; grid-template-columns: 2fr 2fr auto; gap: 8px; padding: 16px; background: var(--bg-white); border: var(--border-thin); margin-bottom: 16px;">
+            <input type="email" id="inviteEmailInput" data-testid="invite-email"
+              placeholder="person@example.com" required
+              style="padding: 12px 16px; border: var(--border-thin); font-size: 14px; font-weight: 600;">
+            <input type="text" id="inviteNoteInput" data-testid="invite-note"
+              placeholder="Note (optional) — e.g., beta tester"
+              style="padding: 12px 16px; border: var(--border-thin); font-size: 14px;">
+            <button type="submit" class="create-btn" data-testid="invite-submit"
+              style="background: var(--gold); color: #000;">Invite & Grant</button>
+            <p id="inviteFormMsg" data-testid="invite-msg"
+              style="grid-column: 1 / -1; margin: 0; font-size: 13px; font-weight: 600; min-height: 18px;"></p>
+          </form>
+          <div id="invitesContainer" data-testid="invites-container">
+            <div class="loading">Loading invites...</div>
+          </div>
+        </div>
+      </section>
+
       <!-- Users Management Section -->
       <section class="section">
         <div class="section-header">
           <h2 class="section-title">Users & Subscriptions</h2>
         </div>
-        <div class="section-content" id="usersContainer">
+        <div class="section-content" id="usersContainer" data-testid="users-container">
           <div class="loading">Loading users...</div>
         </div>
       </section>
@@ -976,6 +1005,11 @@
         this.waitlistCount = document.getElementById('waitlist-count');
         this.exportWaitlistBtn = document.getElementById('exportWaitlistBtn');
         this.logoutBtn = document.getElementById('logoutBtn');
+        this.invitesContainer = document.getElementById('invitesContainer');
+        this.inviteForm = document.getElementById('inviteForm');
+        this.inviteEmailInput = document.getElementById('inviteEmailInput');
+        this.inviteNoteInput = document.getElementById('inviteNoteInput');
+        this.inviteFormMsg = document.getElementById('inviteFormMsg');
 
         // Waitlist state
         this.waitlistEntries = [];
@@ -1080,6 +1114,10 @@
           this.renderUsers(users, subscriptions);
           this.renderPosts(posts);
 
+          // Load invites + wire form
+          await this.loadInvites();
+          this.bindInviteForm();
+
           // Load waitlist entries
           await this.loadWaitlist();
         } catch (error) {
@@ -1180,11 +1218,18 @@
         const draftCount = posts.filter(post => post.status === 'draft').length;
         const totalCount = posts.length;
         const usersCount = users ? users.length : 0;
+        const freeAccessCount = users
+          ? users.filter((u) => u.has_free_tools_access === true).length
+          : 0;
 
         const statsHTML = `
           <div class="stat-card">
             <div class="stat-number">${usersCount}</div>
             <div class="stat-label">Total Users</div>
+          </div>
+          <div class="stat-card" data-testid="free-access-stat">
+            <div class="stat-number" data-testid="free-access-count">${freeAccessCount}</div>
+            <div class="stat-label">Free Access</div>
           </div>
           <div class="stat-card">
             <div class="stat-number">${totalCount}</div>
@@ -1217,21 +1262,153 @@
           const sub = subscriptions[user.id];
           const status = sub?.status || 'inactive';
           const joinDate = new Date(user.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: '2-digit' });
+          const hasFreeAccess = user.has_free_tools_access === true;
+          const freeBadge = hasFreeAccess
+            ? `<span class="user-status" data-testid="user-free-badge" style="background: var(--gold); color: #000; margin-left: 6px;">Free Access</span>`
+            : '';
+          const freeBtn = hasFreeAccess
+            ? `<button class="action-btn" data-testid="revoke-free" data-user-id="${user.id}" onclick="dashboard.revokeFreeAccess('${user.id}')" style="background: #fff; color: var(--ink); border: var(--border-thin);">Revoke Free</button>`
+            : `<button class="action-btn" data-testid="grant-free" data-user-id="${user.id}" onclick="dashboard.grantFreeAccess('${user.id}')" style="background: var(--gold); color: #000; border: var(--border-thin);">Grant Free</button>`;
 
           return `
-            <div class="user-row">
+            <div class="user-row" data-testid="user-row" data-user-id="${user.id}">
               <div class="user-email">${this.escapeHtml(user.email)}</div>
               <div>${this.escapeHtml(user.full_name || 'N/A')}</div>
               <div>${joinDate}</div>
-              <div class="user-status ${status}">${status}</div>
+              <div class="user-status ${status}">${status}${freeBadge}</div>
               <div class="user-actions">
-                <button class="action-btn delete" onclick="dashboard.cancelUserSub('${user.id}')">Cancel</button>
+                ${freeBtn}
+                <button class="action-btn delete" onclick="dashboard.cancelUserSub('${user.id}')">Cancel Sub</button>
               </div>
             </div>
           `;
         }).join('');
 
         this.usersContainer.innerHTML = usersHTML;
+      }
+
+      async grantFreeAccess(userId) {
+        try {
+          const { error } = await adminUserManager.grantFreeAccess(userId, null);
+          if (error) {
+            alert('Failed to grant free access: ' + (error.message || ''));
+            return;
+          }
+          await this.loadDashboard();
+        } catch (e) {
+          console.error('grantFreeAccess error:', e);
+          alert('Error granting free access.');
+        }
+      }
+
+      async revokeFreeAccess(userId) {
+        if (!confirm('Revoke this user\'s free tool access?')) return;
+        try {
+          const { error } = await adminUserManager.revokeFreeAccess(userId);
+          if (error) {
+            alert('Failed to revoke: ' + (error.message || ''));
+            return;
+          }
+          await this.loadDashboard();
+        } catch (e) {
+          console.error('revokeFreeAccess error:', e);
+          alert('Error revoking access.');
+        }
+      }
+
+      async loadInvites() {
+        if (!this.invitesContainer) return;
+        try {
+          const { data: invites, error } = await adminUserManager.listInvites();
+          if (error) {
+            this.invitesContainer.innerHTML = `<div class="empty">Unable to load invites: ${this.escapeHtml(error.message || '')}</div>`;
+            return;
+          }
+          this.renderInvites(invites || []);
+        } catch (e) {
+          console.error('loadInvites error:', e);
+          this.invitesContainer.innerHTML = '<div class="empty">Error loading invites.</div>';
+        }
+      }
+
+      renderInvites(invites) {
+        if (!invites.length) {
+          this.invitesContainer.innerHTML = `<div class="empty"><p>No invites yet. Use the form above to grant free access.</p></div>`;
+          return;
+        }
+        const rows = invites.map((inv) => {
+          const invitedAt = new Date(inv.invited_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: '2-digit' });
+          const redeemedAt = inv.redeemed_at ? new Date(inv.redeemed_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: '2-digit' }) : '';
+          const statusTag = inv.redeemed_at
+            ? `<span class="user-status active" style="background: var(--green); color: #000;">Redeemed ${redeemedAt}</span>`
+            : `<span class="user-status" style="background: var(--gold); color: #000;">Pending</span>`;
+          const revokeBtn = !inv.redeemed_at
+            ? `<button class="action-btn delete" data-testid="revoke-invite" data-invite-id="${inv.id}" onclick="dashboard.revokeInvite('${inv.id}')">Revoke</button>`
+            : '';
+          return `
+            <div class="user-row" data-testid="invite-row" data-invite-id="${inv.id}" style="grid-template-columns: 2fr 1.5fr 1fr 1fr auto;">
+              <div class="user-email">${this.escapeHtml(inv.email)}</div>
+              <div>${this.escapeHtml(inv.note || '—')}</div>
+              <div style="font-size: 12px; opacity: 0.7;">${invitedAt}</div>
+              <div>${statusTag}</div>
+              <div class="user-actions">${revokeBtn}</div>
+            </div>
+          `;
+        }).join('');
+        this.invitesContainer.innerHTML = rows;
+      }
+
+      bindInviteForm() {
+        if (!this.inviteForm || this.inviteForm.dataset.bound === 'true') return;
+        this.inviteForm.dataset.bound = 'true';
+        this.inviteForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const email = this.inviteEmailInput.value.trim();
+          const note = this.inviteNoteInput.value.trim();
+          const submitBtn = this.inviteForm.querySelector('button[type="submit"]');
+          this.inviteFormMsg.textContent = 'Processing…';
+          this.inviteFormMsg.style.color = '';
+          submitBtn.disabled = true;
+          try {
+            const { data, error } = await adminUserManager.inviteByEmail(email, note || null);
+            if (error) {
+              this.inviteFormMsg.textContent = 'Error: ' + (error.message || 'could not invite');
+              this.inviteFormMsg.style.color = 'var(--coral)';
+              return;
+            }
+            if (data?.mode === 'granted') {
+              this.inviteFormMsg.textContent = `${email} is an existing user — free access granted.`;
+            } else {
+              this.inviteFormMsg.textContent = `Invite queued for ${email}. Free access applies on signup.`;
+            }
+            this.inviteFormMsg.style.color = 'var(--green)';
+            this.inviteEmailInput.value = '';
+            this.inviteNoteInput.value = '';
+            await this.loadInvites();
+            await this.loadDashboard();
+          } catch (err) {
+            console.error('inviteByEmail error:', err);
+            this.inviteFormMsg.textContent = 'Error: ' + (err.message || 'could not invite');
+            this.inviteFormMsg.style.color = 'var(--coral)';
+          } finally {
+            submitBtn.disabled = false;
+          }
+        });
+      }
+
+      async revokeInvite(inviteId) {
+        if (!confirm('Revoke this invite?')) return;
+        try {
+          const { error } = await adminUserManager.revokeInvite(inviteId);
+          if (error) {
+            alert('Failed to revoke invite: ' + (error.message || ''));
+            return;
+          }
+          await this.loadInvites();
+        } catch (e) {
+          console.error('revokeInvite error:', e);
+          alert('Error revoking invite.');
+        }
       }
 
       async cancelUserSub(userId) {
