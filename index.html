@@ -35,7 +35,7 @@
       --shadow-hover: 10px 10px 0px 0px var(--ink);
       --shadow-brutal: 8px 8px 0px 0px var(--ink);
       --radius-sm: 4px;
-      --max-width: 1200px;
+      --max-width: 1400px;
 
       --space-xs: 8px;
       --space-sm: 16px;
@@ -65,10 +65,102 @@
       margin: 0;
       font-family: 'Inter', sans-serif;
       background-color: #07080f;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
       color: #efe5cd;
       line-height: 1.5;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
+      animation: ambient-grid-drift 24s linear infinite;
+    }
+
+    /* ═══════════════════════════════════════════
+       AMBIENT BACKGROUND ANIMATIONS
+       ═══════════════════════════════════════════ */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      pointer-events: none;
+      background:
+        radial-gradient(640px circle at 15% 22%, rgba(245, 166, 35, 0.55), transparent 42%),
+        radial-gradient(580px circle at 82% 72%, rgba(229, 0, 0, 0.45), transparent 48%),
+        radial-gradient(720px circle at 55% 42%, rgba(167, 139, 250, 0.35), transparent 50%);
+      mix-blend-mode: screen;
+      animation: ambient-orbs 26s ease-in-out infinite;
+      will-change: transform;
+      filter: blur(4px);
+      opacity: 0.65;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: -20%;
+      z-index: 998;
+      pointer-events: none;
+      background:
+        conic-gradient(
+          from 0deg at 60% 40%,
+          rgba(245, 166, 35, 0.20) 0deg,
+          transparent 60deg,
+          rgba(229, 0, 0, 0.22) 160deg,
+          transparent 240deg,
+          rgba(167, 139, 250, 0.20) 320deg,
+          rgba(245, 166, 35, 0.20) 360deg
+        );
+      mix-blend-mode: screen;
+      animation: ambient-shimmer 60s linear infinite;
+      will-change: transform;
+      filter: blur(120px);
+      opacity: 0.55;
+    }
+
+    @keyframes ambient-grid-drift {
+      from { background-position: 0 0, 0 0; }
+      to { background-position: 40px 40px, 40px 40px; }
+    }
+
+    @keyframes ambient-orbs {
+      0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+      33% { transform: translate3d(2%, -2%, 0) scale(1.08); }
+      66% { transform: translate3d(-2%, 3%, 0) scale(1.05); }
+    }
+
+    @keyframes ambient-shimmer {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Sections sit above the ambient layer */
+    .hero,
+    .why-section,
+    .capabilities-section,
+    .howit-section,
+    .transition-zone,
+    .toolkit-section,
+    .pricing-section-dark,
+    .ecosystem-cta,
+    .anchor-pull-section,
+    .anchor-closer,
+    .site-footer {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Cards stay crisp on top */
+    .dark-card,
+    .cap-card,
+    .step-card,
+    .toolkit-card,
+    .pricing-path,
+    .anchor-pull-quote,
+    .nav {
+      position: relative;
+      z-index: 2;
     }
 
     h1, h2, h3, h4, h5, h6 {

@@ -18,7 +18,7 @@
       --shadow-hard: 0 2px 16px rgba(0,0,0,0.25);
       --shadow-hover: 0 8px 40px rgba(0,0,0,0.4);
       --radius-sm: 4px;
-      --max-width: 1100px;
+      --max-width: 1400px;
 
       --space-xs: 8px;
       --space-sm: 16px;
@@ -3135,3 +3135,160 @@
 
 /* Prevent horizontal scroll from offscreen mobile-menu transforms */
 html { overflow-x: hidden; max-width: 100%; }
+
+/* ============================================
+   AMBIENT BACKGROUND ANIMATIONS
+   Added 2026-04-23 — noticeable but not distracting
+   ============================================ */
+
+/* Layer 1: the grid overlay on <body> slowly pans */
+body {
+  animation: ambient-grid-drift 24s linear infinite;
+}
+
+@keyframes ambient-grid-drift {
+  from { background-position: 0 0, 0 0; }
+  to { background-position: 40px 40px, 40px 40px; }
+}
+
+/* Layer 2: 3 floating gradient orbs behind all content.
+   Attached via body::before on a fixed full-viewport layer so scroll
+   doesn't carry them around (they always ambient-drift in place). */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  background:
+    radial-gradient(640px circle at var(--orb-a-x, 15%) var(--orb-a-y, 22%),
+      rgba(245, 166, 35, 0.55), transparent 42%),
+    radial-gradient(580px circle at var(--orb-b-x, 82%) var(--orb-b-y, 72%),
+      rgba(229, 0, 0, 0.45), transparent 48%),
+    radial-gradient(720px circle at var(--orb-c-x, 55%) var(--orb-c-y, 42%),
+      rgba(167, 139, 250, 0.35), transparent 50%);
+  mix-blend-mode: screen;
+  animation: ambient-orbs 26s ease-in-out infinite;
+  will-change: transform, background-position;
+  filter: blur(4px);
+  opacity: 0.65;
+}
+
+/* Light mode: switch blend mode to multiply so orbs tint instead of glow */
+[data-theme='light'] body::before {
+  mix-blend-mode: multiply;
+  opacity: 0.45;
+  background:
+    radial-gradient(640px circle at var(--orb-a-x, 15%) var(--orb-a-y, 22%),
+      rgba(245, 166, 35, 0.55), transparent 42%),
+    radial-gradient(580px circle at var(--orb-b-x, 82%) var(--orb-b-y, 72%),
+      rgba(196, 30, 58, 0.45), transparent 48%),
+    radial-gradient(720px circle at var(--orb-c-x, 55%) var(--orb-c-y, 42%),
+      rgba(79, 142, 247, 0.35), transparent 50%);
+}
+
+@keyframes ambient-orbs {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    --orb-a-x: 15%;  --orb-a-y: 22%;
+    --orb-b-x: 82%;  --orb-b-y: 72%;
+    --orb-c-x: 55%;  --orb-c-y: 42%;
+  }
+  33% {
+    transform: translate3d(2%, -2%, 0) scale(1.08);
+    --orb-a-x: 28%;  --orb-a-y: 14%;
+    --orb-b-x: 68%;  --orb-b-y: 84%;
+    --orb-c-x: 42%;  --orb-c-y: 55%;
+  }
+  66% {
+    transform: translate3d(-2%, 3%, 0) scale(1.05);
+    --orb-a-x: 10%;  --orb-a-y: 35%;
+    --orb-b-x: 90%;  --orb-b-y: 62%;
+    --orb-c-x: 62%;  --orb-c-y: 30%;
+  }
+}
+
+/* Layer 3: a conic shimmer that slowly rotates — adds a sense of depth */
+body::after {
+  content: '';
+  position: fixed;
+  inset: -20%;
+  z-index: 998;
+  pointer-events: none;
+  background:
+    conic-gradient(
+      from 0deg at 60% 40%,
+      rgba(245, 166, 35, 0.20) 0deg,
+      transparent 60deg,
+      rgba(229, 0, 0, 0.22) 160deg,
+      transparent 240deg,
+      rgba(167, 139, 250, 0.20) 320deg,
+      rgba(245, 166, 35, 0.20) 360deg
+    );
+  mix-blend-mode: screen;
+  animation: ambient-shimmer 60s linear infinite;
+  will-change: transform;
+  filter: blur(120px);
+  opacity: 0.55;
+}
+
+[data-theme='light'] body::after {
+  mix-blend-mode: multiply;
+  opacity: 0.25;
+}
+
+@keyframes ambient-shimmer {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Keep hero/section backgrounds above the orbs but respectful of them */
+.hero,
+.sec-what-is,
+.sec-how,
+.sec-capabilities,
+.sec-full-stack,
+.sec-real-world,
+.sec-safety,
+.sec-getting-started,
+.sec-pricing,
+.sec-guarantee,
+.sec-social-proof-new,
+.sec-bundle-contents,
+.sec-bundle-upgrades,
+.sec-bigger-picture,
+.anchor-pull-section,
+.anchor-closer {
+  position: relative;
+  z-index: 1;
+}
+
+/* Cards + nav stay crisp on top of the ambient layer */
+.border-box,
+.pillar-card,
+.step-card,
+.analogy-card,
+.capability-card,
+.commit-card,
+.resource-card,
+.blog-card,
+.anchor-pull-quote,
+.nav,
+.toc-bar {
+  position: relative;
+  z-index: 2;
+}
+
+/* Reduced motion — freeze animations */
+@media (prefers-reduced-motion: reduce) {
+  body {
+    animation: none !important; /* stylelint-disable-line declaration-no-important */
+  }
+  body::before {
+    animation: none !important; /* stylelint-disable-line declaration-no-important */
+    transform: none !important; /* stylelint-disable-line declaration-no-important */
+  }
+  body::after {
+    animation: none !important; /* stylelint-disable-line declaration-no-important */
+  }
+}

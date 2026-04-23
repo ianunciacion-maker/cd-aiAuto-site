@@ -463,6 +463,118 @@ test('marketing-animations.js serves 200', async ({ request }) => {
   expect(body).toContain('IntersectionObserver');
 });
 
+// ───── AMBIENT BACKGROUND ANIMATIONS ─────
+test.describe('Ambient background animations on every page', () => {
+  for (const p of MARKETING_PAGES) {
+    test(`${p.name}: body has drifting grid + pseudo-element orbs + shimmer animations`, async ({
+      page,
+    }) => {
+      await page.goto(p.path);
+      await page.waitForLoadState('load');
+
+      // body element itself runs the grid-drift animation
+      const bodyAnim = await page.evaluate(() => {
+        const cs = getComputedStyle(document.body);
+        return {
+          name: cs.animationName,
+          duration: cs.animationDuration,
+          iteration: cs.animationIterationCount,
+          playState: cs.animationPlayState,
+        };
+      });
+      expect(bodyAnim.name, `${p.name}: body should run an ambient grid animation`).toMatch(
+        /ambient-grid-drift/
+      );
+      expect(bodyAnim.iteration).toBe('infinite');
+      expect(bodyAnim.playState).toBe('running');
+
+      // body::before runs the orb-drift animation
+      const beforeAnim = await page.evaluate(() => {
+        const cs = getComputedStyle(document.body, '::before');
+        return {
+          name: cs.animationName,
+          duration: cs.animationDuration,
+          iteration: cs.animationIterationCount,
+          playState: cs.animationPlayState,
+          blendMode: cs.mixBlendMode,
+          pointerEvents: cs.pointerEvents,
+          position: cs.position,
+        };
+      });
+      expect(beforeAnim.name, `${p.name}: body::before should run ambient-orbs`).toMatch(
+        /ambient-orbs/
+      );
+      expect(beforeAnim.iteration).toBe('infinite');
+      expect(beforeAnim.playState).toBe('running');
+      // Must sit above content via blend mode — screen (dark) or multiply (light)
+      expect(['screen', 'multiply']).toContain(beforeAnim.blendMode);
+      // Must not block clicks
+      expect(beforeAnim.pointerEvents).toBe('none');
+      // Must be fixed (stays put on scroll)
+      expect(beforeAnim.position).toBe('fixed');
+
+      // body::after runs the conic shimmer
+      const afterAnim = await page.evaluate(() => {
+        const cs = getComputedStyle(document.body, '::after');
+        return {
+          name: cs.animationName,
+          iteration: cs.animationIterationCount,
+          playState: cs.animationPlayState,
+          pointerEvents: cs.pointerEvents,
+        };
+      });
+      expect(afterAnim.name, `${p.name}: body::after should run ambient-shimmer`).toMatch(
+        /ambient-shimmer/
+      );
+      expect(afterAnim.iteration).toBe('infinite');
+      expect(afterAnim.playState).toBe('running');
+      expect(afterAnim.pointerEvents).toBe('none');
+    });
+  }
+
+  test('Home: orbs are actually moving over time', async ({ page }) => {
+    await page.goto('/index.html');
+    await page.waitForLoadState('load');
+    // The orb animation runs on transforms of body::before.
+    // We read the currentTime of the animation to prove it's progressing.
+    const first = await page.evaluate(() => {
+      const anims = document.body.getAnimations({ subtree: true });
+      const orb = anims.find((a) => a.animationName === 'ambient-orbs');
+      return orb ? orb.currentTime : null;
+    });
+    expect(first, 'ambient-orbs web animation should be present').not.toBeNull();
+
+    await page.waitForTimeout(600);
+
+    const second = await page.evaluate(() => {
+      const anims = document.body.getAnimations({ subtree: true });
+      const orb = anims.find((a) => a.animationName === 'ambient-orbs');
+      return orb ? orb.currentTime : null;
+    });
+    expect(second, 'orb animation should still be running').not.toBeNull();
+    expect(second).toBeGreaterThan(first);
+  });
+});
+
+// ───── WIDER CONTENT AREA ─────
+test.describe('Container max-width uses modern 1400px', () => {
+  for (const p of MARKETING_PAGES) {
+    test(`${p.name}: .container max-width ≥ 1400px`, async ({ page }) => {
+      await page.goto(p.path);
+      await page.waitForLoadState('load');
+      const maxW = await page.evaluate(() => {
+        const el = document.querySelector('.container, .nav-inner');
+        if (!el) return null;
+        const raw = getComputedStyle(el).maxWidth;
+        if (!raw.endsWith('px')) return null;
+        return parseInt(raw, 10);
+      });
+      expect(maxW, `${p.name}: .container must define a px max-width`).not.toBeNull();
+      expect(maxW).toBeGreaterThanOrEqual(1400);
+    });
+  }
+});
+
 // ───── RESPONSIVE ─────
 test.describe('Responsive check — pages render at mobile width', () => {
   test.use({ viewport: { width: 390, height: 844 } });
