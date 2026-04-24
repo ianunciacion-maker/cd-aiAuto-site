@@ -3,1101 +3,293 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>Tools – Ai-Auto</title>
+  <title>AI Tools – Ai-Auto</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Four AI tools replacing four full-time roles — available standalone or free with a ClawLauncher install." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Playfair+Display:wght@500;600;700;900&display=swap"
-    rel="stylesheet">
-  <link rel="stylesheet" href="./css/components/navigation.css">
-
-  <style>
-    :root {
-      /* Neobrutalist Palette */
-      --bg-paper: #f2f0e9;
-      --bg-white: #ffffff;
-      --ink: #121212;
-      --blue: #2357ff;
-      --gold: #ffcc00;
-      --coral: #ff6b58;
-      --lavender: #dcd6f7;
-      --green: #00d084;
-      --pink: #ff4d9e;
-      --purple: #8b5cf6;
-
-      /* Structural Variables */
-      --border-thick: 3px solid var(--ink);
-      --border-thin: 2px solid var(--ink);
-      --shadow-hard: 6px 6px 0px 0px var(--ink);
-      --shadow-hover: 10px 10px 0px 0px var(--ink);
-      --shadow-brutal: 8px 8px 0px 0px var(--ink);
-      --radius-sm: 4px;
-      --max-width: 1200px;
-
-      /* Spacing */
-      --space-xs: 8px;
-      --space-sm: 16px;
-      --space-md: 32px;
-      --space-lg: 64px;
-      --space-xl: 128px;
-    }
-
-    [data-theme="dark"] {
-      --bg-paper: #0a0a0a;
-      --bg-white: #1a1a1a;
-      --ink: #f0f0f0;
-      --blue: #4d7aff;
-      --gold: #ffd633;
-      --coral: #ff8c7a;
-      --lavender: #2a2a40;
-      --green: #00ff9f;
-      --pink: #ff6bb5;
-      --purple: #a78bfa;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background-color: var(--bg-paper);
-      color: var(--ink);
-      line-height: 1.5;
-      overflow-x: hidden;
-    }
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      font-family: 'Playfair Display', serif;
-      margin: 0;
-      font-weight: 900;
-      line-height: 1.1;
-    }
-
-    p {
-      margin: 0 0 var(--space-sm);
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    img {
-      max-width: 100%;
-      display: block;
-      border: var(--border-thin);
-    }
-
-    /* UTILITIES */
-    .container {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 0 var(--space-md);
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 14px 28px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      border: var(--border-thick);
-      background: var(--blue);
-      color: #fff;
-      box-shadow: var(--shadow-hard);
-      cursor: pointer;
-      transition: all 0.2s;
-      font-size: 14px;
-    }
-
-    .btn:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: var(--shadow-hover);
-      filter: brightness(1.1);
-    }
-
-    .btn-outline {
-      background: transparent;
-      color: var(--ink);
-    }
-
-    .btn-gold {
-      background: var(--gold);
-      color: #000;
-    }
-
-    .tag {
-      display: inline-block;
-      padding: 4px 12px;
-      border: var(--border-thin);
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-    }
-
-
-    /* HERO */
-    .hero {
-      padding: var(--space-xl) 0;
-      border-bottom: var(--border-thick);
-      background: var(--bg-white);
-      text-align: center;
-    }
-
-    .hero h1 {
-      font-size: clamp(56px, 10vw, 96px);
-      margin-bottom: var(--space-md);
-      text-transform: uppercase;
-      letter-spacing: -0.02em;
-    }
-
-    .hero h1 .highlight {
-      display: inline-block;
-      background: var(--gold);
-      color: #000;
-      padding: 0 16px;
-      transform: rotate(-1deg);
-      border: var(--border-thick);
-      box-shadow: var(--shadow-brutal);
-    }
-
-    .hero-subtitle {
-      font-size: 20px;
-      max-width: 700px;
-      margin: 0 auto var(--space-lg);
-      font-weight: 600;
-    }
-
-    /* CATEGORY SECTION */
-    .category-section {
-      padding: var(--space-xl) 0;
-      border-bottom: var(--border-thick);
-    }
-
-    .category-section:nth-child(even) {
-      background: var(--bg-white);
-    }
-
-    .category-header {
-      margin-bottom: var(--space-lg);
-    }
-
-    .category-header h2 {
-      font-size: 48px;
-      margin-bottom: var(--space-sm);
-      text-transform: uppercase;
-    }
-
-    .category-header p {
-      font-size: 18px;
-      opacity: 0.7;
-      max-width: 600px;
-    }
-
-    .tools-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      gap: var(--space-lg);
-    }
-
-    .tool-card {
-      border: var(--border-thick);
-      background: var(--bg-paper);
-      padding: var(--space-lg);
-      box-shadow: var(--shadow-brutal);
-      transition: all 0.2s;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .tool-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 8px;
-    }
-
-    .tool-card.blue::before {
-      background: var(--blue);
-    }
-
-    .tool-card.coral::before {
-      background: var(--coral);
-    }
-
-    .tool-card.gold::before {
-      background: var(--gold);
-    }
-
-    .tool-card.green::before {
-      background: var(--green);
-    }
-
-    .tool-card.purple::before {
-      background: var(--purple);
-    }
-
-    .tool-card.pink::before {
-      background: var(--pink);
-    }
-
-    .tool-card:hover {
-      transform: translate(-4px, -4px);
-      box-shadow: 12px 12px 0 var(--ink);
-    }
-
-    .tool-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: start;
-      margin-bottom: var(--space-md);
-      padding-bottom: var(--space-sm);
-      border-bottom: var(--border-thick);
-    }
-
-    .tool-badge {
-      background: var(--blue);
-      color: #fff;
-      padding: 4px 12px;
-      border: var(--border-thin);
-      font-size: 10px;
-      font-weight: 700;
-      text-transform: uppercase;
-    }
-
-    .tool-card h3 {
-      font-size: 28px;
-      margin-bottom: 8px;
-    }
-
-    .tool-price {
-      font-size: 24px;
-      font-weight: 900;
-      color: var(--blue);
-      font-family: 'Playfair Display', serif;
-    }
-
-    .tool-description {
-      font-size: 15px;
-      line-height: 1.6;
-      margin-bottom: var(--space-md);
-    }
-
-    .tool-features {
-      list-style: none;
-      padding: 0;
-      margin: var(--space-md) 0;
-    }
-
-    .tool-features li {
-      padding: 8px 0;
-      border-bottom: 1px solid var(--ink);
-      font-weight: 600;
-      font-size: 14px;
-    }
-
-    .tool-features li::before {
-      content: '→';
-      margin-right: 8px;
-      color: var(--blue);
-      font-weight: 900;
-    }
-
-    .tool-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 700;
-      text-transform: uppercase;
-      font-size: 13px;
-      color: var(--blue);
-      border-bottom: 2px solid var(--blue);
-      padding-bottom: 2px;
-    }
-
-    .tool-cta:hover {
-      transform: translateX(4px);
-    }
-
-    /* PRICING TABLE */
-    .pricing-section {
-      padding: var(--space-xl) 0;
-      background: var(--bg-white);
-      border-bottom: var(--border-thick);
-    }
-
-    .pricing-header {
-      text-align: center;
-      margin-bottom: var(--space-lg);
-    }
-
-    .pricing-header h2 {
-      font-size: 64px;
-      margin-bottom: var(--space-sm);
-      text-transform: uppercase;
-    }
-
-    .pricing-table {
-      border: var(--border-thick);
-      background: var(--bg-paper);
-      overflow: hidden;
-    }
-
-    .pricing-row {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr;
-      border-bottom: var(--border-thin);
-      transition: background 0.2s;
-    }
-
-    .pricing-row:last-child {
-      border-bottom: none;
-    }
-
-    .pricing-row:hover {
-      background: var(--gold);
-    }
-
-    .pricing-cell {
-      padding: var(--space-md);
-      border-right: var(--border-thin);
-    }
-
-    .pricing-cell:last-child {
-      border-right: none;
-    }
-
-    .pricing-row.header {
-      background: var(--ink);
-      color: var(--bg-paper);
-    }
-
-    .pricing-row.header:hover {
-      background: var(--ink);
-    }
-
-    .pricing-tool-name {
-      font-weight: 900;
-      font-size: 18px;
-      margin-bottom: 4px;
-    }
-
-    .pricing-tool-type {
-      font-size: 12px;
-      opacity: 0.7;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .pricing-price {
-      font-size: 28px;
-      font-weight: 900;
-      font-family: 'Playfair Display', serif;
-      color: var(--blue);
-      text-align: center;
-    }
-
-    .pricing-row:hover .pricing-price {
-      color: var(--ink);
-    }
-
-    /* FEATURES GRID */
-    .features-section {
-      padding: var(--space-xl) 0;
-      background: var(--bg-paper);
-      border-bottom: var(--border-thick);
-    }
-
-    .features-header {
-      text-align: center;
-      margin-bottom: var(--space-lg);
-    }
-
-    .features-header h2 {
-      font-size: 64px;
-      margin-bottom: var(--space-sm);
-      text-transform: uppercase;
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: var(--space-lg);
-    }
-
-    .feature-card {
-      border: var(--border-thick);
-      background: var(--bg-white);
-      padding: var(--space-md);
-      transition: all 0.2s;
-      position: relative;
-    }
-
-    .feature-card:hover {
-      transform: rotate(-2deg) scale(1.05);
-      z-index: 10;
-      box-shadow: var(--shadow-brutal);
-    }
-
-    .feature-icon {
-      width: 80px;
-      height: 80px;
-      border: var(--border-thick);
-      background: var(--ink);
-      color: var(--bg-paper);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 40px;
-      margin-bottom: var(--space-md);
-    }
-
-    .feature-card:nth-child(1) .feature-icon {
-      background: var(--blue);
-    }
-
-    .feature-card:nth-child(2) .feature-icon {
-      background: var(--coral);
-    }
-
-    .feature-card:nth-child(3) .feature-icon {
-      background: var(--gold);
-      color: #000;
-    }
-
-    .feature-card:nth-child(4) .feature-icon {
-      background: var(--green);
-      color: #000;
-    }
-
-    .feature-card:nth-child(5) .feature-icon {
-      background: var(--purple);
-    }
-
-    .feature-card:nth-child(6) .feature-icon {
-      background: var(--pink);
-    }
-
-    .feature-card h3 {
-      font-size: 24px;
-      margin-bottom: var(--space-sm);
-    }
-
-    .feature-card p {
-      font-size: 15px;
-      line-height: 1.6;
-    }
-
-    /* COMPARISON TABLE */
-    .comparison-section {
-      padding: var(--space-xl) 0;
-      background: var(--bg-white);
-      border-bottom: var(--border-thick);
-    }
-
-    .comparison-header {
-      text-align: center;
-      margin-bottom: var(--space-lg);
-    }
-
-    .comparison-header h2 {
-      font-size: 64px;
-      margin-bottom: var(--space-sm);
-      text-transform: uppercase;
-    }
-
-    .comparison-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: var(--space-md);
-    }
-
-    .plan-card {
-      border: var(--border-thick);
-      background: var(--bg-paper);
-      overflow: hidden;
-    }
-
-    .plan-card.featured {
-      transform: scale(1.05);
-      z-index: 2;
-    }
-
-    .plan-header {
-      background: var(--ink);
-      color: var(--bg-paper);
-      padding: var(--space-md);
-      text-align: center;
-      border-bottom: var(--border-thick);
-    }
-
-    .plan-card.featured .plan-header {
-      background: var(--blue);
-    }
-
-    .plan-header h3 {
-      font-size: 24px;
-      margin-bottom: 8px;
-      text-transform: uppercase;
-    }
-
-    .plan-price {
-      font-size: 48px;
-      font-weight: 900;
-      font-family: 'Playfair Display', serif;
-      margin-bottom: 4px;
-    }
-
-    .plan-period {
-      font-size: 14px;
-      opacity: 0.8;
-    }
-
-    .plan-body {
-      padding: var(--space-md);
-    }
-
-    .plan-features {
-      list-style: none;
-      padding: 0;
-      margin: 0 0 var(--space-md);
-    }
-
-    .plan-features li {
-      padding: 12px 0;
-      border-bottom: 1px solid var(--ink);
-      font-weight: 600;
-    }
-
-    .plan-features li::before {
-      content: '✓';
-      margin-right: 8px;
-      color: var(--green);
-      font-weight: 900;
-    }
-
-    /* FOOTER CTA */
-    .footer-cta {
-      background: var(--blue);
-      color: #fff;
-      padding: var(--space-xl) 0;
-      text-align: center;
-      border-bottom: var(--border-thick);
-    }
-
-    .footer-cta h2 {
-      font-size: 80px;
-      margin-bottom: var(--space-md);
-      text-shadow: 6px 6px 0 var(--ink);
-      text-transform: uppercase;
-    }
-
-    .footer-cta p {
-      font-size: 24px;
-      margin-bottom: var(--space-lg);
-      font-weight: 600;
-    }
-
-    /* SITE FOOTER */
-    .site-footer {
-      background: var(--ink);
-      color: var(--bg-paper);
-      padding: var(--space-lg) 0;
-    }
-
-    .footer-inner {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr;
-      gap: var(--space-lg);
-    }
-
-    .footer-brand h3 {
-      font-size: 32px;
-      margin-bottom: var(--space-sm);
-    }
-
-    .footer-links h4 {
-      font-size: 16px;
-      margin-bottom: var(--space-sm);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .footer-links ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .footer-links li {
-      margin-bottom: 8px;
-    }
-
-    .footer-links a:hover {
-      text-decoration: underline;
-    }
-
-    .footer-bottom {
-      margin-top: var(--space-lg);
-      padding-top: var(--space-md);
-      border-top: 2px solid var(--bg-paper);
-      text-align: center;
-      font-weight: 700;
-    }
-
-    /* COMING SOON BANNER */
-    .coming-soon-banner {
-      position: absolute;
-      top: 20px;
-      right: -40px;
-      width: 200px;
-      height: 40px;
-      background: linear-gradient(135deg, var(--coral) 0%, var(--pink) 100%);
-      transform: rotate(45deg);
-      z-index: 10;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 4px 4px 0px 0px var(--ink);
-      border: 3px solid var(--ink);
-      overflow: hidden;
-    }
-
-    .banner-content {
-      color: #fff;
-      font-weight: 900;
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      white-space: nowrap;
-      animation: slideText 3s linear infinite;
-      padding-left: 100%;
-    }
-
-    @keyframes slideText {
-      0% {
-        transform: translateX(0);
-      }
-
-      100% {
-        transform: translateX(-100%);
-      }
-    }
-
-    /* RESPONSIVE */
-    @media (max-width: 900px) {
-
-      .tools-grid,
-      .features-grid,
-      .comparison-grid {
-        grid-template-columns: 1fr;
-        gap: var(--space-md);
-      }
-
-      .tool-card {
-        padding: var(--space-md);
-      }
-
-      .pricing-row {
-        grid-template-columns: 1fr;
-      }
-
-      .pricing-cell {
-        border-right: none;
-        border-bottom: var(--border-thin);
-      }
-
-      .hero h1 {
-        font-size: 48px;
-      }
-
-      .category-header h2,
-      .pricing-header h2,
-      .features-header h2,
-      .comparison-header h2 {
-        font-size: 40px;
-      }
-
-      .footer-inner {
-        grid-template-columns: 1fr;
-      }
-
-
-      .plan-card.featured {
-        transform: scale(1);
-      }
-    }
-
-    @media (max-width: 768px) {
-      .coming-soon-banner {
-        top: 15px;
-        right: -30px;
-        width: 150px;
-        height: 30px;
-      }
-
-      .banner-content {
-        font-size: 10px;
-      }
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@500;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/components/navigation.css">
+  <link rel="stylesheet" href="css/clawlauncher.css">
 </head>
 
 <body>
 
-  <!-- NAV -->
+  <!-- NAV (injected by navigation.js) -->
 
-  <!-- HERO -->
+  <!-- ========== HERO ========== -->
   <section class="hero">
     <div class="container">
-      <div class="tag" style="margin-bottom: 24px; background: var(--blue); color: #fff;">Tools</div>
-      <h1>
-        Your <span class="highlight">Automation</span><br>
-        Toolkit
-      </h1>
-      <p class="hero-subtitle">
-        Discover powerful AI tools to streamline your workflow, boost productivity, and scale your operations with
-        intelligent automation.
-      </p>
-    </div>
-  </section>
-
-  <!-- CORE TOOLS -->
-  <section class="category-section">
-    <div class="container">
-      <div class="category-header">
-        <h2>AI Content Creation Tools</h2>
-        <p>Premium automation for serious builders. Individual tools for specific content needs.</p>
-      </div>
-      <div class="tools-grid">
-        <div class="tool-card blue">
-          <div class="tool-header">
-            <div>
-              <div class="tool-badge">Writing Tool</div>
-              <h3>Blog Generator</h3>
-            </div>
+      <div class="hero-split">
+        <div>
+          <div class="anchor-tagline">&ldquo;Business as we know it will never be the same.&rdquo;</div>
+          <div class="hero-badges">
+            <span class="hero-tag">Your Automation Toolkit</span>
+            <span class="hero-tag-launch">&#128293; Free with ClawLauncher</span>
           </div>
-          <p class="tool-description">
-            Generate engaging blog posts with AI. Perfect for content marketers, bloggers, and businesses looking to
-            scale their content production.
+          <h1>
+            Four AI tools. <br>
+            <span class="gradient-text">Four full-time roles</span> replaced.
+          </h1>
+          <p class="hero-subtitle">
+            Each tool below replaces a specialist you used to hire at <strong>$65K&ndash;$140K loaded</strong>. Rent them by the month &mdash; or get all four <strong>free when you install ClawLauncher</strong>.
           </p>
-          <ul class="tool-features">
-            <li>SEO-optimized blog posts</li>
-            <li>Multiple tone and style options</li>
-            <li>Keyword integration</li>
-            <li>Custom length control</li>
-          </ul>
-          <a href="tools/blog-generator.html" class="tool-cta">Generate Blog Post →</a>
-        </div>
-
-        <div class="tool-card coral">
-          <div class="tool-header">
-            <div>
-              <div class="tool-badge">Social Tool</div>
-              <h3>Social Captions</h3>
-            </div>
+          <p class="hero-stats">
+            4 Tools &nbsp;&middot;&nbsp; $29&ndash;$49/month standalone &nbsp;&middot;&nbsp; Free with ClawLauncher
+          </p>
+          <div class="hero-buttons">
+            <a href="openclaw.html" class="btn btn-lobster-cta">Install ClawLauncher &mdash; get all four free &rarr;</a>
+            <a href="#tools" class="btn btn-outline">Or pick one standalone &darr;</a>
           </div>
-          <p class="tool-description">
-            Create compelling social media captions for all platforms. Instagram, Twitter, LinkedIn, Facebook, and
-            TikTok ready content.
-          </p>
-          <ul class="tool-features">
-            <li>Platform-specific optimization</li>
-            <li>Hashtag suggestions</li>
-            <li>Multiple tone options</li>
-            <li>Emoji integration</li>
-          </ul>
-          <a href="tools/social-captions.html" class="tool-cta">Create Social Captions →</a>
         </div>
-
-        <div class="tool-card gold">
-          <div class="tool-header">
-            <div>
-              <div class="tool-badge">Email Tool</div>
-              <h3>Email Campaigns</h3>
-            </div>
-          </div>
-          <p class="tool-description">
-            Craft professional email campaigns that convert. From newsletters to promotional emails, create content that
-            drives action.
-          </p>
-          <ul class="tool-features">
-            <li>Multiple email templates</li>
-            <li>Subject line optimization</li>
-            <li>Call-to-action generation</li>
-            <li>Audience targeting</li>
-          </ul>
-          <a href="tools/email-campaigns.html" class="tool-cta">Create Email Campaigns →</a>
-        </div>
-
-        <div class="tool-card green">
-          <div class="tool-header">
-            <div>
-              <div class="tool-badge">E-commerce Tool</div>
-              <h3>Product Descriptions</h3>
-            </div>
-          </div>
-          <p class="tool-description">
-            Write compelling product descriptions that sell. Perfect for e-commerce stores, marketplaces, and product
-            catalogs.
-          </p>
-          <ul class="tool-features">
-            <li>SEO-friendly descriptions</li>
-            <li>Multiple tone options</li>
-            <li>Feature highlighting</li>
-            <li>Benefit-focused copy</li>
-          </ul>
-          <a href="tools/product-descriptions.html" class="tool-cta">Generate Product Descriptions →</a>
-        </div>
+        <figure class="image-frame image-frame--wide reveal" style="margin: 0;">
+          <img src="images/stock/ops_dashboard.jpg" alt="A live ops dashboard — the kind of workflow these tools automate." loading="lazy">
+        </figure>
       </div>
     </div>
   </section>
 
-  <!-- UNSTOPPABLE MARKETING ENGINE -->
-  <section class="category-section">
+  <!-- ========== STICKY TOC ========== -->
+  <div class="toc-bar">
+    <div class="toc-inner">
+      <a href="#tools" class="toc-pill toc-link" data-section="tools">Core Tools</a>
+      <a href="#roadmap" class="toc-pill toc-link" data-section="roadmap">Roadmap</a>
+      <a href="#features" class="toc-pill toc-link" data-section="features">Features</a>
+      <a href="#get-early-access" class="toc-pill toc-link" data-section="get-early-access">Early Access</a>
+    </div>
+  </div>
+
+  <!-- ========== CORE TOOLS ========== -->
+  <section class="sec-what-is" id="tools">
     <div class="container">
-      <div class="category-header">
-        <h2>Roadmap: The Marketing Engine</h2>
-        <p>Complete 4-step automated system coming soon. Scale your content creation and distribution across every
-          platform.</p>
-      </div>
-      <div class="tools-grid">
+      <div class="tag" style="margin-bottom: var(--space-sm);">AI Content Creation</div>
+      <h2 class="section-title">Premium automation for <span class="gradient-text-blue">serious builders</span></h2>
+      <p class="section-subtitle">Individual tools for specific content needs. Each one replaces a real role your company used to hire for. Buy standalone, or get all four free with a ClawLauncher install.</p>
 
-        <!-- Card 1: Ideation (Blue) -->
-        <div class="tool-card blue" style="position: relative; overflow: hidden;">
-          <!-- Coming Soon Banner -->
-          <div class="coming-soon-banner">
-            <div class="banner-content">
-              🚀 COMING SOON
-            </div>
-          </div>
-
-          <div class="tool-header">
-            <div>
-              <div class="tool-badge">Step 1: Research</div>
-              <h3>🕵️ Ideation (The Spy)</h3>
-            </div>
-          </div>
-          <p class="tool-description">
-            Use AI Deep Research to uncover profitable niches, trending topics, and audience pain points.
-          </p>
+      <div class="pillars-grid" style="grid-template-columns: repeat(2, 1fr);">
+        <div class="pillar-card reveal">
+          <div class="accent-bar" style="background: var(--blue);"></div>
+          <div class="tag" style="margin-bottom: var(--space-xs);">Writing Tool</div>
+          <h4 style="font-size: 28px; margin-bottom: var(--space-sm);">Blog Generator</h4>
+          <p style="margin-bottom: var(--space-sm);">Generate engaging blog posts with AI. Perfect for content marketers, bloggers, and businesses looking to scale their content production.</p>
+          <ul style="list-style: none; padding: 0; margin: var(--space-sm) 0; font-size: 14px; color: var(--body);">
+            <li style="padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05);"><span style="color: var(--blue); font-weight: 900; margin-right: 8px;">&rarr;</span>SEO-optimized blog posts</li>
+            <li style="padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05);"><span style="color: var(--blue); font-weight: 900; margin-right: 8px;">&rarr;</span>Multiple tone and style options</li>
+            <li style="padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05);"><span style="color: var(--blue); font-weight: 900; margin-right: 8px;">&rarr;</span>Keyword integration</li>
+            <li style="padding: 6px 0;"><span style="color: var(--blue); font-weight: 900; margin-right: 8px;">&rarr;</span>Custom length control</li>
+          </ul>
+          <a href="tools/blog-generator.html" class="btn btn-outline">Generate Blog Post &rarr;</a>
         </div>
 
-        <!-- Card 2: Creation (Coral) -->
-        <div class="tool-card coral" style="position: relative; overflow: hidden;">
-          <!-- Coming Soon Banner -->
-          <div class="coming-soon-banner">
-            <div class="banner-content">
-              🚀 COMING SOON
-            </div>
-          </div>
-
-          <div class="tool-header">
-            <div>
-              <div class="tool-badge">Step 2: Content</div>
-              <h3>🏭 Creation (The Factory)</h3>
-            </div>
-          </div>
-          <p class="tool-description">
-            AI generates comprehensive, high-quality content tailored to your target audience.
-          </p>
+        <div class="pillar-card reveal">
+          <div class="accent-bar" style="background: var(--coral);"></div>
+          <div class="tag" style="margin-bottom: var(--space-xs); background: rgba(229, 80, 64, 0.12); color: var(--coral); border-color: rgba(229, 80, 64, 0.25);">Social Tool</div>
+          <h4 style="font-size: 28px; margin-bottom: var(--space-sm);">Social Captions</h4>
+          <p style="margin-bottom: var(--space-sm);">Create compelling social media captions for every platform. Instagram, Twitter, LinkedIn, Facebook, and TikTok-ready content.</p>
+          <ul style="list-style: none; padding: 0; margin: var(--space-sm) 0; font-size: 14px; color: var(--body);">
+            <li style="padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05);"><span style="color: var(--coral); font-weight: 900; margin-right: 8px;">&rarr;</span>Platform-specific optimization</li>
+            <li style="padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05);"><span style="color: var(--coral); font-weight: 900; margin-right: 8px;">&rarr;</span>Hashtag suggestions</li>
+            <li style="padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05);"><span style="color: var(--coral); font-weight: 900; margin-right: 8px;">&rarr;</span>Multiple tone options</li>
+            <li style="padding: 6px 0;"><span style="color: var(--coral); font-weight: 900; margin-right: 8px;">&rarr;</span>Emoji integration</li>
+          </ul>
+          <a href="tools/social-captions.html" class="btn btn-outline">Create Social Captions &rarr;</a>
         </div>
 
-        <!-- Card 3: Multiplication (Gold) -->
-        <div class="tool-card gold" style="position: relative; overflow: hidden;">
-          <!-- Coming Soon Banner -->
-          <div class="coming-soon-banner">
-            <div class="banner-content">
-              🚀 COMING SOON
-            </div>
-          </div>
-
-          <div class="tool-header">
-            <div>
-              <div class="tool-badge">Step 3: Adaptation</div>
-              <h3>⚡️ Multiplication (The Cloner)</h3>
-            </div>
-          </div>
-          <p class="tool-description">
-            Transform one piece of content into unlimited variations. Adapt for every platform automatically.
-          </p>
+        <div class="pillar-card reveal">
+          <div class="accent-bar" style="background: var(--gold);"></div>
+          <div class="tag" style="margin-bottom: var(--space-xs);">Email Tool</div>
+          <h4 style="font-size: 28px; margin-bottom: var(--space-sm);">Email Campaigns</h4>
+          <p style="margin-bottom: var(--space-sm);">Craft professional email campaigns that convert. Newsletters, promotional emails, and sequences that drive action.</p>
+          <ul style="list-style: none; padding: 0; margin: var(--space-sm) 0; font-size: 14px; color: var(--body);">
+            <li style="padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05);"><span style="color: var(--gold); font-weight: 900; margin-right: 8px;">&rarr;</span>Multiple email templates</li>
+            <li style="padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05);"><span style="color: var(--gold); font-weight: 900; margin-right: 8px;">&rarr;</span>Subject line optimization</li>
+            <li style="padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05);"><span style="color: var(--gold); font-weight: 900; margin-right: 8px;">&rarr;</span>Call-to-action generation</li>
+            <li style="padding: 6px 0;"><span style="color: var(--gold); font-weight: 900; margin-right: 8px;">&rarr;</span>Audience targeting</li>
+          </ul>
+          <a href="tools/email-campaigns.html" class="btn btn-outline">Create Email Campaigns &rarr;</a>
         </div>
 
-        <!-- Card 4: Distribution (Green) -->
-        <div class="tool-card green" style="position: relative; overflow: hidden;">
-          <!-- Coming Soon Banner -->
-          <div class="coming-soon-banner">
-            <div class="banner-content">
-              🚀 COMING SOON
-            </div>
-          </div>
-
-          <div class="tool-header">
-            <div>
-              <div class="tool-badge">Step 4: Automation</div>
-              <h3>🚀 Distribution (The Cannon)</h3>
-            </div>
-          </div>
-          <p class="tool-description">
-            Deploy content across 50+ platforms with N8N/Zapier automation. Schedule and track performance on autopilot.
-          </p>
+        <div class="pillar-card reveal">
+          <div class="accent-bar" style="background: var(--green);"></div>
+          <div class="tag" style="margin-bottom: var(--space-xs); background: rgba(3, 255, 167, 0.12); color: var(--green); border-color: rgba(3, 255, 167, 0.25);">E-commerce Tool</div>
+          <h4 style="font-size: 28px; margin-bottom: var(--space-sm);">Product Descriptions</h4>
+          <p style="margin-bottom: var(--space-sm);">Write compelling product descriptions that sell. Perfect for e-commerce stores, marketplaces, and product catalogs.</p>
+          <ul style="list-style: none; padding: 0; margin: var(--space-sm) 0; font-size: 14px; color: var(--body);">
+            <li style="padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05);"><span style="color: var(--green); font-weight: 900; margin-right: 8px;">&rarr;</span>SEO-friendly descriptions</li>
+            <li style="padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05);"><span style="color: var(--green); font-weight: 900; margin-right: 8px;">&rarr;</span>Multiple tone options</li>
+            <li style="padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05);"><span style="color: var(--green); font-weight: 900; margin-right: 8px;">&rarr;</span>Feature highlighting</li>
+            <li style="padding: 6px 0;"><span style="color: var(--green); font-weight: 900; margin-right: 8px;">&rarr;</span>Benefit-focused copy</li>
+          </ul>
+          <a href="tools/product-descriptions.html" class="btn btn-outline">Generate Product Descriptions &rarr;</a>
         </div>
-
       </div>
 
-      <!-- WAITLIST CTA -->
-      <div
-        style="margin-top: var(--space-xl); text-align: center; max-width: 600px; margin-left: auto; margin-right: auto;">
-        <h3 style="font-size: 24px; margin-bottom: var(--space-sm); text-transform: uppercase;">Get Early Access</h3>
-        <p style="margin-bottom: var(--space-md); opacity: 0.8;">Join the waitlist to be notified when the full engine
-          launches.</p>
-
-        <form id="waitlistForm" style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;">
-          <input type="email" id="waitlistEmail" placeholder="Enter your email" required
-            style="flex: 1; min-width: 250px; padding: 14px 16px; border: var(--border-thick); font-size: 16px;">
-          <button type="submit" class="btn">Notify Me</button>
-        </form>
-        <p id="waitlistSuccess" style="display: none; margin-top: 16px; color: var(--green); font-weight: 700;">Thanks!
-          You've been added to the list.</p>
+      <!-- Anchor quote 2 — ClawLauncher pitch -->
+      <div class="anchor-pull-quote reveal">
+        <p>
+          &ldquo;ClawLauncher automates new startups as it <span class="accent">lowers expenses</span> and <span class="accent">increases revenue</span> for any business.&rdquo;
+        </p>
+        <span class="anchor-pull-quote__caption">— Get all four tools free when you install it.</span>
       </div>
-
     </div>
   </section>
 
-  <!-- Script for Waitlist -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="./supabase.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const waitlistForm = document.getElementById('waitlistForm');
-      const waitlistSuccess = document.getElementById('waitlistSuccess');
-
-      if (waitlistForm) {
-        waitlistForm.addEventListener('submit', async (e) => {
-          e.preventDefault();
-          const email = document.getElementById('waitlistEmail').value;
-          const btn = waitlistForm.querySelector('button');
-
-          btn.textContent = 'Joining...';
-          btn.disabled = true;
-
-          try {
-            // Attempt to save to database if table exists via global window.supabase (idempotent)
-            if (window.supabase) {
-              const { error } = await window.supabase.from('waitlist').insert([{
-                email,
-                source: 'tools_page'
-              }]);
-              if (error) throw error;
-            }
-          } catch (err) {
-            console.log('Waitlist error:', err);
-          }
-
-          // Always show success to user for positive UX
-          waitlistForm.style.display = 'none';
-          waitlistSuccess.style.display = 'block';
-        });
-      }
-    });
-  </script>
-
-  <!-- FEATURES -->
-  <section class="features-section">
+  <!-- ========== ROADMAP ========== -->
+  <section class="sec-capabilities" id="roadmap">
     <div class="container">
-      <div class="features-header">
-        <h2>Key Features</h2>
-        <p style="font-size: 18px; opacity: 0.7;">What makes our tools different</p>
-      </div>
-      <div class="features-grid">
-        <div class="feature-card">
-          <div class="feature-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-            </svg>
+      <div class="tag" style="background: rgba(167, 139, 250, 0.1); color: #a78bfa; border-color: rgba(167, 139, 250, 0.25); margin-bottom: var(--space-sm);">Roadmap</div>
+      <h2 class="section-title">The <span class="gradient-text-purple">Marketing Engine</span></h2>
+      <p class="section-subtitle">A complete 4-step automated system coming soon. Scale your content creation and distribution across every platform.</p>
+
+      <div class="capabilities-grid" style="grid-template-columns: repeat(4, 1fr);">
+        <div class="capability-card reveal">
+          <div class="capability-header" style="background: rgba(79, 142, 247, 0.08); border-bottom-color: rgba(79, 142, 247, 0.2);">
+            <span class="capability-icon">&#128373;&#65039;</span>
+            <span>Ideation</span>
           </div>
-          <h3>Lightning Fast</h3>
+          <div class="capability-body">
+            <div class="tag" style="background: rgba(255, 255, 255, 0.04); color: var(--ink-muted); border-color: #302e2b; margin-bottom: var(--space-xs); font-size: 10px;">Step 1 · Research</div>
+            <p style="color: var(--body); font-size: 14px;">Use AI Deep Research to uncover profitable niches, trending topics, and audience pain points.</p>
+            <div class="tag" style="background: rgba(245, 166, 35, 0.12); color: var(--gold); border-color: rgba(245, 166, 35, 0.25); font-size: 10px;">&#128640; Coming Soon</div>
+          </div>
+        </div>
+        <div class="capability-card reveal">
+          <div class="capability-header" style="background: rgba(229, 80, 64, 0.12); border-bottom-color: rgba(229, 80, 64, 0.25);">
+            <span class="capability-icon">&#127981;</span>
+            <span>Creation</span>
+          </div>
+          <div class="capability-body">
+            <div class="tag" style="background: rgba(255, 255, 255, 0.04); color: var(--ink-muted); border-color: #302e2b; margin-bottom: var(--space-xs); font-size: 10px;">Step 2 · Content</div>
+            <p style="color: var(--body); font-size: 14px;">AI generates comprehensive, high-quality content tailored to your target audience.</p>
+            <div class="tag" style="background: rgba(245, 166, 35, 0.12); color: var(--gold); border-color: rgba(245, 166, 35, 0.25); font-size: 10px;">&#128640; Coming Soon</div>
+          </div>
+        </div>
+        <div class="capability-card reveal">
+          <div class="capability-header" style="background: rgba(245, 166, 35, 0.1); border-bottom-color: rgba(245, 166, 35, 0.25);">
+            <span class="capability-icon">&#9889;&#65039;</span>
+            <span>Multiplication</span>
+          </div>
+          <div class="capability-body">
+            <div class="tag" style="background: rgba(255, 255, 255, 0.04); color: var(--ink-muted); border-color: #302e2b; margin-bottom: var(--space-xs); font-size: 10px;">Step 3 · Adapt</div>
+            <p style="color: var(--body); font-size: 14px;">Transform one piece of content into unlimited variations. Adapt for every platform automatically.</p>
+            <div class="tag" style="background: rgba(245, 166, 35, 0.12); color: var(--gold); border-color: rgba(245, 166, 35, 0.25); font-size: 10px;">&#128640; Coming Soon</div>
+          </div>
+        </div>
+        <div class="capability-card reveal">
+          <div class="capability-header" style="background: rgba(3, 255, 167, 0.1); border-bottom-color: rgba(3, 255, 167, 0.25);">
+            <span class="capability-icon">&#128640;</span>
+            <span>Distribution</span>
+          </div>
+          <div class="capability-body">
+            <div class="tag" style="background: rgba(255, 255, 255, 0.04); color: var(--ink-muted); border-color: #302e2b; margin-bottom: var(--space-xs); font-size: 10px;">Step 4 · Automate</div>
+            <p style="color: var(--body); font-size: 14px;">Deploy content across 50+ platforms with automation. Schedule and track performance on autopilot.</p>
+            <div class="tag" style="background: rgba(245, 166, 35, 0.12); color: var(--gold); border-color: rgba(245, 166, 35, 0.25); font-size: 10px;">&#128640; Coming Soon</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FEATURES ========== -->
+  <section class="sec-what-is" id="features">
+    <div class="container">
+      <div class="tag" style="background: rgba(3, 255, 167, 0.12); color: var(--green); border-color: rgba(3, 255, 167, 0.25); margin-bottom: var(--space-sm);">What sets us apart</div>
+      <h2 class="section-title">Key <span class="gradient-text-green">Features</span></h2>
+      <p class="section-subtitle">What makes our tools different from everything else in your &ldquo;to evaluate&rdquo; folder.</p>
+
+      <div class="pillars-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="pillar-card reveal">
+          <div class="accent-bar" style="background: var(--gold);"></div>
+          <h4>&#9889;&#65039; Lightning Fast</h4>
           <p>Built for speed. Every tool is optimized to save you time, not waste it.</p>
         </div>
-        <div class="feature-card">
-          <div class="feature-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-            </svg>
-          </div>
-          <h3>Secure & Private</h3>
+        <div class="pillar-card reveal">
+          <div class="accent-bar" style="background: var(--blue);"></div>
+          <h4>&#128274; Secure &amp; Private</h4>
           <p>Your data is encrypted and never shared. We take privacy seriously.</p>
         </div>
-        <div class="feature-card">
-          <div class="feature-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M23 4v6h-6"></path>
-              <path d="M1 20v-6h6"></path>
-              <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10"></path>
-              <path d="M23 14l-4.64 4.36A9 9 0 0 1 3.51 15"></path>
-            </svg>
-          </div>
-          <h3>Seamless Integration</h3>
+        <div class="pillar-card reveal">
+          <div class="accent-bar" style="background: var(--coral);"></div>
+          <h4>&#128279; Seamless Integration</h4>
           <p>Connect with the tools you already use. No workflow disruption.</p>
         </div>
-        <div class="feature-card">
-          <div class="feature-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="18" y1="20" x2="18" y2="10"></line>
-              <line x1="12" y1="20" x2="12" y2="4"></line>
-              <line x1="6" y1="20" x2="6" y2="14"></line>
-            </svg>
-          </div>
-          <h3>Advanced Analytics</h3>
+        <div class="pillar-card reveal">
+          <div class="accent-bar" style="background: var(--pink);"></div>
+          <h4>&#128200; Advanced Analytics</h4>
           <p>Track everything. Understand your productivity and optimize continuously.</p>
         </div>
-        <div class="feature-card">
-          <div class="feature-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"></circle>
-              <circle cx="12" cy="12" r="6"></circle>
-              <circle cx="12" cy="12" r="2"></circle>
-            </svg>
-          </div>
-          <h3>AI-Powered</h3>
+        <div class="pillar-card reveal">
+          <div class="accent-bar" style="background: var(--green);"></div>
+          <h4>&#129302; AI-Powered</h4>
           <p>Real AI, not just automation. Tools that learn and adapt to you.</p>
         </div>
-        <div class="feature-card">
-          <div class="feature-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
-              <polyline points="17 6 23 6 23 12"></polyline>
-            </svg>
-          </div>
-          <h3>Built to Scale</h3>
+        <div class="pillar-card reveal">
+          <div class="accent-bar" style="background: var(--lavender);"></div>
+          <h4>&#128200; Built to Scale</h4>
           <p>Start small, grow big. Our tools scale with your ambitions.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- FOOTER CTA -->
+  <!-- ========== EARLY ACCESS WAITLIST ========== -->
+  <section class="sec-what-is" id="get-early-access" style="background: radial-gradient(ellipse 50% 40% at 50% 100%, rgba(229, 0, 0, 0.1) 0%, transparent 70%), #130909;">
+    <div class="container" style="text-align: center;">
+      <div class="tag" style="background: rgba(229, 0, 0, 0.1); color: #f87171; border-color: rgba(229, 0, 0, 0.2); margin-bottom: var(--space-sm);">Early Access</div>
+      <h2 class="section-title">Get notified when the <span class="gradient-text-coral">full Engine launches</span></h2>
+      <p class="section-subtitle" style="margin-left: auto; margin-right: auto;">Join the waitlist &mdash; one email when Ideation, Creation, Multiplication, and Distribution go live.</p>
 
-  <script src="./js/components/navigation.js"></script>
+      <form id="waitlistForm" style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; max-width: 460px; margin: 0 auto;">
+        <input type="email" id="waitlistEmail" placeholder="you@business.com" required aria-label="Email"
+          style="flex: 1; min-width: 220px; padding: 14px 18px; background: var(--bg-elevated); border: 1px solid #302e2b; border-radius: var(--radius-sm); font-size: 15px; color: var(--ink);">
+        <button type="submit" class="btn btn-gold">Notify Me</button>
+      </form>
+      <p id="waitlistSuccess" style="display: none; margin-top: var(--space-sm); color: var(--green); font-weight: 700;">Thanks! You&rsquo;ve been added to the list.</p>
+    </div>
+  </section>
+
+  <!-- ========== ANCHOR CLOSER ========== -->
+  <section class="anchor-closer">
+    <div class="container anchor-closer__inner">
+      <p class="anchor-closer__lede">The shift is happening to everyone. But only one group comes out ahead.</p>
+      <p class="anchor-closer__quote">
+        &ldquo;<span class="quote-accent">AI will not replace humans</span>, but those who use AI will replace those who don&rsquo;t.&rdquo;
+      </p>
+    </div>
+  </section>
+
+  <!-- FOOTER (injected by navigation.js) -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./supabase.js"></script>
+  <script src="js/components/navigation.js"></script>
+  <script src="js/marketing-animations.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const waitlistForm = document.getElementById('waitlistForm');
+      const waitlistSuccess = document.getElementById('waitlistSuccess');
+      if (!waitlistForm) return;
+      waitlistForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('waitlistEmail').value;
+        const btn = waitlistForm.querySelector('button');
+        btn.textContent = 'Joining...';
+        btn.disabled = true;
+        try {
+          if (window.supabase) {
+            const { error } = await window.supabase.from('waitlist').insert([{
+              email, source: 'tools_page'
+            }]);
+            if (error) throw error;
+          }
+        } catch (err) {
+          console.log('Waitlist error:', err);
+        }
+        waitlistForm.style.display = 'none';
+        waitlistSuccess.style.display = 'block';
+      });
+    });
+  </script>
 
 </body>
 

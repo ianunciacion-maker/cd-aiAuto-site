@@ -3,250 +3,340 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>Blog Post – Ai-Auto</title>
+  <title>Dispatch – Ai-Auto</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Read about AI automation and productivity tips from Ai-Auto.">
+  <meta name="description" content="A dispatch from the front line of the AI labor shift.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Playfair+Display:wght@500;600;700;900&display=swap" rel="stylesheet">
-  <!-- Load Quill CSS before custom styles for proper cascade -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@500;600;700;900&display=swap" rel="stylesheet">
   <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-  <link rel="stylesheet" href="../css/main.css">
-  <link rel="stylesheet" href="../css/components/blog.css">
+  <link rel="stylesheet" href="../css/components/navigation.css">
+  <link rel="stylesheet" href="../css/clawlauncher.css">
+  <style>
+    /* Post-specific styles */
+    .post-hero {
+      padding: var(--space-lg) 0 var(--space-md);
+      border-bottom: var(--border-thick);
+      background: radial-gradient(ellipse 50% 40% at 0% 100%, rgba(245, 166, 35, 0.08) 0%, transparent 70%), radial-gradient(ellipse 50% 40% at 100% 100%, rgba(167, 139, 250, 0.08) 0%, transparent 70%), #0f1219;
+    }
+    .post-hero__meta {
+      display: flex;
+      gap: 14px;
+      font-size: 12px;
+      color: var(--ink-muted);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: var(--space-sm);
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .post-hero__back {
+      color: var(--gold);
+      font-weight: 700;
+      border-bottom: 1px solid rgba(245, 166, 35, 0.3);
+      padding-bottom: 2px;
+    }
+    .post-hero__back:hover { color: #ffb733; }
+    .post-hero h1 {
+      font-size: clamp(32px, 5vw, 56px);
+      line-height: 1.1;
+      margin-bottom: var(--space-md);
+      max-width: 820px;
+      color: #f1f5f9;
+    }
+    .post-featured-image {
+      width: 100%;
+      max-width: 960px;
+      margin: var(--space-md) auto 0;
+      border-radius: var(--radius-sm);
+      border: var(--border-thick);
+      box-shadow: var(--shadow-hard);
+      display: block;
+    }
+    .post-body {
+      padding: var(--space-lg) 0;
+      border-bottom: var(--border-thick);
+    }
+    .post-article {
+      max-width: 760px;
+      margin: 0 auto;
+      color: var(--body, #b0bcd4);
+      font-size: 18px;
+      line-height: 1.8;
+    }
+    .post-article p { color: var(--body, #b0bcd4); margin-bottom: var(--space-sm); font-size: inherit; line-height: inherit; }
+    .post-article h1, .post-article h2, .post-article h3, .post-article h4 { color: #f1f5f9; margin: var(--space-lg) 0 var(--space-sm); line-height: 1.2; }
+    .post-article h2 { font-size: 32px; font-weight: 800; }
+    .post-article h3 { font-size: 24px; font-weight: 800; }
+    .post-article h4 { font-size: 20px; font-weight: 800; }
+    .post-article a { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
+    .post-article a:hover { color: #ffb733; }
+    .post-article ul, .post-article ol { padding-left: 24px; margin-bottom: var(--space-sm); }
+    .post-article li { margin-bottom: 8px; color: var(--body, #b0bcd4); }
+    .post-article ul li::marker { color: var(--lobster); }
+    .post-article ol li::marker { color: var(--gold); font-weight: 700; }
+    .post-article blockquote {
+      border-left: 3px solid var(--gold);
+      padding: var(--space-sm) var(--space-md);
+      margin: var(--space-md) 0;
+      background: rgba(245, 166, 35, 0.06);
+      font-style: italic;
+      font-size: 20px;
+      color: #f1f5f9;
+    }
+    .post-article code {
+      font-family: 'SF Mono', Menlo, Consolas, monospace;
+      font-size: 0.88em;
+      padding: 2px 6px;
+      background: rgba(229, 0, 0, 0.1);
+      border-radius: 3px;
+      color: #efe5cd;
+    }
+    .post-article pre {
+      padding: var(--space-md);
+      background: #0a0a0a;
+      border: 1px solid #292825;
+      border-radius: var(--radius-sm);
+      overflow-x: auto;
+      margin-bottom: var(--space-md);
+    }
+    .post-article pre code { background: transparent; padding: 0; font-size: 14px; }
+    .post-article img {
+      width: 100%;
+      margin: var(--space-md) 0;
+      border: var(--border-thick);
+      border-radius: var(--radius-sm);
+    }
+    .post-article hr {
+      border: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #292825, transparent);
+      margin: var(--space-lg) 0;
+    }
+    /* Override Quill's default padding */
+    .ql-editor.post-article { padding: 0 !important; } /* stylelint-disable-line declaration-no-important */
+
+    .post-nav {
+      padding: var(--space-md) 0;
+      display: flex;
+      justify-content: space-between;
+      border-bottom: var(--border-thick);
+      background: #0c0e13;
+    }
+    .post-nav-link {
+      color: var(--ink-secondary);
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 0.02em;
+      transition: color 0.25s;
+    }
+    .post-nav-link:hover { color: var(--gold); }
+
+    .post-loading {
+      text-align: center;
+      padding: var(--space-xl) var(--space-md);
+    }
+    .post-loading-spinner {
+      width: 40px;
+      height: 40px;
+      margin: 0 auto var(--space-sm);
+      border: 3px solid #292825;
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .post-error { text-align: center; padding: var(--space-xl); }
+    .post-error h3 { color: #f1f5f9; margin-bottom: var(--space-sm); }
+  </style>
 </head>
 
 <body>
-  <!-- BLOG POST -->
-  <section class="blog-post-container">
-    <div class="blog-post-wrapper">
-      <!-- Loading state -->
-      <div class="blog-loading" id="postLoading">
-        <div class="blog-loading-spinner"></div>
-        <p>Loading blog post...</p>
-      </div>
 
-      <!-- Blog post content will be loaded here -->
-      <div id="blogPostContent"></div>
+  <!-- NAV (injected by navigation.js) -->
+
+  <!-- Loading state -->
+  <div class="post-loading" id="postLoading">
+    <div class="post-loading-spinner"></div>
+    <p>Loading dispatch&hellip;</p>
+  </div>
+
+  <!-- Blog post content will be loaded here -->
+  <div id="blogPostContent"></div>
+
+  <!-- Post Navigation -->
+  <nav class="post-nav" id="blogNavigation" style="display: none;">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; gap: var(--space-sm);">
+      <a href="../blog.html" class="post-nav-link">&larr; Back to all dispatches</a>
+      <a href="#" class="post-nav-link" id="nextPostLink" style="display: none;">Next dispatch &rarr;</a>
+    </div>
+  </nav>
+
+  <!-- Anchor quote 2 (ClawLauncher pitch in every post) -->
+  <section class="sec-what-is" id="post-cta" style="display: none;" data-cta-block>
+    <div class="container">
+      <div class="anchor-pull-quote reveal">
+        <p>
+          &ldquo;ClawLauncher automates new startups as it <span class="accent">lowers expenses</span> and <span class="accent">increases revenue</span> for any business.&rdquo;
+        </p>
+        <span class="anchor-pull-quote__caption">— Want this running your business? Install it.</span>
+      </div>
+      <div style="text-align: center; margin-top: var(--space-md);">
+        <a href="../openclaw.html" class="btn btn-lobster-cta">Install ClawLauncher &rarr;</a>
+      </div>
     </div>
   </section>
 
-  <!-- BLOG NAVIGATION -->
-  <nav class="blog-nav" id="blogNavigation" style="display: none;">
-    <a href="../blog.html" class="blog-nav-link">← Back to Blog</a>
-    <a href="#" class="blog-nav-link" id="nextPostLink" style="display: none;">Next Post →</a>
-  </nav>
+  <!-- Anchor closer -->
+  <section class="anchor-closer" id="post-closer" style="display: none;" data-closer-block>
+    <div class="container anchor-closer__inner">
+      <p class="anchor-closer__lede">The shift is happening to everyone. But only one group comes out ahead.</p>
+      <p class="anchor-closer__quote">
+        &ldquo;<span class="quote-accent">AI will not replace humans</span>, but those who use AI will replace those who don&rsquo;t.&rdquo;
+      </p>
+    </div>
+  </section>
 
+  <!-- FOOTER (injected by navigation.js) -->
 
-
-
-
-  <!-- Scripts -->
-  <!-- Navigation Component -->
   <script src="../js/components/navigation.js"></script>
-
-  <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../supabase.js"></script>
+  <script src="../js/marketing-animations.js"></script>
   <script>
-    // Blog post functionality
     class BlogPost {
       constructor() {
         this.postContent = document.getElementById('blogPostContent');
         this.loading = document.getElementById('postLoading');
         this.navigation = document.getElementById('blogNavigation');
         this.nextPostLink = document.getElementById('nextPostLink');
-        this.slug = this.getSlugFromUrl();
-        this.allPosts = [];
-        this.currentPostIndex = 0;
+        this.ctaBlock = document.querySelector('[data-cta-block]');
+        this.closerBlock = document.querySelector('[data-closer-block]');
+        this.slug = new URLSearchParams(window.location.search).get('slug');
         this.init();
       }
 
-      getSlugFromUrl() {
-        const urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get('slug');
-      }
-
       async init() {
-        if (!this.slug) {
-          this.showError('No blog post specified.');
-          return;
-        }
-
+        if (!this.slug) { this.showError('No dispatch specified.'); return; }
         try {
           await this.loadBlogPost();
           await this.loadNextPostLink();
-        } catch (error) {
-          this.showError('Failed to load blog post. Please try again later.');
+        } catch (e) {
+          console.error(e);
+          this.showError('Failed to load dispatch. Please try again later.');
         }
       }
 
       async loadBlogPost() {
-        const { data, error } = await blogManager.getPostBySlug(this.slug);
-        
-        if (error) {
-          throw error;
-        }
-
-        if (!data) {
-          this.showNotFound();
-          return;
-        }
-
+        if (!window.blogManager) { this.showError('Blog system unavailable.'); return; }
+        const { data, error } = await window.blogManager.getPostBySlug(this.slug);
+        if (error) throw error;
+        if (!data) return this.showNotFound();
         this.renderBlogPost(data);
         this.updateSEO(data);
       }
 
       renderBlogPost(post) {
         const date = new Date(post.published_at || post.created_at).toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric'
+          year: 'numeric', month: 'long', day: 'numeric'
         });
-
-        // Content is already HTML from Quill editor
-        const renderedContent = post.content;
-
-        // Include featured image if available
-        const featuredImageHtml = post.featured_image
-          ? `<img src="${post.featured_image}" alt="${this.escapeHtml(post.title)}" class="blog-featured-image" />`
+        const featuredImage = post.featured_image
+          ? `<img src="${post.featured_image}" alt="${this.escape(post.title)}" class="post-featured-image">`
           : '';
-
-        const postHTML = `
-          <article class="blog-post-header">
-            <h1 class="blog-post-title-main">${this.escapeHtml(post.title)}</h1>
-            <div class="blog-post-meta-main">
-              <span class="blog-post-date">${date}</span>
-              <span class="blog-post-author">By Admin</span>
+        const html = `
+          <section class="post-hero">
+            <div class="container">
+              <div class="post-hero__meta">
+                <a href="../blog.html" class="post-hero__back">Dispatches</a>
+                <span>&middot;</span>
+                <span>${date}</span>
+                <span>&middot;</span>
+                <span>By Ai-Auto Team</span>
+              </div>
+              <h1>${this.escape(post.title)}</h1>
+              ${featuredImage}
             </div>
-          </article>
+          </section>
 
-          ${featuredImageHtml}
-
-          <article class="blog-post-content ql-editor">
-            ${renderedContent}
-          </article>
+          <section class="post-body">
+            <div class="container">
+              <article class="post-article ql-editor">
+                ${post.content || ''}
+              </article>
+            </div>
+          </section>
         `;
-
-        this.hideLoading();
-        this.postContent.innerHTML = postHTML;
+        this.loading.style.display = 'none';
+        this.postContent.innerHTML = html;
         this.navigation.style.display = 'flex';
+        if (this.ctaBlock) this.ctaBlock.style.display = 'block';
+        if (this.closerBlock) this.closerBlock.style.display = 'block';
       }
 
       updateSEO(post) {
-        // Update page title
-        document.title = `${post.title} – Ai-Auto Blog`;
-
-        // Update meta description
-        const metaDescription = document.querySelector('meta[name="description"]');
-        if (metaDescription) {
-          const excerpt = post.excerpt || this.createExcerpt(post.content);
-          metaDescription.content = excerpt;
-        }
-
-        // Update Open Graph tags
-        this.updateMetaTag('og:title', post.title);
-        this.updateMetaTag('og:description', post.excerpt || this.createExcerpt(post.content));
-        this.updateMetaTag('og:type', 'article');
-        this.updateMetaTag('og:url', window.location.href);
-
-        // Add featured image to Open Graph if available
+        document.title = `${post.title} – Ai-Auto`;
+        const meta = document.querySelector('meta[name="description"]');
+        if (meta) meta.content = post.excerpt || this.excerpt(post.content);
+        this.setMeta('og:title', post.title);
+        this.setMeta('og:description', post.excerpt || this.excerpt(post.content));
+        this.setMeta('og:type', 'article');
+        this.setMeta('og:url', window.location.href);
         if (post.featured_image) {
-          this.updateMetaTag('og:image', post.featured_image);
-          this.updateMetaTag('og:image:width', '1200');
-          this.updateMetaTag('og:image:height', '630');
+          this.setMeta('og:image', post.featured_image);
+          this.setMeta('og:image:width', '1200');
+          this.setMeta('og:image:height', '630');
         }
       }
 
-      updateMetaTag(property, content) {
-        let tag = document.querySelector(`meta[property="${property}"]`) || 
-                   document.querySelector(`meta[name="${property}"]`);
-        
+      setMeta(p, content) {
+        let tag = document.querySelector(`meta[property="${p}"]`) || document.querySelector(`meta[name="${p}"]`);
         if (!tag) {
           tag = document.createElement('meta');
-          tag.setAttribute(property.includes('og:') ? 'property' : 'name', property);
+          tag.setAttribute(p.indexOf('og:') === 0 ? 'property' : 'name', p);
           document.head.appendChild(tag);
         }
-        
         tag.content = content;
       }
 
       async loadNextPostLink() {
         try {
-          // Get all published posts
-          const { data: allPosts } = await blogManager.getAllPosts();
-
-          if (!allPosts || allPosts.length === 0) {
-            return;
-          }
-
-          this.allPosts = allPosts;
-
-          // Find the current post index
-          this.currentPostIndex = allPosts.findIndex(post => post.slug === this.slug);
-
-          // If there's a next post, show the link
-          if (this.currentPostIndex !== -1 && this.currentPostIndex < allPosts.length - 1) {
-            const nextPost = allPosts[this.currentPostIndex + 1];
+          if (!window.blogManager) return;
+          const { data: posts } = await window.blogManager.getAllPosts();
+          if (!posts || !posts.length) return;
+          const idx = posts.findIndex(p => p.slug === this.slug);
+          if (idx !== -1 && idx < posts.length - 1) {
+            const next = posts[idx + 1];
             this.nextPostLink.style.display = 'inline-flex';
-            this.nextPostLink.href = `post.html?slug=${nextPost.slug}`;
-            this.nextPostLink.textContent = `Next Post: ${nextPost.title} →`;
+            this.nextPostLink.href = `post.html?slug=${encodeURIComponent(next.slug)}`;
+            this.nextPostLink.textContent = `Next: ${next.title} →`;
           }
-        } catch (error) {
-          console.error('Error loading next post link:', error);
-        }
+        } catch (e) { console.error('Next post link load failed:', e); }
       }
 
-      createExcerpt(content, maxLength = 160) {
-        // Strip HTML tags and formatting to create plain text excerpt
-        let stripped = content
-          .replace(/<[^>]*>/g, '') // Remove HTML tags
-          .trim();
-        return stripped.length > maxLength
-          ? stripped.substring(0, maxLength) + '...'
-          : stripped;
+      excerpt(content, max) {
+        max = max || 160;
+        const stripped = (content || '').replace(/<[^>]*>/g, '').trim();
+        return stripped.length > max ? stripped.substring(0, max) + '…' : stripped;
       }
 
-      escapeHtml(text) {
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
+      escape(text) {
+        if (!text) return '';
+        const d = document.createElement('div');
+        d.textContent = text;
+        return d.innerHTML;
       }
 
-      hideLoading() {
+      showError(msg) {
         this.loading.style.display = 'none';
+        this.postContent.innerHTML = `<div class="post-error"><h3>Something went wrong</h3><p>${this.escape(msg)}</p><a href="../blog.html" class="btn" style="margin-top: var(--space-md);">Back to Dispatches</a></div>`;
       }
-
-      showError(message) {
-        this.hideLoading();
-        this.postContent.innerHTML = `
-          <div class="blog-error">
-            <div class="blog-error-box">
-              <h3>Oops! Something went wrong</h3>
-              <p>${message}</p>
-            </div>
-          </div>
-        `;
-      }
-
       showNotFound() {
-        this.hideLoading();
-        this.postContent.innerHTML = `
-          <div class="blog-error">
-            <div class="blog-error-box">
-              <h3>Blog Post Not Found</h3>
-              <p>The blog post you're looking for doesn't exist or has been removed.</p>
-              <a href="../blog.html" class="btn" style="margin-top: var(--space-md);">Back to Blog</a>
-            </div>
-          </div>
-        `;
+        this.loading.style.display = 'none';
+        this.postContent.innerHTML = `<div class="post-error"><h3>Dispatch not found</h3><p>The dispatch you're looking for doesn't exist or has been removed.</p><a href="../blog.html" class="btn" style="margin-top: var(--space-md);">Back to Dispatches</a></div>`;
       }
     }
-
-    // Initialize blog post when DOM is ready
-    document.addEventListener('DOMContentLoaded', () => {
-      new BlogPost();
-    });
-
+    document.addEventListener('DOMContentLoaded', () => new BlogPost());
   </script>
 
 </body>

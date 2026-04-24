@@ -21,11 +21,11 @@ class SiteNavigation {
             <a href="${this.getBaseUrl()}blog.html" class="nav-link" id="blogLink">Blog</a>
             <a href="${this.getBaseUrl()}ai-resources.html" class="nav-link" id="aiResourcesLink">AI Resources</a>
           </div>
-          <div class="nav-auth" style="display: flex; gap: 12px; align-items: center;">
+          <div class="nav-auth">
             ${this.isOpenClawPage()
-              ? '<a href="#bundle-pricing" class="btn btn-gold" onclick="document.querySelector(\'#bundle-pricing\').scrollIntoView({behavior:\'smooth\',block:\'start\'});return false;">Get Installed Now</a>'
-              : `<a href="${this.getBaseUrl()}user/login.html" style="font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink);">Log In</a>
-            <a href="${this.getBaseUrl()}user/signup.html" class="btn btn-gold">Get Started</a>`}
+              ? '<a href="#bundle-pricing" class="nav-cta nav-cta--primary" onclick="document.querySelector(\'#bundle-pricing\').scrollIntoView({behavior:\'smooth\',block:\'start\'});return false;">Get Installed Now</a>'
+              : `<a href="${this.getBaseUrl()}user/login.html" class="nav-cta nav-cta--ghost">Log In</a>
+            <a href="${this.getBaseUrl()}user/signup.html" class="nav-cta nav-cta--primary">Get Started</a>`}
           </div>
         </div>
       </nav>
@@ -54,9 +54,9 @@ class SiteNavigation {
           <a href="${this.getBaseUrl()}blog.html" class="mobile-menu-link">Blog</a>
           <a href="${this.getBaseUrl()}ai-resources.html" class="mobile-menu-link">AI Resources</a>
           ${this.isOpenClawPage()
-            ? '<a href="#bundle-pricing" class="btn btn-gold" style="width: 100%; margin-top: 16px;" onclick="document.getElementById(\'mobileMenu\').classList.remove(\'active\');document.querySelector(\'#bundle-pricing\').scrollIntoView({behavior:\'smooth\',block:\'start\'});return false;">Get Installed Now</a>'
+            ? '<a href="#bundle-pricing" class="nav-cta nav-cta--primary nav-cta--block" onclick="document.getElementById(\'mobileMenu\').classList.remove(\'active\');document.querySelector(\'#bundle-pricing\').scrollIntoView({behavior:\'smooth\',block:\'start\'});return false;">Get Installed Now</a>'
             : `<a href="${this.getBaseUrl()}user/login.html" class="mobile-menu-link">Log In</a>
-          <a href="${this.getBaseUrl()}user/signup.html" class="btn btn-gold" style="width: 100%; margin-top: 16px;">Get Started</a>`}
+          <a href="${this.getBaseUrl()}user/signup.html" class="nav-cta nav-cta--primary nav-cta--block">Get Started</a>`}
         </div>
       </div>
     `;
@@ -184,50 +184,54 @@ class SiteNavigation {
         return;
       }
 
-      // Add click event listener to hamburger
+      // Add click event listener to hamburger — toggles open/closed
+      // (the hamburger stays visible above the menu overlay via high
+      // z-index, so the same button must both open and close).
       hamburger.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
-        console.log('Hamburger clicked'); // Debug log
-        mobileMenu.classList.add('active');
-        document.body.style.overflow = 'hidden';
+        const isOpen = mobileMenu.classList.toggle('active');
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+        hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        hamburger.classList.toggle('is-open', isOpen);
       });
 
-      // Add click event listener to close button
+      // Shared close routine so every close path keeps the hamburger
+      // icon, body overflow, and aria-expanded in sync.
+      const closeMobileMenu = () => {
+        mobileMenu.classList.remove('active');
+        document.body.style.overflow = '';
+        hamburger.setAttribute('aria-expanded', 'false');
+        hamburger.classList.remove('is-open');
+      };
+
+      // Close button inside the mobile menu
       closeMenu.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
-        console.log('Close menu clicked'); // Debug log
-        mobileMenu.classList.remove('active');
-        document.body.style.overflow = '';
+        closeMobileMenu();
       });
 
-      // Close menu when clicking on a link
-      const mobileLinks = mobileMenu.querySelectorAll('a');
-      mobileLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-          console.log('Mobile link clicked'); // Debug log
-          mobileMenu.classList.remove('active');
-          document.body.style.overflow = '';
-          // Allow default navigation to proceed
-        });
+      // Close when a menu link is tapped — let navigation proceed naturally
+      mobileMenu.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => closeMobileMenu());
       });
 
-      // Close menu when clicking outside
+      // Close on any click outside both the menu and the hamburger
       document.addEventListener('click', (e) => {
-        if (mobileMenu.classList.contains('active') &&
-            !mobileMenu.contains(e.target) &&
-            !hamburger.contains(e.target)) {
-          mobileMenu.classList.remove('active');
-          document.body.style.overflow = '';
+        if (
+          mobileMenu.classList.contains('active') &&
+          !mobileMenu.contains(e.target) &&
+          !hamburger.contains(e.target)
+        ) {
+          closeMobileMenu();
         }
       });
 
-      // Close menu with escape key
+      // Close on Escape
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
-          mobileMenu.classList.remove('active');
-          document.body.style.overflow = '';
+          closeMobileMenu();
         }
       });
 

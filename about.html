@@ -5,673 +5,240 @@
   <meta charset="UTF-8" />
   <title>About – Ai-Auto</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="The team, the mission, and the founder behind Ai-Auto — a platform built to help operators set their own salary with AI." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Playfair Display for headings, Inter for body -->
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Playfair+Display:wght@500;600;700;900&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@500;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/components/navigation.css">
-  
-  <style>
-    :root {
-      /* Neobrutalist Palette */
-      --bg-paper: #f2f0e9;
-      --bg-white: #ffffff;
-      --ink: #121212;
-      --blue: #2357ff;
-      --gold: #ffcc00;
-      --coral: #ff6b58;
-      --lavender: #dcd6f7;
-
-      /* Structural Variables */
-      --border-thick: 3px solid var(--ink);
-      --border-thin: 2px solid var(--ink);
-      --shadow-hard: 6px 6px 0px 0px var(--ink);
-      --shadow-hover: 10px 10px 0px 0px var(--ink);
-      --radius-sm: 4px;
-      --max-width: 1200px;
-
-      /* Spacing */
-      --space-xs: 8px;
-      --space-sm: 16px;
-      --space-md: 32px;
-      --space-lg: 64px;
-      --space-xl: 128px;
-    }
-
-    [data-theme="dark"] {
-      --bg-paper: #0a0a0a;
-      --bg-white: #1a1a1a;
-      --ink: #f0f0f0;
-      --blue: #4d7aff;
-      --gold: #ffd633;
-      --coral: #ff8c7a;
-      --lavender: #2a2a40;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background-color: var(--bg-paper);
-      color: var(--ink);
-      line-height: 1.5;
-      overflow-x: hidden;
-    }
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      font-family: 'Playfair Display', serif;
-      margin: 0;
-      font-weight: 900;
-      line-height: 1.1;
-    }
-
-    p {
-      margin: 0 0 var(--space-sm);
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    img {
-      max-width: 100%;
-      display: block;
-      border: var(--border-thin);
-    }
-
-    /* UTILITIES */
-    .container {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 0 var(--space-md);
-    }
-
-    .grid {
-      display: grid;
-      gap: var(--space-md);
-    }
-
-    .flex {
-      display: flex;
-      gap: var(--space-sm);
-    }
-
-    .border-box {
-      border: var(--border-thick);
-      background: var(--bg-white);
-      box-shadow: var(--shadow-hard);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .border-box:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: var(--shadow-hover);
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 12px 24px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      border: var(--border-thick);
-      background: var(--blue);
-      color: #fff;
-      box-shadow: var(--shadow-hard);
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .btn:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: var(--shadow-hover);
-      filter: brightness(1.1);
-    }
-
-    .btn-outline {
-      background: transparent;
-      color: var(--ink);
-    }
-
-    .tag {
-      display: inline-block;
-      padding: 4px 12px;
-      border: var(--border-thin);
-      font-size: 12px;
-      font-weight: 700;
-      text-transform: uppercase;
-      background: var(--gold);
-      color: #000;
-    }
-
-
-    /* HERO SECTION */
-    .hero {
-      padding: var(--space-lg) 0;
-      border-bottom: var(--border-thick);
-      background-image: radial-gradient(var(--ink) 1px, transparent 1px);
-      background-size: 20px 20px;
-    }
-
-    .hero-grid {
-      grid-template-columns: 2fr 1fr;
-      align-items: start;
-    }
-
-    .hero-content h1 {
-      font-size: clamp(48px, 8vw, 96px);
-      margin-bottom: var(--space-md);
-      text-transform: uppercase;
-      letter-spacing: -0.02em;
-    }
-
-    .hero-content h1 span {
-      display: block;
-      background: var(--gold);
-      color: #000;
-      width: fit-content;
-      padding: 0 12px;
-      transform: rotate(-1deg);
-      border: var(--border-thin);
-    }
-
-    .hero-lead {
-      font-size: 20px;
-      max-width: 600px;
-      margin-bottom: var(--space-md);
-      font-weight: 500;
-      background: var(--bg-white);
-      border: var(--border-thin);
-      padding: var(--space-sm);
-      box-shadow: var(--shadow-hard);
-    }
-
-    .hero-card {
-      background: var(--bg-white);
-      padding: var(--space-md);
-      border: var(--border-thick);
-      box-shadow: var(--shadow-hard);
-      transform: rotate(2deg);
-    }
-
-    .hero-card h3 {
-      font-size: 24px;
-      margin-bottom: var(--space-sm);
-      border-bottom: var(--border-thin);
-      padding-bottom: var(--space-xs);
-    }
-
-    .stat-row {
-      display: flex;
-      justify-content: space-between;
-      margin-top: var(--space-sm);
-    }
-
-    .stat {
-      text-align: center;
-    }
-
-    .stat-val {
-      font-size: 32px;
-      font-weight: 900;
-      color: var(--blue);
-    }
-
-    .stat-label {
-      font-size: 12px;
-      text-transform: uppercase;
-      font-weight: 700;
-    }
-
-    /* MISSION SECTION (Rooted In) */
-    .mission {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .mission-left {
-      background: var(--ink);
-      color: var(--bg-paper);
-      padding: var(--space-lg);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      border-bottom: var(--border-thick);
-    }
-
-    .mission-right {
-      background: var(--bg-white);
-      padding: var(--space-lg);
-      border-left: var(--border-thick);
-      border-bottom: var(--border-thick);
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-md);
-    }
-
-    .mission-title {
-      font-size: 64px;
-      margin-bottom: var(--space-md);
-    }
-
-    .value-card {
-      border: var(--border-thin);
-      padding: var(--space-sm);
-      background: var(--lavender);
-      box-shadow: 4px 4px 0 var(--ink);
-    }
-
-    .value-card h4 {
-      font-size: 20px;
-      margin-bottom: 8px;
-      text-transform: uppercase;
-    }
-
-    /* CLINT PROFILE */
-    .profile-section {
-      padding: var(--space-xl) 0;
-      background: var(--bg-paper);
-    }
-
-    .profile-container {
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: var(--space-lg);
-      align-items: center;
-    }
-
-    .profile-img-box {
-      position: relative;
-    }
-
-    .profile-avatar {
-      width: 100%;
-      aspect-ratio: 1;
-      object-fit: cover;
-      object-position: center 20%;
-      border: var(--border-thick);
-      box-shadow: var(--shadow-hard);
-    }
-
-    .profile-badge {
-      position: absolute;
-      bottom: -20px;
-      right: -20px;
-      background: var(--gold);
-      border: var(--border-thick);
-      padding: 12px 24px;
-      font-weight: 900;
-      text-transform: uppercase;
-      transform: rotate(-5deg);
-    }
-
-    .profile-content {
-      background: var(--bg-white);
-      border: var(--border-thick);
-      padding: var(--space-lg);
-      box-shadow: var(--shadow-hard);
-    }
-
-    .profile-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      border-bottom: var(--border-thick);
-      padding-bottom: var(--space-sm);
-      margin-bottom: var(--space-md);
-    }
-
-    .profile-name {
-      font-size: 48px;
-    }
-
-    .profile-role {
-      font-family: 'Inter', sans-serif;
-      font-weight: 700;
-      color: var(--text-muted);
-      text-transform: uppercase;
-    }
-
-    .skill-list {
-      list-style: none;
-      padding: 0;
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-xs);
-      margin-top: var(--space-md);
-    }
-
-    .skill-item {
-      border: var(--border-thin);
-      padding: 4px 12px;
-      font-weight: 700;
-      font-size: 12px;
-      text-transform: uppercase;
-    }
-
-    /* JOURNEY (From Book to App) */
-    .journey {
-      padding: var(--space-lg) 0;
-      border-top: var(--border-thick);
-      border-bottom: var(--border-thick);
-      background: var(--bg-white);
-    }
-
-    .journey-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: var(--space-md);
-      margin-top: var(--space-lg);
-    }
-
-    .step-card {
-      border: var(--border-thick);
-      padding: var(--space-md);
-      background: var(--bg-paper);
-      position: relative;
-      height: 100%;
-      transition: transform 0.2s;
-    }
-
-    .step-card:hover {
-      transform: translateY(-10px);
-      background: var(--gold);
-    }
-
-    .step-number {
-      font-size: 64px;
-      font-weight: 900;
-      opacity: 0.1;
-      position: absolute;
-      top: 0;
-      right: 10px;
-      line-height: 1;
-    }
-
-    .step-title {
-      font-size: 24px;
-      margin-bottom: var(--space-sm);
-      border-bottom: var(--border-thin);
-      padding-bottom: 8px;
-    }
-
-    /* TEAM SECTION */
-    .team {
-      padding: var(--space-lg) 0;
-    }
-
-    .team-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: var(--space-md);
-    }
-
-    .team-card {
-      border: var(--border-thick);
-      background: var(--bg-white);
-      padding: 0;
-      box-shadow: var(--shadow-hard);
-    }
-
-    .team-header {
-      background: var(--ink);
-      color: #fff;
-      padding: var(--space-sm);
-      text-align: center;
-      border-bottom: var(--border-thick);
-    }
-
-    .team-body {
-      padding: var(--space-md);
-    }
-
-    /* FOOTER */
-    .footer-cta {
-      background: var(--blue);
-      color: #fff;
-      padding: var(--space-xl) 0;
-      text-align: center;
-      border-top: var(--border-thick);
-    }
-
-    .footer-cta h2 {
-      font-size: 64px;
-      margin-bottom: var(--space-md);
-      text-shadow: 4px 4px 0 var(--ink);
-    }
-
-    .site-footer {
-      background: var(--ink);
-      color: var(--bg-paper);
-      padding: var(--space-md) 0;
-      border-top: var(--border-thick);
-    }
-
-    .footer-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    /* RESPONSIVE */
-    @media (max-width: 900px) {
-
-      .hero-grid,
-      .mission,
-      .profile-container,
-      .journey-grid,
-      .team-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .mission-right {
-        border-left: none;
-      }
-
-      .hero-content h1 {
-        font-size: 48px;
-      }
-
-      .profile-img-box {
-        width: 200px;
-        margin: 0 auto;
-      }
-
-    }
-  </style>
+  <link rel="stylesheet" href="css/clawlauncher.css">
 </head>
 
 <body>
 
-  <!-- NAV -->
+  <!-- NAV (injected by navigation.js) -->
 
-  <!-- HERO -->
+  <!-- ========== HERO ========== -->
   <section class="hero">
-    <div class="container grid hero-grid">
-      <div class="hero-content">
-        <div class="tag" style="margin-bottom: 16px;">Established 2024</div>
-        <h1>
-          Empowering<br>
-          <span>Your Work</span><br>
-          With AI
-        </h1>
-        <div class="hero-lead">
-          We believe in a future where you set your own salary, automate the mundane, and focus on what truly matters.
-        </div>
-        <div class="flex">
-          <a href="#mission" class="btn">Read Our Mission</a>
-          <a href="tools.html" class="btn btn-outline">View Tools</a>
-        </div>
-      </div>
-
-      <div class="hero-card">
-        <h3>Quick Facts</h3>
-        <div class="stat-row">
-          <div class="stat">
-            <div class="stat-val">HQ</div>
-            <div class="stat-label">Global</div>
-          </div>
-          <div class="stat">
-            <div class="stat-val">24/7</div>
-            <div class="stat-label">Automation</div>
-          </div>
-        </div>
-        <hr style="border: 0; border-top: var(--border-thin); margin: 20px 0;">
-        <p style="font-size: 14px; font-weight: 600;">
-          Ai-Auto is more than a platform; it's a movement towards autonomous productivity.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- MISSION (Rooted In) -->
-  <section id="mission" class="mission">
-    <div class="mission-left">
-      <h2 class="mission-title">Rooted In<br><span style="color: var(--gold);">Efficiency</span></h2>
-      <p style="font-size: 20px; max-width: 400px;">
-        Our philosophy is simple: If it can be automated, it should be. We build tools that respect your time and
-        amplify your output.
-      </p>
-    </div>
-    <div class="mission-right">
-      <div class="value-card">
-        <h4>Transparency</h4>
-        <p>No hidden algorithms. We build in public and share our process.</p>
-      </div>
-      <div class="value-card" style="background: var(--coral);">
-        <h4>Speed</h4>
-        <p>Time is the only non-renewable resource. We help you save it.</p>
-      </div>
-      <div class="value-card" style="background: var(--blue); color: white;">
-        <h4>Empowerment</h4>
-        <p>Tools that don't just do the work, but teach you how to scale.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- CLINT PROFILE -->
-  <section class="profile-section">
-    <div class="container profile-container">
-      <div class="profile-img-box">
-        <img src="images/founder.jpeg" alt="Clint Day - Founder" class="profile-avatar">
-        <div class="profile-badge">Founder</div>
-      </div>
-      <div class="profile-content">
-        <div class="profile-header">
-          <h2 class="profile-name">Clint Day</h2>
-          <span class="profile-role">Founder & Lead Dev</span>
-        </div>
-        <p>
-          Having learned the life-changing power of starting your own business, Clint Day became an entrepreneurship evangelist. It builds self-confidence, generates passion, fulfills purpose, and enables owners to help others.
-        </p>
-        <p>
-          Entrepreneurship is also the backbone of the U. S. economy employing over 55% of all workers as a natural job creator. What makes Clint different is he not only lived entrepreneurship as a serial insurance agency founder, but he started teaching others how to do it rather than take early retirement.
-        </p>
-        <p>
-          He is a Vietnam veteran who helped start three veteran entrepreneurship programs, and actively supports DAV, a 1 million strong non-profit for disabled vets.
-        </p>
-        <p>
-          In 2019 Clint was awarded the Silver Star Award for Entrepreneurial Excellence by the President of the National Association for Community College Entrepreneurship. He holds an MBA and five certificates in entrepreneurship including the SEE from Babson College and Entrepreneurship Essentials from the Harvard Business School.
-        </p>
-        <p>
-          He has been professionally qualified by AACSB, the Association to Advance Collegiate Schools of Business, while his explanations are easy to understand and highly entertaining.
-        </p>
-        <ul class="skill-list">
-          <li class="skill-item">Serial Entrepreneur</li>
-          <li class="skill-item">AI Enthusiast</li>
-          <li class="skill-item">Automations Ambassador</li>
-          <li class="skill-item">Author</li>
-          <li class="skill-item">Educator</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- JOURNEY -->
-  <section class="journey">
     <div class="container">
-      <h2 style="text-align: center; font-size: 48px;">From Book to App</h2>
-      <div class="journey-grid">
-        <div class="step-card">
-          <span class="step-number">01</span>
-          <h3 class="step-title">Concept</h3>
-          <p>The idea was born from a desire to escape the 9-5 loop. Sketches, notes, and a vision for autonomy.</p>
+      <div class="hero-split">
+        <div>
+          <div class="anchor-tagline">&ldquo;Business as we know it will never be the same.&rdquo;</div>
+          <div class="hero-badges">
+            <span class="hero-tag">Est. 2024</span>
+            <span class="hero-tag-launch">&#128293; Founder-Led</span>
+          </div>
+          <h1>
+            Empowering <span class="gradient-text">Your Work</span> <br>
+            With AI.
+          </h1>
+          <p class="hero-subtitle">
+            We believe in a future where <strong>you set your own salary</strong>, automate the mundane, and focus on what truly matters. Ai-Auto is more than a platform &mdash; it&rsquo;s a movement toward autonomous productivity.
+          </p>
+          <p class="hero-stats">
+            Est. 2024 &nbsp;&middot;&nbsp; Founder-Led &nbsp;&middot;&nbsp; 24/7 Automation &nbsp;&middot;&nbsp; Global HQ
+          </p>
+          <div class="hero-buttons">
+            <a href="#mission" class="btn btn-gold">Read Our Mission</a>
+            <a href="tools.html" class="btn btn-outline">View Tools</a>
+          </div>
         </div>
-        <div class="step-card">
-          <span class="step-number">02</span>
-          <h3 class="step-title">Prototype</h3>
+        <figure class="image-frame image-frame--wide reveal" style="margin: 0;">
+          <img src="images/stock/team_casual.jpg" alt="A diverse, casually-dressed team sharing a laugh over a tablet in a collaborative workspace." loading="lazy">
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== STICKY TOC ========== -->
+  <div class="toc-bar">
+    <div class="toc-inner">
+      <a href="#mission" class="toc-pill toc-link" data-section="mission">Mission</a>
+      <a href="#founder" class="toc-pill toc-link" data-section="founder">Founder</a>
+      <a href="#journey" class="toc-pill toc-link" data-section="journey">Journey</a>
+      <a href="#team" class="toc-pill toc-link" data-section="team">Team</a>
+    </div>
+  </div>
+
+  <!-- ========== MISSION ========== -->
+  <section class="sec-what-is" id="mission">
+    <div class="container">
+      <div class="tag" style="margin-bottom: var(--space-sm);">Our Mission</div>
+      <h2 class="section-title">Rooted In <span class="gradient-text-gold">Efficiency</span></h2>
+      <p class="section-subtitle">Our philosophy is simple: if it can be automated, it should be. We build tools that respect your time and amplify your output.</p>
+
+      <div class="pillars-grid">
+        <div class="pillar-card reveal">
+          <div class="accent-bar" style="background: var(--blue);"></div>
+          <h4>Transparency</h4>
+          <p>No hidden algorithms. We build in public and share our process. If we use it ourselves, we&rsquo;ll tell you why.</p>
+        </div>
+        <div class="pillar-card reveal">
+          <div class="accent-bar" style="background: var(--coral);"></div>
+          <h4>Speed</h4>
+          <p>Time is the only non-renewable resource. Every tool we ship is built to save you more of it than the one before.</p>
+        </div>
+        <div class="pillar-card reveal">
+          <div class="accent-bar" style="background: var(--gold);"></div>
+          <h4>Empowerment</h4>
+          <p>Tools that don&rsquo;t just do the work, but teach you how to scale. You stay the owner. AI just runs the execution.</p>
+        </div>
+      </div>
+
+      <!-- Anchor quote 2 -->
+      <div class="anchor-pull-quote reveal">
+        <p>
+          &ldquo;ClawLauncher automates new startups as it <span class="accent">lowers expenses</span> and <span class="accent">increases revenue</span> for any business.&rdquo;
+        </p>
+        <span class="anchor-pull-quote__caption">— The bet, in one sentence.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOUNDER ========== -->
+  <section class="sec-what-is" id="founder" style="background: radial-gradient(ellipse 50% 40% at 0% 0%, rgba(245, 166, 35, 0.08) 0%, transparent 70%), radial-gradient(ellipse 40% 50% at 100% 100%, rgba(229, 0, 0, 0.06) 0%, transparent 70%), #0f1219;">
+    <div class="container">
+      <div class="tag" style="background: rgba(3, 255, 167, 0.12); color: var(--green); border-color: rgba(3, 255, 167, 0.25); margin-bottom: var(--space-sm);">Who&rsquo;s Behind It</div>
+      <h2 class="section-title">Meet <span class="gradient-text-coral">Clint Day</span></h2>
+      <p class="section-subtitle">Founder, entrepreneurship evangelist, and Vietnam veteran &mdash; building Ai-Auto for operators who&rsquo;ve already run something.</p>
+
+      <div class="analogy-grid" style="grid-template-columns: 1fr 2fr; margin-top: var(--space-lg); align-items: start;">
+        <div class="border-box reveal" style="padding: 0; overflow: hidden;">
+          <img src="images/founder.jpeg" alt="Clint Day — Founder of Ai-Auto" style="width: 100%; display: block;">
+          <div style="padding: var(--space-sm) var(--space-md); text-align: center; background: var(--bg-elevated); border-top: var(--border-thick);">
+            <div style="font-size: 20px; font-weight: 800; color: #f1f5f9;">Clint Day</div>
+            <div style="font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); font-weight: 700;">Founder</div>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <p>Having learned the life-changing power of starting your own business, <strong>Clint Day became an entrepreneurship evangelist.</strong> It builds self-confidence, generates passion, fulfills purpose, and enables owners to help others.</p>
+          <p>Entrepreneurship is also the backbone of the U.S. economy &mdash; employing over <strong>55% of all workers</strong> as a natural job creator. What makes Clint different is he not only lived entrepreneurship as a serial insurance agency founder, but he started teaching others how to do it rather than take early retirement.</p>
+          <p>He is a <strong>Vietnam veteran</strong> who helped start three veteran entrepreneurship programs, and actively supports DAV, a 1-million-strong non-profit for disabled vets.</p>
+          <p>In 2019 Clint was awarded the <strong>Silver Star Award for Entrepreneurial Excellence</strong> by the President of the National Association for Community College Entrepreneurship. He holds an MBA and five certificates in entrepreneurship including the SEE from Babson College and Entrepreneurship Essentials from the Harvard Business School.</p>
+          <p>He has been professionally qualified by AACSB, the Association to Advance Collegiate Schools of Business, while his explanations are easy to understand and highly entertaining.</p>
+
+          <div class="capsule-grid" style="justify-content: flex-start; margin-top: var(--space-md);">
+            <span class="capsule capsule-accent">Serial Entrepreneur</span>
+            <span class="capsule">AI Enthusiast</span>
+            <span class="capsule">Automations Ambassador</span>
+            <span class="capsule">Author</span>
+            <span class="capsule">Educator</span>
+            <span class="capsule">Vietnam Veteran</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== BANNER before JOURNEY ========== -->
+  <div class="image-banner reveal">
+    <img src="images/stock/mature_team.jpg" alt="Experienced operators working together — the people ClawLauncher is built for." loading="lazy">
+    <div class="image-banner__content">
+      <h3>Built by hands that have run things.</h3>
+      <p>Four people, three decades of operating experience — and a shared belief that the next chapter of business belongs to the operators who already know how to build.</p>
+    </div>
+  </div>
+
+  <!-- ========== JOURNEY ========== -->
+  <section class="sec-how" id="journey">
+    <div class="container">
+      <div class="tag" style="background: rgba(79, 142, 247, 0.1); color: #5b8ff0; border-color: rgba(79, 142, 247, 0.2); margin-bottom: var(--space-sm);">The Path</div>
+      <h2 class="section-title">From <span class="gradient-text-blue">Book to App</span></h2>
+      <p class="section-subtitle">Every platform has an origin story. Here&rsquo;s ours &mdash; from sketches in a notebook to a working suite of AI tools.</p>
+
+      <div class="steps-grid">
+        <div class="step-card reveal">
+          <div class="step-number">01</div>
+          <h3>Concept</h3>
+          <p>The idea was born from a desire to escape the 9-to-5 loop. Sketches, notes, and a vision for autonomy.</p>
+        </div>
+        <div class="step-card reveal">
+          <div class="step-number">02</div>
+          <h3>Prototype</h3>
           <p>Building the MVP. Rough edges, core functionality, and the first successful automation scripts.</p>
         </div>
-        <div class="step-card">
-          <span class="step-number">03</span>
-          <h3 class="step-title">Beta</h3>
-          <p>Testing with real users. Refining the UI, squashing bugs, and validating the "Set Your Own Salary" model.
-          </p>
+        <div class="step-card reveal">
+          <div class="step-number">03</div>
+          <h3>Beta</h3>
+          <p>Testing with real users. Refining the UI, squashing bugs, and validating the &ldquo;Set Your Own Salary&rdquo; model.</p>
         </div>
-        <div class="step-card" style="background: var(--ink); color: var(--bg-paper);">
-          <span class="step-number" style="color: var(--bg-paper);">04</span>
-          <h3 class="step-title" style="border-color: var(--bg-paper);">Launch</h3>
-          <p>Going live. A full suite of tools available to the world. This is just the beginning.</p>
+        <div class="step-card reveal">
+          <div class="step-number">04</div>
+          <h3>Launch</h3>
+          <p>Going live. A full suite of tools available to the world &mdash; and ClawLauncher as the flagship install. This is just the beginning.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- TEAM -->
-  <section class="team">
+  <!-- ========== TEAM ========== -->
+  <section class="sec-capabilities" id="team">
     <div class="container">
-      <h2 style="margin-bottom: var(--space-md);">Who's Building</h2>
-      <div class="team-grid">
-        <div class="team-card">
-          <div class="team-header">
-            <h3>Engineering</h3>
+      <div class="tag" style="background: rgba(229, 80, 64, 0.12); color: var(--coral); border-color: rgba(229, 80, 64, 0.25); margin-bottom: var(--space-sm);">Who&rsquo;s Building</div>
+      <h2 class="section-title">Three Disciplines. <span class="gradient-text-purple">One Platform.</span></h2>
+      <p class="section-subtitle">Engineering, design, and support working under one roof &mdash; because ClawLauncher installs are only as good as the people standing behind them.</p>
+
+      <div class="capabilities-grid">
+        <div class="capability-card reveal">
+          <div class="capability-header" style="background: rgba(79, 142, 247, 0.08); border-bottom-color: rgba(79, 142, 247, 0.2);">
+            <span class="capability-icon">&#128187;</span>
+            <span>Engineering</span>
           </div>
-          <div class="team-body">
-            <p>The architects behind the code. Focused on stability, scalability, and speed.</p>
-            <div class="tag">Backend</div>
-            <div class="tag">AI Models</div>
-          </div>
-        </div>
-        <div class="team-card">
-          <div class="team-header" style="background: var(--blue);">
-            <h3>Design</h3>
-          </div>
-          <div class="team-body">
-            <p>Crafting the interface. Ensuring that power doesn't come at the cost of usability.</p>
-            <div class="tag">UI/UX</div>
-            <div class="tag">Visuals</div>
+          <div class="capability-body">
+            <p style="color: var(--body); margin-bottom: var(--space-sm);">The architects behind the code. Focused on stability, scalability, and speed.</p>
+            <ul>
+              <li>Backend infrastructure</li>
+              <li>AI model integration</li>
+              <li>Supabase + Stripe plumbing</li>
+            </ul>
           </div>
         </div>
-        <div class="team-card">
-          <div class="team-header" style="background: var(--coral);">
-            <h3>Support</h3>
+        <div class="capability-card reveal">
+          <div class="capability-header" style="background: rgba(245, 166, 35, 0.1); border-bottom-color: rgba(245, 166, 35, 0.25);">
+            <span class="capability-icon">&#127912;</span>
+            <span>Design</span>
           </div>
-          <div class="team-body">
-            <p>Here to help you succeed. Guides, tutorials, and direct assistance.</p>
-            <div class="tag">Docs</div>
-            <div class="tag">Community</div>
+          <div class="capability-body">
+            <p style="color: var(--body); margin-bottom: var(--space-sm);">Crafting the interface. Ensuring power doesn&rsquo;t come at the cost of usability.</p>
+            <ul>
+              <li>UI &amp; UX</li>
+              <li>Brand &amp; visuals</li>
+              <li>Motion &amp; micro-interactions</li>
+            </ul>
+          </div>
+        </div>
+        <div class="capability-card reveal">
+          <div class="capability-header" style="background: rgba(229, 80, 64, 0.12); border-bottom-color: rgba(229, 80, 64, 0.25);">
+            <span class="capability-icon">&#128221;</span>
+            <span>Support</span>
+          </div>
+          <div class="capability-body">
+            <p style="color: var(--body); margin-bottom: var(--space-sm);">Here to help you succeed. Guides, tutorials, and direct assistance.</p>
+            <ul>
+              <li>Docs &amp; onboarding</li>
+              <li>Community channels</li>
+              <li>Direct human help</li>
+            </ul>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- FOOTER CTA -->
+  <!-- ========== ANCHOR CLOSER ========== -->
+  <section class="anchor-closer">
+    <div class="container anchor-closer__inner">
+      <p class="anchor-closer__lede">The shift is happening to everyone. But only one group comes out ahead.</p>
+      <p class="anchor-closer__quote">
+        &ldquo;<span class="quote-accent">AI will not replace humans</span>, but those who use AI will replace those who don&rsquo;t.&rdquo;
+      </p>
+    </div>
+  </section>
+
+  <!-- FOOTER CTA (injected by navigation.js) -->
 
   <script src="js/components/navigation.js"></script>
+  <script src="js/marketing-animations.js"></script>
 
 </body>
 

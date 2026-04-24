@@ -1,17 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <title>AI Automation Installation – Ai-Auto</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Get a fully installed, fully integrated AI automation system that builds, manages, and runs your entire operation. Done-for-you installation, training, and ongoing support." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Playfair+Display:wght@500;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/components/navigation.css">
-
-  <style>
     :root {
       --bg-paper: #0e0e0e;
       --bg-white: #1a1a1a;
@@ -32,7 +18,7 @@
       --shadow-hard: 0 2px 16px rgba(0,0,0,0.25);
       --shadow-hover: 0 8px 40px rgba(0,0,0,0.4);
       --radius-sm: 4px;
-      --max-width: 1100px;
+      --max-width: 1400px;
 
       --space-xs: 8px;
       --space-sm: 16px;
@@ -62,8 +48,6 @@
 
     * { box-sizing: border-box; }
 
-    html { overflow-x: hidden; }
-
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
@@ -77,102 +61,6 @@
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
-      animation: ambient-grid-drift 24s linear infinite;
-    }
-
-    /* ═══════════════════════════════════════════
-       AMBIENT BACKGROUND ANIMATIONS — matches clawlauncher.css
-       ═══════════════════════════════════════════ */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      z-index: 999;
-      pointer-events: none;
-      background:
-        radial-gradient(640px circle at 15% 22%, rgba(245, 166, 35, 0.55), transparent 42%),
-        radial-gradient(580px circle at 82% 72%, rgba(229, 0, 0, 0.45), transparent 48%),
-        radial-gradient(720px circle at 55% 42%, rgba(167, 139, 250, 0.35), transparent 50%);
-      mix-blend-mode: screen;
-      animation: ambient-orbs 26s ease-in-out infinite;
-      will-change: transform;
-      filter: blur(4px);
-      opacity: 0.65;
-    }
-
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      z-index: 998;
-      pointer-events: none;
-      background:
-        conic-gradient(
-          from 0deg at 60% 40%,
-          rgba(245, 166, 35, 0.20) 0deg,
-          transparent 60deg,
-          rgba(229, 0, 0, 0.22) 160deg,
-          transparent 240deg,
-          rgba(167, 139, 250, 0.20) 320deg,
-          rgba(245, 166, 35, 0.20) 360deg
-        );
-      mix-blend-mode: screen;
-      animation: ambient-shimmer 60s linear infinite;
-      transform-origin: 60% 40%;
-      transform: scale(1.4);
-      will-change: transform;
-      filter: blur(120px);
-      opacity: 0.55;
-    }
-
-    @keyframes ambient-grid-drift {
-      from { background-position: 0 0, 0 0; }
-      to { background-position: 40px 40px, 40px 40px; }
-    }
-
-    @keyframes ambient-orbs {
-      0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-      33% { transform: translate3d(2%, -2%, 0) scale(1.08); }
-      66% { transform: translate3d(-2%, 3%, 0) scale(1.05); }
-    }
-
-    @keyframes ambient-shimmer {
-      from { transform: scale(1.4) rotate(0deg); }
-      to { transform: scale(1.4) rotate(360deg); }
-    }
-
-    /* Keep openclaw content above the ambient layer via stacking context */
-    .hero,
-    .toc-bar,
-    .sec-what-is,
-    .sec-capabilities,
-    .sec-how,
-    .sec-real-world,
-    .sec-safety,
-    .sec-getting-started,
-    .sec-pricing,
-    .sec-guarantee,
-    .sec-bundle-contents,
-    .sec-bundle-upgrades,
-    .sec-social-proof-new,
-    .sec-bigger-picture,
-    .sec-full-stack,
-    .site-footer,
-    .nav {
-      position: relative;
-      z-index: 2;
-    }
-
-    /* Reduced motion — freeze ambient animations */
-    @media (prefers-reduced-motion: reduce) {
-      body,
-      body::before,
-      body::after {
-        animation: none !important;
-      }
-      body::after {
-        transform: scale(1.4);
-      }
     }
 
     h1, h2, h3, h4, h5, h6 {
@@ -3026,1053 +2914,535 @@
       .capsule { font-size: 12px; padding: 8px 14px; }
     }
 
-  </style>
-</head>
-
-<body>
-
-  <!-- NAV (injected by navigation.js) -->
-
-  <!-- ========== HERO ========== -->
-  <section class="hero">
-    <div class="container">
-      <div class="hero-badges">
-        <span class="hero-tag">Done-For-You AI Installation</span>
-        <span class="hero-tag-launch">&#128293; Limited Availability</span>
-      </div>
-      <h1>Finally... A Fully Installed, Fully Integrated <span class="gradient-text">AI Command Center</span> That Builds, Manages, and Runs <span class="gradient-text-coral">Your Entire Operation</span></h1>
-      <p class="hero-subtitle">Plus you get the training, live support, done-for-you skills, the complete software suite, and your own <strong>custom Control Board built to ensure you actually win.</strong></p>
-      <p class="hero-stats">500+ Installs Done &nbsp;&middot;&nbsp; 350+ Clients Onboarded &nbsp;&middot;&nbsp; 4.7 Client Rating</p>
-
-      <div class="capsule-grid">
-        <div class="capsule"><span class="capsule-icon">&#9881;&#65039;</span> Complete Software Suite</div>
-        <div class="capsule"><span class="capsule-icon">&#128295;</span> Full Installation &amp; Setup</div>
-        <div class="capsule"><span class="capsule-icon">&#128101;</span> Live Support Access</div>
-        <div class="capsule"><span class="capsule-icon">&#129302;</span> Done-For-You Skills</div>
-        <div class="capsule"><span class="capsule-icon">&#127891;</span> Full Training Program</div>
-        <div class="capsule"><span class="capsule-icon">&#128203;</span> Custom Control Board</div>
-        <div class="capsule capsule-accent"><span class="capsule-icon">&#128737;&#65039;</span> Fully Installed &amp; Integrated</div>
-        <div class="capsule capsule-accent"><span class="capsule-icon">&#9889;</span> Ongoing Monthly Support</div>
-      </div>
-
-      <div class="hero-buttons">
-        <a href="#bundle-pricing" class="btn btn-lobster-cta toc-link">Get Installed Now &rarr;</a>
-        <a href="#what-you-get" class="btn btn-outline toc-link">See What's Included &darr;</a>
-      </div>
-
-      <!-- Dashboard Preview -->
-      <div class="dashboard-preview">
-        <img src="images/openclaw/agency/dashboard1.png" alt="AI System Dashboard - Login" loading="lazy" />
-        <img src="images/openclaw/agency/dashboard2.png" alt="AI System Dashboard - Management" loading="lazy" />
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== STICKY TOC ========== -->
-  <div class="toc-bar" id="tocBar">
-    <div class="toc-inner">
-      <a href="#what-you-get" class="toc-pill toc-link active" data-section="what-you-get">What You Get</a>
-      <a href="#social-proof" class="toc-pill toc-link" data-section="social-proof">Results</a>
-      <a href="#bundle-contents" class="toc-pill toc-link" data-section="bundle-contents">What's Included</a>
-      <a href="#bundle-upgrades" class="toc-pill toc-link" data-section="bundle-upgrades">Full Suite</a>
-      <a href="#bundle-pricing" class="toc-pill toc-link" data-section="bundle-pricing">Pricing</a>
-      <a href="#guarantee" class="toc-pill toc-link" data-section="guarantee">Guarantee</a>
-    </div>
-  </div>
-
-  <!-- ========== MARQUEE TICKER ========== -->
-  <div class="marquee-strip" aria-hidden="true">
-    <div class="marquee-track">
-      <span class="marquee-item">500+ Installs Done <span class="marquee-dot">&#9733;</span></span>
-      <span class="marquee-item">350+ Clients Onboarded <span class="marquee-dot">&#9733;</span></span>
-      <span class="marquee-item">4.7 Client Rating <span class="marquee-dot">&#9733;</span></span>
-      <span class="marquee-item">30-Day Money-Back Guarantee <span class="marquee-dot">&#9733;</span></span>
-      <span class="marquee-item">No Technical Skills Required <span class="marquee-dot">&#9733;</span></span>
-      <span class="marquee-item">Setup in Under 5 Minutes <span class="marquee-dot">&#9733;</span></span>
-      <span class="marquee-item">Zero Prompt Engineering <span class="marquee-dot">&#9733;</span></span>
-      <span class="marquee-item">Full Business Automation <span class="marquee-dot">&#9733;</span></span>
-      <!-- duplicate for seamless loop -->
-      <span class="marquee-item">500+ Installs Done <span class="marquee-dot">&#9733;</span></span>
-      <span class="marquee-item">350+ Clients Onboarded <span class="marquee-dot">&#9733;</span></span>
-      <span class="marquee-item">4.7 Client Rating <span class="marquee-dot">&#9733;</span></span>
-      <span class="marquee-item">30-Day Money-Back Guarantee <span class="marquee-dot">&#9733;</span></span>
-      <span class="marquee-item">No Technical Skills Required <span class="marquee-dot">&#9733;</span></span>
-      <span class="marquee-item">Setup in Under 5 Minutes <span class="marquee-dot">&#9733;</span></span>
-      <span class="marquee-item">Zero Prompt Engineering <span class="marquee-dot">&#9733;</span></span>
-      <span class="marquee-item">Full Business Automation <span class="marquee-dot">&#9733;</span></span>
-    </div>
-  </div>
-
-  <!-- ========== WHAT YOU GET ========== -->
-  <section class="sec-what-is" id="what-you-get">
-    <div class="container">
-      <div class="tag" style="margin-bottom: var(--space-sm);">What You Get</div>
-      <h2 class="section-title">Your Complete AI Automation System &mdash; <span class="gradient-text-blue">Installed &amp; Ready</span></h2>
-      <p class="section-subtitle">We take the most powerful open-source AI agent framework and install it as a fully managed system for your business &mdash; configured, connected, and ready to generate results from day one.</p>
-
-      <!-- Analogy -->
-      <div class="analogy-grid">
-        <div class="analogy-card">
-          <div class="analogy-type">DIY Setup</div>
-          <h3>Do It Yourself</h3>
-          <p>You research, configure servers, install dependencies, troubleshoot errors, connect APIs &mdash; weeks of trial and error with no guarantee it works. You're on your own.</p>
-        </div>
-        <div class="analogy-card featured">
-          <div class="analogy-type">We Install It For You</div>
-          <h3>Done-For-You Installation</h3>
-          <p>We handle the entire setup &mdash; server, configuration, integrations, custom skills, and onboarding. You get a fully working AI automation system from day one, with training and support included.</p>
-        </div>
-      </div>
-
-      <!-- Three Pillars -->
-      <div class="pillars-grid">
-        <div class="pillar-card">
-          <div class="accent-bar" style="background: var(--blue);"></div>
-          <h4>Complete Installation</h4>
-          <p>We set up your entire AI system on secure cloud infrastructure &mdash; fully configured, connected, and tested before handoff. You never touch a terminal.</p>
-        </div>
-        <div class="pillar-card">
-          <div class="accent-bar" style="background: var(--gold);"></div>
-          <h4>Custom Configuration</h4>
-          <p>Your system is tailored to your business &mdash; custom skills, workflows, and integrations set up to match your operations and goals.</p>
-        </div>
-        <div class="pillar-card">
-          <div class="accent-bar" style="background: var(--coral);"></div>
-          <h4>Ongoing Support</h4>
-          <p>We don't just install and disappear. Get live training, a 3-day onboarding workshop, and continued support to ensure you succeed long-term.</p>
-        </div>
-      </div>
-
-      <!-- Origin -->
-      <div class="origin-box">
-        <strong>The technology:</strong> Built on the <strong>85,000+ star</strong> open-source AI agent framework trusted by <strong>100,000+ developers</strong>. We package this battle-tested technology into a fully managed installation &mdash; no coding, no terminal, no configuration required. Your system runs entirely in the cloud, accessible from any device.
-      </div>
-
-      <!-- Video Explainer -->
-      <div class="video-block">
-        <div class="video-block-header">Watch: Your AI System Explained</div>
-        <div class="video-iframe-wrap">
-          <iframe
-            src="https://player.vimeo.com/video/1174520054?badge=0&autopause=0&player_id=0&app_id=58479"
-            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
-            allowfullscreen
-            title="AI System Demo">
-          </iframe>
-        </div>
-      </div>
-
-      <div class="video-cta">
-        <a href="#bundle-pricing" class="btn btn-lobster-cta toc-link">Get Installed Now &rarr;</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== SOCIAL PROOF: TESTIMONIALS #1 ========== -->
-  <section class="sec-social-proof-new" id="social-proof">
-    <div class="container">
-      <div class="tag" style="background: rgba(3, 255, 167, 0.12); color: var(--green); border-color: rgba(3, 255, 167, 0.25); margin-bottom: var(--space-sm);">Real Results</div>
-      <h2 class="section-title">They're Already <span class="gradient-text-green">Crushing It</span></h2>
-      <p class="section-subtitle">No hype. No filters. Just screenshots straight from the community.</p>
-
-      <div class="testimonials-grid">
-        <!-- Card 1 -->
-        <div class="testimonial-card">
-          <div class="testimonial-card-header" style="background: rgba(30, 29, 42, 0.6);">
-            <div>
-              <span class="star-rating">&#11088;&#11088;&#11088;&#11088;&#11088;</span>
-              <span class="testimonial-quote">&ldquo;Total newbie &mdash; and he had a live bot in MINUTES!&rdquo;</span>
-            </div>
-            <span class="testimonial-verified">&#10003; Verified</span>
-          </div>
-          <img src="images/openclaw/test21.png" alt="Installation result" loading="lazy" />
-          <div class="testimonial-reactions">
-            <span>&#10084;&#65039; <strong>312</strong></span>
-            <span>&#128293; <strong>248</strong></span>
-            <span>&#128525; <strong>197</strong></span>
-            <span class="react-label">People loved this</span>
-          </div>
-        </div>
-
-        <!-- Card 2 -->
-        <div class="testimonial-card">
-          <div class="testimonial-card-header" style="background: rgba(245, 166, 35, 0.12);">
-            <div>
-              <span class="star-rating">&#11088;&#11088;&#11088;&#11088;&#11088;</span>
-              <span class="testimonial-quote">&ldquo;Bilingual AI bot. Built &amp; live. Under 10 minutes!&rdquo;</span>
-            </div>
-            <span class="testimonial-verified">&#10003; Verified</span>
-          </div>
-          <img src="images/openclaw/test22.png" alt="Installation result" loading="lazy" />
-          <div class="testimonial-reactions">
-            <span>&#10084;&#65039; <strong>289</strong></span>
-            <span>&#128293; <strong>221</strong></span>
-            <span>&#129321; <strong>178</strong></span>
-            <span class="react-label">People loved this</span>
-          </div>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="testimonial-card">
-          <div class="testimonial-card-header" style="background: rgba(255, 110, 180, 0.12);">
-            <div>
-              <span class="star-rating">&#11088;&#11088;&#11088;&#11088;&#11088;</span>
-              <span class="testimonial-quote">&ldquo;10 minutes to build. She called it a GAME CHANGER.&rdquo;</span>
-            </div>
-            <span class="testimonial-verified">&#10003; Verified</span>
-          </div>
-          <img src="images/openclaw/test23.png" alt="Installation result" loading="lazy" />
-          <div class="testimonial-reactions">
-            <span>&#10084;&#65039; <strong>341</strong></span>
-            <span>&#128293; <strong>274</strong></span>
-            <span>&#128525; <strong>203</strong></span>
-            <span class="react-label">People loved this</span>
-          </div>
-        </div>
-
-        <!-- Card 4 -->
-        <div class="testimonial-card">
-          <div class="testimonial-card-header" style="background: rgba(229, 80, 64, 0.15);">
-            <div>
-              <span class="star-rating">&#11088;&#11088;&#11088;&#11088;&#11088;</span>
-              <span class="testimonial-quote">&ldquo;Full setup &mdash; data, logos, API keys &mdash; done in 15 mins!&rdquo;</span>
-            </div>
-            <span class="testimonial-verified">&#10003; Verified</span>
-          </div>
-          <img src="images/openclaw/test24.png" alt="Installation result" loading="lazy" />
-          <div class="testimonial-reactions">
-            <span>&#10084;&#65039; <strong>267</strong></span>
-            <span>&#128293; <strong>198</strong></span>
-            <span>&#129321; <strong>154</strong></span>
-            <span class="react-label">People loved this</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="section-cta">
-        <p>500+ entrepreneurs already deployed their AI business</p>
-        <a href="#bundle-pricing" class="btn btn-lobster toc-link">Get Installed Now &rarr;</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== BUNDLE CONTENTS ========== -->
-  <section class="sec-bundle-contents" id="bundle-contents">
-    <div class="container">
-      <div class="tag" style="margin-bottom: var(--space-sm);">What's Included</div>
-      <h2 class="section-title">One Bundle. <span class="gradient-text-gold">Total Domination.</span></h2>
-      <p class="section-subtitle">Here is everything you are going to get &mdash; the complete software suite, training, live support, done-for-you skills, and your own custom Control Board.</p>
-
-      <img src="images/openclaw/cover.png" alt="AI Automation Bundle" class="bundle-hero-img" loading="lazy" />
-
-      <div class="bundle-components-grid">
-        <div class="bundle-component">
-          <span class="bundle-component-number">01</span>
-          <span class="bundle-component-value">Value: $297</span>
-          <h3>Claw Launcher Install</h3>
-          <p>We walk you through the exact installation process so your system is ready to go.</p>
-          <ul>
-            <li>Complete system setup</li>
-            <li>Connect everything correctly</li>
-            <li>Get your system ready to start generating results</li>
-          </ul>
-        </div>
-
-        <div class="bundle-component">
-          <span class="bundle-component-number">02</span>
-          <span class="bundle-component-value">Value: $497</span>
-          <h3>Claw Launcher Onboarder</h3>
-          <p>A simple onboarding system that shows you exactly how to start using the system the right way.</p>
-          <ul>
-            <li>Step-by-step onboarding</li>
-            <li>Understand how the system works</li>
-            <li>Avoid beginner mistakes</li>
-            <li>Start using the system faster</li>
-          </ul>
-        </div>
-
-        <div class="bundle-component">
-          <span class="bundle-component-number">03</span>
-          <span class="bundle-component-value">Value: $497</span>
-          <h3>3-Day Onboarding Workshop</h3>
-          <p>Join our live 3-day workshop where we walk you through everything step-by-step.</p>
-          <ul>
-            <li>Watch the system being implemented live</li>
-            <li>Ask questions and get guidance</li>
-            <li>See exactly how to use the tools for results</li>
-            <li>Learn the fastest path to getting started</li>
-          </ul>
-        </div>
-
-        <div class="bundle-component" style="background: linear-gradient(130deg, rgba(245, 166, 35, 0.15), rgba(245, 166, 35, 0.05)); border-color: rgba(245, 166, 35, 0.25);">
-          <span class="bundle-component-number">04</span>
-          <span class="bundle-component-value" style="background: rgba(3, 255, 167, 0.15); color: var(--green);">Value: $497</span>
-          <h3>Cashflow Engine</h3>
-          <p>A powerful suite of skills designed to help you create revenue assets fast. Inside you'll get:</p>
-          <ul>
-            <li><strong>Revenue Page Architect</strong> &mdash; Build revenue pages designed to convert</li>
-            <li><strong>Conversion Copywriter</strong> &mdash; Generate persuasive copy that sells</li>
-            <li><strong>Hero Hook Builder</strong> &mdash; Create powerful hooks that grab attention</li>
-            <li><strong>VSL Script Creator</strong> &mdash; High-converting video sales letter scripts</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="bundle-total-value">
-        <h3>Total Value: $1,788</h3>
-      </div>
-
-      <div class="guarantee-callout">
-        <h3>100% Installation Guarantee</h3>
-        <p>You <em>will</em> be installed and operational. If you can't complete the two simple setup steps, we will do it for you.</p>
-      </div>
-
-      <div class="section-cta">
-        <p>All of this runs autonomously &mdash; so you can focus on what matters.</p>
-        <a href="#bundle-pricing" class="btn btn-lobster toc-link">Get Installed Now &rarr;</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== BUNDLE UPGRADES (FULL SUITE) ========== -->
-  <section class="sec-bundle-upgrades" id="bundle-upgrades">
-    <div class="container">
-      <div class="tag" style="margin-bottom: var(--space-sm);">Full Suite</div>
-      <h2 class="section-title">Plus Everything You Need to <span class="gradient-text-purple">Win</span></h2>
-      <p class="section-subtitle">The complete ecosystem &mdash; skill repository, control panel, business builder, and connector series.</p>
-
-      <!-- Skill Repository -->
-      <div class="upgrade-item">
-        <img src="images/openclaw/oto1-skill-repo.png" alt="Skill Repository" loading="lazy" />
-        <div class="upgrade-item-body">
-          <span class="bundle-component-value">Value: $3,997</span>
-          <h3>Skill Repository</h3>
-          <p>Unlock access to <strong>100+ ready-to-deploy automation skills</strong> that dramatically expand what your AI system can do. Instantly connect with powerful business tools, platforms, and automation systems.</p>
-          <div class="skill-cat-grid">
-            <div class="skill-cat">
-              <div class="skill-cat-icon">&#128231;</div>
-              <div class="skill-cat-name">Email &amp; Marketing</div>
-              <div class="skill-cat-tools">ActiveCampaign &middot; ConvertKit &middot; Brevo &middot; Klaviyo</div>
-            </div>
-            <div class="skill-cat">
-              <div class="skill-cat-icon">&#129309;</div>
-              <div class="skill-cat-name">CRM &amp; Sales</div>
-              <div class="skill-cat-tools">HubSpot &middot; Freshsales &middot; Close CRM &middot; Copper</div>
-            </div>
-            <div class="skill-cat">
-              <div class="skill-cat-icon">&#9881;&#65039;</div>
-              <div class="skill-cat-name">Productivity</div>
-              <div class="skill-cat-tools">Asana &middot; ClickUp &middot; Jira &middot; Google Calendar</div>
-            </div>
-            <div class="skill-cat">
-              <div class="skill-cat-icon">&#129302;</div>
-              <div class="skill-cat-name">AI &amp; Voice</div>
-              <div class="skill-cat-tools">Claude &middot; Gemini &middot; ElevenLabs</div>
-            </div>
-            <div class="skill-cat">
-              <div class="skill-cat-icon">&#9729;&#65039;</div>
-              <div class="skill-cat-name">Cloud &amp; Storage</div>
-              <div class="skill-cat-tools">AWS &middot; Google Drive &middot; Dropbox</div>
-            </div>
-            <div class="skill-cat">
-              <div class="skill-cat-icon">&#128722;</div>
-              <div class="skill-cat-name">Ecommerce</div>
-              <div class="skill-cat-tools">Gumroad &middot; Magento &middot; Ecwid</div>
-            </div>
-            <div class="skill-cat">
-              <div class="skill-cat-icon">&#128736;&#65039;</div>
-              <div class="skill-cat-name">Developer Tools</div>
-              <div class="skill-cat-tools">GitHub &middot; GitLab &middot; Firebase</div>
-            </div>
-            <div class="skill-cat">
-              <div class="skill-cat-icon">&#128203;</div>
-              <div class="skill-cat-name">Forms &amp; Data</div>
-              <div class="skill-cat-tools">Google Forms &middot; Jotform &middot; Airtable</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Control Panel -->
-      <div class="upgrade-item">
-        <img src="images/openclaw/oto2-control-panel.png" alt="Control Panel" loading="lazy" />
-        <div class="upgrade-item-body">
-          <span class="bundle-component-value">Value: $997</span>
-          <h3>Control Panel</h3>
-          <p>The advanced dashboard that makes managing your entire AI automation system simple and organized.</p>
-          <div class="upgrade-features">
-            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#129513;</span><span>Manage agents, skills, and workflows from one place</span></div>
-            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128200;</span><span>Monitor activity and track automation performance</span></div>
-            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128640;</span><span>Launch and control tasks instantly through the dashboard</span></div>
-            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128269;</span><span>Access logs, sessions, and system insights easily</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Business Builder -->
-      <div class="upgrade-item">
-        <img src="images/openclaw/oto4-business-builder.png" alt="Business Builder" loading="lazy" />
-        <div class="upgrade-item-body">
-          <span class="bundle-component-value">Value: $2,997</span>
-          <h3>Business Builder</h3>
-          <p>A complete training system designed to help you turn your AI system into a <strong>real business.</strong></p>
-          <div class="upgrade-features">
-            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128161;</span><span>Create profitable AI service offers</span></div>
-            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128176;</span><span>Build systems that generate consistent income</span></div>
-            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128230;</span><span>Package and sell AI solutions</span></div>
-            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128200;</span><span>Scale into a sustainable business</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Connector Series -->
-      <div class="upgrade-item">
-        <img src="images/openclaw/oto6-connector-series.png" alt="Connector Series" loading="lazy" />
-        <div class="upgrade-item-body">
-          <span class="bundle-component-value">Value: $2,997</span>
-          <h3>Connector Series</h3>
-          <p>Expand what your system can do by connecting it with <strong>apps, tools, and online services.</strong></p>
-          <div class="upgrade-features">
-            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128279;</span><span>Connect with external apps and services</span></div>
-            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128260;</span><span>Send and receive data between different tools</span></div>
-            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#9889;</span><span>Trigger automations across platforms</span></div>
-            <div class="upgrade-feature"><span class="upgrade-feature-icon">&#128268;</span><span>Build more powerful workflows</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="section-cta">
-        <p>Everything installed, configured, and ready to go.</p>
-        <a href="#bundle-pricing" class="btn btn-lobster toc-link">Get Installed Now &rarr;</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== PRICING ========== -->
-  <section class="sec-pricing" id="bundle-pricing">
-    <div class="container">
-      <div class="tag" style="background: rgba(229, 0, 0, 0.15); color: #e55040; border-color: rgba(229, 0, 0, 0.25); margin-bottom: var(--space-sm);">Get Started</div>
-      <h2 class="section-title">Get Your AI System <span class="gradient-text">Installed</span></h2>
-      <p class="section-subtitle">Choose the installation package that fits your business.</p>
-
-      <div class="pricing-tiers-grid">
-
-        <!-- TIER 1: ClawLauncher Install (Featured) -->
-        <div class="pricing-tier-card tier-featured">
-          <div class="pricing-featured-badge">&#11088; BEST VALUE</div>
-          <span class="tier-label">Tier 1</span>
-          <span class="tier-name">&#9881;&#65039; ClawLauncher Install</span>
-          <span class="tier-price">$1,297</span>
-          <p class="tier-subtitle">&#128293; One-Time Payment &mdash; Full Installation</p>
-          <div class="tier-cta">
-            <a href="https://buy.stripe.com/3cIeVdcP15fe1mx8XO4Ni0A" target="_blank" rel="noopener noreferrer" class="btn btn-gold-cta">Get Installed Now &rarr;</a>
-          </div>
-          <p class="tier-guarantee-note">&#10003; 30-day money-back guarantee</p>
-        </div>
-
-        <!-- TIER 2: 10+ Setups -->
-        <div class="pricing-tier-card">
-          <span class="tier-label">Tier 2</span>
-          <span class="tier-name">&#128101; 10+ Setups</span>
-          <span class="tier-price">$1,500 &ndash; $2,500</span>
-          <p class="tier-subtitle">For teams and agencies deploying 10 or more installations.</p>
-          <div class="tier-cta">
-            <a href="javascript:void(0)" onclick="openSetupModal()" class="btn btn-outline" style="border-radius:8px;">Get Multi-Setup &rarr;</a>
-          </div>
-          <p class="tier-guarantee-note">&#10003; 30-day money-back guarantee</p>
-        </div>
-
-        <!-- TIER 3: Spread Pay -->
-        <div class="pricing-tier-card">
-          <span class="tier-label">Tier 3</span>
-          <span class="tier-name">&#128197; Spread Pay</span>
-          <span class="tier-price">$1,256 <span style="font-size: 18px; font-weight: 600; opacity: 0.6;">down</span></span>
-          <p class="tier-spread-detail">then $209/mo &times; 6 months &mdash; total $2,511</p>
-          <p class="tier-subtitle">50% now, 50% spread over 6 months.</p>
-          <div class="tier-cta">
-            <a href="https://buy.stripe.com/aFa7sLaGT4ba6GR2zq4Ni0B" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="border-radius:8px;">Get Spread Pay &rarr;</a>
-          </div>
-          <p class="tier-guarantee-note">&#10003; 30-day money-back guarantee</p>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== GUARANTEE ========== -->
-  <section class="sec-guarantee" id="guarantee">
-    <div class="container">
-      <div class="tag" style="background: rgba(3, 255, 167, 0.12); color: var(--green); border-color: rgba(3, 255, 167, 0.25); margin-bottom: var(--space-sm);">Risk-Free</div>
-      <h2 class="section-title">30-Day <span class="gradient-text-green">Simple Guarantee</span></h2>
-      <p class="section-subtitle">No hoops. No fine print. Just results &mdash; or your money back.</p>
-
-      <div class="guarantee-box">
-        <div class="guarantee-badge">
-          <span class="guarantee-badge-number">30</span>
-          <span class="guarantee-badge-label">Day</span>
-        </div>
-        <div class="guarantee-text">
-          <h3>Try It Risk-Free</h3>
-
-          <div class="guarantee-steps">
-            <div class="guarantee-step">
-              <span class="guarantee-step-icon" style="background: rgba(99, 102, 241, 0.15); color: #818cf8;">&#128218;</span>
-              <span>Go through the guide.</span>
-            </div>
-            <div class="guarantee-step">
-              <span class="guarantee-step-icon" style="background: rgba(3, 255, 167, 0.15); color: var(--green);">&#129302;</span>
-              <span>Deploy your first AI worker.</span>
-            </div>
-            <div class="guarantee-step">
-              <span class="guarantee-step-icon" style="background: rgba(245, 166, 35, 0.15); color: var(--gold);">&#9889;</span>
-              <span>Test the system.</span>
-            </div>
-          </div>
-
-          <div class="guarantee-condition">
-            <p>If you don't see the shift&hellip;</p>
-            <p>If you don't see how this changes execution&hellip;</p>
-            <p style="color: var(--ink);">Email us within <strong>30 days</strong>. We'll refund you.</p>
-          </div>
-
-          <div class="guarantee-nodrama">
-            <span>&#10060; No drama.</span>
-            <span>&#10067; No questions.</span>
-          </div>
-          <p style="margin-top: var(--space-sm); color: var(--ink); font-weight: 600;">You take the risk off your shoulders.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== MORE SOCIAL PROOF (with proof screenshots woven in) ========== -->
-  <section class="sec-social-proof-new">
-    <div class="container">
-      <div class="tag" style="background: rgba(229, 80, 64, 0.12); color: var(--coral); border-color: rgba(229, 80, 64, 0.25); margin-bottom: var(--space-sm);">More Results</div>
-      <h2 class="section-title">The Community Keeps <span class="gradient-text-coral">Winning</span></h2>
-      <p class="section-subtitle">Still on the fence? Let them do the talking.</p>
-
-      <div class="testimonials-grid">
-        <!-- Testimonial 5 -->
-        <div class="testimonial-card">
-          <div class="testimonial-card-header" style="background: rgba(245, 166, 35, 0.12);">
-            <div>
-              <span class="star-rating">&#11088;&#11088;&#11088;&#11088;&#11088;</span>
-              <span class="testimonial-quote">&ldquo;This completely changed how I run my business!&rdquo;</span>
-            </div>
-            <span class="testimonial-verified">&#10003; Verified</span>
-          </div>
-          <img src="images/openclaw/test25.png" alt="Customer result" loading="lazy" />
-          <div class="testimonial-reactions">
-            <span>&#10084;&#65039; <strong>298</strong></span>
-            <span>&#128293; <strong>231</strong></span>
-            <span>&#128525; <strong>184</strong></span>
-            <span class="react-label">People loved this</span>
-          </div>
-        </div>
-
-        <!-- Proof 1 -->
-        <div class="proof-card">
-          <img src="images/openclaw/agency/proof1.png" alt="Revenue proof" loading="lazy" />
-        </div>
-
-        <!-- Proof 2 -->
-        <div class="proof-card">
-          <img src="images/openclaw/agency/proof2.png" alt="Revenue proof" loading="lazy" />
-        </div>
-
-        <!-- Testimonial 6 -->
-        <div class="testimonial-card">
-          <div class="testimonial-card-header" style="background: rgba(30, 29, 42, 0.6);">
-            <div>
-              <span class="star-rating">&#11088;&#11088;&#11088;&#11088;&#11088;</span>
-              <span class="testimonial-quote">&ldquo;I deployed my first AI worker in under 20 minutes!&rdquo;</span>
-            </div>
-            <span class="testimonial-verified">&#10003; Verified</span>
-          </div>
-          <img src="images/openclaw/test26.png" alt="Customer result" loading="lazy" />
-          <div class="testimonial-reactions">
-            <span>&#10084;&#65039; <strong>274</strong></span>
-            <span>&#128293; <strong>209</strong></span>
-            <span>&#129321; <strong>167</strong></span>
-            <span class="react-label">People loved this</span>
-          </div>
-        </div>
-
-        <!-- Testimonial 7 -->
-        <div class="testimonial-card">
-          <div class="testimonial-card-header" style="background: rgba(3, 255, 167, 0.12);">
-            <div>
-              <span class="star-rating">&#11088;&#11088;&#11088;&#11088;&#11088;</span>
-              <span class="testimonial-quote">&ldquo;Revenue up. Workload down. This is the cheat code.&rdquo;</span>
-            </div>
-            <span class="testimonial-verified">&#10003; Verified</span>
-          </div>
-          <img src="images/openclaw/test27.png" alt="Customer result" loading="lazy" />
-          <div class="testimonial-reactions">
-            <span>&#10084;&#65039; <strong>319</strong></span>
-            <span>&#128293; <strong>255</strong></span>
-            <span>&#128525; <strong>211</strong></span>
-            <span class="react-label">People loved this</span>
-          </div>
-        </div>
-
-        <!-- Proof 3 -->
-        <div class="proof-card">
-          <img src="images/openclaw/agency/proof3.png" alt="Revenue proof" loading="lazy" />
-        </div>
-
-        <!-- Proof 4 -->
-        <div class="proof-card">
-          <img src="images/openclaw/agency/proof4.png" alt="Revenue proof" loading="lazy" />
-        </div>
-
-        <!-- Testimonial 8 -->
-        <div class="testimonial-card">
-          <div class="testimonial-card-header" style="background: rgba(255, 110, 180, 0.12);">
-            <div>
-              <span class="star-rating">&#11088;&#11088;&#11088;&#11088;&#11088;</span>
-              <span class="testimonial-quote">&ldquo;Hands down the best investment I've ever made online.&rdquo;</span>
-            </div>
-            <span class="testimonial-verified">&#10003; Verified</span>
-          </div>
-          <img src="images/openclaw/test28.png" alt="Customer result" loading="lazy" />
-          <div class="testimonial-reactions">
-            <span>&#10084;&#65039; <strong>342</strong></span>
-            <span>&#128293; <strong>278</strong></span>
-            <span>&#129321; <strong>193</strong></span>
-            <span class="react-label">People loved this</span>
-          </div>
-        </div>
-
-        <!-- Proof 5 -->
-        <div class="proof-card">
-          <img src="images/openclaw/agency/proof5.png" alt="Revenue proof" loading="lazy" />
-        </div>
-
-        <!-- Proof 6 -->
-        <div class="proof-card">
-          <img src="images/openclaw/agency/proof6.png" alt="Revenue proof" loading="lazy" />
-        </div>
-      </div>
-
-      <div class="section-cta">
-        <p>450+ entrepreneurs already seeing results just like these</p>
-        <a href="#bundle-pricing" class="btn btn-lobster toc-link">Get Installed Now &rarr;</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== BIGGER PICTURE ========== -->
-  <section class="sec-bigger-picture">
-    <div class="container">
-      <div class="tag" style="background: rgba(229, 80, 64, 0.12); color: var(--coral); border-color: rgba(229, 80, 64, 0.25); margin-bottom: var(--space-sm);">Why This Matters</div>
-      <h2>The <span class="gradient-text-purple">Bigger Picture</span></h2>
-      <p class="highlight-text">The CEO of Anthropic (the company behind Claude AI) predicts that AI could displace 50% of entry-level white-collar jobs within one to five years, potentially driving unemployment to 10&ndash;20%.</p>
-
-      <div class="quote-with-photo">
-        <img class="quote-photo" src="images/dario-amodei.jpg" alt="Dario Amodei, CEO of Anthropic" />
-        <blockquote>
-          &ldquo;AI is not just automating specific tasks &mdash; it is becoming a general labor substitute for humans.&rdquo;
-          <br><span style="font-style: normal; font-size: 14px; font-weight: 700;">&mdash; Dario Amodei, CEO of Anthropic</span>
-        </blockquote>
-      </div>
-
-      <p class="highlight-text">This isn't about replacing you. It's about making sure you're not replaced. Business owners who adopt AI tools early gain a significant competitive advantage.</p>
-
-      <div class="cta-row">
-        <a href="#bundle-pricing" class="btn btn-lobster toc-link">Get Installed Now &rarr;</a>
-        <a href="ai-resources.html" class="btn btn-outline">Explore More AI Resources</a>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- FOOTER (injected by navigation.js) -->
-
-  <!-- INSTALL COUNT MODAL (Tier 2) -->
-  <div id="setupModal" class="setup-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="setupModalTitle">
-    <div class="setup-modal">
-      <button onclick="closeSetupModal()" class="setup-modal-close" aria-label="Close">&times;</button>
-      <p class="setup-modal-kicker">Confirm Your Setup</p>
-      <h2 class="setup-modal-title" id="setupModalTitle">How many setups do you need?</h2>
-      <p class="setup-modal-sub">Pick the option that fits and we'll route you to the right place.</p>
-      <div class="setup-options">
-        <a href="https://buy.stripe.com/3cIeVdcP15fe1mx8XO4Ni0A"
-           class="setup-option"
-           target="_blank" rel="noopener noreferrer"
-           onclick="closeSetupModal()">
-          <span class="setup-option-icon">&#128100;</span>
-          <span class="setup-option-label">1 Setup</span>
-          <span class="setup-option-desc">Single installation</span>
-          <span class="setup-option-price" style="color: var(--gold);">$1,297</span>
-        </a>
-        <a href="https://pl.setyourownsalary.com/2497install-15008"
-           class="setup-option option-featured"
-           target="_blank" rel="noopener noreferrer"
-           onclick="closeSetupModal()">
-          <span class="setup-option-icon">&#128101;</span>
-          <span class="setup-option-label">10+ Setups</span>
-          <span class="setup-option-desc">Team &amp; agency installs</span>
-          <span class="setup-option-price">$1,500 &ndash; $2,500</span>
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- WAITLIST MODAL -->
-  <div id="waitlistModal" style="
-    display: none; position: fixed; inset: 0; z-index: 9999;
-    background: rgba(0,0,0,0.6); align-items: center; justify-content: center;
-  ">
-    <div style="
-      background: var(--bg-white, #1a1a1a); border: 1px solid #292825;
-      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6); border-radius: 8px; max-width: 460px; width: 90%; padding: 40px;
-      position: relative;
-    ">
-      <button onclick="closeWaitlistModal()" style="
-        position: absolute; top: 16px; right: 16px; background: none;
-        border: 1px solid #302e2b; width: 32px; height: 32px; font-size: 18px;
-        cursor: pointer; font-weight: 700; line-height: 1; border-radius: 4px; color: #958f80;
-      ">&#215;</button>
-
-      <!-- Default state -->
-      <div id="waitlistForm">
-        <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; color: #736f64;">Early Access</div>
-        <h2 style="font-family: 'Inter', sans-serif; font-size: 26px; font-weight: 700; margin: 0 0 8px; color: #efe5cd;">Join the Waitlist</h2>
-        <p style="font-size: 15px; margin: 0 0 28px; color: #736f64;">We're onboarding clients in waves. Drop your info and we'll reach out when your spot is ready.</p>
-
-        <div style="margin-bottom: 16px;">
-          <label style="display: block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; color: #958f80;">Name</label>
-          <input id="waitlistName" type="text" placeholder="Your name" style="
-            width: 100%; padding: 12px 14px; border: 1px solid #292825;
-            font-size: 15px; font-family: inherit; background: #141413; color: #efe5cd; border-radius: 4px; box-sizing: border-box;
-          ">
-        </div>
-
-        <div style="margin-bottom: 24px;">
-          <label style="display: block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; color: #958f80;">Email</label>
-          <input id="waitlistEmail" type="email" placeholder="you@example.com" style="
-            width: 100%; padding: 12px 14px; border: 1px solid #292825;
-            font-size: 15px; font-family: inherit; background: #141413; color: #efe5cd; border-radius: 4px; box-sizing: border-box;
-          ">
-        </div>
-
-        <div id="waitlistError" style="display:none; color: #e55040; font-size: 13px; font-weight: 600; margin-bottom: 12px;"></div>
-
-        <button id="waitlistSubmitBtn" onclick="submitWaitlist()" style="
-          width: 100%; padding: 14px; background: linear-gradient(135deg, #c41e3a, #e50000); color: #fff;
-          border: 1px solid rgba(229, 0, 0, 0.5); border-radius: 4px; font-size: 15px; font-weight: 700;
-          text-transform: uppercase; letter-spacing: 0.05em; cursor: pointer;
-          box-shadow: 0 2px 16px rgba(229, 0, 0, 0.2); transition: all 0.25s ease;
-        " onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 32px rgba(229,0,0,0.25)'"
-           onmouseout="this.style.transform='';this.style.boxShadow='0 2px 16px rgba(229,0,0,0.2)'">
-          Reserve My Spot
-        </button>
-      </div>
-
-      <!-- Success state -->
-      <div id="waitlistSuccess" style="display: none; text-align: center; padding: 20px 0;">
-        <div style="font-size: 48px; margin-bottom: 16px;">&#127881;</div>
-        <h2 style="font-family: 'Inter', sans-serif; font-size: 26px; font-weight: 700; margin: 0 0 12px; color: #efe5cd;">You're on the list!</h2>
-        <p style="font-size: 15px; color: #736f64; margin: 0;">We'll reach out when your spot is ready. Keep an eye on your inbox.</p>
-      </div>
-    </div>
-  </div>
-
-
-  <script src="js/components/navigation.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="supabase.js"></script>
-
-  <script>
-    // ===== SMOOTH SCROLL WITH OFFSET =====
-    document.querySelectorAll('.toc-link').forEach(function(link) {
-      link.addEventListener('click', function(e) {
-        var href = this.getAttribute('href');
-        if (href && href.startsWith('#')) {
-          e.preventDefault();
-          var target = document.querySelector(href);
-          if (target) {
-            var offset = 140;
-            var top = target.getBoundingClientRect().top + window.pageYOffset - offset;
-            window.scrollTo({ top: top, behavior: 'smooth' });
-          }
-        }
-      });
-    });
-
-    // ===== INTERSECTION OBSERVER FOR TOC =====
-    // NOTE: we deliberately do NOT call .scrollIntoView on the active
-    // pill — browsers sometimes bubble that scroll up to the document,
-    // and when the last section[id] hits the observer (i.e. you're at
-    // the bottom of the page) the browser scrolls the page back up to
-    // "center" the pill. That caused a persistent bottom-bounce bug.
-    // Instead we only adjust the .toc-bar container's horizontal
-    // scrollLeft so the active pill remains visible in its own strip.
-    (function() {
-      var sections = document.querySelectorAll('section[id]');
-      var pills = document.querySelectorAll('.toc-pill');
-
-      if (!sections.length || !pills.length) return;
-
-      var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-      function centerPillInContainer(pill) {
-        var container = pill.closest('.toc-bar');
-        if (!container) return;
-        var target = pill.offsetLeft - container.clientWidth / 2 + pill.offsetWidth / 2;
-        var max = container.scrollWidth - container.clientWidth;
-        target = Math.max(0, Math.min(target, max));
-        if (Math.abs(container.scrollLeft - target) > 1) {
-          container.scrollTo({
-            left: target,
-            behavior: reducedMotion ? 'auto' : 'smooth',
-          });
-        }
-      }
-
-      var observer = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-          if (!entry.isIntersecting) return;
-          pills.forEach(function(pill) { pill.classList.remove('active'); });
-          var activePill = document.querySelector('.toc-pill[data-section="' + entry.target.id + '"]');
-          if (activePill) {
-            activePill.classList.add('active');
-            centerPillInContainer(activePill);
-          }
-        });
-      }, {
-        rootMargin: '-150px 0px -60% 0px',
-        threshold: 0
-      });
-
-      sections.forEach(function(section) {
-        observer.observe(section);
-      });
-    })();
-
-    // ===== VIDEO PLAY BUTTON =====
-    (function() {
-      var video = document.getElementById('openclawVideo');
-      var playBtn = document.getElementById('videoPlayBtn');
-      if (!video || !playBtn) return;
-
-      playBtn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        video.play();
-      });
-
-      video.addEventListener('play', function() {
-        playBtn.classList.add('hidden');
-      });
-
-      video.addEventListener('pause', function() {
-        if (!video.ended) {
-          playBtn.classList.remove('hidden');
-        }
-      });
-
-      video.addEventListener('ended', function() {
-        playBtn.classList.remove('hidden');
-      });
-    })();
-
-    // ===== SETUP SELECTOR MODAL =====
-    var setupModal = document.getElementById('setupModal');
-
-    function openSetupModal() {
-      setupModal.classList.add('open');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeSetupModal() {
-      setupModal.classList.remove('open');
-      document.body.style.overflow = '';
-    }
-
-    setupModal.addEventListener('click', function(e) {
-      if (e.target === setupModal) closeSetupModal();
-    });
-
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && setupModal.classList.contains('open')) closeSetupModal();
-    });
-
-
-    // ===== WAITLIST MODAL =====
-    var waitlistModal = document.getElementById('waitlistModal');
-
-    function openWaitlistModal() {
-      waitlistModal.style.display = 'flex';
-      document.body.style.overflow = 'hidden';
-      document.getElementById('waitlistName').focus();
-    }
-
-    function closeWaitlistModal() {
-      waitlistModal.style.display = 'none';
-      document.body.style.overflow = '';
-    }
-
-    waitlistModal.addEventListener('click', function(e) {
-      if (e.target === waitlistModal) closeWaitlistModal();
-    });
-
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') closeWaitlistModal();
-    });
-
-    async function submitWaitlist() {
-      var name = document.getElementById('waitlistName').value.trim();
-      var email = document.getElementById('waitlistEmail').value.trim();
-      var errorEl = document.getElementById('waitlistError');
-      var submitBtn = document.getElementById('waitlistSubmitBtn');
-
-      errorEl.style.display = 'none';
-
-      if (!name) {
-        errorEl.textContent = 'Please enter your name.';
-        errorEl.style.display = 'block';
-        return;
-      }
-      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        errorEl.textContent = 'Please enter a valid email address.';
-        errorEl.style.display = 'block';
-        return;
-      }
-
-      submitBtn.textContent = 'Saving...';
-      submitBtn.disabled = true;
-
-      try {
-        var result = await waitlistManager.addEntry(name, email, 'openclaw');
-
-        if (result.error) {
-          var msg = result.error.code === '23505'
-            ? 'That email is already on the waitlist!'
-            : 'Something went wrong. Please try again.';
-          errorEl.textContent = msg;
-          errorEl.style.display = 'block';
-          submitBtn.textContent = 'Reserve My Spot';
-          submitBtn.disabled = false;
-          return;
-        }
-
-        document.getElementById('waitlistForm').style.display = 'none';
-        document.getElementById('waitlistSuccess').style.display = 'block';
-      } catch (err) {
-        errorEl.textContent = 'Something went wrong. Please try again.';
-        errorEl.style.display = 'block';
-        submitBtn.textContent = 'Reserve My Spot';
-        submitBtn.disabled = false;
-      }
-    }
-
-    // ===== SCROLL REVEAL =====
-    (function() {
-      var revealSelectors = [
-        '.section-title', '.section-subtitle',
-        '.analogy-card', '.pillar-card',
-        '.testimonial-card', '.bundle-component',
-        '.bundle-total-value', '.guarantee-callout',
-        '.upgrade-item',
-        '.section-cta', '.origin-box',
-        '.pricing-tier-card',
-        '.guarantee-box',
-        '.quote-with-photo',
-        '.proof-card', '.dashboard-preview img',
-        '.capsule-grid', '.skill-cat'
-      ];
-
-      // Collect all elements
-      var allReveal = [];
-      revealSelectors.forEach(function(sel) {
-        document.querySelectorAll(sel).forEach(function(el, i) {
-          el.classList.add('reveal');
-          // Stagger sibling cards
-          if (i > 0 && i < 8) {
-            el.style.transitionDelay = (i * 0.09) + 's';
-          }
-          allReveal.push(el);
-        });
-      });
-
-      // Safety section sides: slide in from left/right
-      var safetyLeft = document.querySelector('.safety-left');
-      var safetyRight = document.querySelector('.safety-right');
-      if (safetyLeft) { safetyLeft.classList.remove('reveal'); safetyLeft.classList.add('reveal-left'); }
-      if (safetyRight) { safetyRight.classList.remove('reveal'); safetyRight.classList.add('reveal-right'); }
-
-      // Video block scale in
-      var videoBlock = document.querySelector('.video-block');
-      if (videoBlock) { videoBlock.classList.add('reveal-scale'); }
-
-      // Pricing featured card scale
-      var pricingFeatured = document.querySelector('.tier-featured');
-      if (pricingFeatured) { pricingFeatured.classList.remove('reveal'); pricingFeatured.classList.add('reveal-scale'); }
-
-      var observer = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
-      document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(function(el) {
-        observer.observe(el);
-      });
-    })();
-
-    // ===== NUMBER COUNTER ANIMATION =====
-    (function() {
-      function parseVal(str) {
-        var raw = str.replace(/[^0-9.KM+]/gi, '');
-        var num = parseFloat(raw);
-        if (str.indexOf('K') > -1) num *= 1000;
-        if (str.indexOf('M') > -1) num *= 1000000;
-        return num;
-      }
-      function formatVal(original, current) {
-        if (original.indexOf('K') > -1) return Math.round(current / 1000) + 'K+';
-        if (original.indexOf('%') > -1) return Math.round(current) + '%';
-        if (original.indexOf('-Day') > -1) return original; // skip "30-Day"
-        if (original.indexOf('+') > -1) return Math.round(current).toLocaleString() + '+';
-        return Math.round(current).toLocaleString();
-      }
-
-      var statsObserver = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-          if (!entry.isIntersecting) return;
-          var el = entry.target;
-          var original = el.getAttribute('data-target');
-          if (!original) return;
-          var end = parseVal(original);
-          if (!end || original.indexOf('-Day') > -1) return;
-          statsObserver.unobserve(el);
-          var start = 0;
-          var duration = 1200;
-          var startTime = null;
-          function step(ts) {
-            if (!startTime) startTime = ts;
-            var progress = Math.min((ts - startTime) / duration, 1);
-            var eased = 1 - Math.pow(1 - progress, 3);
-            el.textContent = formatVal(original, start + (end - start) * eased);
-            if (progress < 1) requestAnimationFrame(step);
-            else el.textContent = original;
-          }
-          requestAnimationFrame(step);
-        });
-      }, { threshold: 0.5 });
-
-      document.querySelectorAll('.community-stat .stat-val').forEach(function(el) {
-        el.setAttribute('data-target', el.textContent.trim());
-        statsObserver.observe(el);
-      });
-    })();
-  </script>
-
-
-</body>
-
-</html>
+
+/* ============================================
+   MARKETING PAGE SUPPLEMENTS
+   Added 2026-04-23 — dark nav + anchor-quote closer
+   ============================================ */
+
+/* Dark theme nav overrides (openclaw approach) */
+.nav {
+  background: rgba(14, 14, 14, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: var(--border-thick);
+}
+
+.nav .logo {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  padding: 4px 0;
+  color: #efe5cd;
+  letter-spacing: -0.02em;
+  transition: color 0.25s ease;
+}
+
+.nav .logo:hover,
+.nav .logo:focus-visible {
+  background: transparent;
+  box-shadow: none;
+  transform: none;
+  color: var(--gold);
+}
+
+.nav-link {
+  color: #b0bcd4;
+  transition: color 0.25s ease;
+}
+
+.nav-link:hover {
+  color: var(--gold);
+}
+
+.nav-auth a:not(.btn) {
+  color: #b0bcd4;
+}
+
+.nav-auth a:not(.btn):hover {
+  color: var(--gold);
+}
+
+.hamburger span {
+  background: #efe5cd;
+}
+
+.mobile-menu {
+  background: #0e0e0e;
+}
+
+.mobile-menu-link {
+  background: rgba(239, 229, 205, 0.04);
+  border: 1px solid #292825;
+  color: #efe5cd;
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+.mobile-menu-link:hover,
+.mobile-menu-link:focus-visible {
+  background: rgba(245, 166, 35, 0.1);
+  border-color: rgba(245, 166, 35, 0.4);
+  color: #f5a623;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Anchor-quote closer — appears above footer on every marketing page */
+.anchor-closer {
+  padding: var(--space-lg) 0;
+  text-align: center;
+  background: #050505;
+  border-top: var(--border-thick);
+  border-bottom: var(--border-thick);
+  position: relative;
+  overflow: hidden;
+}
+
+.anchor-closer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(245, 166, 35, 0.06), transparent 70%);
+  pointer-events: none;
+}
+
+.anchor-closer__inner {
+  position: relative;
+  z-index: 1;
+}
+
+.anchor-closer__lede {
+  font-family: 'Inter', sans-serif;
+  font-style: italic;
+  font-size: 14px;
+  color: var(--ink-muted);
+  margin-bottom: var(--space-md);
+  letter-spacing: 0.02em;
+}
+
+.anchor-closer__quote {
+  font-family: 'Inter', sans-serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(20px, 2.8vw, 32px);
+  line-height: 1.4;
+  color: #f1f5f9;
+  max-width: 900px;
+  margin: 0 auto;
+  letter-spacing: -0.01em;
+}
+
+.anchor-closer__quote .quote-accent {
+  background: linear-gradient(135deg, #fbbf24 0%, #f97316 50%, #ec4899 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Anchor-quote hero tagline — the "Business as we know it" slogan across all pages */
+.anchor-tagline {
+  display: inline-block;
+  margin-bottom: var(--space-sm);
+  padding: 8px 20px;
+  background: rgba(245, 166, 35, 0.08);
+  border: 1px solid rgba(245, 166, 35, 0.2);
+  border-radius: 40px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: 0.02em;
+  font-style: italic;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Pull quote — anchor quote 2 inside product pitch sections */
+.anchor-pull-quote {
+  border: var(--border-thick);
+  background: var(--gradient-card);
+  padding: var(--space-lg);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-hard);
+  margin: var(--space-lg) auto;
+  max-width: 900px;
+  text-align: center;
+  position: relative;
+}
+
+.anchor-pull-quote::before {
+  content: '\201C';
+  position: absolute;
+  top: -20px;
+  left: 24px;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 80px;
+  line-height: 1;
+  color: var(--gold);
+  font-weight: 900;
+}
+
+.anchor-pull-quote p {
+  font-family: 'Inter', sans-serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: clamp(22px, 3vw, 36px);
+  line-height: 1.35;
+  color: #f1f5f9;
+  margin: 0;
+  letter-spacing: -0.015em;
+}
+
+.anchor-pull-quote p .accent {
+  background: linear-gradient(135deg, #fbbf24, #f97316, #ec4899);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.anchor-pull-quote__caption {
+  display: block;
+  margin-top: var(--space-sm);
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  color: var(--ink-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Scroll reveal helpers (optional on marketing pages) */
+.js-loaded .reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.js-loaded .revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stagger > .reveal:nth-child(1) { transition-delay: 0s; }
+.stagger > .reveal:nth-child(2) { transition-delay: 0.08s; }
+.stagger > .reveal:nth-child(3) { transition-delay: 0.16s; }
+.stagger > .reveal:nth-child(4) { transition-delay: 0.24s; }
+.stagger > .reveal:nth-child(5) { transition-delay: 0.32s; }
+.stagger > .reveal:nth-child(6) { transition-delay: 0.4s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .js-loaded .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Align reveal class names with both openclaw (.visible) and shared marketing (.revealed) */
+.js-loaded .reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Prevent horizontal scroll from offscreen mobile-menu transforms.
+   NOTE: we intentionally do NOT set overscroll-behavior here — on
+   Mac trackpads it breaks momentum scrolling on this page set. */
+html {
+  overflow-x: hidden;
+}
+
+/* ============================================
+   AMBIENT BACKGROUND ANIMATIONS
+   Added 2026-04-23 — noticeable but not distracting
+   ============================================ */
+
+/* Layer 1: the grid overlay on <body> slowly pans */
+body {
+  animation: ambient-grid-drift 24s linear infinite;
+}
+
+@keyframes ambient-grid-drift {
+  from { background-position: 0 0, 0 0; }
+  to { background-position: 40px 40px, 40px 40px; }
+}
+
+/* Layer 2: 3 floating gradient orbs behind all content.
+   Attached via body::before on a fixed full-viewport layer so scroll
+   doesn't carry them around (they always ambient-drift in place). */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  background:
+    radial-gradient(640px circle at var(--orb-a-x, 15%) var(--orb-a-y, 22%),
+      rgba(245, 166, 35, 0.55), transparent 42%),
+    radial-gradient(580px circle at var(--orb-b-x, 82%) var(--orb-b-y, 72%),
+      rgba(229, 0, 0, 0.45), transparent 48%),
+    radial-gradient(720px circle at var(--orb-c-x, 55%) var(--orb-c-y, 42%),
+      rgba(167, 139, 250, 0.35), transparent 50%);
+  mix-blend-mode: screen;
+  animation: ambient-orbs 26s ease-in-out infinite;
+  will-change: transform, background-position;
+  filter: blur(4px);
+  opacity: 0.65;
+}
+
+/* Light mode: switch blend mode to multiply so orbs tint instead of glow */
+[data-theme='light'] body::before {
+  mix-blend-mode: multiply;
+  opacity: 0.45;
+  background:
+    radial-gradient(640px circle at var(--orb-a-x, 15%) var(--orb-a-y, 22%),
+      rgba(245, 166, 35, 0.55), transparent 42%),
+    radial-gradient(580px circle at var(--orb-b-x, 82%) var(--orb-b-y, 72%),
+      rgba(196, 30, 58, 0.45), transparent 48%),
+    radial-gradient(720px circle at var(--orb-c-x, 55%) var(--orb-c-y, 42%),
+      rgba(79, 142, 247, 0.35), transparent 50%);
+}
+
+@keyframes ambient-orbs {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    --orb-a-x: 15%;  --orb-a-y: 22%;
+    --orb-b-x: 82%;  --orb-b-y: 72%;
+    --orb-c-x: 55%;  --orb-c-y: 42%;
+  }
+  33% {
+    transform: translate3d(2%, -2%, 0) scale(1.08);
+    --orb-a-x: 28%;  --orb-a-y: 14%;
+    --orb-b-x: 68%;  --orb-b-y: 84%;
+    --orb-c-x: 42%;  --orb-c-y: 55%;
+  }
+  66% {
+    transform: translate3d(-2%, 3%, 0) scale(1.05);
+    --orb-a-x: 10%;  --orb-a-y: 35%;
+    --orb-b-x: 90%;  --orb-b-y: 62%;
+    --orb-c-x: 62%;  --orb-c-y: 30%;
+  }
+}
+
+/* Layer 3: a conic shimmer that slowly rotates — adds a sense of depth.
+   Kept within viewport bounds (inset: 0 + scale) so it never extends
+   past the document and triggers bottom-bounce. */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 998;
+  pointer-events: none;
+  background:
+    conic-gradient(
+      from 0deg at 60% 40%,
+      rgba(245, 166, 35, 0.20) 0deg,
+      transparent 60deg,
+      rgba(229, 0, 0, 0.22) 160deg,
+      transparent 240deg,
+      rgba(167, 139, 250, 0.20) 320deg,
+      rgba(245, 166, 35, 0.20) 360deg
+    );
+  mix-blend-mode: screen;
+  animation: ambient-shimmer 60s linear infinite;
+  transform-origin: 60% 40%;
+  will-change: transform;
+  filter: blur(120px);
+  opacity: 0.55;
+  transform: scale(1.4);
+}
+
+[data-theme='light'] body::after {
+  mix-blend-mode: multiply;
+  opacity: 0.25;
+}
+
+@keyframes ambient-shimmer {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Keep hero/section backgrounds above the orbs but respectful of them */
+.hero,
+.sec-what-is,
+.sec-how,
+.sec-capabilities,
+.sec-full-stack,
+.sec-real-world,
+.sec-safety,
+.sec-getting-started,
+.sec-pricing,
+.sec-guarantee,
+.sec-social-proof-new,
+.sec-bundle-contents,
+.sec-bundle-upgrades,
+.sec-bigger-picture,
+.anchor-pull-section,
+.anchor-closer {
+  position: relative;
+  z-index: 1;
+}
+
+/* Cards + nav stay crisp on top of the ambient layer */
+.border-box,
+.pillar-card,
+.step-card,
+.analogy-card,
+.capability-card,
+.commit-card,
+.resource-card,
+.blog-card,
+.anchor-pull-quote,
+.nav,
+.toc-bar {
+  position: relative;
+  z-index: 2;
+}
+
+/* Reduced motion — freeze animations */
+@media (prefers-reduced-motion: reduce) {
+  body {
+    animation: none !important; /* stylelint-disable-line declaration-no-important */
+  }
+  body::before {
+    animation: none !important; /* stylelint-disable-line declaration-no-important */
+    transform: none !important; /* stylelint-disable-line declaration-no-important */
+  }
+  body::after {
+    animation: none !important; /* stylelint-disable-line declaration-no-important */
+  }
+}
+
+/* Dark nav: make the ghost Log In button readable on cream text */
+.nav .nav-cta--ghost {
+  color: #efe5cd;
+  border-color: rgba(239, 229, 205, 0.4);
+}
+
+.nav .nav-cta--ghost:hover,
+.nav .nav-cta--ghost:focus-visible {
+  background: rgba(239, 229, 205, 0.08);
+  color: #f5a623;
+  border-color: var(--gold, #f5a623);
+  transform: translateY(-1px);
+}
+
+/* ============================================
+   IMAGE FRAMES — shared stock-image pattern
+   ============================================ */
+
+/* Standard image frame: dark-bordered card with soft shadow.
+   Applies a subtle desaturation + brightness drop so the photo
+   sits inside the overall dark aesthetic. */
+.image-frame {
+  position: relative;
+  border: 1px solid #292825;
+  border-radius: 6px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+  background: #0e0e0e;
+  aspect-ratio: 4 / 3;
+  width: 100%;
+}
+
+.image-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: brightness(0.82) saturate(0.92) contrast(1.05);
+  transition: filter 0.4s ease, transform 0.6s ease;
+}
+
+.image-frame:hover img {
+  filter: brightness(0.9) saturate(1) contrast(1.05);
+  transform: scale(1.02);
+}
+
+.image-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(135deg, rgba(245, 166, 35, 0.08), transparent 45%),
+    linear-gradient(to top, rgba(14, 14, 14, 0.55), transparent 55%);
+  pointer-events: none;
+}
+
+.image-frame--tall { aspect-ratio: 3 / 4; }
+.image-frame--wide { aspect-ratio: 16 / 9; }
+.image-frame--banner { aspect-ratio: 21 / 9; }
+
+/* Full-width banner with overlay text */
+.image-banner {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 21 / 7;
+  min-height: 280px;
+  overflow: hidden;
+  border-top: 1px solid #292825;
+  border-bottom: 1px solid #292825;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.image-banner img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.45) saturate(0.9) contrast(1.1);
+}
+
+.image-banner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 60% at 50% 50%, rgba(14, 14, 14, 0.25), rgba(14, 14, 14, 0.85));
+  pointer-events: none;
+}
+
+.image-banner__content {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+  padding: var(--space-md);
+}
+
+.image-banner__content h3 {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(24px, 3vw, 40px);
+  font-weight: 900;
+  letter-spacing: -0.025em;
+  color: #f1f5f9;
+  margin-bottom: var(--space-sm);
+}
+
+.image-banner__content p {
+  font-size: 16px;
+  color: #b0bcd4;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* Hero split: text column + image column */
+.hero-split {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: var(--space-lg);
+  align-items: center;
+  text-align: left;
+}
+
+.hero-split > :first-child {
+  text-align: left;
+}
+
+@media (max-width: 960px) {
+  .hero-split {
+    grid-template-columns: 1fr;
+  }
+}

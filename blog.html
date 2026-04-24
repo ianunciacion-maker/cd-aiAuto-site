@@ -5,744 +5,238 @@
   <meta charset="UTF-8" />
   <title>Blog – Ai-Auto</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Read the latest articles about AI automation, productivity tips, and how to set your own salary with AI-powered tools.">
+  <meta name="description" content="Dispatches from the front line of the AI labor shift — the roles being absorbed, the businesses outrunning it, and how to come out ahead.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Playfair+Display:wght@500;600;700;900&display=swap"
-    rel="stylesheet">
-  <link rel="stylesheet" href="./css/components/navigation.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@500;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/components/navigation.css">
+  <link rel="stylesheet" href="css/clawlauncher.css">
   <style>
-    :root {
-      /* Neobrutalist Palette */
-      --bg-paper: #f2f0e9;
-      --bg-white: #ffffff;
-      --ink: #121212;
-      --blue: #2357ff;
-      --gold: #ffcc00;
-      --coral: #ff6b58;
-      --lavender: #dcd6f7;
-      --green: #00d084;
-      --pink: #ff4d9e;
-
-      /* Structural Variables */
-      --border-thick: 3px solid var(--ink);
-      --border-thin: 2px solid var(--ink);
-      --shadow-hard: 6px 6px 0px 0px var(--ink);
-      --shadow-hover: 10px 10px 0px 0px var(--ink);
-      --shadow-brutal: 8px 8px 0px 0px var(--ink);
-      --radius-sm: 4px;
-      --max-width: 1200px;
-
-      /* Spacing */
-      --space-xs: 8px;
-      --space-sm: 16px;
-      --space-md: 32px;
-      --space-lg: 64px;
-      --space-xl: 128px;
-    }
-
-    [data-theme="dark"] {
-      --bg-paper: #0a0a0a;
-      --bg-white: #1a1a1a;
-      --ink: #f0f0f0;
-      --blue: #4d7aff;
-      --gold: #ffd633;
-      --coral: #ff8c7a;
-      --lavender: #2a2a40;
-      --green: #00ff9f;
-      --pink: #ff6bb5;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background-color: var(--bg-paper);
-      color: var(--ink);
-      line-height: 1.5;
-      overflow-x: hidden;
-    }
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      font-family: 'Playfair Display', serif;
-      margin: 0;
-      font-weight: 900;
-      line-height: 1.1;
-    }
-
-    p {
-      margin: 0 0 var(--space-sm);
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    img {
-      max-width: 100%;
-      display: block;
-      border: var(--border-thin);
-    }
-
-    /* UTILITIES */
-    .container {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 0 var(--space-md);
-    }
-
-    .grid {
+    /* Blog-card overrides for openclaw look */
+    .blog-grid {
       display: grid;
+      grid-template-columns: repeat(3, 1fr);
       gap: var(--space-md);
     }
+    @media (max-width: 900px) { .blog-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px) { .blog-grid { grid-template-columns: 1fr; } }
 
-    .flex {
-      display: flex;
-      gap: var(--space-sm);
-    }
-
-    .border-box {
-      border: var(--border-thick);
-      background: var(--bg-white);
-      box-shadow: var(--shadow-hard);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .border-box:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: var(--shadow-hover);
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 14px 28px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      border: var(--border-thick);
-      background: var(--blue);
-      color: #fff;
-      box-shadow: var(--shadow-hard);
-      cursor: pointer;
-      transition: all 0.2s;
-      font-size: 14px;
-    }
-
-    .btn:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: var(--shadow-hover);
-      filter: brightness(1.1);
-    }
-
-    .btn-outline {
-      background: transparent;
-      color: var(--ink);
-    }
-
-    .btn-gold {
-      background: var(--gold);
-      color: #000;
-    }
-
-    .tag {
-      display: inline-block;
-      padding: 4px 12px;
-      border: var(--border-thin);
-      font-size: 12px;
-      font-weight: 700;
-      text-transform: uppercase;
-      background: var(--gold);
-      color: #000;
-    }
-
-
-    /* HERO SECTION */
-    .hero {
-      padding: var(--space-lg) 0;
-      border-bottom: var(--border-thick);
-      background-image:
-        repeating-linear-gradient(0deg, transparent, transparent 19px, var(--ink) 19px, var(--ink) 20px),
-        repeating-linear-gradient(90deg, transparent, transparent 19px, var(--ink) 19px, var(--ink) 20px);
-      background-size: 20px 20px;
-      position: relative;
-    }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: var(--bg-paper);
-      opacity: 0.92;
-      z-index: 0;
-    }
-
-    .hero .container {
-      position: relative;
-      z-index: 1;
-    }
-
-    .hero h1 {
-      font-size: clamp(36px, 7vw, 64px);
-      margin-bottom: var(--space-sm);
-      text-transform: uppercase;
-      letter-spacing: -0.03em;
-      line-height: 1.1;
-      color: var(--ink);
-    }
-
-    .hero h1 .highlight {
-      display: inline-block;
-      background: var(--gold);
-      color: #000;
-      padding: 0 12px;
-      transform: rotate(-2deg);
-      border: var(--border-thick);
-      box-shadow: var(--shadow-brutal);
-    }
-
-    .hero-subtitle {
-      font-size: 17px;
-      max-width: 560px;
-      margin-bottom: var(--space-sm);
-      font-weight: 600;
-      color: var(--ink);
-      background: var(--bg-white);
-      border: var(--border-thick);
-      padding: var(--space-sm);
-      box-shadow: var(--shadow-hard);
-      line-height: 1.5;
-    }
-
-    .hero .tag {
-      margin-bottom: var(--space-sm);
-    }
-
-    /* FOOTER CTA */
-    .footer-cta {
-      background: var(--blue);
-      color: #fff;
-      padding: var(--space-xl) 0;
-      text-align: center;
-      border-bottom: var(--border-thick);
-    }
-
-    .footer-cta h2 {
-      font-size: 80px;
-      margin-bottom: var(--space-md);
-      text-shadow: 6px 6px 0 var(--ink);
-      text-transform: uppercase;
-    }
-
-    .footer-cta p {
-      font-size: 24px;
-      margin-bottom: var(--space-lg);
-      font-weight: 600;
-    }
-
-    /* SITE FOOTER */
-    .site-footer {
-      background: var(--ink);
-      color: var(--bg-paper);
-      padding: var(--space-lg) 0;
-    }
-
-    .footer-inner {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr;
-      gap: var(--space-lg);
-    }
-
-    .footer-brand h3 {
-      font-size: 32px;
-      margin-bottom: var(--space-sm);
-    }
-
-    .footer-links h4 {
-      font-size: 16px;
-      margin-bottom: var(--space-sm);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .footer-links ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .footer-links li {
-      margin-bottom: 8px;
-    }
-
-    .footer-links a:hover {
-      text-decoration: underline;
-    }
-
-    .footer-bottom {
-      margin-top: var(--space-lg);
-      padding-top: var(--space-md);
-      border-top: 2px solid var(--bg-paper);
-      text-align: center;
-      font-weight: 700;
-    }
-
-    /* BLOG SPECIFIC STYLES */
-    .blog-posts-container {
-      padding: var(--space-lg) 0;
-      background: var(--bg-paper);
-    }
-
-    .blog-posts-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: var(--space-md);
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 0 var(--space-md);
-    }
-
-    .blog-post-card {
-      border: var(--border-thick);
-      background: var(--bg-white);
-      box-shadow: var(--shadow-hard);
-      transition: all 0.2s;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
+    .blog-card {
       display: flex;
       flex-direction: column;
+      border: var(--border-thick);
+      background: var(--gradient-card);
+      box-shadow: var(--shadow-hard);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.25s ease;
     }
-
-    .blog-post-image {
+    .blog-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+      border-color: #46443e;
+    }
+    .blog-card__image {
       width: 100%;
-      height: 200px;
+      aspect-ratio: 16 / 9;
+      background: linear-gradient(135deg, #2a1a14, #0e0e0e);
       object-fit: cover;
       border-bottom: var(--border-thick);
-      margin: 0;
     }
-
-    .blog-post-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 5px;
-      background: var(--blue);
-      z-index: 10;
-    }
-
-    .blog-post-card-content {
-      padding: var(--space-sm);
+    .blog-card__body {
+      padding: var(--space-md);
+      flex: 1;
       display: flex;
       flex-direction: column;
-      flex-grow: 1;
     }
-
-    .blog-post-card:hover {
-      transform: translate(-3px, -3px);
-      box-shadow: 10px 10px 0 var(--ink);
-    }
-
-    .blog-post-meta {
+    .blog-card__meta {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: var(--space-xs);
+      gap: 10px;
       font-size: 11px;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      opacity: 0.7;
-    }
-
-    .blog-post-date {
-      font-weight: 600;
-    }
-
-    .blog-post-author {
+      color: var(--ink-muted);
       font-weight: 700;
-      color: var(--blue);
-    }
-
-    .blog-post-title {
-      font-size: 20px;
-      margin-bottom: var(--space-xs);
-      line-height: 1.25;
-    }
-
-    .blog-post-excerpt {
-      font-size: 15px;
-      line-height: 1.55;
       margin-bottom: var(--space-sm);
-      opacity: 0.8;
     }
-
-    .blog-post-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-weight: 700;
-      text-transform: uppercase;
-      font-size: 13px;
-      color: var(--blue);
-      border-bottom: 2px solid var(--blue);
-      padding-bottom: 2px;
-      transition: all 0.2s;
-      margin-top: auto;
+    .blog-card__title {
+      font-size: 22px;
+      line-height: 1.3;
+      color: var(--heading, #f1f5f9);
+      margin-bottom: var(--space-sm);
+      font-weight: 800;
     }
-
-    .blog-post-link:hover {
-      transform: translateX(4px);
+    .blog-card__excerpt {
+      font-size: 14px;
+      color: var(--body, #b0bcd4);
+      line-height: 1.6;
+      margin-bottom: var(--space-sm);
+      flex: 1;
+    }
+    .blog-card__link {
       color: var(--gold);
-      border-color: var(--gold);
-    }
-
-    /* Loading, Error, Empty States */
-    .blog-loading,
-    .blog-error,
-    .blog-empty {
-      text-align: center;
-      padding: var(--space-lg) 0;
-    }
-
-    .blog-loading {
-      font-size: 18px;
       font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      align-self: flex-start;
     }
-
+    .blog-loading, .blog-empty {
+      text-align: center;
+      padding: var(--space-xl) var(--space-md);
+      grid-column: 1 / -1;
+    }
     .blog-loading-spinner {
-      display: inline-block;
-      width: 36px;
-      height: 36px;
-      border: var(--border-thick);
-      border-color: var(--blue);
-      border-top-color: transparent;
+      width: 40px;
+      height: 40px;
+      margin: 0 auto var(--space-sm);
+      border: 3px solid #292825;
+      border-top-color: var(--gold);
       border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin-bottom: var(--space-sm);
+      animation: spin 0.8s linear infinite;
     }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    .blog-error-box {
-      border: var(--border-thick);
-      background: var(--coral);
-      color: #fff;
-      padding: var(--space-md);
-      max-width: 500px;
-      margin: 0 auto;
-      box-shadow: var(--shadow-hard);
-    }
-
-    .blog-empty-box {
-      border: var(--border-thick);
-      background: var(--bg-white);
-      padding: var(--space-lg);
-      max-width: 500px;
-      margin: 0 auto;
-      box-shadow: var(--shadow-hard);
-    }
-
-    /* RESPONSIVE - Tablet */
-    @media (max-width: 900px) {
-      .hero {
-        padding: var(--space-md) 0;
-      }
-
-      .hero h1 {
-        font-size: 32px;
-      }
-
-      .hero-subtitle {
-        font-size: 15px;
-      }
-
-      .footer-inner {
-        grid-template-columns: 1fr;
-      }
-
-      .blog-posts-grid {
-        grid-template-columns: 1fr;
-        gap: var(--space-sm);
-        padding: 0 var(--space-sm);
-      }
-
-      .blog-posts-container {
-        padding: var(--space-md) 0;
-      }
-
-      .blog-post-card-content {
-        padding: var(--space-sm);
-      }
-
-      .footer-cta h2 {
-        font-size: 36px;
-      }
-    }
-
-    /* RESPONSIVE - Mobile */
-    @media (max-width: 480px) {
-      .hero {
-        padding: var(--space-sm) 0;
-      }
-
-      .hero h1 {
-        font-size: 26px;
-        margin-bottom: var(--space-xs);
-      }
-
-      .hero h1 .highlight {
-        padding: 0 8px;
-      }
-
-      .hero-subtitle {
-        font-size: 14px;
-        padding: var(--space-xs);
-      }
-
-      .hero .tag {
-        font-size: 10px;
-        margin-bottom: var(--space-xs);
-      }
-
-      .container {
-        padding: 0 var(--space-sm);
-      }
-
-      .blog-posts-container {
-        padding: var(--space-sm) 0;
-      }
-
-      .blog-posts-grid {
-        padding: 0 12px;
-        gap: var(--space-xs);
-      }
-
-      .blog-post-image {
-        height: 160px;
-      }
-
-      .blog-post-card-content {
-        padding: 12px;
-      }
-
-      .blog-post-title {
-        font-size: 18px;
-      }
-
-      .blog-post-excerpt {
-        font-size: 14px;
-        margin-bottom: var(--space-xs);
-      }
-
-      .blog-post-meta {
-        font-size: 10px;
-      }
-
-      .blog-post-link {
-        font-size: 12px;
-        padding: var(--space-xs) 0;
-      }
-
-      .blog-loading {
-        font-size: 15px;
-        padding: var(--space-md) 0;
-      }
-
-      .blog-loading-spinner {
-        width: 30px;
-        height: 30px;
-      }
-
-      .blog-error-box,
-      .blog-empty-box {
-        padding: var(--space-sm);
-        margin: 0 12px;
-      }
-    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .blog-empty h3 { font-size: 26px; margin-bottom: var(--space-sm); color: #f1f5f9; }
+    .blog-empty p { color: var(--ink-secondary); }
   </style>
 </head>
 
 <body>
 
-  <!-- NAV -->
+  <!-- NAV (injected by navigation.js) -->
 
-  <!-- BLOG HERO -->
+  <!-- ========== HERO ========== -->
   <section class="hero">
     <div class="container">
-      <div class="tag" style="background: var(--blue); color: #fff;">AI Automation Blog</div>
-      <h1>
-        Your <span class="highlight">Content Hub</span><br>
-        For AI Automation
-      </h1>
-      <p class="hero-subtitle">
-        Learn how to automate your work, scale your productivity, and set your own salary with AI-powered tools and strategies.
-      </p>
-    </div>
-  </section>
-
-  <!-- BLOG POSTS -->
-  <section class="blog-posts-container">
-    <div class="blog-posts-grid" id="blogPostsGrid">
-      <!-- Loading state -->
-      <div class="blog-loading" id="blogLoading">
-        <div class="blog-loading-spinner"></div>
-        <p>Loading blog posts...</p>
+      <div class="hero-split">
+        <div>
+          <div class="anchor-tagline">&ldquo;Business as we know it will never be the same.&rdquo;</div>
+          <div class="hero-badges">
+            <span class="hero-tag">Dispatches</span>
+            <span class="hero-tag-launch">&#128293; Updated Monthly</span>
+          </div>
+          <h1>
+            What&rsquo;s actually <br>
+            <span class="gradient-text">happening to work.</span>
+          </h1>
+          <p class="hero-subtitle">
+            Monthly dispatches from the front line of the AI labor shift. The roles being absorbed. The businesses outrunning it. The moves people in their 50s are making to come out ahead.
+          </p>
+          <p class="hero-stats">
+            Written by Clinton E. Day and the Ai-Auto team &nbsp;&middot;&nbsp; No hot takes &nbsp;&middot;&nbsp; No hype
+          </p>
+        </div>
+        <figure class="image-frame image-frame--wide reveal" style="margin: 0;">
+          <img src="images/stock/writing_desk.jpg" alt="A writing desk with notes and keyboard — where each dispatch begins." loading="lazy">
+        </figure>
       </div>
     </div>
   </section>
 
-  <!-- FOOTER CTA -->
+  <!-- ========== POSTS ========== -->
+  <section class="sec-what-is" id="dispatches">
+    <div class="container">
+      <div class="tag" style="margin-bottom: var(--space-sm);">All Dispatches</div>
+      <h2 class="section-title">The <span class="gradient-text-gold">Field Reports</span></h2>
+      <p class="section-subtitle">Facts and what to do about them. Read the latest &mdash; or dig through the archive.</p>
 
-  <!-- Scripts -->
+      <div class="blog-grid" id="blogPostsGrid">
+        <div class="blog-loading" id="blogLoading">
+          <div class="blog-loading-spinner"></div>
+          <p>Loading dispatches&hellip;</p>
+        </div>
+      </div>
+
+      <!-- Anchor quote 2 -->
+      <div class="anchor-pull-quote reveal" style="margin-top: var(--space-xl);">
+        <p>
+          &ldquo;ClawLauncher automates new startups as it <span class="accent">lowers expenses</span> and <span class="accent">increases revenue</span> for any business.&rdquo;
+        </p>
+        <span class="anchor-pull-quote__caption">— Stop reading. Start automating.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== ANCHOR CLOSER ========== -->
+  <section class="anchor-closer">
+    <div class="container anchor-closer__inner">
+      <p class="anchor-closer__lede">The shift is happening to everyone. But only one group comes out ahead.</p>
+      <p class="anchor-closer__quote">
+        &ldquo;<span class="quote-accent">AI will not replace humans</span>, but those who use AI will replace those who don&rsquo;t.&rdquo;
+      </p>
+    </div>
+  </section>
+
+  <!-- FOOTER (injected by navigation.js) -->
+
+  <script src="js/components/navigation.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./supabase.js"></script>
+  <script src="js/marketing-animations.js"></script>
   <script>
-    // Blog listing functionality
-    class BlogListing {
-      constructor() {
-        this.postsGrid = document.getElementById('blogPostsGrid');
-        this.loading = document.getElementById('blogLoading');
-        this.init();
-      }
+    (function() {
+      var grid = document.getElementById('blogPostsGrid');
+      var loading = document.getElementById('blogLoading');
 
-      async init() {
-        try {
-          // Load blog posts
-          await this.loadBlogPosts();
-        } catch (error) {
-          this.showError('Failed to load blog posts. Please try again later.');
-        }
-      }
-
-      async loadBlogPosts() {
-        const { data, error } = await blogManager.getAllPosts();
-
-        if (error) {
-          throw error;
-        }
-
-        if (!data || data.length === 0) {
-          this.showEmptyState();
-          return;
-        }
-
-        this.renderBlogPosts(data);
-      }
-
-      renderBlogPosts(posts) {
-        const postsHTML = posts.map(post => this.createPostCard(post)).join('');
-        this.postsGrid.innerHTML = postsHTML;
-      }
-
-      createPostCard(post) {
-        const date = new Date(post.published_at || post.created_at).toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'short',
-          day: 'numeric'
-        });
-
-        const excerpt = post.excerpt || this.createExcerpt(post.content);
-        const imageHtml = post.featured_image
-          ? `<img src="${post.featured_image}" alt="${this.escapeHtml(post.title)}" class="blog-post-image" />`
-          : '';
-
-        return `
-          <article class="blog-post-card" onclick="window.location.href='blog/post.html?slug=${post.slug}'">
-            ${imageHtml}
-            <div class="blog-post-card-content">
-              <div class="blog-post-meta">
-                <span class="blog-post-date">${date}</span>
-                <span class="blog-post-author">By Admin</span>
-              </div>
-              <h2 class="blog-post-title">${this.escapeHtml(post.title)}</h2>
-              <p class="blog-post-excerpt">${this.escapeHtml(excerpt)}</p>
-              <a href="blog/post.html?slug=${post.slug}" class="blog-post-link" onclick="event.stopPropagation()">
-                Read More →
-              </a>
-            </div>
-          </article>
-        `;
-      }
-
-      createExcerpt(content, maxLength = 150) {
-        // Strip HTML tags and formatting to create plain text excerpt
-        let stripped = content
-          .replace(/<[^>]*>/g, '') // Remove HTML tags
-          .trim();
-        return stripped.length > maxLength
-          ? stripped.substring(0, maxLength) + '...'
-          : stripped;
-      }
-
-      escapeHtml(text) {
-        const div = document.createElement('div');
-        div.textContent = text;
+      function escapeHtml(text) {
+        var div = document.createElement('div');
+        div.textContent = text || '';
         return div.innerHTML;
       }
 
-      showLoading() {
-        this.loading.style.display = 'block';
+      function makeExcerpt(content, max) {
+        var stripped = (content || '').replace(/<[^>]*>/g, '').trim();
+        max = max || 160;
+        return stripped.length > max ? stripped.substring(0, max) + '…' : stripped;
       }
 
-      hideLoading() {
-        this.loading.style.display = 'none';
+      function cardHtml(post) {
+        var date = new Date(post.published_at || post.created_at).toLocaleDateString('en-US', {
+          year: 'numeric', month: 'short', day: 'numeric'
+        });
+        var excerpt = post.excerpt || makeExcerpt(post.content);
+        var image = post.featured_image
+          ? '<img class="blog-card__image" src="' + post.featured_image + '" alt="' + escapeHtml(post.title) + '" loading="lazy">'
+          : '<div class="blog-card__image" aria-hidden="true"></div>';
+        return '<a class="blog-card" href="blog/post.html?slug=' + encodeURIComponent(post.slug) + '">'
+          + image
+          + '<div class="blog-card__body">'
+          + '<div class="blog-card__meta"><span>' + date + '</span><span>&middot;</span><span>Ai-Auto Team</span></div>'
+          + '<h2 class="blog-card__title">' + escapeHtml(post.title) + '</h2>'
+          + '<p class="blog-card__excerpt">' + escapeHtml(excerpt) + '</p>'
+          + '<span class="blog-card__link">Read dispatch &rarr;</span>'
+          + '</div></a>';
       }
 
-      showError(message) {
-        this.hideLoading();
-        this.postsGrid.innerHTML = `
-          <div class="blog-error">
-            <div class="blog-error-box">
-              <h3>Oops! Something went wrong</h3>
-              <p>${message}</p>
-            </div>
-          </div>
-        `;
+      function render(posts) {
+        if (!posts || posts.length === 0) {
+          grid.innerHTML = '<div class="blog-empty"><h3>No dispatches yet.</h3><p>The first one\'s coming soon. <a href="mailto:clint@ai-auto.com" style="color: var(--gold); text-decoration: underline;">Email Clint</a> if you want to suggest a topic.</p></div>';
+          return;
+        }
+        grid.innerHTML = posts.map(cardHtml).join('');
       }
 
-      showEmptyState() {
-        this.hideLoading();
-        this.postsGrid.innerHTML = `
-          <div class="blog-empty">
-            <div class="blog-empty-box">
-              <h3>No blog posts yet</h3>
-              <p>We're working on some great content. Check back soon!</p>
-            </div>
-          </div>
-        `;
+      async function load() {
+        try {
+          if (!window.blogManager) {
+            render([]);
+            return;
+          }
+          var result = await window.blogManager.getAllPosts();
+          if (result.error) throw result.error;
+          render(result.data || []);
+        } catch (err) {
+          console.error('Blog load failed:', err);
+          grid.innerHTML = '<div class="blog-empty"><h3>Could not load dispatches.</h3><p>Please try again later.</p></div>';
+        }
       }
-    }
 
-    // Initialize blog listing when DOM is ready
-    document.addEventListener('DOMContentLoaded', () => {
-      new BlogListing();
-    });
-
+      document.addEventListener('DOMContentLoaded', load);
+    })();
   </script>
-
-  <!-- Navigation Component -->
-  <script src="./js/components/navigation.js"></script>
-
-  <!-- Supabase -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="./supabase.js"></script>
 
 </body>
 
