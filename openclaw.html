@@ -62,6 +62,8 @@
 
     * { box-sizing: border-box; }
 
+    html { overflow-x: hidden; }
+
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
@@ -3800,22 +3802,43 @@
     });
 
     // ===== INTERSECTION OBSERVER FOR TOC =====
+    // NOTE: we deliberately do NOT call .scrollIntoView on the active
+    // pill — browsers sometimes bubble that scroll up to the document,
+    // and when the last section[id] hits the observer (i.e. you're at
+    // the bottom of the page) the browser scrolls the page back up to
+    // "center" the pill. That caused a persistent bottom-bounce bug.
+    // Instead we only adjust the .toc-bar container's horizontal
+    // scrollLeft so the active pill remains visible in its own strip.
     (function() {
       var sections = document.querySelectorAll('section[id]');
       var pills = document.querySelectorAll('.toc-pill');
 
       if (!sections.length || !pills.length) return;
 
+      var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      function centerPillInContainer(pill) {
+        var container = pill.closest('.toc-bar');
+        if (!container) return;
+        var target = pill.offsetLeft - container.clientWidth / 2 + pill.offsetWidth / 2;
+        var max = container.scrollWidth - container.clientWidth;
+        target = Math.max(0, Math.min(target, max));
+        if (Math.abs(container.scrollLeft - target) > 1) {
+          container.scrollTo({
+            left: target,
+            behavior: reducedMotion ? 'auto' : 'smooth',
+          });
+        }
+      }
+
       var observer = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
-          if (entry.isIntersecting) {
-            pills.forEach(function(pill) { pill.classList.remove('active'); });
-            var activePill = document.querySelector('.toc-pill[data-section="' + entry.target.id + '"]');
-            if (activePill) {
-              activePill.classList.add('active');
-              // Scroll pill into view on mobile
-              activePill.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-            }
+          if (!entry.isIntersecting) return;
+          pills.forEach(function(pill) { pill.classList.remove('active'); });
+          var activePill = document.querySelector('.toc-pill[data-section="' + entry.target.id + '"]');
+          if (activePill) {
+            activePill.classList.add('active');
+            centerPillInContainer(activePill);
           }
         });
       }, {

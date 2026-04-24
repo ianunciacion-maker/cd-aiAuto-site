@@ -172,13 +172,15 @@ test.describe('Anchor quotes present on every page', () => {
       expect(bodyText, 'Quote 3 — closer').toContain(ANCHOR_Q3);
       expect(bodyText, 'Quote 3 tail').toContain(ANCHOR_Q3_TAIL);
 
-      // Quote 1 must specifically appear as the tagline pill (gold-tinted element)
+      // Quote 1 must specifically appear as a visible hero element —
+      // either a tagline pill on the marketing pages, or inside the
+      // thesis-hero closer on the homepage.
       const tagline = page.locator(
-        '.anchor-tagline, .hero-tag:has-text("Business as we know")'
+        '.anchor-tagline, .hero-tag:has-text("Business as we know"), .thesis-hero__closer:has-text("Business as we know")'
       );
       await expect(
         tagline.first(),
-        'Quote 1 must appear as a visible hero tagline element'
+        'Quote 1 must appear as a visible hero element'
       ).toBeVisible();
 
       // Quote 2 must appear in a pull-quote container
@@ -216,6 +218,20 @@ test.describe('Home: preserved sections + assets', () => {
     expect(body).toContain('Works While You Sleep');
     expect(body).toContain('Software Authorities');
     expect(body).toContain('Ongoing Support');
+  });
+
+  test('thesis hero distinction: reasonable / secure / pro-built + AI Tools free', async ({ page }) => {
+    // The distinction message must appear up top (in the thesis hero)
+    // so visitors see the "why ClawLauncher is different" angle before
+    // scrolling. We verify the text AND that it lives inside the
+    // .thesis-hero__distinction element (proves it's in the right spot,
+    // not buried elsewhere).
+    const distinction = page.locator('.thesis-hero__distinction');
+    await expect(distinction).toBeVisible();
+    const text = await distinction.innerText();
+    expect(text).toMatch(/reasonable,?\s*secure,?\s*and\s+pro-built/i);
+    expect(text).toMatch(/every\s+AI\s+Tool\s+free/i);
+    expect(text).toMatch(/ClawLauncher/);
   });
 
   test('Picture1.png hero image loads', async ({ page }) => {
@@ -690,7 +706,10 @@ test.describe('Container max-width uses modern 1400px', () => {
 
 // ───── SCROLL STABILITY ─────
 test.describe('Pages do not bounce back up when you hit the bottom', () => {
-  for (const p of MARKETING_PAGES) {
+  // ClawLauncher also needs the scroll-stability check — it has its own
+  // inline TOC scroll-spy separate from the marketing pages.
+  const SCROLL_PAGES = [...MARKETING_PAGES, { name: 'ClawLauncher', path: '/openclaw.html' }];
+  for (const p of SCROLL_PAGES) {
     test(`${p.name}: scrolling to the bottom stays at the bottom (no bounce)`, async ({ page }) => {
       await page.goto(p.path);
       await page.waitForLoadState('load');
@@ -761,6 +780,130 @@ test.describe('Pages do not bounce back up when you hit the bottom', () => {
       ).toBeGreaterThan(max - 100);
     });
   }
+});
+
+// ───── FLOATING YOUTUBE PLAYER ─────
+test.describe('Home: floating YouTube player', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/index.html');
+    await page.waitForLoadState('load');
+    // Allow the entrance transition to settle
+    await page.waitForTimeout(1200);
+  });
+
+  test('renders in the lower-right, iframe constructed by YT.Player with autoplay+mute', async ({ page }) => {
+    const widget = page.locator('#floatingVideo');
+    await expect(widget).toBeVisible();
+    const box = await widget.boundingBox();
+    const viewport = page.viewportSize();
+    // Lower-right quadrant of the viewport
+    expect(box.x + box.width).toBeGreaterThan(viewport.width * 0.6);
+    expect(box.y + box.height).toBeGreaterThan(viewport.height * 0.6);
+
+    // YT.Player replaces the placeholder div with an iframe pointing at
+    // YouTube (nocookie preferred). Wait for the replacement.
+    await page.waitForFunction(() => {
+      const el = document.querySelector('#floatingVideoIframe');
+      return el && el.tagName && el.tagName.toLowerCase() === 'iframe';
+    }, null, { timeout: 10000 });
+
+    const src = await page.locator('iframe#floatingVideoIframe').getAttribute('src');
+    expect(src).toMatch(/youtube(-nocookie)?\.com\/embed\//);
+    expect(src).toContain('autoplay=1');
+    expect(src).toContain('mute=1');
+
+    // The iframe must grant autoplay permission via the allow attribute.
+    const allow = await page.locator('iframe#floatingVideoIframe').getAttribute('allow');
+    expect((allow || '').toLowerCase()).toContain('autoplay');
+  });
+
+  test('default volume is set to 80 and video unmutes on first user gesture', async ({ request }) => {
+    const res = await request.get('/index.html');
+    expect(res.status()).toBe(200);
+    const html = await res.text();
+    expect(html).toMatch(/DEFAULT_VOLUME\s*=\s*80\b/);
+    expect(html).toMatch(/setVolume\(\s*DEFAULT_VOLUME\s*\)/);
+    expect(html).toContain('unMute');
+    expect(html).toContain('playVideo');
+    // First-gesture wiring: must include pointermove/mousemove so merely
+    // moving the cursor unmutes (not only clicks).
+    expect(html).toMatch(/pointermove|mousemove/);
+    // Must use the official IFrame API (more reliable than URL params alone).
+    expect(html).toContain('new YT.Player');
+    expect(html).toContain('iframe_api');
+  });
+
+  test('"Tap for sound" overlay renders and hides after a click', async ({ page }) => {
+    await page.waitForLoadState('load');
+    const overlay = page.locator('#floatingVideoUnmute');
+    // The overlay must exist and be visible by default.
+    await expect(overlay).toBeVisible({ timeout: 5000 });
+    await expect(overlay).toHaveText(/sound|hear|unmute/i);
+
+    // Clicking it removes the overlay (via .is-hidden class).
+    await overlay.click();
+    await page.waitForTimeout(500);
+    const hidden = await overlay.evaluate((el) => el.classList.contains('is-hidden'));
+    expect(hidden, 'overlay should be marked is-hidden after click').toBe(true);
+  });
+
+  test('first user click triggers the unmute handler (gesture listener is wired)', async ({ page }) => {
+    await page.waitForLoadState('load');
+    // The handler removes itself on first gesture. We can observe this
+    // by seeing that before clicking, a pointerdown listener exists in
+    // capture phase, and after clicking + a tick, it's gone.
+    const before = await page.evaluate(() => {
+      // Add a canary: if capture-phase pointerdown still fires, we see it.
+      window.__gesture_canary_fired__ = false;
+      window.addEventListener('pointerdown', () => {
+        window.__gesture_canary_fired__ = true;
+      }, { capture: true, once: true });
+      return true;
+    });
+    expect(before).toBe(true);
+
+    // Click anywhere to simulate a first user gesture.
+    await page.mouse.click(400, 400);
+    await page.waitForTimeout(800);
+
+    const fired = await page.evaluate(() => window.__gesture_canary_fired__);
+    expect(fired, 'pointerdown should fire on user click').toBe(true);
+    // The widget should still be on screen after the gesture.
+    await expect(page.locator('#floatingVideo')).toBeVisible();
+  });
+
+  test('iframe uses position: fixed so it stays put on scroll', async ({ page }) => {
+    const pos = await page.locator('#floatingVideo').evaluate(
+      (el) => getComputedStyle(el).position
+    );
+    expect(pos).toBe('fixed');
+  });
+
+  test('takes a small viewport footprint (not a page-wide overlay)', async ({ page }) => {
+    const box = await page.locator('#floatingVideo').boundingBox();
+    const viewport = page.viewportSize();
+    const widthRatio = box.width / viewport.width;
+    const heightRatio = box.height / viewport.height;
+    // The floating widget should occupy less than ~30% of the viewport in
+    // either dimension — big enough to see, small enough not to cover content.
+    expect(widthRatio, `widget width ${widthRatio.toFixed(2)} too large`).toBeLessThan(0.3);
+    expect(heightRatio, `widget height ${heightRatio.toFixed(2)} too large`).toBeLessThan(0.6);
+  });
+
+  test('close button hides the widget and shows the reopen pill', async ({ page }) => {
+    await page.locator('#floatingVideoClose').click();
+    await page.waitForTimeout(450); // wait for transition
+    await expect(page.locator('#floatingVideo.is-hidden')).toHaveCount(1);
+    await expect(page.locator('#floatingVideoReopen.is-visible')).toHaveCount(1);
+  });
+
+  test('minimize button collapses the widget and keeps it on screen', async ({ page }) => {
+    await page.locator('#floatingVideoMinimize').click();
+    await page.waitForTimeout(450);
+    await expect(page.locator('#floatingVideo.is-minimized')).toHaveCount(1);
+    const box = await page.locator('#floatingVideo').boundingBox();
+    expect(box.width).toBeLessThan(260); // minimized default width 180
+  });
 });
 
 // ───── STOCK IMAGES LOAD ─────

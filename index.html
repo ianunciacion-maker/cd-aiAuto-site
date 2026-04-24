@@ -1110,8 +1110,19 @@
     }
 
     .mobile-menu-link {
+      background: rgba(239, 229, 205, 0.04);
+      border: 1px solid #292825;
       color: #efe5cd;
-      border-bottom: 1px solid #292825;
+      transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+    }
+
+    .mobile-menu-link:hover,
+    .mobile-menu-link:focus-visible {
+      background: rgba(245, 166, 35, 0.1);
+      border-color: rgba(245, 166, 35, 0.4);
+      color: #f5a623;
+      transform: none;
+      box-shadow: none;
     }
 
     /* Dark-nav Log In (ghost) — cream border + cream text */
@@ -1326,6 +1337,550 @@
     }
 
     /* ═══════════════════════════════════════════
+       THESIS HERO — Agentic AI is displacing jobs
+       ═══════════════════════════════════════════ */
+    .thesis-hero {
+      position: relative;
+      padding: 140px 0 120px;
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 30%, rgba(229, 0, 0, 0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 80% 70%, rgba(167, 139, 250, 0.1) 0%, transparent 65%),
+        #050608;
+      border-bottom: 1px solid #1e1d1b;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .thesis-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: linear-gradient(180deg, transparent 0%, black 40%, black 80%, transparent 100%);
+      -webkit-mask-image: linear-gradient(180deg, transparent 0%, black 40%, black 80%, transparent 100%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .thesis-hero__inner {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .thesis-hero__kicker {
+      display: inline-block;
+      padding: 8px 18px;
+      background: rgba(229, 0, 0, 0.1);
+      border: 1px solid rgba(229, 0, 0, 0.3);
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #ff4d5e;
+      margin-bottom: var(--space-md);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .thesis-hero__headline {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(40px, 7vw, 88px);
+      font-weight: 900;
+      line-height: 1.02;
+      letter-spacing: -0.035em;
+      color: #f1f5f9;
+      margin-bottom: var(--space-md);
+    }
+
+    .thesis-hero__lede {
+      font-size: clamp(20px, 2.4vw, 28px);
+      font-weight: 500;
+      line-height: 1.4;
+      color: #d4ddea;
+      margin: 0 auto var(--space-md);
+      max-width: 720px;
+    }
+
+    .thesis-hero__lede em {
+      font-style: italic;
+      color: #ff7a82;
+      font-weight: 600;
+    }
+
+    .thesis-hero__body {
+      font-size: 17px;
+      line-height: 1.7;
+      color: #b0bcd4;
+      max-width: 640px;
+      margin: 0 auto var(--space-lg);
+    }
+
+    .thesis-hero__body strong {
+      color: #f1f5f9;
+      font-weight: 700;
+    }
+
+    /* Crossed-out roles strip */
+    .jobs-gone {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      margin: var(--space-lg) auto;
+      max-width: 1100px;
+    }
+
+    .job-gone {
+      padding: 18px 14px;
+      background: linear-gradient(135deg, rgba(15, 15, 15, 0.9), rgba(8, 8, 8, 0.9));
+      border: 1px solid #1e1d1b;
+      border-radius: 4px;
+      text-align: left;
+      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+        border-color 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .job-gone::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 2px;
+      background: linear-gradient(90deg, #e50000, transparent);
+    }
+
+    .job-gone:hover {
+      border-color: #46443e;
+      transform: translateY(-3px);
+    }
+
+    .job-gone__label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #6b7fa3;
+      margin-bottom: 8px;
+    }
+
+    .job-gone__role {
+      display: block;
+      font-size: 15px;
+      font-weight: 800;
+      color: #d4ddea;
+      text-decoration: line-through;
+      text-decoration-color: #e50000;
+      text-decoration-thickness: 2px;
+      margin-bottom: 6px;
+      letter-spacing: -0.01em;
+    }
+
+    .job-gone__note {
+      font-size: 12px;
+      color: #736f64;
+      line-height: 1.45;
+      margin: 0;
+    }
+
+    @media (max-width: 1000px) {
+      .jobs-gone { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 520px) {
+      .jobs-gone { grid-template-columns: 1fr; }
+    }
+
+    .thesis-hero__closer {
+      font-size: clamp(22px, 2.6vw, 32px);
+      font-weight: 700;
+      line-height: 1.35;
+      color: #f1f5f9;
+      margin: var(--space-md) auto var(--space-md);
+      max-width: 720px;
+    }
+
+    .thesis-hero__closer strong {
+      background: linear-gradient(135deg, #fbbf24 0%, #f97316 50%, #ec4899 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 900;
+    }
+
+    .thesis-hero__distinction {
+      font-size: clamp(18px, 2.1vw, 24px);
+      font-weight: 500;
+      line-height: 1.55;
+      color: #d4ddea;
+      max-width: 760px;
+      margin: var(--space-md) auto var(--space-md);
+      padding: var(--space-md) var(--space-md);
+      background: linear-gradient(
+        135deg,
+        rgba(245, 166, 35, 0.08),
+        rgba(229, 0, 0, 0.06) 55%,
+        rgba(167, 139, 250, 0.06)
+      );
+      border: 1px solid rgba(245, 166, 35, 0.28);
+      border-radius: 10px;
+      box-shadow: 0 6px 28px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(245, 166, 35, 0.06);
+    }
+
+    .thesis-hero__distinction strong {
+      color: #f1f5f9;
+      font-weight: 800;
+    }
+
+    .thesis-hero__distinction-accent {
+      font-weight: 700;
+      background: linear-gradient(135deg, #fbbf24 0%, #f97316 50%, #ec4899 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .thesis-hero__cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 32px;
+      background: linear-gradient(135deg, #c41e3a, #e50000);
+      border: 1px solid var(--lobster, #e50000);
+      border-radius: 4px;
+      color: #fff;
+      font-weight: 800;
+      font-size: 16px;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+      animation: clawPulse 2.5s ease-in-out infinite;
+    }
+
+    .thesis-hero__cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(229, 0, 0, 0.3);
+      background: linear-gradient(135deg, #e50000, #ff2020);
+      animation-play-state: paused;
+    }
+
+    .thesis-hero__cta-arrow {
+      display: inline-block;
+      animation: bounceDown 1.6s ease-in-out infinite;
+    }
+
+    /* "The Move" transition label above the existing hero */
+    .hero {
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 60px; height: 1px;
+      background: linear-gradient(90deg, transparent, #f5a623, transparent);
+    }
+
+    .hero-move-kicker {
+      display: inline-block;
+      padding: 6px 16px;
+      background: rgba(245, 166, 35, 0.08);
+      border: 1px solid rgba(245, 166, 35, 0.25);
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #f5a623;
+      margin-bottom: var(--space-md);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    /* ═══════════════════════════════════════════
+       FLOATING YOUTUBE PLAYER (bottom-right)
+       ═══════════════════════════════════════════ */
+    .floating-video {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      width: 220px;
+      aspect-ratio: 9 / 16;
+      z-index: 100;
+      border: 1px solid rgba(245, 166, 35, 0.3);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55),
+        0 0 0 1px rgba(0, 0, 0, 0.25);
+      background: #000;
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.35s ease,
+        width 0.35s ease,
+        aspect-ratio 0.35s ease;
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .floating-video.is-entering {
+      transform: translateY(120%);
+      opacity: 0;
+    }
+
+    .floating-video.is-minimized {
+      width: 140px;
+      aspect-ratio: 1 / 1;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+    }
+
+    .floating-video.is-minimized .floating-video__iframe {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .floating-video.is-minimized .floating-video__mini-label {
+      opacity: 1;
+    }
+
+    .floating-video.is-hidden {
+      transform: translateY(140%);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .floating-video__iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+      transition: opacity 0.3s ease;
+    }
+
+    .floating-video__mini-label {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      text-align: center;
+      padding: 12px;
+      background: linear-gradient(135deg, #191918, #0e0e0e);
+    }
+
+    .floating-video__mini-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #e50000, #c41e3a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 16px;
+    }
+
+    .floating-video__mini-text {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #efe5cd;
+      line-height: 1.3;
+    }
+
+    .floating-video__controls {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      display: flex;
+      gap: 4px;
+      z-index: 4; /* above the "tap for sound" overlay */
+    }
+
+    .floating-video__btn {
+      width: 28px;
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      color: #efe5cd;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+      padding: 0;
+      line-height: 1;
+    }
+
+    .floating-video__btn:hover,
+    .floating-video__btn:focus-visible {
+      background: rgba(245, 166, 35, 0.9);
+      color: #0e0e0e;
+      transform: scale(1.08);
+      outline: none;
+    }
+
+    .floating-video__btn svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* "Tap for sound" overlay — shown until audio is unmuted. */
+    .floating-video__unmute {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px;
+      background: linear-gradient(
+        180deg,
+        rgba(14, 14, 14, 0.35) 0%,
+        rgba(14, 14, 14, 0.08) 35%,
+        rgba(14, 14, 14, 0.08) 65%,
+        rgba(14, 14, 14, 0.7) 100%
+      );
+      border: 0;
+      color: #fff;
+      cursor: pointer;
+      z-index: 3;
+      font-family: 'Inter', sans-serif;
+      transition: opacity 0.35s ease, transform 0.35s ease;
+      opacity: 1;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .floating-video__unmute.is-hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.96);
+    }
+
+    .floating-video__unmute-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 999px;
+      background: rgba(245, 166, 35, 0.92);
+      color: #0e0e0e;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 20px rgba(245, 166, 35, 0.4);
+      animation: unmuteBreathe 2.2s ease-in-out infinite;
+    }
+
+    .floating-video__unmute-icon svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .floating-video__unmute-label {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      background: rgba(14, 14, 14, 0.78);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border-radius: 999px;
+      border: 1px solid rgba(245, 166, 35, 0.35);
+    }
+
+    @keyframes unmuteBreathe {
+      0%, 100% { transform: scale(1); box-shadow: 0 6px 20px rgba(245, 166, 35, 0.4); }
+      50%      { transform: scale(1.08); box-shadow: 0 6px 28px rgba(245, 166, 35, 0.6); }
+    }
+
+    .floating-video__reopen {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 100;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #e50000, #c41e3a);
+      border: 1px solid rgba(245, 166, 35, 0.4);
+      color: #fff;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45),
+        0 0 24px rgba(229, 0, 0, 0.3);
+      animation: clawPulse 2.5s ease-in-out infinite;
+      padding: 0;
+    }
+
+    .floating-video__reopen.is-visible { display: inline-flex; }
+
+    .floating-video__reopen:hover {
+      transform: scale(1.05);
+      animation-play-state: paused;
+    }
+
+    .floating-video__reopen svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    @media (max-width: 640px) {
+      .floating-video {
+        width: 150px;
+        right: 12px;
+        bottom: 12px;
+        border-radius: 12px;
+      }
+      .floating-video.is-minimized {
+        width: 96px;
+      }
+      .floating-video__unmute-label {
+        font-size: 10px;
+        padding: 4px 10px;
+      }
+      .floating-video__unmute-icon {
+        width: 38px;
+        height: 38px;
+      }
+      .floating-video__btn {
+        width: 24px;
+        height: 24px;
+      }
+      .floating-video__btn svg {
+        width: 12px;
+        height: 12px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .floating-video {
+        width: 130px;
+      }
+    }
+
+    /* ═══════════════════════════════════════════
        REDUCED MOTION
        ═══════════════════════════════════════════ */
     @media (prefers-reduced-motion: reduce) {
@@ -1342,12 +1897,79 @@
 <body>
 
   <!-- ═══════════════════════════════════════════
-       HERO
+       THESIS HERO — Agentic AI is displacing jobs
        ═══════════════════════════════════════════ -->
-  <section class="hero">
+  <section class="thesis-hero">
+    <div class="container">
+      <div class="thesis-hero__inner">
+        <span class="thesis-hero__kicker reveal">What's happening right now</span>
+        <h1 class="thesis-hero__headline reveal">
+          <span class="gradient-text-warm">Agentic AI</span> is quietly<br>replacing mid-career jobs.
+        </h1>
+        <p class="thesis-hero__lede reveal">
+          It doesn&rsquo;t chat. It doesn&rsquo;t summarize. <em>It does the work.</em>
+        </p>
+        <p class="thesis-hero__body reveal">
+          Agentic AI &mdash; systems that plan, decide, and execute tasks end-to-end &mdash; is absorbing whole roles this year. Not entry-level roles. Mid-career ones. The copywriter with <strong>18 years</strong>. The ops manager with <strong>22</strong>. The marketing director with <strong>30</strong>.
+        </p>
+
+        <!-- Jobs already gone proof strip -->
+        <div class="jobs-gone stagger">
+          <div class="job-gone reveal">
+            <span class="job-gone__label">2024 &middot; Gone</span>
+            <span class="job-gone__role">Senior Copywriter</span>
+            <p class="job-gone__note">60% of in-house content teams cut or reduced.</p>
+          </div>
+          <div class="job-gone reveal">
+            <span class="job-gone__label">Shrinking Fast</span>
+            <span class="job-gone__role">Social Manager</span>
+            <p class="job-gone__note">Avg tenure: 14 months. Down from 3.5 years.</p>
+          </div>
+          <div class="job-gone reveal">
+            <span class="job-gone__label">~18%/yr</span>
+            <span class="job-gone__role">Email Specialist</span>
+            <p class="job-gone__note">Role shrinking across mid-market.</p>
+          </div>
+          <div class="job-gone reveal">
+            <span class="job-gone__label">Flagged &ldquo;at risk&rdquo;</span>
+            <span class="job-gone__role">Product Copywriter</span>
+            <p class="job-gone__note">Named in Goldman Sachs displacement report.</p>
+          </div>
+          <div class="job-gone reveal">
+            <span class="job-gone__label">Consolidating</span>
+            <span class="job-gone__role">Regional Ops Mgr</span>
+            <p class="job-gone__note">Being merged into dashboard + agent roles.</p>
+          </div>
+        </div>
+
+        <p class="thesis-hero__closer reveal">
+          If you&rsquo;re over 50, you&rsquo;re not imagining it.<br>
+          <strong>Business as we know it will never be the same.</strong>
+        </p>
+
+        <p class="thesis-hero__distinction reveal">
+          That&rsquo;s why we built <strong>ClawLauncher</strong>. Not only is it
+          <span class="thesis-hero__distinction-accent">reasonable, secure, and pro-built</span>
+          by software authorities &mdash; <strong>buyers also get every AI Tool free.</strong>
+          No upsells. No subscriptions stacked on top. Install it once, own the whole stack.
+        </p>
+
+        <a href="#the-move" class="thesis-hero__cta reveal"
+          onclick="document.getElementById('the-move').scrollIntoView({behavior:'smooth',block:'start'});return false;">
+          Here&rsquo;s the move we&rsquo;ve built
+          <span class="thesis-hero__cta-arrow">&darr;</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       HERO — The Move (Business Builder / ClawLauncher)
+       ═══════════════════════════════════════════ -->
+  <section class="hero" id="the-move">
     <div class="container hero-inner">
       <div class="hero-content">
-        <div class="anchor-tagline">&ldquo;Business as we know it will never be the same.&rdquo;</div>
+        <span class="hero-move-kicker reveal">The Move &mdash; for operators who&rsquo;ve earned their seat</span>
         <div class="hero-pill">Only 2 reputable builders in the country &mdash; you just found one</div>
 
         <h1 class="hero-headline-primary">
@@ -1674,6 +2296,46 @@
     </div>
   </footer>
 
+  <!-- ═══════════════════════════════════════════
+       FLOATING YOUTUBE PLAYER
+       ═══════════════════════════════════════════ -->
+  <!-- To swap the video, change data-video-id to any 11-char YouTube ID.
+       Current: https://www.youtube.com/shorts/JTGQi7Zv3TQ -->
+  <div class="floating-video is-entering" id="floatingVideo" data-video-id="JTGQi7Zv3TQ" role="complementary" aria-label="Background video about AI">
+    <div class="floating-video__controls">
+      <button type="button" class="floating-video__btn" id="floatingVideoMinimize"
+        aria-label="Minimize video" title="Minimize">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14"/></svg>
+      </button>
+      <button type="button" class="floating-video__btn" id="floatingVideoClose"
+        aria-label="Close video" title="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <!-- The IFrame API replaces this placeholder div with an iframe it builds itself. -->
+    <div class="floating-video__iframe" id="floatingVideoIframe"></div>
+    <!-- Tap-to-hear overlay: browsers require a user gesture before audio
+         can play, so this gives users a one-click path to turn on sound. -->
+    <button type="button" class="floating-video__unmute" id="floatingVideoUnmute"
+      aria-label="Unmute video and set volume to 80%">
+      <span class="floating-video__unmute-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 10v4a1 1 0 0 0 1 1h3l4 3.5V5.5L7 9H4a1 1 0 0 0-1 1zm14.5 2a4.5 4.5 0 0 0-2.5-4.03v8.06a4.5 4.5 0 0 0 2.5-4.03zM15 3.23v2.06a7 7 0 0 1 0 13.42v2.06a9 9 0 0 0 0-17.54z"/></svg>
+      </span>
+      <span class="floating-video__unmute-label">Tap for sound</span>
+    </button>
+    <div class="floating-video__mini-label" aria-hidden="true">
+      <div class="floating-video__mini-icon">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      </div>
+      <div class="floating-video__mini-text">Video<br>Minimized</div>
+    </div>
+  </div>
+
+  <button type="button" class="floating-video__reopen" id="floatingVideoReopen"
+    aria-label="Reopen video" title="Reopen video">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+  </button>
+
   <!-- Navigation Component -->
   <script src="js/components/navigation.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -1699,6 +2361,160 @@
       document.querySelectorAll('.reveal').forEach((el) => {
         revealObserver.observe(el);
       });
+
+      // ═══════════════════════════════════════════
+      // FLOATING YOUTUBE PLAYER (IFrame API — more reliable than URL params)
+      // ═══════════════════════════════════════════
+      (function () {
+        var container = document.getElementById('floatingVideo');
+        if (!container) return;
+
+        var minimizeBtn = document.getElementById('floatingVideoMinimize');
+        var closeBtn = document.getElementById('floatingVideoClose');
+        var reopenBtn = document.getElementById('floatingVideoReopen');
+        var unmuteBtn = document.getElementById('floatingVideoUnmute');
+        var videoId = container.getAttribute('data-video-id');
+        var DEFAULT_VOLUME = 80; // 0–100
+        var player = null;
+        var isClosed = false;
+        var hasUnmuted = false;
+
+        // Inject the YouTube IFrame API script (idempotent).
+        function loadYouTubeAPI(cb) {
+          if (window.YT && window.YT.Player) { cb(); return; }
+          var existing = document.getElementById('youtube-iframe-api');
+          var prevReady = window.onYouTubeIframeAPIReady;
+          window.onYouTubeIframeAPIReady = function () {
+            if (prevReady) { try { prevReady(); } catch (_e) {} }
+            cb();
+          };
+          if (!existing) {
+            var tag = document.createElement('script');
+            tag.id = 'youtube-iframe-api';
+            tag.src = 'https://www.youtube.com/iframe_api';
+            document.head.appendChild(tag);
+          }
+        }
+
+        function buildPlayer() {
+          player = new YT.Player('floatingVideoIframe', {
+            videoId: videoId,
+            host: 'https://www.youtube-nocookie.com',
+            playerVars: {
+              autoplay: 1,
+              mute: 1,
+              controls: 1,
+              rel: 0,
+              modestbranding: 1,
+              playsinline: 1,
+              loop: 1,
+              playlist: videoId, // required for loop on a single video
+            },
+            events: {
+              onReady: function (e) {
+                // Autoplay must start muted per browser policy; re-assert
+                // muted + force play. Volume is preset for later unmute.
+                try { e.target.mute(); } catch (_) {}
+                try { e.target.playVideo(); } catch (_) {}
+                try { e.target.setVolume(DEFAULT_VOLUME); } catch (_) {}
+                [250, 800, 1800].forEach(function (ms) {
+                  setTimeout(function () {
+                    try { e.target.playVideo(); } catch (_) {}
+                  }, ms);
+                });
+              },
+              onStateChange: function (e) {
+                // If the browser parks the player at UNSTARTED (-1) or
+                // PAUSED (2) right after load, nudge it once.
+                if ((e.data === -1 || e.data === 2) && !player.__nudged__) {
+                  player.__nudged__ = true;
+                  setTimeout(function () {
+                    try { e.target.playVideo(); } catch (_) {}
+                  }, 300);
+                }
+              },
+            },
+          });
+        }
+
+        loadYouTubeAPI(buildPlayer);
+
+        // Slide in after a moment so it doesn't compete with first paint.
+        setTimeout(function () {
+          container.classList.remove('is-entering');
+        }, 900);
+
+        // First-user-gesture unmute: browsers keep audio muted until they
+        // see an interaction. Hook every common gesture at the capture
+        // phase, unmute + set volume once, and remove the listeners.
+        function applyVolumeAndUnmute() {
+          if (!player) return;
+          try { player.unMute(); } catch (_) {}
+          try { player.setVolume(DEFAULT_VOLUME); } catch (_) {}
+          try { player.playVideo(); } catch (_) {}
+          hasUnmuted = true;
+          if (unmuteBtn) unmuteBtn.classList.add('is-hidden');
+        }
+
+        // pointermove + mousemove catch the case where the visitor just
+        // glances at the page with a mouse — no click required.
+        var gestureEvents = [
+          'pointerdown', 'pointermove', 'click', 'keydown',
+          'scroll', 'wheel', 'touchstart', 'mousemove',
+        ];
+        function onFirstGesture() {
+          applyVolumeAndUnmute();
+          setTimeout(applyVolumeAndUnmute, 200);
+          setTimeout(applyVolumeAndUnmute, 600);
+          gestureEvents.forEach(function (ev) {
+            window.removeEventListener(ev, onFirstGesture, { capture: true });
+          });
+        }
+        gestureEvents.forEach(function (ev) {
+          window.addEventListener(ev, onFirstGesture, { capture: true, passive: true });
+        });
+
+        // Explicit "Tap for sound" overlay click — guarantees one-tap audio
+        // even if the visitor never moves their mouse or scrolls (e.g. on
+        // iOS, where moves aren't a thing, or when browser gesture
+        // promotion silently fails).
+        if (unmuteBtn) {
+          unmuteBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            applyVolumeAndUnmute();
+          });
+        }
+
+        function pauseVideo() { try { if (player) player.pauseVideo(); } catch (_) {} }
+        function playVideo()  { try { if (player) player.playVideo(); } catch (_) {} }
+
+        minimizeBtn.addEventListener('click', function () {
+          var minimized = container.classList.toggle('is-minimized');
+          minimizeBtn.setAttribute('aria-label', minimized ? 'Expand video' : 'Minimize video');
+          minimizeBtn.setAttribute('title', minimized ? 'Expand' : 'Minimize');
+          if (minimized) pauseVideo();
+          else playVideo();
+        });
+
+        closeBtn.addEventListener('click', function () {
+          isClosed = true;
+          container.classList.add('is-hidden');
+          reopenBtn.classList.add('is-visible');
+          pauseVideo();
+        });
+
+        reopenBtn.addEventListener('click', function () {
+          isClosed = false;
+          container.classList.remove('is-hidden', 'is-minimized');
+          reopenBtn.classList.remove('is-visible');
+          playVideo();
+        });
+
+        document.addEventListener('visibilitychange', function () {
+          if (document.hidden) pauseVideo();
+          else if (!isClosed) playVideo();
+        });
+      })();
     });
   </script>
 

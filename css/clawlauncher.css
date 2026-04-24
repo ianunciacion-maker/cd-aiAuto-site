@@ -2972,8 +2972,19 @@
 }
 
 .mobile-menu-link {
+  background: rgba(239, 229, 205, 0.04);
+  border: 1px solid #292825;
   color: #efe5cd;
-  border-bottom: 1px solid #292825;
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+.mobile-menu-link:hover,
+.mobile-menu-link:focus-visible {
+  background: rgba(245, 166, 35, 0.1);
+  border-color: rgba(245, 166, 35, 0.4);
+  color: #f5a623;
+  transform: none;
+  box-shadow: none;
 }
 
 /* Anchor-quote closer — appears above footer on every marketing page */
