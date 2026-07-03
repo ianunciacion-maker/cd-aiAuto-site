@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>ClawLauncher by Ai-Auto – AI Automation Built For You</title>
+  <title>Small Business Automation Center – Ai-Auto</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description"
     content="ClawLauncher: professionally built AI automation that runs your entire business by voice commands. Built by world-class engineers. Starting at $1,297 — others charge $5K-$20K.">
@@ -1373,22 +1373,6 @@
       margin: 0 auto;
     }
 
-    .thesis-hero__kicker {
-      display: inline-block;
-      padding: 8px 18px;
-      background: rgba(229, 0, 0, 0.1);
-      border: 1px solid rgba(229, 0, 0, 0.3);
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: #ff4d5e;
-      margin-bottom: var(--space-md);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-    }
-
     .thesis-hero__headline {
       font-family: 'Inter', sans-serif;
       font-size: clamp(40px, 7vw, 88px);
@@ -1414,87 +1398,254 @@
       font-weight: 600;
     }
 
-    .thesis-hero__body {
-      font-size: 17px;
-      line-height: 1.7;
-      color: #b0bcd4;
-      max-width: 640px;
-      margin: 0 auto var(--space-lg);
-    }
-
-    .thesis-hero__body strong {
-      color: #f1f5f9;
-      font-weight: 700;
-    }
-
-    /* Crossed-out roles strip */
-    .jobs-gone {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 12px;
-      margin: var(--space-lg) auto;
-      max-width: 1100px;
-    }
-
-    .job-gone {
-      padding: 18px 14px;
-      background: linear-gradient(135deg, rgba(15, 15, 15, 0.9), rgba(8, 8, 8, 0.9));
-      border: 1px solid #1e1d1b;
-      border-radius: 4px;
-      text-align: left;
-      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
-        border-color 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .job-gone::before {
-      content: '';
+    /* Breathing halo behind the headline */
+    .thesis-hero__halo {
       position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 2px;
-      background: linear-gradient(90deg, #e50000, transparent);
+      top: -80px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(720px, 90vw);
+      height: 420px;
+      background: radial-gradient(ellipse 50% 50% at 50% 50%,
+          rgba(245, 166, 35, 0.16) 0%,
+          rgba(236, 72, 153, 0.08) 45%,
+          transparent 70%);
+      filter: blur(40px);
+      animation: glowPulse 7s ease-in-out infinite;
+      pointer-events: none;
+      z-index: -1;
     }
 
-    .job-gone:hover {
-      border-color: #46443e;
-      transform: translateY(-3px);
+    /* ═══════════════════════════════════════════
+       PROFESSOR'S SEAL — Clint Day endorsement band
+       ═══════════════════════════════════════════ */
+    .professor-seal {
+      position: relative;
+      z-index: 1;
+      padding: var(--space-xl) 0;
     }
 
-    .job-gone__label {
+    .professor-seal__card {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: var(--space-lg);
+      align-items: center;
+      max-width: 980px;
+      margin: 0 auto;
+      padding: var(--space-lg);
+      background: linear-gradient(160deg, rgba(20, 20, 22, 0.92), rgba(8, 8, 10, 0.94));
+      border: 1px solid rgba(245, 166, 35, 0.28);
+      border-radius: 16px;
+      box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(245, 166, 35, 0.08);
+    }
+
+    .professor-seal__photo-wrap {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 2px solid transparent;
+      background: linear-gradient(#0a0a0c, #0a0a0c) padding-box,
+        linear-gradient(135deg, #fbbf24, #f97316 60%, #ec4899) border-box;
+    }
+
+    .professor-seal__photo {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      object-position: top center;
       display: block;
+    }
+
+    .professor-seal__tag {
+      display: inline-block;
+      padding: 6px 16px;
+      background: rgba(245, 166, 35, 0.12);
+      border: 1px solid rgba(245, 166, 35, 0.35);
+      border-radius: 999px;
       font-size: 11px;
       font-weight: 700;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: #6b7fa3;
-      margin-bottom: 8px;
+      color: #fbbf24;
+      margin-bottom: 18px;
     }
 
-    .job-gone__role {
-      display: block;
-      font-size: 15px;
+    .professor-seal__quote {
+      margin: 0 0 20px;
+      font-size: clamp(18px, 2.2vw, 23px);
+      font-weight: 500;
+      line-height: 1.55;
+      color: #e2e8f2;
+    }
+
+    .professor-seal__accent {
+      font-weight: 700;
+      background: linear-gradient(135deg, #fbbf24 0%, #f97316 60%, #ec4899 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .professor-seal__name {
+      font-size: 18px;
       font-weight: 800;
-      color: #d4ddea;
-      text-decoration: line-through;
-      text-decoration-color: #e50000;
-      text-decoration-thickness: 2px;
-      margin-bottom: 6px;
-      letter-spacing: -0.01em;
+      color: #f1f5f9;
     }
 
-    .job-gone__note {
+    .professor-seal__cred {
       font-size: 12px;
-      color: #736f64;
-      line-height: 1.45;
-      margin: 0;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #d9a032;
+      margin-top: 4px;
     }
 
-    @media (max-width: 1000px) {
-      .jobs-gone { grid-template-columns: repeat(2, 1fr); }
+    @media (max-width: 760px) {
+      .professor-seal__card { grid-template-columns: 1fr; }
+      .professor-seal__photo-wrap { max-width: 240px; margin: 0 auto; }
+      .professor-seal__content { text-align: center; }
     }
-    @media (max-width: 520px) {
-      .jobs-gone { grid-template-columns: 1fr; }
+
+    /* ═══════════════════════════════════════════
+       VALLEY SIGNAL — Marc Andreessen + video
+       ═══════════════════════════════════════════ */
+    .valley-signal {
+      position: relative;
+      z-index: 1;
+      padding: var(--space-xl) 0;
+    }
+
+    .valley-signal__grid {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: var(--space-lg);
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .valley-signal__video {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 107, 88, 0.3);
+      box-shadow: 0 16px 56px rgba(0, 0, 0, 0.5), 0 0 40px rgba(255, 107, 88, 0.08);
+    }
+
+    .valley-signal__video iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .valley-signal__tag {
+      display: inline-block;
+      padding: 6px 16px;
+      background: rgba(255, 107, 88, 0.12);
+      border: 1px solid rgba(255, 107, 88, 0.35);
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #ff8a7a;
+      margin-bottom: 18px;
+    }
+
+    .valley-signal__headline {
+      font-size: clamp(28px, 3.6vw, 42px);
+      margin-bottom: 16px;
+    }
+
+    .valley-signal__body {
+      font-size: 16px;
+      line-height: 1.7;
+      color: #b0bcd4;
+      margin-bottom: 24px;
+    }
+
+    .valley-signal__person {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .valley-signal__photo {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: 68% 18%;
+      flex-shrink: 0;
+      border: 2px solid transparent;
+      background: linear-gradient(#0a0a0c, #0a0a0c) padding-box,
+        linear-gradient(135deg, #ff6b58, #ec4899) border-box;
+    }
+
+    .valley-signal__id strong {
+      display: block;
+      font-size: 16px;
+      font-weight: 800;
+      color: #f1f5f9;
+    }
+
+    .valley-signal__id span {
+      display: block;
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #ff8a7a;
+      margin-top: 3px;
+    }
+
+    .valley-signal__link {
+      display: inline-block;
+      font-size: 14px;
+      font-weight: 700;
+      color: #fbbf24;
+      border-bottom: 1px solid rgba(245, 166, 35, 0.4);
+      padding-bottom: 2px;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .valley-signal__link:hover {
+      color: #fde68a;
+      border-color: #fde68a;
+    }
+
+    @media (max-width: 860px) {
+      .valley-signal__grid { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .thesis-hero__halo, .thesis-hero__offer { animation: none; }
+    }
+
+    .thesis-hero__offer {
+      display: inline-block;
+      margin: 0 auto var(--space-sm);
+      padding: 12px 24px;
+      background: rgba(245, 166, 35, 0.12);
+      border: 1px solid rgba(245, 166, 35, 0.35);
+      border-radius: 999px;
+      font-size: 15px;
+      font-weight: 700;
+      color: #fbbf24;
+      animation: offerGlow 5s ease-in-out infinite;
+    }
+
+    @keyframes offerGlow {
+      0%, 100% { box-shadow: 0 0 0 rgba(245, 166, 35, 0); }
+      50% { box-shadow: 0 0 28px rgba(245, 166, 35, 0.25); }
     }
 
     .thesis-hero__closer {
@@ -1902,45 +2053,17 @@
   <section class="thesis-hero">
     <div class="container">
       <div class="thesis-hero__inner">
-        <span class="thesis-hero__kicker reveal">What's happening right now</span>
+        <div class="thesis-hero__halo" aria-hidden="true"></div>
+
         <h1 class="thesis-hero__headline reveal">
-          <span class="gradient-text-warm">Agentic AI</span> is quietly<br>replacing mid-career jobs.
+          Small Business Automation Center
         </h1>
         <p class="thesis-hero__lede reveal">
-          It doesn&rsquo;t chat. It doesn&rsquo;t summarize. <em>It does the work.</em>
-        </p>
-        <p class="thesis-hero__body reveal">
-          Agentic AI &mdash; systems that plan, decide, and execute tasks end-to-end &mdash; is absorbing whole roles this year. Not entry-level roles. Mid-career ones. The copywriter with <strong>18 years</strong>. The ops manager with <strong>22</strong>. The marketing director with <strong>30</strong>.
+          Secure <span class="gradient-text-warm">Agentic Claw</span> from a Trusted Professor
         </p>
 
-        <!-- Jobs already gone proof strip -->
-        <div class="jobs-gone stagger">
-          <div class="job-gone reveal">
-            <span class="job-gone__label">2024 &middot; Gone</span>
-            <span class="job-gone__role">Senior Copywriter</span>
-            <p class="job-gone__note">60% of in-house content teams cut or reduced.</p>
-          </div>
-          <div class="job-gone reveal">
-            <span class="job-gone__label">Shrinking Fast</span>
-            <span class="job-gone__role">Social Manager</span>
-            <p class="job-gone__note">Avg tenure: 14 months. Down from 3.5 years.</p>
-          </div>
-          <div class="job-gone reveal">
-            <span class="job-gone__label">~18%/yr</span>
-            <span class="job-gone__role">Email Specialist</span>
-            <p class="job-gone__note">Role shrinking across mid-market.</p>
-          </div>
-          <div class="job-gone reveal">
-            <span class="job-gone__label">Flagged &ldquo;at risk&rdquo;</span>
-            <span class="job-gone__role">Product Copywriter</span>
-            <p class="job-gone__note">Named in Goldman Sachs displacement report.</p>
-          </div>
-          <div class="job-gone reveal">
-            <span class="job-gone__label">Consolidating</span>
-            <span class="job-gone__role">Regional Ops Mgr</span>
-            <p class="job-gone__note">Being merged into dashboard + agent roles.</p>
-          </div>
-        </div>
+        <p class="thesis-hero__offer reveal">Buy our Claw and get these additional AI tools free &mdash; blog
+          generator, social captions, email campaigns &amp; product descriptions.</p>
 
         <p class="thesis-hero__closer reveal">
           If you&rsquo;re over 50, you&rsquo;re not imagining it.<br>
@@ -2031,12 +2154,37 @@
         </div>
         <div class="why-card dark-card reveal">
           <h3>Extremely Difficult to Build</h3>
-          <p>Building a secure, production-grade OpenClaw requires deep technical skill. Most attempts fail or create
-            security risks. You don't need to build it &mdash; we already did.</p>
+          <p>Building a secure, production-grade OpenClaw requires deep technical skill. Ours is
+            professionally-built, reasonably-priced and safe to use.</p>
         </div>
       </div>
 
       <p class="why-trust-line reveal">Peace of mind: long-term support, voice-activated commands, works while you sleep.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       PROFESSOR'S SEAL — Clint Day endorsement
+       ═══════════════════════════════════════════ -->
+  <section class="professor-seal">
+    <div class="container">
+      <div class="professor-seal__card reveal">
+        <div class="professor-seal__photo-wrap">
+          <img src="images/founder.jpeg" alt="Clint Day &mdash; AACSB &amp; USASBE qualified professor"
+            class="professor-seal__photo" loading="lazy">
+        </div>
+        <div class="professor-seal__content">
+          <span class="professor-seal__tag">The Professor&rsquo;s Seal</span>
+          <blockquote class="professor-seal__quote">
+            &ldquo;An autonomous bot that runs an entire business more productively and increases revenue is
+            <span class="professor-seal__accent">revolutionary</span>. We carefully vetted this ClawLauncher choice
+            so that I, an AACSB and USASBE qualified professor, can recommend it as a
+            <span class="professor-seal__accent">safe and fairly priced</span> agentic agent.&rdquo;
+          </blockquote>
+          <div class="professor-seal__name">Clint Day</div>
+          <div class="professor-seal__cred">AACSB &amp; USASBE Qualified Professor &middot; Founder, Ai-Auto</div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -2236,6 +2384,40 @@
           &ldquo;ClawLauncher automates new startups as it <span class="accent">lowers expenses</span> and <span class="accent">increases revenue</span> for any business.&rdquo;
         </p>
         <span class="anchor-pull-quote__caption">— The bet, in one sentence.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       VALLEY SIGNAL — Marc Andreessen + video
+       ═══════════════════════════════════════════ -->
+  <section class="valley-signal">
+    <div class="container">
+      <div class="valley-signal__grid">
+        <div class="valley-signal__video reveal">
+          <iframe src="https://www.youtube-nocookie.com/embed/87Pm0SGTtN8"
+            title="Marc Andreessen on AI agents" loading="lazy" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        <div class="valley-signal__content reveal">
+          <span class="valley-signal__tag">The Silicon Valley Signal</span>
+          <h2 class="valley-signal__headline">Silicon Valley Is Already Moving Toward
+            <span class="gradient-text-warm">AI Agents</span></h2>
+          <p class="valley-signal__body">Marc Andreessen describes a near future where AI bots and agents become
+            routine in business &mdash; running continuously, responding to feedback, and completing work without
+            frustration, distraction, or fatigue.</p>
+          <div class="valley-signal__person">
+            <img src="images/marc-andreessen.png" alt="Marc Andreessen &mdash; venture capitalist"
+              class="valley-signal__photo" loading="lazy">
+            <div class="valley-signal__id">
+              <strong>Marc Andreessen</strong>
+              <span>Venture Capitalist &middot; a16z</span>
+            </div>
+          </div>
+          <a href="https://a16z.com/2023/06/06/ai-will-save-the-world/" target="_blank" rel="noopener noreferrer"
+            class="valley-signal__link">Read his essay: &ldquo;AI Will Save the World&rdquo; &rarr;</a>
+        </div>
       </div>
     </div>
   </section>

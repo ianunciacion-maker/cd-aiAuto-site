@@ -21,9 +21,14 @@ npm run validate         # HTML validation + all linters
 npx eslint path/to/file.js        # Lint single JS file
 npx stylelint css/path/to/file.css # Lint single CSS file
 vercel --prod            # Manual production deploy (auto-deploys on push to main)
+
+# Playwright E2E tests (tests/redesign/) — not wired into package.json scripts
+npx serve . -p 8123 &                                                         # tests expect baseURL http://localhost:8123
+npx playwright test --config tests/redesign/playwright.config.js              # full suite
+npx playwright test --config tests/redesign/playwright.config.js redesign.spec.js -g "some test name"  # single test
 ```
 
-**No automated test suite exists.** Testing is manual via browser. There are no unit tests, integration tests, or test runner configured.
+**No unit test suite exists** — no unit/integration tests, and `api/` is untested. There is a Playwright E2E suite at `tests/redesign/` (`redesign.spec.js`, `audit.spec.js`, `admin-free-access.spec.js`) covering marketing-page redesign consistency (design language vs. `openclaw.html`, required anchor copy, no console errors/broken assets) and a responsive-overflow audit across 7 breakpoints. It expects a static server already running on port 8123 (see command above) and isn't part of `npm run validate` or any CI — run it manually when touching marketing pages.
 
 ## Code Style Rules
 
