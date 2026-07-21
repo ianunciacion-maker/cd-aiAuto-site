@@ -404,6 +404,25 @@
       border-bottom-left-radius: 4px;
     }
 
+    .bubble-photo {
+      padding: 5px 5px 7px;
+    }
+
+    .bubble-photo img {
+      display: block;
+      width: 168px;
+      height: auto;
+      border-radius: 10px;
+      border-bottom-right-radius: 2px;
+    }
+
+    .bubble-photo-caption {
+      display: block;
+      padding: 5px 5px 0;
+      font-size: 11px;
+      opacity: 0.85;
+    }
+
     .bubble:nth-child(1) { animation-delay: 0.3s; }
     .bubble:nth-child(2) { animation-delay: 0.9s; }
     .bubble:nth-child(3) { animation-delay: 1.6s; }
@@ -782,7 +801,10 @@
           <div class="chat-body">
             <div class="bubble bubble-user">I'm slammed. Clear my afternoon?</div>
             <div class="bubble bubble-agent">Done &mdash; 3 meetings moved, polite reschedule notes sent to everyone. You're free after 1pm. &#9989;</div>
-            <div class="bubble bubble-user">&#128247; (photo of a crumpled receipt)</div>
+            <div class="bubble bubble-user bubble-photo">
+              <img src="images/receipt-crumpled.jpg" alt="Photo of a crumpled office-supply receipt totaling $42.80" width="480" height="480" loading="lazy">
+              <span class="bubble-photo-caption">&#128247; receipt.jpg</span>
+            </div>
             <div class="bubble bubble-agent">Logged: $42.80, office supplies &mdash; filed to this month's books. Also: that big lead has gone quiet for 2 days. Check-in email drafted, want to review it?</div>
             <div class="bubble bubble-agent typing"><span></span><span></span><span></span></div>
           </div>
