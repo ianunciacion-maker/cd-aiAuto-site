@@ -15,7 +15,16 @@ class SiteNavigation {
           <a href="${this.getBaseUrl()}index.html" class="logo">Ai-Auto</a>
           <div class="nav-links">
             <a href="${this.getBaseUrl()}index.html" class="nav-link" id="homeLink">Home</a>
-            <a href="${this.getBaseUrl()}openclaw.html" class="nav-link" id="openclawLink">ClawLauncher</a>
+            <div class="nav-dropdown">
+              <a href="${this.getBaseUrl()}openclaw.html" class="nav-link" id="openclawLink">
+                ClawLauncher <span class="nav-dropdown-caret">&#9662;</span></a>
+              <div class="nav-dropdown-menu">
+                <a href="${this.getBaseUrl()}openclaw.html"
+                  class="nav-dropdown-item">The Full Bundle</a>
+                <a href="${this.getBaseUrl()}clawlauncher-explained.html"
+                  class="nav-dropdown-item">What It Actually Does</a>
+              </div>
+            </div>
             <a href="${this.getBaseUrl()}tools.html" class="nav-link" id="toolsLink">Tools</a>
             <a href="${this.getBaseUrl()}about.html" class="nav-link" id="aboutLink">About</a>
             <a href="${this.getBaseUrl()}blog.html" class="nav-link" id="blogLink">Blog</a>
@@ -49,6 +58,8 @@ class SiteNavigation {
         <div class="mobile-menu-links">
           <a href="${this.getBaseUrl()}index.html" class="mobile-menu-link">Home</a>
           <a href="${this.getBaseUrl()}openclaw.html" class="mobile-menu-link">ClawLauncher</a>
+          <a href="${this.getBaseUrl()}clawlauncher-explained.html"
+            class="mobile-menu-link mobile-menu-sublink">&rarr; What It Actually Does</a>
           <a href="${this.getBaseUrl()}tools.html" class="mobile-menu-link">Tools</a>
           <a href="${this.getBaseUrl()}about.html" class="mobile-menu-link">About</a>
           <a href="${this.getBaseUrl()}blog.html" class="mobile-menu-link">Blog</a>
@@ -260,7 +271,7 @@ class SiteNavigation {
     const highlightStyle = 'text-decoration: underline; text-decoration-thickness: 3px; text-decoration-color: var(--gold);';
 
     // Determine which link to highlight
-    if (currentPath.includes('openclaw')) {
+    if (currentPath.includes('openclaw') || currentPath.includes('clawlauncher-explained')) {
       openclawLink.setAttribute('style', highlightStyle);
     } else if (currentPath.includes('about.html')) {
       aboutLink.setAttribute('style', highlightStyle);

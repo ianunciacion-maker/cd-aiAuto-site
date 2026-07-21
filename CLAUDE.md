@@ -53,16 +53,16 @@ The heart of the application — exports 8 manager classes, all exposed globally
 
 ### Key Directories
 
-- `api/` — Vercel serverless functions. All endpoints are POST. Stripe webhook at `api/webhooks/stripe.js` (1024MB memory, 10s timeout configured in `vercel.json`).
+- `api/` — Vercel serverless functions. All endpoints are POST. Has its own `package.json` (deps: `stripe`, `@supabase/supabase-js`). Stripe webhook at `api/webhooks/stripe.js` (1024MB memory, 10s timeout configured in `vercel.json`).
 - `api/tools/` — AI generation endpoints. Blog + captions proxy to **n8n webhooks**; email campaign + product descriptions call **OpenRouter** directly. All require `use-tool.js` to track usage.
 - `css/` — Organized: `base/` (variables, reset, typography), `components/`, `layout/`, `pages/`, `utilities/`. Entry point: `main.css`. Dark mode is in `css/base/variables.css` via `[data-theme="dark"]` selector, not a separate folder.
-- `js/` — ES6 modules. Entry point: `main.js`. Components: `navigation.js`, `forms.js`, `tool-navigation.js`. Modules: `theme.js`, `animations.js`, plus per-tool history modules (`social-captions-history.js`, `email-campaigns-history.js`, `product-descriptions-history.js`).
+- `js/` — ES6 modules. Entry point: `main.js` (plus `marketing-animations.js` for marketing pages). Components: `navigation.js`, `forms.js`, `tool-navigation.js`. Modules: `theme.js`, `animations.js`, plus per-tool history modules (`social-captions-history.js`, `email-campaigns-history.js`, `product-descriptions-history.js`).
 - `admin/` — Dashboard, blog editor (Quill.js WYSIWYG). Protected by `authManager.protectAdminRoute()`.
 - `user/` — Login, signup, dashboard, checkout. Signup → checkout → Stripe subscription flow.
 - `tools/` — Individual AI tool pages. Require active subscription.
 - `aiauto-remotion/` — **Separate subproject** (not tracked in git). Remotion-based promotional video generation. Has its own `package.json`, uses React + TypeScript. Run `remotion studio` from that directory.
-- `docs/sql/` — SQL migration scripts for Supabase schema changes. Run these in the Supabase SQL editor when setting up or modifying DB schema.
-- `openclaw.html`, `clawmate.html` — Standalone explainer/marketing pages for companion products. Self-contained (inline styles, no build step), use the same neobrutalist design tokens.
+- `docs/sql/` — SQL migration scripts for Supabase schema changes. Run these in the Supabase SQL editor when setting up or modifying DB schema. Other `docs/` subfolders (`setup/`, `deployment/`, `guides/`) hold setup and deployment guides — see `docs/README.md` for the index.
+- `openclaw.html`, `clawmate.html`, `clawlauncher-explained.html` — Standalone explainer/marketing pages for companion products. Self-contained (inline styles, no build step), use the same neobrutalist design tokens.
 - `ai-resources.html`, `admin/ai-resources.html` — Public-facing and admin pages for curated AI resource listings. Admin page protected by `authManager.protectAdminRoute()`.
 
 ### Authentication Flow
@@ -147,4 +147,6 @@ Local dev: `/api/.env.local` (gitignored). Production: Vercel dashboard. Templat
 - Stripe webhook events logged to `webhook_events` Supabase table for audit trail
 - Blog editor Quill styles need `!important` which conflicts with stylelint rule — disable rule inline for those files
 - `.gitignore` has aggressive wildcard patterns (`*secret*`, `*token*`, `*password*`) — new files with these substrings in the name will be silently ignored. Exceptions exist for `user/*password*.html` and `plans/*password*.md`.
+- All `*.sql` files are gitignored EXCEPT `docs/sql/*.sql` — a new migration saved anywhere else (e.g. project root) will be silently ignored by git. Always put SQL migrations in `docs/sql/`.
+- The `!docs/sql/*.sql` and `!images/stock/*` gitignore negations also re-include macOS AppleDouble junk (`._foo.sql`, `._bar.jpg`) that would otherwise be ignored — don't stage `._*` files.
 - `npm run validate` only checks `*.html` in the project root — HTML files in subdirectories (`admin/`, `user/`, `tools/`, `blog/`) are not validated

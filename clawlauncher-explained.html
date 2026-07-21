@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>What ClawLauncher Actually Does – Ai-Auto</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A plain-English tour of what your ClawLauncher AI employee actually does all day — the morning brief, the bookkeeping, the lead follow-ups, the file cleanup, and more.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Playfair+Display:wght@500;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/components/navigation.css">
+
+  <style>
+    :root {
+      --bg-paper: #0e0e0e;
+      --bg-white: #1a1a1a;
+      --bg-elevated: #222120;
+      --ink: #efe5cd;
+      --ink-secondary: #958f80;
+      --ink-muted: #736f64;
+      --blue: #e50000;
+      --gold: #f5a623;
+      --coral: #e55040;
+      --lavender: #1e1d2a;
+      --green: #03ffa7;
+      --pink: #ff6eb4;
+      --lobster: #e50000;
+      --sky: #4f8ef7;
+
+      --border-thick: 1px solid #292825;
+      --border-thin: 1px solid #302e2b;
+      --shadow-hard: 0 2px 16px rgba(0,0,0,0.25);
+      --shadow-hover: 0 8px 40px rgba(0,0,0,0.4);
+      --radius-sm: 4px;
+      --max-width: 1100px;
+
+      --space-xs: 8px;
+      --space-sm: 16px;
+      --space-md: 32px;
+      --space-lg: 80px;
+
+      --gradient-card: linear-gradient(130deg, #191918 0%, #151414 100%);
+    }
+
+    [data-theme="dark"] {
+      --bg-paper: #080808;
+      --bg-white: #141413;
+      --bg-elevated: #1c1b1a;
+      --ink: #efe5cd;
+      --ink-secondary: #8a8477;
+      --ink-muted: #68645a;
+      --blue: #f02020;
+      --gold: #f5a623;
+      --coral: #f06050;
+      --lavender: #16152a;
+      --green: #03ffa7;
+      --pink: #ff7ac0;
+      --lobster: #f02020;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { overflow-x: hidden; scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-paper);
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+      background-size: 40px 40px;
+      color: var(--ink);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      animation: ambient-grid-drift 24s linear infinite;
+    }
+
+    /* Ambient glow layers — matches openclaw.html */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      pointer-events: none;
+      background:
+        radial-gradient(640px circle at 15% 22%, rgba(245, 166, 35, 0.5), transparent 42%),
+        radial-gradient(580px circle at 82% 72%, rgba(229, 0, 0, 0.4), transparent 48%),
+        radial-gradient(720px circle at 55% 42%, rgba(167, 139, 250, 0.32), transparent 50%);
+      mix-blend-mode: screen;
+      animation: ambient-orbs 26s ease-in-out infinite;
+      will-change: transform;
+      filter: blur(4px);
+      opacity: 0.6;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 998;
+      pointer-events: none;
+      background:
+        conic-gradient(
+          from 0deg at 60% 40%,
+          rgba(245, 166, 35, 0.20) 0deg,
+          transparent 60deg,
+          rgba(229, 0, 0, 0.22) 160deg,
+          transparent 240deg,
+          rgba(167, 139, 250, 0.20) 320deg,
+          rgba(245, 166, 35, 0.20) 360deg
+        );
+      mix-blend-mode: screen;
+      animation: ambient-shimmer 60s linear infinite;
+      transform-origin: 60% 40%;
+      transform: scale(1.4);
+      will-change: transform;
+      filter: blur(120px);
+      opacity: 0.5;
+    }
+
+    @keyframes ambient-grid-drift {
+      from { background-position: 0 0, 0 0; }
+      to { background-position: 40px 40px, 40px 40px; }
+    }
+
+    @keyframes ambient-orbs {
+      0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+      33% { transform: translate3d(2%, -2%, 0) scale(1.08); }
+      66% { transform: translate3d(-2%, 3%, 0) scale(1.05); }
+    }
+
+    @keyframes ambient-shimmer {
+      from { transform: scale(1.4) rotate(0deg); }
+      to { transform: scale(1.4) rotate(360deg); }
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      color: #f1f5f9;
+    }
+
+    p { margin: 0 0 var(--space-sm); color: var(--ink-secondary); font-size: 16px; line-height: 1.7; }
+    a { color: inherit; text-decoration: none; }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #fbbf24 0%, #f97316 35%, #ec4899 70%, #a78bfa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .gradient-text-gold {
+      background: linear-gradient(135deg, #fbbf24, #f59e0b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .gradient-text-green {
+      background: linear-gradient(135deg, #34d399, #03ffa7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 5px 14px;
+      border: 1px solid #302e2b;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(245, 166, 35, 0.1);
+      color: var(--gold);
+      border-radius: 3px;
+      margin-bottom: var(--space-sm);
+    }
+
+    .tag--sky {
+      background: rgba(79, 142, 247, 0.1);
+      color: #7fabf7;
+      border-color: rgba(79, 142, 247, 0.25);
+    }
+
+    .tag--green {
+      background: rgba(3, 255, 167, 0.08);
+      color: var(--green);
+      border-color: rgba(3, 255, 167, 0.22);
+    }
+
+    .section-title {
+      font-size: clamp(36px, 5vw, 64px);
+      margin-bottom: var(--space-md);
+      color: #f1f5f9;
+      font-weight: 900;
+      line-height: 1.08;
+    }
+
+    .section-subtitle {
+      font-size: 18px;
+      max-width: 700px;
+      margin-bottom: var(--space-md);
+      font-weight: 400;
+      color: #b0bcd4;
+      line-height: 1.7;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 28px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      border: 1px solid #302e2b;
+      background: var(--gradient-card);
+      color: var(--ink);
+      box-shadow: var(--shadow-hard);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      font-size: 14px;
+      border-radius: var(--radius-sm);
+    }
+
+    .btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+
+    .btn-lobster {
+      background: linear-gradient(135deg, #c41e3a, #e50000);
+      color: #ffffff;
+      border-color: #e50000;
+      box-shadow: 0 4px 24px rgba(229, 0, 0, 0.35);
+    }
+
+    .btn-lobster:hover { box-shadow: 0 8px 40px rgba(229, 0, 0, 0.5); }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid #46443e;
+      color: var(--ink-secondary);
+    }
+
+    .btn-outline:hover { color: var(--ink); border-color: #68645a; }
+
+    .cta-row {
+      display: flex;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+    }
+
+    /* ========== SCROLL REVEAL ========== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .reveal.visible { opacity: 1; transform: none; }
+
+    .day-grid .reveal:nth-child(2) { transition-delay: 0.08s; }
+    .day-grid .reveal:nth-child(3) { transition-delay: 0.16s; }
+    .day-grid .reveal:nth-child(4) { transition-delay: 0.24s; }
+    .compare-grid .reveal:nth-child(3) { transition-delay: 0.12s; }
+
+    /* ========== HERO ========== */
+    .hero {
+      padding: 150px 0 var(--space-lg);
+      border-bottom: var(--border-thick);
+      background:
+        radial-gradient(ellipse 55% 45% at 20% 0%, rgba(245, 166, 35, 0.1) 0%, transparent 70%),
+        radial-gradient(ellipse 45% 50% at 100% 80%, rgba(229, 0, 0, 0.08) 0%, transparent 70%),
+        #0f1219;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 56px;
+      align-items: center;
+    }
+
+    .hero .crumb {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--ink-muted);
+      margin-bottom: var(--space-sm);
+    }
+
+    .hero .crumb a { color: var(--ink-secondary); transition: color 0.2s ease; }
+    .hero .crumb a:hover { color: var(--gold); }
+
+    .hero h1 { font-size: clamp(40px, 5.5vw, 68px); font-weight: 900; margin-bottom: var(--space-md); }
+
+    /* ========== CHAT MOCKUP ========== */
+    .chat-card {
+      border: var(--border-thick);
+      background: var(--gradient-card);
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+      border-radius: 16px;
+      overflow: hidden;
+      transform: rotate(1.6deg);
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .chat-card:hover {
+      transform: rotate(0deg) translateY(-4px);
+      box-shadow: 0 32px 90px rgba(0, 0, 0, 0.65), 0 0 40px rgba(245, 166, 35, 0.12);
+    }
+
+    .chat-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      border-bottom: var(--border-thick);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .chat-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      background: linear-gradient(135deg, #c41e3a, #e50000);
+      box-shadow: 0 2px 12px rgba(229, 0, 0, 0.4);
+    }
+
+    .chat-id { line-height: 1.25; }
+
+    .chat-name { font-weight: 700; font-size: 14px; color: #f1f5f9; }
+
+    .chat-status {
+      font-size: 11.5px;
+      color: var(--green);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .chat-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: dot-pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes dot-pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(3, 255, 167, 0.5); }
+      50% { box-shadow: 0 0 0 6px rgba(3, 255, 167, 0); }
+    }
+
+    .chat-body {
+      padding: 20px 18px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .bubble {
+      max-width: 88%;
+      padding: 10px 14px;
+      font-size: 13.5px;
+      line-height: 1.55;
+      border-radius: 14px;
+      opacity: 0;
+      animation: bubble-in 0.5s ease forwards;
+    }
+
+    .bubble-user {
+      align-self: flex-end;
+      background: linear-gradient(135deg, #c41e3a, #e50000);
+      color: #ffffff;
+      border-bottom-right-radius: 4px;
+    }
+
+    .bubble-agent {
+      align-self: flex-start;
+      background: #1e1d1c;
+      border: var(--border-thin);
+      color: #cdc6b4;
+      border-bottom-left-radius: 4px;
+    }
+
+    .bubble:nth-child(1) { animation-delay: 0.3s; }
+    .bubble:nth-child(2) { animation-delay: 0.9s; }
+    .bubble:nth-child(3) { animation-delay: 1.6s; }
+    .bubble:nth-child(4) { animation-delay: 2.3s; }
+    .bubble:nth-child(5) { animation-delay: 3s; }
+
+    @keyframes bubble-in {
+      from { opacity: 0; transform: translateY(12px) scale(0.97); }
+      to { opacity: 1; transform: none; }
+    }
+
+    .typing {
+      display: inline-flex;
+      gap: 4px;
+      align-items: center;
+      padding: 12px 16px;
+    }
+
+    .typing span {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--ink-muted);
+      animation: typing-bounce 1.2s ease-in-out infinite;
+    }
+
+    .typing span:nth-child(2) { animation-delay: 0.15s; }
+    .typing span:nth-child(3) { animation-delay: 0.3s; }
+
+    @keyframes typing-bounce {
+      0%, 60%, 100% { transform: none; opacity: 0.4; }
+      30% { transform: translateY(-4px); opacity: 1; }
+    }
+
+    /* ========== SECTIONS ========== */
+    .sec {
+      padding: var(--space-lg) 0;
+      border-bottom: var(--border-thick);
+      position: relative;
+      z-index: 2;
+    }
+
+    .sec-difference {
+      background:
+        radial-gradient(ellipse 50% 40% at 100% 0%, rgba(79, 142, 247, 0.07) 0%, transparent 70%),
+        #0e1117;
+    }
+
+    .sec-day {
+      background:
+        radial-gradient(ellipse 50% 40% at 0% 0%, rgba(245, 166, 35, 0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 50% at 100% 100%, rgba(229, 0, 0, 0.05) 0%, transparent 70%),
+        #0f1219;
+    }
+
+    .sec-guardrails {
+      background:
+        radial-gradient(ellipse 50% 45% at 50% 100%, rgba(3, 255, 167, 0.06) 0%, transparent 70%),
+        #0e1117;
+    }
+
+    /* ========== COMPARE CARDS ========== */
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 64px 1fr;
+      gap: var(--space-sm);
+      align-items: stretch;
+      margin-bottom: var(--space-md);
+    }
+
+    .compare-card {
+      border: var(--border-thick);
+      padding: var(--space-md);
+      background: var(--gradient-card);
+      box-shadow: var(--shadow-hard);
+      border-radius: 12px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .compare-card.dull {
+      filter: saturate(0.35);
+      opacity: 0.75;
+    }
+
+    .compare-card.featured {
+      border-color: rgba(245, 166, 35, 0.45);
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(245, 166, 35, 0.09) 0%, transparent 70%),
+        var(--gradient-card);
+      box-shadow: 0 8px 40px rgba(245, 166, 35, 0.12);
+    }
+
+    .compare-card.featured:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 56px rgba(245, 166, 35, 0.18);
+    }
+
+    .compare-vs {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .compare-vs span {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 14px;
+      letter-spacing: 0.04em;
+      color: var(--gold);
+      border: 1px solid rgba(245, 166, 35, 0.4);
+      background: rgba(245, 166, 35, 0.08);
+      box-shadow: 0 0 24px rgba(245, 166, 35, 0.15);
+    }
+
+    .compare-type {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ink-muted);
+      margin-bottom: var(--space-xs);
+    }
+
+    .compare-card.featured .compare-type { color: var(--gold); }
+
+    .compare-emoji { font-size: 34px; margin-bottom: var(--space-xs); }
+
+    .compare-card h3 { font-size: 24px; margin-bottom: var(--space-xs); }
+
+    /* ========== USE-CASE CARDS ========== */
+    .day-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-md);
+      margin-top: var(--space-md);
+      margin-bottom: var(--space-md);
+    }
+
+    .day-card {
+      border: var(--border-thick);
+      background: var(--gradient-card);
+      box-shadow: var(--shadow-hard);
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    .day-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      opacity: 0.85;
+    }
+
+    .day-card--gold::before { background: linear-gradient(90deg, #fbbf24, #f59e0b); }
+    .day-card--green::before { background: linear-gradient(90deg, #34d399, #03ffa7); }
+    .day-card--coral::before { background: linear-gradient(90deg, #f97316, #e55040); }
+    .day-card--sky::before { background: linear-gradient(90deg, #60a5fa, #4f8ef7); }
+
+    .day-card:hover {
+      transform: translateY(-5px);
+      border-color: #46443e;
+    }
+
+    .day-card--gold:hover { box-shadow: 0 14px 48px rgba(245, 166, 35, 0.14); }
+    .day-card--green:hover { box-shadow: 0 14px 48px rgba(3, 255, 167, 0.1); }
+    .day-card--coral:hover { box-shadow: 0 14px 48px rgba(229, 80, 64, 0.14); }
+    .day-card--sky:hover { box-shadow: 0 14px 48px rgba(79, 142, 247, 0.14); }
+
+    .day-card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: var(--space-sm) var(--space-md);
+      border-bottom: var(--border-thick);
+      font-weight: 800;
+      font-size: 17px;
+      color: var(--ink);
+    }
+
+    .day-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .day-card--gold .day-icon { background: rgba(245, 166, 35, 0.12); border: 1px solid rgba(245, 166, 35, 0.3); }
+    .day-card--green .day-icon { background: rgba(3, 255, 167, 0.08); border: 1px solid rgba(3, 255, 167, 0.25); }
+    .day-card--coral .day-icon { background: rgba(229, 80, 64, 0.12); border: 1px solid rgba(229, 80, 64, 0.3); }
+    .day-card--sky .day-icon { background: rgba(79, 142, 247, 0.12); border: 1px solid rgba(79, 142, 247, 0.3); }
+
+    .day-card-body { padding: var(--space-md); }
+
+    .day-card-body ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .day-card-body li {
+      position: relative;
+      padding-left: 22px;
+      margin-bottom: 13px;
+      font-size: 14.5px;
+      line-height: 1.65;
+      color: #b0bcd4;
+    }
+
+    .day-card-body li:last-child { margin-bottom: 0; }
+
+    .day-card-body li::before {
+      content: '\2192';
+      position: absolute;
+      left: 0;
+      font-weight: 700;
+    }
+
+    .day-card--gold li::before { color: var(--gold); }
+    .day-card--green li::before { color: var(--green); }
+    .day-card--coral li::before { color: var(--coral); }
+    .day-card--sky li::before { color: #7fabf7; }
+
+    /* ========== CALLOUTS ========== */
+    .callout {
+      border: 1px solid rgba(79, 142, 247, 0.18);
+      background:
+        radial-gradient(ellipse 70% 100% at 0% 0%, rgba(79, 142, 247, 0.07) 0%, transparent 60%),
+        rgba(22, 27, 58, 0.5);
+      padding: var(--space-md);
+      font-size: 16px;
+      border-radius: 12px;
+      color: #b0bcd4;
+      line-height: 1.7;
+      margin-bottom: var(--space-sm);
+    }
+
+    .callout strong { font-weight: 700; color: var(--ink); }
+
+    .callout-green {
+      border-color: rgba(3, 255, 167, 0.22);
+      background:
+        radial-gradient(ellipse 70% 100% at 0% 0%, rgba(3, 255, 167, 0.05) 0%, transparent 60%),
+        rgba(16, 34, 28, 0.45);
+    }
+
+    /* ========== GUARDRAIL CHIPS ========== */
+    .guard-chips {
+      display: flex;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+      margin-top: var(--space-sm);
+    }
+
+    .guard-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border: 1px solid rgba(3, 255, 167, 0.25);
+      background: rgba(3, 255, 167, 0.06);
+      color: #9df5ce;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-radius: 999px;
+    }
+
+    /* ========== FINAL CTA ========== */
+    .sec-final {
+      padding: 100px 0;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      background:
+        radial-gradient(ellipse 60% 55% at 50% 0%, rgba(229, 0, 0, 0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 45% at 80% 100%, rgba(245, 166, 35, 0.06) 0%, transparent 70%),
+        #0f1219;
+    }
+
+    .sec-final .cta-row { justify-content: center; margin-top: var(--space-md); }
+
+    .sec-final .section-subtitle { margin-left: auto; margin-right: auto; }
+
+    .final-chips {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: var(--space-md);
+    }
+
+    .final-chip {
+      padding: 8px 16px;
+      border: var(--border-thin);
+      background: rgba(255, 255, 255, 0.02);
+      color: var(--ink-secondary);
+      font-size: 12.5px;
+      font-weight: 600;
+      border-radius: 999px;
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 900px) {
+      .hero { padding-top: 110px; }
+
+      .hero-grid { grid-template-columns: 1fr; gap: var(--space-md); }
+
+      .chat-card { transform: none; max-width: 440px; }
+
+      .compare-grid { grid-template-columns: 1fr; }
+
+      .compare-vs { padding: 4px 0; }
+
+      .day-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Reduced motion — freeze everything */
+    @media (prefers-reduced-motion: reduce) {
+      body,
+      body::before,
+      body::after,
+      .chat-dot,
+      .typing span {
+        animation: none;
+      }
+
+      .bubble { animation: none; opacity: 1; }
+
+      .reveal { opacity: 1; transform: none; transition: none; }
+
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- NAV (injected by navigation.js) -->
+
+  <!-- ========== HERO ========== -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div>
+          <div class="crumb"><a href="openclaw.html">ClawLauncher</a> &nbsp;/&nbsp; In Plain English</div>
+          <div class="tag">No Jargon, Just a Normal Week</div>
+          <h1>What Does Your AI Employee <span class="gradient-text">Actually Do All Day?</span></h1>
+          <p class="section-subtitle">A chatbot answers questions. Your ClawLauncher gets things done. This page is the plain-English tour &mdash; what a working agent takes off an ordinary small business owner's plate in an ordinary week.</p>
+          <div class="cta-row">
+            <a href="openclaw.html#bundle-pricing" class="btn btn-lobster">Get Installed Now &rarr;</a>
+            <a href="openclaw.html" class="btn btn-outline">&larr; Back to ClawLauncher</a>
+          </div>
+        </div>
+        <div class="chat-card">
+          <div class="chat-head">
+            <div class="chat-avatar">&#129438;</div>
+            <div class="chat-id">
+              <div class="chat-name">Your ClawLauncher</div>
+              <div class="chat-status"><span class="chat-dot"></span> Online &middot; working</div>
+            </div>
+          </div>
+          <div class="chat-body">
+            <div class="bubble bubble-user">I'm slammed. Clear my afternoon?</div>
+            <div class="bubble bubble-agent">Done &mdash; 3 meetings moved, polite reschedule notes sent to everyone. You're free after 1pm. &#9989;</div>
+            <div class="bubble bubble-user">&#128247; (photo of a crumpled receipt)</div>
+            <div class="bubble bubble-agent">Logged: $42.80, office supplies &mdash; filed to this month's books. Also: that big lead has gone quiet for 2 days. Check-in email drafted, want to review it?</div>
+            <div class="bubble bubble-agent typing"><span></span><span></span><span></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== THE DIFFERENCE ========== -->
+  <section class="sec sec-difference">
+    <div class="container">
+      <div class="tag tag--sky reveal">The Difference</div>
+      <h2 class="section-title reveal">A Librarian vs. an Assistant <span class="gradient-text-gold">With Keys to the Office</span></h2>
+
+      <div class="compare-grid">
+        <div class="compare-card dull reveal">
+          <div class="compare-emoji">&#128218;</div>
+          <div class="compare-type">A Standard AI Chatbot</div>
+          <h3>Answers questions</h3>
+          <p>Like a librarian: you ask, it tells you. Helpful, but when the conversation ends, nothing in your business has actually moved. The follow-up, the filing, the sending &mdash; still yours.</p>
+        </div>
+        <div class="compare-vs"><span>VS</span></div>
+        <div class="compare-card featured reveal">
+          <div class="compare-emoji">&#128273;</div>
+          <div class="compare-type">Your ClawLauncher Agent</div>
+          <h3>Gets things done</h3>
+          <p>Like a trusted assistant with keys to the office: it can read the inbox, tidy the files, and click the buttons for you. You delegate the outcome, and it works out the steps.</p>
+        </div>
+      </div>
+
+      <div class="callout reveal">
+        <strong>And it's not old-school automation either.</strong> Rigid if-this-then-that tools follow one wire from trigger to action, and break the moment reality gets messy. An agent understands intent, remembers how you like things done, and thinks through a multi-step task until it's finished.
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== A NORMAL WEEK ========== -->
+  <section class="sec sec-day">
+    <div class="container">
+      <div class="tag reveal">A Normal Week</div>
+      <h2 class="section-title reveal">Work That Comes <span class="gradient-text-gold">Off Your Plate</span></h2>
+      <p class="section-subtitle reveal">Every item below is a real, ordinary task an agent handles today &mdash; no app-hopping, no prompt marathons. You message it like a team member, and it coordinates the rest.</p>
+
+      <div class="day-grid">
+        <div class="day-card day-card--gold reveal">
+          <div class="day-card-header"><span class="day-icon">&#128197;</span> Admin &amp; Operations</div>
+          <div class="day-card-body">
+            <ul>
+              <li>Wake up to a morning brief: one message summarizing your inbox, calendar, and team chat &mdash; urgent fires flagged, pending approvals listed.</li>
+              <li>Text &ldquo;clear my afternoon&rdquo; and it checks every meeting, drafts polite reschedule notes, and moves the calendar blocks for you.</li>
+              <li>Hand it a meeting recording and get back the transcript, who said what, and the action items &mdash; already filed in your project tool.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="day-card day-card--green reveal">
+          <div class="day-card-header"><span class="day-icon">&#128176;</span> Finance &amp; Sales</div>
+          <div class="day-card-body">
+            <ul>
+              <li>Snap a photo of a receipt and text it over &mdash; vendor, amount, and tax extracted and logged straight into your books.</li>
+              <li>It watches your sales pipeline; if a high-value lead goes quiet for two days, you get a nudge with a check-in email already drafted for your review.</li>
+              <li>Every Monday morning: bank balance, ad spend, and the week's numbers in one snapshot to your team channel.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="day-card day-card--coral reveal">
+          <div class="day-card-header"><span class="day-icon">&#128227;</span> Marketing &amp; Research</div>
+          <div class="day-card-body">
+            <ul>
+              <li>When a topic in your niche starts trending, it drafts a post in your brand voice &mdash; and asks before anything gets published.</li>
+              <li>A weekly sweep of your competitors: what they published, what it means for you, and three topics to answer back with.</li>
+              <li>New client signed? Folder created, welcome email sent, kickoff call scheduled &mdash; before you've opened your laptop.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="day-card day-card--sky reveal">
+          <div class="day-card-header"><span class="day-icon">&#128187;</span> Files, Sites &amp; Housekeeping</div>
+          <div class="day-card-body">
+            <ul>
+              <li>A digital janitor: every Friday night it sorts your downloads and shared drive by project and clears out the stale clutter.</li>
+              <li>If your website goes down, you get a text immediately &mdash; while it safely works on bringing the service back up.</li>
+              <li>Out of the office without a file? Text it, and the document is found on your machine and in your inbox a minute later.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout reveal">
+        <strong>Why it compounds:</strong> your agent remembers. Preferences, writing style, project history &mdash; kept privately on your own system, not someone else's servers &mdash; so every week it fits your business a little better. The real win isn't any single task; it's centralization. You stop juggling ten apps and simply message one assistant that coordinates the rest.
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== GUARDRAILS ========== -->
+  <section class="sec sec-guardrails">
+    <div class="container">
+      <div class="tag tag--green reveal">Trust &amp; Safety</div>
+      <h2 class="section-title reveal">Powerful Tools, <span class="gradient-text-green">Proper Guardrails</span></h2>
+      <div class="callout callout-green reveal">
+        <strong>An assistant that can act deserves more care than one that can only talk.</strong> That's why every system we install runs in a secure sandbox with human approval built in for anything consequential &mdash; you get the leverage of a digital employee while staying firmly in charge. Nothing gets sent, deleted, or spent without the guardrails you set.
+      </div>
+      <div class="guard-chips reveal">
+        <span class="guard-chip">&#128737;&#65039; Sandboxed by default</span>
+        <span class="guard-chip">&#9989; Human approval built in</span>
+        <span class="guard-chip">&#127919; You set the limits</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FINAL CTA ========== -->
+  <section class="sec-final">
+    <div class="container">
+      <h2 class="section-title reveal">Ready to Hand <span class="gradient-text">Some of This Off?</span></h2>
+      <p class="section-subtitle reveal">ClawLauncher is this agent, installed and configured for your business &mdash; done for you, with training and support included.</p>
+      <div class="cta-row reveal">
+        <a href="openclaw.html#bundle-pricing" class="btn btn-lobster">Get Installed Now &rarr;</a>
+        <a href="openclaw.html" class="btn btn-outline">See the Full ClawLauncher Bundle</a>
+      </div>
+      <div class="final-chips reveal">
+        <span class="final-chip">&#9749; Mornings briefed</span>
+        <span class="final-chip">&#129534; Books kept current</span>
+        <span class="final-chip">&#128222; Leads chased</span>
+        <span class="final-chip">&#128452;&#65039; Files tidy</span>
+        <span class="final-chip">&#128564; Works while you sleep</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER (injected by navigation.js) -->
+
+  <script src="js/components/navigation.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase.js"></script>
+  <script>
+    // Scroll reveal
+    (function() {
+      var els = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window)) {
+        els.forEach(function(el) { el.classList.add('visible'); });
+        return;
+      }
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+      els.forEach(function(el) { observer.observe(el); });
+    })();
+  </script>
+</body>
+
+</html>
