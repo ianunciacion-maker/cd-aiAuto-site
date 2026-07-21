@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Playfair+Display:wght@500;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/components/navigation.css">
+  <link rel="stylesheet" href="css/layout/footer.css">
 
   <style>
     :root {
@@ -769,6 +770,46 @@
       .reveal { opacity: 1; transform: none; transition: none; }
 
       html { scroll-behavior: auto; }
+    }
+    /* ========== DARK FOOTER (markup injected by navigation.js, base styles in css/layout/footer.css) ========== */
+    .footer-cta {
+      background: linear-gradient(130deg, #1a0000, #2a0000);
+      color: #f1f5f9;
+      padding: 100px 0;
+    }
+
+    .footer-cta h2 {
+      font-size: 52px;
+      text-shadow: none;
+      color: #f1f5f9;
+    }
+
+    .footer-cta p {
+      color: #cdc6b4;
+    }
+
+    .site-footer {
+      background: #0a0a0a;
+      color: var(--ink-secondary);
+    }
+
+    .footer-brand h3,
+    .footer-links h4 {
+      color: #f1f5f9;
+    }
+
+    .footer-links a {
+      color: var(--ink-secondary);
+    }
+
+    .footer-links a:hover {
+      color: var(--gold);
+      opacity: 1;
+    }
+
+    .footer-bottom {
+      border-top-color: #292825;
+      color: var(--ink-muted);
     }
   </style>
 </head>
